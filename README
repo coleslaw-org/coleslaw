@@ -1,0 +1,1 @@
+Coleslaw aims to be flexible blog software suitable for replacing a single-user wordpress install or jekyll. The primary difference is that the coleslaw-dynamic backend uses PostgreSQL and RESTAS to generate and serve the site while the coleslaw-static backend compiles a static site to be served by Amazon S3.
