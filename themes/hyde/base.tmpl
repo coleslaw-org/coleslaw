@@ -1,0 +1,29 @@
+{namespace coleslaw.theme.hyde}
+
+{template base}
+<!doctype html>{\n}
+<html>
+  <head>
+    <title>{$title}</title>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <link href="http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
+    <link href= "{$siteroot}/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="alternate" href="{$siteroot}/feed.atom" type="application/atom+xml" />
+    {if $headInject} {$headInject |noAutoescape} {/if}
+  </head>
+  <body>
+    <div class="navigation">
+      {$navigation |noAutoescape}
+      {$title}
+    </div>
+    <div id="content">
+      {$content |noAutoescape}
+    </div>
+    {if $bodyInject} {$bodyInject |noAutoescape} {/if}
+    <div class="fineprint">
+      Unless otherwise credited all material {if $license} {$license} {else} © {/if} {$credits}
+    </div>
+  </body>
+</html>
+{/template}

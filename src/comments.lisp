@@ -1,29 +1,29 @@
 (in-package :coleslaw)
 
 (defclass author ()
-  ((name :initform nil
+  ((name :initform nil :initarg :name
          :accessor author-name)
-   (url :initform nil
+   (url :initform nil :initarg :url
         :accessor author-url)
-   (ip :initform nil
+   (ip :initform nil :initarg :ip
        :accessor author-ip)))
 
 (defclass comment ()
-  ((id :initform nil
+  ((id :initform nil :initarg :id
        :accessor comment-id)
-   (post :initform nil
+   (post :initform nil :initarg :post
          :accessor comment-post)
-   (author :initform nil
+   (author :initform nil :initarg :author
            :accessor comment-author)
-   (timestamp :initform nil
+   (timestamp :initform nil :initarg :timestamp
               :accessor comment-timestamp)
-   (content :initform nil
+   (content :initform nil :initarg :content
             :accessor comment-content)
-   (parent :initform nil
+   (parent :initform nil :initarg :parent
            :accessor comment-parent)))
 
 (defgeneric make-comment (post author timestamp content
-                          parent &key &allow-other-key)
+                          parent &key id &allow-other-keys)
   (:documentation "Create a COMMENT with the given data."))
 
 (defgeneric add-comment (comment post-id)

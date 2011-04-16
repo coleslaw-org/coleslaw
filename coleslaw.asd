@@ -1,12 +1,11 @@
 (defsystem :coleslaw
   :name "coleslaw-core"
   :description "Flexible Lisp Blogware"
-  :version "0.0.1"
+  :version "0.0.2"
   :maintainer "Brit Butler <redline6561@gmail.com>"
   :author "Brit Butler <redline6561@gmail.com>"
   :licence "LLGPL"
-  :depends-on (:cl-markdown :docutils
-               :closure-template :cl-fad)
+  :depends-on (:cl-markdown :docutils :closure-template :cl-fad)
   :components ((:module src
                         :components ((:file "packages")
                                      (:file "coleslaw"

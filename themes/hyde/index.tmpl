@@ -1,0 +1,31 @@
+{namespace coleslaw.theme.hyde}
+
+{template index}
+{if $taglinks}
+<div id="tagsoup">
+  <p>This blog covers: {$taglinks |noAutoescape}
+</div>
+{/if}
+{if $monthlinks}
+<div id="monthsoup">
+  <p>View blogs from: {$monthlinks |noAutoescape}
+</div>
+{/if}
+<h1>{$title}</h1>
+{foreach $post in $posts}
+  <div class="article-meta">
+    <a class="article-title" href="{$post.url}">{$post.title}</a>
+    <div class="date"> posted on {$post.date}</div>
+    <div class="article">{$post.contents |noAutoescape}</div>
+    {if $count}
+      <div class="comment-count">
+        <a href="{$post.url}">{$post.comments} comments</a>
+      </div>
+    {/if}
+  </div>
+{/foreach}
+<div id="relative-nav">
+  {if $prev} <a href="{$prev}">Previous</a> {/if}
+  {if $next} <a href="{$next}">Next</a> {/if}
+</div>
+{/template}

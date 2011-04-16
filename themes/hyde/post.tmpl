@@ -1,0 +1,23 @@
+{namespace coleslaw.theme.hyde}
+
+{template post}
+<div class="article-meta">
+  <h1 class="title" {$title}>
+  <div class="tags"
+    Tagged as: {$tags}
+  </div>
+  <div class="date">
+    Written on {$date}
+  </div>
+  <div class="article-content">
+    {$content |noAutoescape}
+  </div>
+  <div class="relative-nav">
+    {if $prev} <a href="{$prev}">Previous</a> {/if}
+    {if $next} <a href="{$next}">Next</a> {/if}
+  </div>
+  {if $comments}
+  <div class="comments">{$comments |noAutoescape}</div>
+  {/if}
+</div>
+{/template}

@@ -22,12 +22,29 @@
            #:find-by-date
            #:find-by-range
 
+           #:post-id
+           #:post-title
+           #:post-tags
+           #:post-date
+           #:post-content
+
            ;; comments
            #:make-comment
            #:add-comment
            #:remove-comment
            #:render-comments
            #:find-comments
+
+           #:author-name
+           #:author-url
+           #:author-ip
+
+           #:comment-id
+           #:comment-post
+           #:comment-author
+           #:comment-timestamp
+           #:comment-content
+           #:comment-parent
 
            ;; indices
            #:add-index

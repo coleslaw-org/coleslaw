@@ -1,18 +1,18 @@
 (in-package :coleslaw)
 
 (defclass post ()
-  ((id :initform nil
+  ((id :initform nil :initarg :id
        :accessor post-id)
-   (title :initform nil
+   (title :initform nil :initarg :title
           :accessor post-title)
-   (tags :initform nil
+   (tags :initform nil :initarg :tags
          :accessor post-tags)
-   (date :initform nil
+   (date :initform nil :initarg :date
          :accessor post-date)
-   (content :initform nil
+   (content :initform nil :initarg :content
             :accessor post-content)))
 
-(defgeneric make-post (title tags date content &key &allow-other-keys)
+(defgeneric make-post (title tags date content &key id &allow-other-keys)
   (:documentation "Create a POST with the given data."))
 
 (defgeneric add-post (post id)
