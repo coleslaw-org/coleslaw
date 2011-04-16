@@ -1,19 +1,21 @@
-(defsystem :coleslaw-core
+(defsystem :coleslaw
   :name "coleslaw-core"
-  :description "Flexible Lisp Blogware, Core utilities"
+  :description "Flexible Lisp Blogware"
   :version "0.0.1"
   :maintainer "Brit Butler <redline6561@gmail.com>"
   :author "Brit Butler <redline6561@gmail.com>"
   :licence "LLGPL"
-  :depends-on (:cl-markdown :docutils :closure-template
-               :external-program :local-time) ; parenscript?
-  :components ((:module core
+  :depends-on (:cl-markdown :docutils
+               :closure-template :cl-fad)
+  :components ((:module src
                         :components ((:file "packages")
                                      (:file "coleslaw"
                                             :depends-on ("packages"))
-                                     (:file "storage"
+                                     (:file "themes"
+                                            :depends-on ("coleslaw"))
+                                     (:file "comments"
                                             :depends-on ("coleslaw"))
                                      (:file "posts"
-                                            :depends-on ("storage"))
+                                            :depends-on ("coleslaw"))
                                      (:file "indices"
                                             :depends-on ("posts"))))))
