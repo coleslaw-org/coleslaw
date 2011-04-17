@@ -1,14 +1,19 @@
 (asdf:oos 'asdf:load-op 'cxml)
 (asdf:oos 'asdf:load-op 'split-sequence)
 (asdf:oos 'asdf:load-op 'local-time)
+(asdf:oos 'asdf:load-op 'cl-ppcre)
 
 (defpackage :coleslaw-import
   (:use :cl :coleslaw :cxml)
   (:import-from :local-time #:+short-month-names+
                             #:encode-timestamp)
-  (:import-from :split-sequence #:split-sequence))
+  (:import-from :split-sequence #:split-sequence)
+  (:import-from :cl-ppcre #:regex-replace-all))
 
 (in-package :coleslaw-import)
+
+;; TODO:
+;; add comment handling ... (when comments ...)
 
 (defgeneric import-post (service post)
   (:documentation "Import POST into *storage*. The method to construct the POST
@@ -42,11 +47,11 @@ object is determined by SERVICE."))
       (let ((new-post (make-post (node-val "title")
                                  (format nil "~{~A~^, ~}" (node-val "category"))
                                  (make-timestamp (node-val "pubDate"))
-                                 (node-val "content:encoded")
+                                 (regex-replace-all (string #\Newline)
+                                                    (node-val "content:encoded")
+                                                    "<br>")
                                  :id (parse-integer (node-val "wp:post_id"))))
             (comments (nodes "wp:comment")))
-        ;; TODO:
-        ;; add comment handling ... (when comments ...)
         (add-post new-post (post-id new-post))))))
 
 (defgeneric import-posts (service filepath)
