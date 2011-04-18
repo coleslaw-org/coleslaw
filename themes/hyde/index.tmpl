@@ -3,12 +3,12 @@
 {template index}
 {if $taglinks}
 <div id="tagsoup">
-  <p>This blog covers: {$taglinks |noAutoescape}
+  <p>This blog covers {$taglinks |noAutoescape}
 </div>
 {/if}
 {if $monthlinks}
 <div id="monthsoup">
-  <p>View blogs from: {$monthlinks |noAutoescape}
+  <p>View posts from {$monthlinks |noAutoescape}
 </div>
 {/if}
 <h1>{$title}</h1>

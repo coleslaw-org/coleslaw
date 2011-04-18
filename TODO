@@ -12,14 +12,12 @@ Ideas:
 ;;;; DYNAMIC
 
 ;;;; STATIC
+;;;; implement *output-dir*, render-site.
 ;;; posts
-;; Implement find-by-date.
-;; Make post-url not suck.
-;; Consider having find-by-range collect all the hash-values in :posts
-;; and return the range of that list rather than the posts matching start->end.
-;; Consider storing tags as a list.
+;; Make find-by-date, post-url not suck.
 
 ;;;; PLUGINS
+;;;; implement disqus support
 ;;; import
 ;; add comment handling ... (when comments ...)
 ;; support old URLs via use of post-aliases?
