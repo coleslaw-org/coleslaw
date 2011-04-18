@@ -12,9 +12,6 @@
 
 (in-package :coleslaw-import)
 
-;; TODO:
-;; add comment handling ... (when comments ...)
-
 (defgeneric import-post (service post)
   (:documentation "Import POST into *storage*. The method to construct the POST
 object is determined by SERVICE."))
@@ -50,7 +47,7 @@ object is determined by SERVICE."))
                                  (regex-replace-all (string #\Newline)
                                                     (node-val "content:encoded")
                                                     "<br>")
-                                 :id (parse-integer (node-val "wp:post_id"))))
+                                 :aliases (node-val "wp:post_id")))
             (comments (nodes "wp:comment")))
         (add-post new-post (post-id new-post))))))
 

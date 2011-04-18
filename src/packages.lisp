@@ -21,12 +21,14 @@
            #:find-by-tag
            #:find-by-date
            #:find-by-range
+           #:post-url
 
            #:post-id
            #:post-title
            #:post-tags
            #:post-date
            #:post-content
+           #:post-aliases
 
            ;; comments
            #:make-comment

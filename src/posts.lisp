@@ -10,7 +10,9 @@
    (date :initform nil :initarg :date
          :accessor post-date)
    (content :initform nil :initarg :content
-            :accessor post-content)))
+            :accessor post-content)
+   (aliases :initform nil :initarg :aliases
+            :accessor post-aliases)))
 
 (defgeneric make-post (title tags date content &key id &allow-other-keys)
   (:documentation "Create a POST with the given data."))
@@ -36,3 +38,6 @@
 (defgeneric find-by-range (start end)
   (:documentation "Retrieve all posts from *storage* with ids between
 START and END."))
+
+(defgeneric post-url (id)
+  (:documentation "Return the URL for the post with the given ID."))

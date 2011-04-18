@@ -9,6 +9,21 @@ Ideas:
 ;; consider add-to-index/setf-index, create-index, create-post.
 ;; then ensure the indices API is okay and GET GOING.
 
+;;;; DYNAMIC
+
+;;;; STATIC
+;;; posts
+;; Implement find-by-date.
+;; Make post-url not suck.
+;; Consider having find-by-range collect all the hash-values in :posts
+;; and return the range of that list rather than the posts matching start->end.
+;; Consider storing tags as a list.
+
+;;;; PLUGINS
+;;; import
+;; add comment handling ... (when comments ...)
+;; support old URLs via use of post-aliases?
+
 ;;;; rendering hooks (eg. :pygmentize, :xpost-lj?)
 ;; may need pre- and post- but for now stick to post-.
 ;; get run on rendered html before "storage"

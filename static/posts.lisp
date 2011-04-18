@@ -1,24 +1,12 @@
 (in-package :coleslaw)
 
-;; TODO
-;; How are we handling next/prev + ids?
-;; Implement find-by-date.
-;; Consider having find-by-range collect all the hash-values in :posts
-;; and return the range of that list rather than the posts matching start->end.
-;; Consider storing tags as a list.
-
-(defmethod make-post :before (title tags date content &key id &allow-other-keys)
-  (when id
-    (let ((index (gethash :posts-index *storage* 0)))
-      (unless (<= id index)
-        (setf (gethash :posts-index *storage*) (1+ id))))))
-
-(defmethod make-post (title tags date content &key id)
-  (make-instance 'post :id (or id (gethash :posts-index *storage* 0))
+(defmethod make-post (title tags date content &key id aliases)
+  (make-instance 'post :id (incf (gethash :posts-index *storage* 0))
                  :title title
                  :tags tags
                  :date date
-                 :content content))
+                 :content content
+                 :aliases aliases))
 
 (defmethod add-post ((post post) id)
   (setf (gethash id (gethash :posts *storage*)) post))
@@ -37,9 +25,10 @@
                                  :tags (post-tags post)
                                  :date (pretty-date (post-date post))
                                  :content (post-content post)
-                                ; :prev (post-prev post)
-                                ; :next (post-next post)
-                                 ))))
+                                 :prev (when (find-post (1- id))
+                                         (post-url (1- id)))
+                                 :next (when (find-post (1+ oid))
+                                         (post-url (1+ id)))))))
       result)))
 
 (defmethod find-post (id)
@@ -53,6 +42,9 @@
     results))
 
 (defmethod find-by-range (start end)
-  (loop for i from start upto end
-     collecting (find-post id) into results
-     finally (return (remove nil results))))
+  (loop for id from start upto end collecting (find-post id)))
+
+(defmethod post-url (id)
+  (flet ((escape (str)
+           (substitute #\- #\Space str)))
+    (concatenate 'string *site-root* (escape (post-title (find-post id))))))
