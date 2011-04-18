@@ -57,7 +57,9 @@
     results))
 
 (defmethod find-by-range (start end)
-  (loop for id from start upto end collecting (find-post id)))
+  (if (> start end)
+      (loop for id from start downto end collecting (find-post id))
+      (loop for id from start upto end collecting (find-post id))))
 
 (defmethod post-url (id)
   (flet ((escape (str)

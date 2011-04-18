@@ -12,9 +12,12 @@ Ideas:
 ;;;; DYNAMIC
 
 ;;;; STATIC
-;;;; implement *output-dir*, render-site.
+;;;; implement render-site, head-inject/body-inject/navigation.
+;;;; non-disqus comment support?
 ;;; posts
 ;; Make find-by-date, post-url not suck.
+;; -- re: post-url, escaping is insufficient and there are collisions by title.
+;; -- What are alternatives?
 
 ;;;; PLUGINS
 ;;;; implement disqus support
@@ -22,8 +25,7 @@ Ideas:
 ;; add comment handling ... (when comments ...)
 ;; support old URLs via use of post-aliases?
 
-;;;; rendering hooks (eg. :pygmentize, :xpost-lj?)
-;; may need pre- and post- but for now stick to post-.
+;;;; rendering hooks (pygmentize, xposting) via :around/:before/:after methods
 ;; get run on rendered html before "storage"
 ;; xposting may be a rendering hook but may necessitate publishing hooks
 ;; again, these should be methods on a generic function
