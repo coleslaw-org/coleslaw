@@ -12,16 +12,23 @@ Ideas:
 ;;;; DYNAMIC
 
 ;;;; STATIC
-;;;; implement render-site, head-inject/body-inject/navigation.
+;;;; implement head-inject/body-inject/navigation!
+;;;; implement start-coleslaw, stop-coleslaw!
 ;;;; non-disqus comment support?
+;;; indexes
+;; what should it really look like, keeping in mind the API should be mostly
+;; identical between the static and dynamic backend?
 ;;; posts
 ;; Make find-by-date, post-url not suck.
+;; -- re: find-by-date, aside from the subseq+string= grossness, the posts it
+;; -- returns are not in reverse chronological order. Fix it!
 ;; -- re: post-url, escaping is insufficient and there are collisions by title.
 ;; -- What are alternatives?
 
 ;;;; PLUGINS
 ;;;; implement disqus support
 ;;; import
+;; add output to HTML files when static-p is true
 ;; add comment handling ... (when comments ...)
 ;; support old URLs via use of post-aliases?
 

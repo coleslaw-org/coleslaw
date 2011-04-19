@@ -2,7 +2,7 @@
 
 (defvar *site-root* nil
   "A string representing the base URL of the site,
-e.g. \"http://blog.redlinernotes.com/\".")
+e.g. \"http://blog.redlinernotes.com\".")
 
 (defvar *site-title* nil
   "A string containing the title of the site,
@@ -39,3 +39,15 @@ e.g. \"CC-BY-SA\". Otherwise, standard copyright is assumed.")
 
 (defmethod set-credentials (name credentials)
   (setf (gethash name (gethash :credentials *storage*)) credentials))
+
+(defmethod render-page (content)
+  (let ((result (funcall (find-symbol "BASE" (theme-package))
+                         (list :title *site-title*
+                               :siteroot *site-root*
+                               :head-inject nil
+                               :navigation nil
+                               :content content
+                               :body-inject nil
+                               :license *site-license*
+                               :credits *site-credits*))))
+    result))

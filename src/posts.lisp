@@ -14,7 +14,8 @@
    (aliases :initform nil :initarg :aliases
             :accessor post-aliases)))
 
-(defgeneric make-post (title tags date content &key id &allow-other-keys)
+(defgeneric make-post (title tags date content
+                       &key id aliases &allow-other-keys)
   (:documentation "Create a POST with the given data."))
 
 (defgeneric add-post (post id)
@@ -24,7 +25,7 @@
   (:documentation "Remove a post from *storage* matching ID."))
 
 (defgeneric render-post (id)
-  (:documentation "Generate the final HTML for post."))
+  (:documentation "Generate the final HTML for the post with given ID."))
 
 (defgeneric find-post (id)
   (:documentation "Retrieve a post from *storage* matching ID."))
