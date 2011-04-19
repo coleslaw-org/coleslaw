@@ -6,5 +6,9 @@
 (defun pretty-list (list)
   (format nil "~{~A~^, ~}" list))
 
+(defun year-month (date)
+  (format nil "~4d-~2,'0d" (local-time:timestamp-year date)
+          (local-time:timestamp-month date)))
+
 (defun theme-fn (name)
   (find-symbol name (theme-package)))

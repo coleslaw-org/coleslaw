@@ -2,21 +2,11 @@
 
 (defun monthlinks ()
   (loop for month in (gethash :months-index *storage*)
-     collect (cons (index-url :date month) month) into months
-     finally (return
-               (pretty-list (mapcar (lambda (consp)
-                                      (format nil "<a href=\"~a\">~a</a>"
-                                              (car consp) (cdr consp)))
-                                    months)))))
+     collecting (list :url (index-url :date month) :name month)))
 
 (defun taglinks ()
   (loop for tag in (gethash :tags-index *storage*)
-     collect (cons (index-url :tag tag) tag) into tags
-     finally (return
-               (pretty-list (mapcar (lambda (consp)
-                                      (format nil "<a href=\"~a\">~a</a>"
-                                              (car consp) (cdr consp)))
-                                    tags)))))
+     collecting (list :url (index-url :tag tag) :name tag)))
 
 (defun index-title (id &optional page)
   (case id

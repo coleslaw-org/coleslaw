@@ -43,14 +43,14 @@
             (push post results)))
     results))
 
-(defmethod find-by-date (date)
+(defmethod find-by-date (year-month)
   (let ((results nil)
-        (year (parse-integer (subseq date 0 4)))
-        (month (parse-integer (subseq date 5))))
+        (year (parse-integer (subseq year-month 0 4)))
+        (month (parse-integer (subseq year-month 5))))
     (loop for post being the hash-values in (gethash :posts *storage*)
-       do (let ((post-date (post-date post)))
-            (when (and (= year (local-time:timestamp-year post-date))
-                       (= month (local-time:timestamp-month post-date)))
+       do (let ((date (post-date post)))
+            (when (and (= year (local-time:timestamp-year date))
+                       (= month (local-time:timestamp-month date)))
               (push post results))))
     results))
 
@@ -62,4 +62,7 @@
 (defmethod post-url (id)
   (flet ((escape (str)
            (substitute #\- #\Space str)))
-    (concatenate 'string *site-root* "/" (escape (post-title (find-post id))))))
+    (let ((post (find-post id)))
+      (concatenate 'string *site-root* "/"
+                   (year-month (post-date post)) "/"
+                   (escape (post-title post))))))

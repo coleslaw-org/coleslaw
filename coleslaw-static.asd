@@ -5,8 +5,14 @@
   :maintainer "Brit Butler <redline6561@gmail.com>"
   :author "Brit Butler <redline6561@gmail.com>"
   :licence "LLGPL"
-  :depends-on (:coleslaw :zs3 :trivial-timers)
+  :depends-on (:coleslaw :zs3 :trivial-timers :cl-store)
   :components ((:module static
                         :components ((:file "coleslaw")
+                                     (:file "comments"
+                                            :depends-on ("coleslaw"))
                                      (:file "posts"
+                                            :depends-on ("coleslaw"))
+                                     (:file "indices"
+                                            :depends-on ("posts"))
+                                     (:file "util"
                                             :depends-on ("coleslaw"))))))

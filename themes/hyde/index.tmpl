@@ -3,12 +3,20 @@
 {template index}
 {if $taglinks}
 <div id="tagsoup">
-  <p>This blog covers {$taglinks |noAutoescape}
+  <p>This blog covers
+    {foreach $taglink in $taglinks}
+      <a href="{$taglink.url |noAutoescape}">{$taglink.name}</a>
+      {if not isLast($taglink)}, {/if}
+    {/foreach}
 </div>
 {/if}
 {if $monthlinks}
 <div id="monthsoup">
-  <p>View posts from {$monthlinks |noAutoescape}
+  <p>View posts from
+    {foreach $monthlink in $monthlinks}
+      <a href="{$monthlink.url |noAutoescape}">{$monthlink.name}</a>
+      {if not isLast($monthlink)}, {/if}
+    {/foreach}
 </div>
 {/if}
 <h1>{$title}</h1>
