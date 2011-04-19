@@ -26,7 +26,7 @@ Ideas:
 ;; -- What are alternatives?
 
 ;;;; PLUGINS
-;;;; implement disqus support
+;;;; implement: analytics, crossposting, disqus, mathjax, pygments, recaptcha, s3
 ;;; import
 ;; add output to HTML files when static-p is true
 ;; add comment handling ... (when comments ...)

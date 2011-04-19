@@ -5,7 +5,8 @@
   :maintainer "Brit Butler <redline6561@gmail.com>"
   :author "Brit Butler <redline6561@gmail.com>"
   :licence "LLGPL"
-  :depends-on (:cl-markdown :docutils :closure-template :cl-fad)
+  :depends-on (:cl-markdown :docutils :closure-template
+               :cl-fad :local-time)
   :components ((:module src
                         :components ((:file "packages")
                                      (:file "coleslaw"
