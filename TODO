@@ -10,13 +10,15 @@ TODO:
 ;;;; implement head-inject/body-inject/navigation!
 ;;;; implement start-coleslaw, stop-coleslaw!
 ;;;; implement render-site!!!
+;;;; how many globals can we move into *storage* as keywords? ALL OF THEM!
+;;;; -- What about generics?
 ;;;; implement atom feed. RSS too?
 ;;;; implement non-disqus comment support?
 ;;;; What do post update semantics look like? i.e. edit file to change tags.
 ;;; indices
 ;; what should it really look like, keeping in mind the API should be mostly
 ;; identical between the static and dynamic backend?
-;; indexes should be id/name, title + posts. rewrite indices to use them.
+;; indexes should be id, type, title + posts. rewrite indices to use them.
 ;;; posts
 ;; post-url, improve escaping.
 
@@ -25,7 +27,6 @@ TODO:
 ;;;; implement: analytics, crossposting, disqus, mathjax, pygments, recaptcha, s3
 ;;;; support input or output dirs being git repos + have git hooks?
 ;;; import
-;; add output to HTML files when static-p is true
 ;; add comment handling ... (when comments ...)
 ;; support old URLs via use of post-aliases?
 

@@ -1,7 +1,4 @@
-(asdf:oos 'asdf:load-op 'cxml)
-(asdf:oos 'asdf:load-op 'split-sequence)
-(asdf:oos 'asdf:load-op 'local-time)
-(asdf:oos 'asdf:load-op 'cl-ppcre)
+(ql:quickload '(cxml split-sequence local-time cl-ppcre))
 
 (defpackage :coleslaw-import
   (:use :cl :coleslaw :cxml)
@@ -12,11 +9,11 @@
 
 (in-package :coleslaw-import)
 
-(defgeneric import-post (service post)
+(defgeneric import-post (service post &key static-p)
   (:documentation "Import POST into *storage*. The method to construct the POST
 object is determined by SERVICE."))
 
-(defmethod import-post ((service (eql :wordpress)) post)
+(defmethod import-post ((service (eql :wordpress)) post &key static-p)
   (labels ((nodes (name)
              (dom:get-elements-by-tag-name post name))
            (value (node)
@@ -49,14 +46,34 @@ object is determined by SERVICE."))
                                                     "<br>")
                                  :aliases (parse-integer (node-val "wp:post_id"))))
             (comments (nodes "wp:comment")))
-        (add-post new-post (post-id new-post))))))
+        (add-post new-post (post-id new-post))
+        (when static-p
+          (write-post post))))))
 
-(defgeneric import-posts (service filepath)
+(defun write-post (post)
+  (let ((filepath (merge-pathnames *input-dir*
+                                   (format nil "~5d,'0/~a.html"
+                                           (post-id post)
+                                           ;; TODO: Write + use escaping fn.
+                                           (post-title post)))))
+    (with-open-file (out filepath :direction :output :if-exists :supersede)
+      ;; TODO: What other data/metadata should we write out?
+      (format out ";;;;;~%")
+      (format out "title: ~A~%" (post-title post))
+      (format out "tags: ~A~%" (pretty-tags (post-tags post)))
+      (format out "date: ~A~%" (pretty-date (post-date post)))
+      (format out ";;;;;~%")
+      (format out "~A~%" (post-content post)))))
+
+(defgeneric import-posts (service filepath &key static-p)
   (:documentation "Import the posts (and potentially comments or other data)
 from FILEPATH, converting them to appropriate coleslaw objects and inserting
-them into *storage*. The method to parse the file is determined by SERVICE."))
+them into *storage*. The method to parse the file is determined by SERVICE.
+If STATIC-P is true, the posts will also be written into *.html files in
+*input-directory*."))
 
-(defmethod import-posts ((service (eql :wordpress)) filepath)
+(defmethod import-posts ((service (eql :wordpress)) filepath &key static-p)
   (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
          (posts (dom:get-elements-by-tag-name xml "item")))
-    (loop for post across posts do (import-post service post))))
+    (loop for post across posts do
+         (import-post service post :static-p static-p))))
