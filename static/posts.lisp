@@ -52,7 +52,7 @@
             (when (and (= year (local-time:timestamp-year date))
                        (= month (local-time:timestamp-month date)))
               (push post results))))
-    results))
+    (sort results #'local-time:timestamp> :key #'post-date)))
 
 (defmethod find-by-range (start end)
   (if (> start end)

@@ -18,12 +18,10 @@ TODO:
 ;; identical between the static and dynamic backend?
 ;; indexes should be id/name, title + posts. rewrite indices to use them.
 ;;; posts
-;; Make find-by-date, post-url not suck.
-;; -- re: find-by-date, aside from the subseq+string= grossness, the posts it
-;; -- returns are not in reverse chronological order. Fix it!
-;; -- re: post-url, improve escaping.
+;; post-url, improve escaping.
 
 ;;;; PLUGINS
+;;;; add activate-plugin, deactivate-plugin, :active-plugins?
 ;;;; implement: analytics, crossposting, disqus, mathjax, pygments, recaptcha, s3
 ;;;; support input or output dirs being git repos + have git hooks?
 ;;; import
