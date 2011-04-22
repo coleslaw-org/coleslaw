@@ -30,15 +30,5 @@
 (defgeneric find-post (id)
   (:documentation "Retrieve a post from *storage* matching ID."))
 
-(defgeneric find-by-tag (tag)
-  (:documentation "Retrieve all posts from *storage* tagged with TAG."))
-
-(defgeneric find-by-date (date)
-  (:documentation "Retrieve all posts from *storage* matching DATE."))
-
-(defgeneric find-by-range (start end)
-  (:documentation "Retrieve all posts from *storage* with ids between
-START and END."))
-
 (defgeneric post-url (id)
   (:documentation "Return the URL for the post with the given ID."))

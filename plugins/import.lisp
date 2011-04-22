@@ -30,13 +30,13 @@ object is determined by SERVICE."))
              (let* ((date (split-sequence #\Space (subseq pubdate 5)))
                     (time (split-sequence #\: (fourth date))))
                (encode-timestamp 0
-                                 (parse-integer (third time)) ; sec
-                                 (parse-integer (second time)) ; min
-                                 (parse-integer (first time)) ; hr
-                                 (parse-integer (first date)) ; day
+                                 (parse-integer (third time))
+                                 (parse-integer (second time))
+                                 (parse-integer (first time))
+                                 (parse-integer (first date))
                                  (position (second date) +short-month-names+
-                                           :test #'string=) ; month
-                                 (parse-integer (third date)))))) ; year
+                                           :test #'string=)
+                                 (parse-integer (third date))))))
     (when (public-p)
       (let ((new-post (make-post (node-val "title")
                                  (node-val "category")
@@ -48,20 +48,20 @@ object is determined by SERVICE."))
             (comments (nodes "wp:comment")))
         (add-post new-post (post-id new-post))
         (when static-p
-          (write-post post))))))
+          (write-post new-post))))))
 
 (defun write-post (post)
-  (let ((filepath (merge-pathnames *input-dir*
-                                   (format nil "~5d,'0/~a.html"
+  (let ((filepath (merge-pathnames (format nil "~5,'0d-~a.html"
                                            (post-id post)
-                                           ;; TODO: Write + use escaping fn.
-                                           (post-title post)))))
-    (with-open-file (out filepath :direction :output :if-exists :supersede)
+                                           (coleslaw::escape (post-title post)))
+                                   coleslaw::*input-directory*)))
+    (with-open-file (out filepath :direction :output
+                         :if-exists :supersede :if-does-not-exist :create)
       ;; TODO: What other data/metadata should we write out?
       (format out ";;;;;~%")
       (format out "title: ~A~%" (post-title post))
-      (format out "tags: ~A~%" (pretty-tags (post-tags post)))
-      (format out "date: ~A~%" (pretty-date (post-date post)))
+      (format out "tags: ~A~%" (coleslaw::pretty-list (post-tags post)))
+      (format out "date: ~A~%" (coleslaw::pretty-date (post-date post)))
       (format out ";;;;;~%")
       (format out "~A~%" (post-content post)))))
 

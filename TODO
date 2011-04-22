@@ -12,15 +12,10 @@ TODO:
 ;;;; implement render-site!!!
 ;;;; how many globals can we move into *storage* as keywords? ALL OF THEM!
 ;;;; -- What about generics?
+;;;; write a proper version of escape considering wild pathnames and valid URL issues
 ;;;; implement atom feed. RSS too?
 ;;;; implement non-disqus comment support?
 ;;;; What do post update semantics look like? i.e. edit file to change tags.
-;;; indices
-;; what should it really look like, keeping in mind the API should be mostly
-;; identical between the static and dynamic backend?
-;; indexes should be id, type, title + posts. rewrite indices to use them.
-;;; posts
-;; post-url, improve escaping.
 
 ;;;; PLUGINS
 ;;;; add activate-plugin, deactivate-plugin, :active-plugins?

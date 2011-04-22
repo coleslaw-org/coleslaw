@@ -12,3 +12,8 @@
 
 (defun theme-fn (name)
   (find-symbol name (theme-package)))
+
+(defun escape (str)
+  (substitute #\. #\/
+              (substitute #\_ #\?
+                          (substitute #\- #\Space str))))
