@@ -9,6 +9,7 @@ TODO:
 ;;;; STATIC
 ;;;; implement start-coleslaw, stop-coleslaw!
 ;;;; implement cl-store use+init, once every 24 hours?
+;;;; implement update-site, parse-file support.
 ;;;; how many globals can we move into *storage* as keywords? ALL OF THEM!
 ;;;; --what about accessing them?
 ;;;; write a proper version of escape considering wild pathnames and valid URL issues
@@ -18,7 +19,7 @@ TODO:
 
 ;;;; PLUGINS
 ;;;; add activate-plugin, deactivate-plugin, :active-plugins?
-;;;; implement: analytics, crossposting, disqus, mathjax, pygments, recaptcha, s3
+;;;; implement: analytics, crossposting, disqus, mathjax, pygments, recaptcha
 ;;;; support input or output dirs being git repos + have git hooks?
 ;;; import
 ;; add comment handling ... (when comments ...)
@@ -28,15 +29,3 @@ TODO:
 ;;;; implement the whole damn backend!
 ;;;; make sure it has an admin interface!
 ;;;; -- spend two years trying to make it secure without HTTPS+SSL. fail.
-
-;;;; rendering hooks (pygmentize, xposting) via :around/:before/:after methods
-;; get run on rendered html before "storage"
-;; xposting may be a rendering hook but may necessitate publishing hooks
-;; again, these should be methods on a generic function
-
-;;;; template hooks *ARE* pre-rendering-hooks. or methods on GFs.
-;;;; they're methods on GFs you fool! work on the classes/constructors for post+indices
-;;;; that's the only thing that makes sense. (eg 'disqus, 'mathjax)
-;; run before the template is called to generate html or javascript includes
-;; for a given template property (eg. comments, includes). they should probably be
-;; methods on a generic function (eg. blog-comments, blog-includes)

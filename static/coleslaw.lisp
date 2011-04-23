@@ -65,31 +65,28 @@ e.g. \"CC-BY-SA\". Otherwise, standard copyright is assumed.")
     result))
 
 (defun write-post (post)
-  (let ((filepath (merge-pathnames
-                   (concatenate 'string (year-month (post-date post))
-                                "/" (escape (post-title post)) ".html")
-                   *output-dir*)))
+  (let* ((id (post-id post))
+         (filepath (merge-pathnames (post-file id)
+                                    *output-dir*)))
     (ensure-directories-exist filepath)
     (with-open-file (out filepath :direction :output
                      :if-exists :supersede :if-does-not-exist :create)
-      (write-string (render-page (render-post (post-id post))) out))))
+      (write-string (render-page (render-post id)) out))))
 
 (defun write-index (index)
-  (ensure-directories-exist
-   (cl-fad:pathname-as-directory (merge-pathnames (index-id index)
-                                                  *output-dir*)))
   (let* ((count (length (index-posts index)))
-         (pages (ceiling (/ count 10))))
+         (pages (ceiling (/ count 10)))
+         (id (index-id index)))
+      (ensure-directories-exist
+       (cl-fad:pathname-as-directory (merge-pathnames id *output-dir*)))
     (loop for page from 1 to pages do
-         (let ((filepath (merge-pathnames
-                          (concatenate 'string (index-id index)
-                                       "/" (write-to-string page) ".html")
-                          *output-dir*)))
+         (let ((filepath (merge-pathnames (index-file id page)
+                                          *output-dir*)))
            (with-open-file (out filepath :direction :output
                             :if-exists :supersede :if-does-not-exist :create)
-             (write-string (render-page (render-index (index-id index) page)) out))))))
+             (write-string (render-page (render-index id page)) out))))))
 
-(defun render-site ()
+(defmethod render-site ()
   (flet ((copy-dir (from to)
            (cl-fad:walk-directory from
              (lambda (file)

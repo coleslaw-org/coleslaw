@@ -49,8 +49,10 @@
                                         (post-url (1+ id)))))))
     result))
 
-(defmethod post-url (id)
+(defun post-file (id)
   (let ((post (find-post id)))
-    (concatenate 'string *site-root* "/"
-                 (year-month (post-date post)) "/"
+    (concatenate 'string (year-month (post-date post)) "/"
                  (escape (post-title post)) ".html")))
+
+(defmethod post-url (id)
+  (concatenate 'string *site-root* "/" (post-file id)))

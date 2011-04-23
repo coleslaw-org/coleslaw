@@ -64,5 +64,10 @@
                                          (index-url id (1+ page)))))))
     content))
 
+(defun index-file (id page)
+  (if (string= "recent" id)
+      (concatenate 'string (write-to-string page) ".html")
+      (concatenate 'string id "/" (write-to-string page) ".html")))
+
 (defmethod index-url (id page)
-  (concatenate 'string *site-root* "/" id "/" (write-to-string page) ".html"))
+  (concatenate 'string *site-root* "/" (index-file id page)))
