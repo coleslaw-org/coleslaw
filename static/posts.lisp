@@ -32,7 +32,8 @@
     (loop for tag in (post-tags post) do
          (remove-from-index (concatenate 'string "tag/" tag) post))
     (remove-from-index (concatenate 'string "date/"
-                                    (month-year (post-date post))))
+                                    (month-year (post-date post))) post)
+    (remove-from-index "recent" post)
     (setf (find-post id) nil)))
 
 (defmethod render-post (id)
@@ -52,4 +53,4 @@
   (let ((post (find-post id)))
     (concatenate 'string *site-root* "/"
                  (year-month (post-date post)) "/"
-                 (escape (post-title post)))))
+                 (escape (post-title post)) ".html")))

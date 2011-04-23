@@ -10,17 +10,15 @@
            ;; themes
            #:*current-theme*
            #:*theme-dir*
+           #:add-injection
+           #:remove-injection
 
-           ;; WARNING: STILL IN FLUX
            ;; posts
            #:make-post
            #:add-post
            #:remove-post
            #:render-post
            #:find-post
-           #:find-by-tag
-           #:find-by-date
-           #:find-by-range
            #:post-url
 
            #:post-id
@@ -49,8 +47,15 @@
            #:comment-parent
 
            ;; indices
-           #:add-index
-           #:remove-index
+           #:make-index
+           #:add-to-index
+           #:remove-from-index
            #:render-index
            #:find-index
-           ))
+           #:index-url
+
+           #:index-id
+           #:index-posts
+
+           ;; plugins
+           #:load-plugins))

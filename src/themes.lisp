@@ -4,9 +4,15 @@
   "The name of a directory containing templates for HTML generation.")
 
 (defparameter *theme-dir* (merge-pathnames
-                           (concatenate 'string "themes/" *current-theme*)
+                           (concatenate 'string "themes/" *current-theme* "/")
                            (asdf:system-source-directory 'coleslaw))
   "The directory containing the current theme and other site templates.")
+
+(defgeneric add-injection (str location)
+  (:documentation "Add STR to the list of elements injected in LOCATION."))
+
+(defgeneric remove-injection (str location)
+  (:documentation "Remove STR from the list of elements injected in LOCATION."))
 
 (defun theme-package (&key (name *current-theme*))
   (find-package (string-upcase (concatenate 'string "coleslaw.theme." name))))

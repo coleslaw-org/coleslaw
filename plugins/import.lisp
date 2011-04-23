@@ -26,6 +26,8 @@ object is determined by SERVICE."))
                    (when (plusp (length nodes)) (value (elt nodes 0))))))
            (public-p ()
              (string= "publish" (node-val "wp:status")))
+           (post-p ()
+             (string= "post" (node-val "wp:post_type")))
            (make-timestamp (pubdate)
              (let* ((date (split-sequence #\Space (subseq pubdate 5)))
                     (time (split-sequence #\: (fourth date))))
@@ -37,7 +39,8 @@ object is determined by SERVICE."))
                                  (position (second date) +short-month-names+
                                            :test #'string=)
                                  (parse-integer (third date))))))
-    (when (public-p)
+    (when (and (public-p)
+               (post-p))
       (let ((new-post (make-post (node-val "title")
                                  (node-val "category")
                                  (make-timestamp (node-val "pubDate"))
@@ -48,20 +51,21 @@ object is determined by SERVICE."))
             (comments (nodes "wp:comment")))
         (add-post new-post (post-id new-post))
         (when static-p
-          (write-post new-post))))))
+          (ensure-directories-exist coleslaw::*input-dir*)
+          (write-post-file new-post))))))
 
-(defun write-post (post)
-  (let ((filepath (merge-pathnames (format nil "~5,'0d-~a.html"
+(defun write-post-file (post)
+  (let ((filepath (merge-pathnames (format nil "~5,'0d-~a.post"
                                            (post-id post)
                                            (coleslaw::escape (post-title post)))
-                                   coleslaw::*input-directory*)))
+                                   coleslaw::*input-dir*)))
     (with-open-file (out filepath :direction :output
-                         :if-exists :supersede :if-does-not-exist :create)
+                     :if-exists :supersede :if-does-not-exist :create)
       ;; TODO: What other data/metadata should we write out?
       (format out ";;;;;~%")
       (format out "title: ~A~%" (post-title post))
       (format out "tags: ~A~%" (coleslaw::pretty-list (post-tags post)))
-      (format out "date: ~A~%" (coleslaw::pretty-date (post-date post)))
+      (format out "date: ~A~%" (coleslaw::year-month (post-date post)))
       (format out ";;;;;~%")
       (format out "~A~%" (post-content post)))))
 
@@ -70,7 +74,7 @@ object is determined by SERVICE."))
 from FILEPATH, converting them to appropriate coleslaw objects and inserting
 them into *storage*. The method to parse the file is determined by SERVICE.
 If STATIC-P is true, the posts will also be written into *.html files in
-*input-directory*."))
+*input-dir*."))
 
 (defmethod import-posts ((service (eql :wordpress)) filepath &key static-p)
   (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))

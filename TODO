@@ -7,15 +7,14 @@ Ideas:
 TODO:
 
 ;;;; STATIC
-;;;; implement head-inject/body-inject/navigation!
 ;;;; implement start-coleslaw, stop-coleslaw!
-;;;; implement render-site!!!
+;;;; implement cl-store use+init, once every 24 hours?
 ;;;; how many globals can we move into *storage* as keywords? ALL OF THEM!
-;;;; -- What about generics?
+;;;; --what about accessing them?
 ;;;; write a proper version of escape considering wild pathnames and valid URL issues
 ;;;; implement atom feed. RSS too?
 ;;;; implement non-disqus comment support?
-;;;; What do post update semantics look like? i.e. edit file to change tags.
+;;;; What do post update semantics look like? i.e. edit file to change tags. what about post-removal?
 
 ;;;; PLUGINS
 ;;;; add activate-plugin, deactivate-plugin, :active-plugins?

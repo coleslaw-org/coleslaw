@@ -18,4 +18,6 @@
                                      (:file "posts"
                                             :depends-on ("coleslaw"))
                                      (:file "indices"
-                                            :depends-on ("posts"))))))
+                                            :depends-on ("posts"))
+                                     (:file "plugins"
+                                            :depends-on ("packages"))))))

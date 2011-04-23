@@ -45,9 +45,9 @@
 (defmethod render-index (id page)
   (let* ((index-posts (index-posts (find-index id)))
          (start (* 10 (1- page)))
-         (end (if (< (+ start 9) (length index-posts))
+         (end (if (> (length index-posts) (+ start 9))
                   (+ start 9)
-                  (- (length index-posts) start)))
+                  (length index-posts)))
          (posts (subseq index-posts start end))
          (content (funcall (find-symbol "INDEX" (theme-package))
                            (list :taglinks (taglinks)
@@ -65,4 +65,4 @@
     content))
 
 (defmethod index-url (id page)
-  (concatenate 'string *site-root* "/" id "/" (write-to-string page)))
+  (concatenate 'string *site-root* "/" id "/" (write-to-string page) ".html"))
