@@ -1,0 +1,13 @@
+{namespace coleslaw.theme.hyde}
+
+{template comment}
+<li id="{$comment.id}" class="comment">
+  <div class="comment-author">{$comment.author}</div><br>
+  <div class="comment-content">{$comment.content |noAutoescape}</div><br>
+  <div class="comment-meta">
+    <span class="comment-datetime">{$comment.timestamp}</span>
+    <span class="meta-sep">|</span>
+    <span class="comment-permalink"><a href="{$comment.url}">Permalink</a></span>
+   </div>
+</li>
+{/template}

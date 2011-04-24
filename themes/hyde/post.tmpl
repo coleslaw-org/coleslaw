@@ -18,6 +18,12 @@
   {if $next} <a href="{$next}">Next</a><br> {/if}{\n}
 </div>{\n}
 {if $comments}
-  <div class="comments">{$comments |noAutoescape}</div>
+  <div class="comments">
+    <h3 class="comment-header" id="numcomments">{length($comments)} comments</h3>
+    <ol id="comments" class="commentlist">
+      {foreach $comment in $comments}
+        {call comment data="$comment" /}{\n}
+      {/foreach}
+  </div>
 {/if}
 {/template}
