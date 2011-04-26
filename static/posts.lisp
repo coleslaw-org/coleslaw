@@ -32,7 +32,7 @@
     (loop for tag in (post-tags post) do
          (remove-from-index (concatenate 'string "tag/" tag) post))
     (remove-from-index (concatenate 'string "date/"
-                                    (month-year (post-date post))) post)
+                                    (year-month (post-date post))) post)
     (remove-from-index "recent" post)
     (setf (find-post id) nil)))
 

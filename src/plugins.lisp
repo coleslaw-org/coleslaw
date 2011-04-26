@@ -2,7 +2,7 @@
 
 (defun load-plugins (plugins)
   "Resolve the path of each symbol in PLUGINS and call LOAD on the
-resulting pathname. It is expected that the matching *.lisp files
+resulting pathnames. It is expected that the matching *.lisp files
 are in the plugins folder in coleslaw's source directory."
   (let ((files (mapcar (lambda (sym)
                          (merge-pathnames

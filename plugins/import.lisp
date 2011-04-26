@@ -1,4 +1,5 @@
-(ql:quickload '(cxml split-sequence local-time cl-ppcre))
+(eval-when (:compile-toplevel)
+  (ql:quickload '(cxml split-sequence local-time cl-ppcre)))
 
 (defpackage :coleslaw-import
   (:use :cl :coleslaw :cxml)
@@ -52,9 +53,9 @@ object is determined by SERVICE."))
         (add-post new-post (post-id new-post))
         (when static-p
           (ensure-directories-exist coleslaw::*input-dir*)
-          (write-post-file new-post))))))
+          (export-post new-post))))))
 
-(defun write-post-file (post)
+(defmethod export-post (post)
   (let ((filepath (merge-pathnames (format nil "~5,'0d-~a.post"
                                            (post-id post)
                                            (coleslaw::escape (post-title post)))
