@@ -16,7 +16,7 @@ Where is the data? git
 How is the data edited? git status/inotify
 Post generation? Static
 What is the post format? (markdown, plaintext, rst, etc, anything with a parser plugin!)
-How are comments handled? They're not supported. If they are, its by a friggin plugin.
+How are comments handled? They're not supported.
 What about themes? Templates are themes. DUH.
 Plugins? Injection support for HEAD and BODY. What about predicate-based injection?
 How is it served? Hunchentoot, Lighttpd, S3, whomever!
@@ -54,6 +54,3 @@ TODO:
 ;;; import
 ;; add comment handling ... (when comments ...)
 ;; support old URLs via use of post-aliases?
-
-;;;; DYNAMIC
-;;;; Scrap that shit!

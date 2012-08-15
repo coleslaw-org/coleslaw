@@ -10,7 +10,6 @@
   :components ((:file "packages")
                (:file "coleslaw")
                (:file "themes")
-               (:file "comments")
                (:file "posts")
                (:file "indices")
                (:file "plugins"))
@@ -29,4 +28,3 @@
 (defmethod operation-done-p ((op test-op)
                              (c (eql (find-system :coleslaw))))
   (values nil))
-

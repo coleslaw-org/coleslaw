@@ -1,11 +1,10 @@
 (eval-when (:compile-toplevel)
-  (ql:quickload '(cxml split-sequence local-time cl-ppcre)))
+  (ql:quickload '(cxml cl-ppcre)))
 
 (defpackage :coleslaw-import
   (:use :cl :coleslaw :cxml)
   (:import-from :local-time #:+short-month-names+
                             #:encode-timestamp)
-  (:import-from :split-sequence #:split-sequence)
   (:import-from :cl-ppcre #:regex-replace-all))
 
 (in-package :coleslaw-import)
@@ -30,8 +29,8 @@ object is determined by SERVICE."))
            (post-p ()
              (string= "post" (node-val "wp:post_type")))
            (make-timestamp (pubdate)
-             (let* ((date (split-sequence #\Space (subseq pubdate 5)))
-                    (time (split-sequence #\: (fourth date))))
+             (let* ((date (cl-ppcre:split " " (subseq pubdate 5)))
+                    (time (cl-ppcre:split ":" (fourth date))))
                (encode-timestamp 0
                                  (parse-integer (third time))
                                  (parse-integer (second time))
