@@ -1,11 +1,5 @@
 (in-package :coleslaw)
 
-(defgeneric start-coleslaw (&rest options)
-  (:documentation "Start the coleslaw server with any specified OPTIONS."))
-
-(defgeneric stop-coleslaw (&rest options)
-  (:documentation "Stop the coleslaw server with any specified OPTIONS."))
-
 (defparameter *storage* nil
   "A db-spec for postmodern or a hash-table cache. It is expected that
 *storage* has methods for each Generic Function in coleslaw implemented.")
@@ -15,3 +9,20 @@
 
 (defgeneric set-credentials (name credentials)
   (:documentation "Store the given CREDENTIALS in *storage* under NAME."))
+
+(defun load-config ()
+  nil)
+
+(defun exit-handler ()
+  nil)
+
+(defun compile-blog ()
+  nil)
+
+(defun main ()
+  (load-config)
+  (unwind-protect
+       (loop do (if (blog-update-p)
+                    (compile-blog)
+                    (sleep 600)))
+    (exit-handler)))

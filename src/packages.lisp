@@ -2,8 +2,6 @@
   (:use :cl :closure-template)
   (:export ;; coleslaw-core
            #:*storage*
-           #:start-coleslaw
-           #:stop-coleslaw
            #:get-credentials
            #:set-credentials
 
@@ -27,24 +25,6 @@
            #:post-date
            #:post-content
            #:post-aliases
-
-           ;; comments
-           #:make-comment
-           #:add-comment
-           #:remove-comment
-           #:render-comments
-           #:find-comments
-
-           #:author-name
-           #:author-url
-           #:author-ip
-
-           #:comment-id
-           #:comment-post
-           #:comment-author
-           #:comment-timestamp
-           #:comment-content
-           #:comment-parent
 
            ;; indices
            #:make-index

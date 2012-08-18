@@ -5,7 +5,7 @@
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
-  :depends-on (:closure-template :cl-fad :local-time :alexandria)
+  :depends-on (:closure-template :iolib.os :local-time :alexandria)
   :serial t
   :components ((:file "packages")
                (:file "coleslaw")
