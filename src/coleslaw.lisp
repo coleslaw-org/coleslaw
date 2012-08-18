@@ -17,8 +17,10 @@
   nil)
 
 (defun compile-blog ()
-  nil)
+  (with-current-directory *temporary-directory*
+    nil))
 
+;; TODO: Make update interval a config option.
 (defun main ()
   (load-config)
   (unwind-protect

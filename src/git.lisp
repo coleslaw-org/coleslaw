@@ -7,14 +7,13 @@
 (defun last-commit ()
   "Retrieve the SHA1 hash of the most recent blog commit."
   (multiple-value-bind (pid stdout stderr)
-      (iolib.os:with-current-directory "/home/redline/projects/coleslaw/"
+      (with-current-directory "/home/redline/projects/coleslaw/"
         (iolib.os:run-program "git" '("log" "-n 1")))
     (cl-ppcre:scan-to-strings "[0-9a-f]{40}" stdout)))
 
 (defun last-published ()
   "Retrieve the SHA1 hash of the most recent published blog."
-  (with-open-file (in "/home/redline/.coleslaw"
-                      :if-does-not-exist :create)
+  (with-open-file (in "/home/redline/.coleslaw" :if-does-not-exist :create)
     (read-line in nil)))
 
 (defun (setf last-published) (new-val)

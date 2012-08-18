@@ -1,5 +1,7 @@
 (defpackage :coleslaw
   (:use :cl :closure-template)
+  (:import-from :iolib.os #:with-current-directory
+                          #:*temporary-directory*)
   (:export ;; coleslaw-core
            #:*storage*
            #:get-credentials
