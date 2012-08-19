@@ -30,17 +30,19 @@
       (render-indices))
     (deploy staging)))
 
+(defun update-symlink (name target)
+  "Update the symlink NAME to point to TARGET."
+  (run-program "ln" (list "-sfn" (namestring target) name)))
+
 (defun deploy (dir)
   "Deploy DIR, updating the .prev and .curr symlinks."
-  (let ((new-build (namestring (app-path (format nil "generated/~a"
-                                                 (get-universal-time))))))
-    (run-program "mv" (list dir new-build))
+  (let ((new-build (app-path (format nil "generated/~a" (get-universal-time)))))
+    (run-program "mv" (list dir (namestring new-build)))
     (when (probe-file (app-path ".prev"))
       (delete-files (read-symlink (app-path ".prev")) :recursive t))
     (when (probe-file (app-path ".curr"))
-      (let ((curr-build (namestring (read-symlink (app-path ".curr")))))
-        (run-program "ln" (list "-sfn" curr-build ".prev"))))
-    (run-program "ln" (list "-sfn" new-build ".curr")))
+      (update-symlink ".prev" (read-symlink (app-path ".curr"))))
+    (update-symlink ".curr" new-build))
   (setf (last-published) (last-commit)))
 
 (defun main ()
