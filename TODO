@@ -31,15 +31,7 @@ It's interesting to note two things.
 -- Blogs are platforms designed for content syndication/publishing, not intelligent discourse.
 
 TODO:
-;;;; implement start-coleslaw, stop-coleslaw!
-;;;; implement cl-store use+init, once every 24 hours?
-;;;; implement update-site, parse-file support.
-;;;; how many globals can we move into *storage* as keywords? ALL OF THEM!
-;;;; --what about accessing them?
-;;;; write a proper version of escape considering wild pathnames and valid URL issues
-;;;; implement atom feed. RSS too?
-;;;; implement non-disqus comment support?
-;;;; What do post update semantics look like? i.e. edit file to change tags. what about post-removal?
-
+;;;; implement atom or RSS feed!
 ;;;; plugins: analytics, logging/monitoring, crossposting, disqus, pygments/gists
 ;; support old URLs via use of post-aliases?
+;;;; write a proper version of escape considering wild pathnames and valid URL issues
