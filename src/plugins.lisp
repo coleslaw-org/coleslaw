@@ -8,7 +8,7 @@ are in the plugins folder in coleslaw's source directory."
                          (merge-pathnames
                           (concatenate 'string "plugins/"
                                        (string-downcase (symbol-name sym)))
-                          (asdf:system-source-directory 'coleslaw)))
+                          coleslaw-conf:*basedir*))
                        plugins)))
     (map nil (lambda (file)
                (compile-file file)

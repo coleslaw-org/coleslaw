@@ -2,12 +2,7 @@
   (:use :cl :closure-template)
   (:import-from :iolib.os #:with-current-directory
                           #:*temporary-directory*)
-  (:export ;; coleslaw-core
-           #:*storage*
-           #:get-credentials
-           #:set-credentials
-
-           ;; themes
+  (:export ;; themes
            #:*current-theme*
            #:*theme-dir*
            #:add-injection

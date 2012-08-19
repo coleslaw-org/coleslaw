@@ -8,6 +8,8 @@
   :depends-on (:closure-template :iolib.os :local-time :alexandria)
   :serial t
   :components ((:file "packages")
+               (:file "config")
+               (:file "git")
                (:file "coleslaw")
                (:file "themes")
                (:file "posts")
@@ -28,3 +30,7 @@
 (defmethod operation-done-p ((op test-op)
                              (c (eql (find-system :coleslaw))))
   (values nil))
+
+(defpackage #:coleslaw-conf (:export #:*basedir*))
+(defparameter coleslaw-conf:*basedir*
+  (make-pathname :name nil :type nil :defaults *load-truename*))

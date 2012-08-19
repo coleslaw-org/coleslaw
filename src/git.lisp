@@ -1,13 +1,9 @@
 (in-package :coleslaw)
 
-;; TODO:
-; Replace hardcoded paths (repo, .deploy) with *config*?
-; blog-update-p would be thing to make a generic in a plugin.
-
 (defun last-commit ()
   "Retrieve the SHA1 hash of the most recent blog commit."
   (multiple-value-bind (pid stdout stderr)
-      (with-current-directory "/home/redline/projects/coleslaw/"
+      (with-current-directory (repo *config*)
         (iolib.os:run-program "git" '("log" "-n 1")))
     (cl-ppcre:scan-to-strings "[0-9a-f]{40}" stdout)))
 

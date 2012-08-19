@@ -1,0 +1,9 @@
+(:author "Brit Butler"
+ :domain "http://redlinernotes.com"
+ :interval 600
+ :license "CC-BY-SA"
+ :plugins nil
+ :repo "/home/redline/projects/coleslaw/ignore/input/"
+ :sitenav ""
+ :title "Improved Means for Achieving Deteriorated Ends"
+ :theme "hyde")

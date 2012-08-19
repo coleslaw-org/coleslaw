@@ -1,14 +1,22 @@
 (in-package :coleslaw)
 
-(defparameter *storage* nil
-  "A db-spec for postmodern or a hash-table cache. It is expected that
-*storage* has methods for each Generic Function in coleslaw implemented.")
+(defclass blog ()
+  ((author :initarg :author :initform "" :accessor author)
+   (domain :initarg :domain :initform "" :accessor domain)
+   (interval :initarg :interval :initform 600 :accessor interval)
+   (license :initarg :license :initform "" :accessor license)
+   (plugins :initarg :plugins :initform '() :accessor plugins)
+   (repo :initarg :repo :initform #p"/" :accessor repo)
+   (sitenav :initarg :sitenav :initform "" :accessor sitenav)
+   (title :initarg :title :initform "" :accessor title)
+   (theme :initarg :theme :initform "hyde" :accessor theme)))
 
-(defgeneric get-credentials (name)
-  (:documentation "Retrieve the credentials keyed by NAME from *storage*."))
+(defparameter *config* nil
+  "A variable to store the blog configuration and plugin settings.")
 
-(defgeneric set-credentials (name credentials)
-  (:documentation "Store the given CREDENTIALS in *storage* under NAME."))
+(defun app-path (path)
+  "Take a relative PATH and return the corresponding pathname beneath coleslaw."
+  (merge-pathnames path coleslaw-conf:*basedir*))
 
 (defun load-config ()
   nil)
@@ -17,14 +25,24 @@
   nil)
 
 (defun compile-blog ()
-  (with-current-directory *temporary-directory*
-    nil))
+  (let ((staging #p"/tmp/coleslaw/"))
+    ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
+    (if (probe-file staging)
+        (iolib.os:delete-files staging :recursive t)
+        (ensure-directories-exist staging))
+    (with-current-directory staging
+      (let ((css-dir (app-path (format nil "themes/~a/css/" (theme *config*))))
+            (static-dir (merge-pathnames "static/" (repo *config*))))
+        (dolist (dir (list css-dir static-dir))
+          (iolib.os:run-program "cp" `("-R" ,dir "."))))
+      (render-posts)
+      (render-indices))
+    (deploy staging)))
 
-;; TODO: Make update interval a config option.
 (defun main ()
   (load-config)
   (unwind-protect
        (loop do (if (blog-update-p)
                     (compile-blog)
-                    (sleep 600)))
+                    (sleep (interval *config*))))
     (exit-handler)))
