@@ -9,11 +9,13 @@
 (defun theme-package (&key (name (theme *config*)))
   (find-package (string-upcase (concatenate 'string "coleslaw.theme." name))))
 
-(defun compile-theme (&key (theme-dir (app-path (theme *config*))))
-  (loop for file in (iolib.os:list-directory theme-dir)
-     do (let ((extension (pathname-type file)))
-          (when (and extension (string= extension "tmpl"))
-            (compile-template :common-lisp-backend file)))))
+(defun compile-theme (&key (theme-dir (app-path "themes/~a/" (theme *config*))))
+  (flet ((maybe-compile (file)
+           (let* ((path (merge-pathnames (file-path-namestring file) theme-dir))
+                  (extension (pathname-type path)))
+             (when (and extension (string= extension "tmpl"))
+               (compile-template :common-lisp-backend path)))))
+    (iolib.os:mapdir #'maybe-compile theme-dir)))
 
 ;; DOCUMENTATION
 ;; A theme directory should be named after the theme and contain *.tmpl files
