@@ -4,7 +4,7 @@
   "Retrieve the SHA1 hash of the most recent blog commit."
   (multiple-value-bind (pid stdout stderr)
       (with-current-directory (repo *config*)
-        (iolib.os:run-program "git" '("log" "-n 1")))
+        (run-program "git" '("log" "-n 1")))
     (cl-ppcre:scan-to-strings "[0-9a-f]{40}" stdout)))
 
 (defun last-published ()

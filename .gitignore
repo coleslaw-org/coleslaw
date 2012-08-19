@@ -2,3 +2,5 @@
 *.fasl
 ignore/
 generated/
+.curr
+.prev

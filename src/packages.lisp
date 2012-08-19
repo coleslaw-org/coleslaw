@@ -1,12 +1,15 @@
 (defpackage :coleslaw
   (:use :cl :closure-template)
   (:import-from :iolib.os #:with-current-directory
-                          #:*temporary-directory*)
+                          #:delete-files
+                          #:read-symlink
+                          #:run-program)
   (:export ;; themes
-           #:*current-theme*
-           #:*theme-dir*
            #:add-injection
            #:remove-injection
+
+           ;; plugins
+           #:load-plugins
 
            ;; posts
            #:make-post
@@ -32,7 +35,4 @@
            #:index-url
 
            #:index-id
-           #:index-posts
-
-           ;; plugins
-           #:load-plugins))
+           #:index-posts))
