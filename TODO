@@ -30,13 +30,7 @@ It's interesting to note two things.
 -- No more livejournal, RSS feeds don't promote communities.
 -- Blogs are platforms designed for content syndication/publishing, not intelligent discourse.
 
-Ideas:
--- Replace cl-markdown with 3bmd down the line?
--- Use cl-inotify or similar for notifications instead of timers?
-
 TODO:
-
-;;;; STATIC
 ;;;; implement start-coleslaw, stop-coleslaw!
 ;;;; implement cl-store use+init, once every 24 hours?
 ;;;; implement update-site, parse-file support.
@@ -47,10 +41,5 @@ TODO:
 ;;;; implement non-disqus comment support?
 ;;;; What do post update semantics look like? i.e. edit file to change tags. what about post-removal?
 
-;;;; PLUGINS
-;;;; add activate-plugin, deactivate-plugin, :active-plugins?
-;;;; implement: analytics, crossposting, disqus, mathjax, pygments, recaptcha
-;;;; support input or output dirs being git repos + have git hooks?
-;;; import
-;; add comment handling ... (when comments ...)
+;;;; plugins: analytics, logging/monitoring, crossposting, disqus, pygments/gists
 ;; support old URLs via use of post-aliases?
