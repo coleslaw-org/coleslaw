@@ -25,11 +25,6 @@
     <a class="article-title" href="{$post.url}">{$post.title}</a>
     <div class="date"> posted on {$post.date}</div>
     <div class="article">{$post.contents |noAutoescape}</div>
-    {if $count}
-      <div class="comment-count">
-        <a href="{$post.url}">{$post.comments} comments</a>
-      </div>
-    {/if}
   </div>
 {/foreach}
 <div id="relative-nav">
