@@ -1,34 +1,38 @@
 (in-package :coleslaw)
 
+(defparameter *metadata* (make-hash-table :test #'equal))
+
 (defclass post ()
-  ((id :initform nil :initarg :id
-       :accessor post-id)
-   (title :initform nil :initarg :title
-          :accessor post-title)
-   (tags :initform nil :initarg :tags
-         :accessor post-tags)
-   (date :initform nil :initarg :date
-         :accessor post-date)
-   (content :initform nil :initarg :content
-            :accessor post-content)
-   (aliases :initform nil :initarg :aliases
-            :accessor post-aliases)))
+  ((slug :initform nil :initarg :slug :accessor post-slug)
+   (title :initform nil :initarg :title :accessor post-title)
+   (tags :initform nil :initarg :tags :accessor post-tags)
+   (date :initform nil :initarg :date :accessor post-date)
+   (format :initform nil :initarg :format :accessor post-format)
+   (content :initform nil :initarg :content :accessor post-content)
+   (aliases :initform nil :initarg :aliases :accessor post-aliases)))
 
-(defgeneric make-post (title tags date content
-                       &key id aliases &allow-other-keys)
-  (:documentation "Create a POST with the given data."))
+(defun render-posts ()
+  (do-files (file (repo *config*) "post")
+    (with-open-file (in file)
+      (let ((post (read-post in)))
+        (setf (gethash (post-slug post) *metadata*) post)))
+    (maphash #'write-post *metadata*)))
 
-(defgeneric add-post (post id)
-  (:documentation "Insert a post into *storage* with the given ID."))
+(defun read-post (stream)
+  "Make a POST instance based on the data from STREAM."
 
-(defgeneric remove-post (id)
-  (:documentation "Remove a post from *storage* matching ID."))
+  )
 
-(defgeneric render-post (id)
-  (:documentation "Generate the final HTML for the post with given ID."))
-
-(defgeneric find-post (id)
-  (:documentation "Retrieve a post from *storage* matching ID."))
-
-(defgeneric post-url (id)
-  (:documentation "Return the URL for the post with the given ID."))
+(defun write-post (slug post)
+  "Write out the HTML for POST in SLUG.html."
+  (with-open-file (out (format nil "~a.html" slug)
+                       :direction :output
+                       :if-does-not-exist :create)
+    (let ((content (funcall (theme-fn "POST")
+                            (list :title (post-title post)
+                                  :tags (post-tags post)
+                                  :date (post-date post)
+                                  :content (post-content post)
+                                  :prev nil
+                                  :next nil))))
+      (write content out))))

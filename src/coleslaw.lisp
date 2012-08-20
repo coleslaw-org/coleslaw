@@ -9,11 +9,17 @@ If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   "Convert an iolib file-path back to a pathname."
   (merge-pathnames (file-path-namestring file) parent))
 
-(defmacro do-files ((var path) &body body)
-  "For each file under PATH, run BODY."
-  `(iolib.os:mapdir (lambda (x)
-                      (let ((,var (to-pathname x ,path)))
-                        ,@body)) ,path))
+(defmacro do-files ((var path &optional extension) &body body)
+  "For each file under PATH, run BODY. If EXTENSION is provided, only run BODY
+on files that match the given extension."
+  (alexandria:with-gensyms (ext)
+    `(iolib.os:mapdir (lambda (x)
+                        (let* ((,var (to-pathname x ,path))
+                               ,@(when extension `((,ext (pathname-type ,var)))))
+                          ,@(if extension
+                                `((when (and ,ext (string= ,ext ,extension))
+                                     ,@body))
+                                `,body))) ,path)))
 
 (defun compile-blog ()
   (let ((staging #p"/tmp/coleslaw/"))
