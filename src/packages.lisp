@@ -5,4 +5,7 @@
                           #:read-symlink
                           #:run-program)
   (:import-from :iolib.pathnames #:file-path-namestring)
-  (:export #:main))
+  (:export #:main
+           #:add-injection
+           #:render-content
+           #:deploy))

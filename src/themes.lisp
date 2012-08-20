@@ -8,12 +8,6 @@
   (:method ((str string) location)
     (pushnew str (gethash location *injections*) :test #'string=)))
 
-(defgeneric remove-injection (str location)
-  (:documentation "Remove STR from the list of elements injected in LOCATION.")
-  (:method ((str string) location)
-    (setf (gethash location *injections*)
-          (remove str (gethash location *injections*) :test #'string=))))
-
 (defun theme-package (&key (name (theme *config*)))
   "Find the package matching the theme NAME."
   (find-package (string-upcase (concatenate 'string "coleslaw.theme." name))))

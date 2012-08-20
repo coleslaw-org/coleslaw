@@ -27,7 +27,8 @@
                                                (domain *config*) (post-slug post))
                                   :title (post-title post)
                                   :date (post-date post)
-                                  :contents (post-contents post)))))
+                                  :content (render-content (post-content post)
+                                                           (post-format post))))))
     (render-page filename
                  (funcall (theme-fn "INDEX")
                           (list :taglinks (taglinks)

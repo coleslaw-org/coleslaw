@@ -20,6 +20,11 @@
         (setf (gethash (post-slug post) *posts*) post))))
   (maphash #'write-post *posts*))
 
+(defgeneric render-content (text format)
+  (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
+  (:method (text (format (eql :html)))
+    text))
+
 (defun read-post (stream)
   "Make a POST instance based on the data from STREAM."
   )
@@ -31,7 +36,8 @@
                         (list :title (post-title post)
                               :tags (post-tags post)
                               :date (post-date post)
-                              :content (post-content post)
+                              :content (render-content (post-content post)
+                                                       (post-format post))
                               ; TODO: Populate prev and next with links.
                               :prev nil
                               :next nil))))
