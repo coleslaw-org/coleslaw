@@ -12,7 +12,7 @@
        collect (list :url (format nil "~a/month/~a.html" (domain *config*) month)
                      :name month))))
 
-(defun write-index (posts filename)
+(defun write-index (posts filename title)
   (let ((content (loop for post in posts
                     collect (list :url (format nil "~a/posts/~a.html"
                                                (domain *config*) (post-slug post))
@@ -23,6 +23,7 @@
                  (funcall (theme-fn "INDEX")
                           (list :taglinks (taglinks)
                                 :monthlinks (monthlinks)
+                                :title title
                                 :posts content
                                 ; TODO: Populate prev and next with links.
                                 :prev nil
@@ -35,26 +36,27 @@
     (let ((posts (sort *posts* #'string> :key #'post-date)))
       (loop for i from 1 then (1+ i)
          until (> (* (1- i) 20) (length posts))
-         do (write-index (by-20 posts i) (format nil "~d.html" i))))))
+         do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts")))))
 
 (defun render-by-tag ()
   (let ((tags (remove-duplicates (mapcan #'post-tags *posts*) :test #'string=)))
     (loop for tag in tags
-       do (let ((posts (remove-if-not (lambda (x)
-                                        (member tag x :test #'string=
-                                                      :key #'post-tags))
-                                      posts)))
-            (write-index posts (format nil "tag/~a.html" tag))))))
+       do (flet ((match-tag (post)
+                   (member tag post :test #'string= :key #'post-tags)))
+            (let ((posts (remove-if-not #'match-tag posts)))
+              (write-index posts (format nil "tag/~a.html" tag)
+                           (format nil "Posts tagged ~a" tag)))))))
 
 (defun render-by-month ()
-  ;; TODO: Make this actually work. Add to render-indices.
-  (let ((months (remove-duplicates (mapcar #'post-date *posts*) :test #'string=)))
+  (let ((months (remove-duplicates (mapcar (lambda (x) (subseq (post-date x) 0 7))
+                                           *posts*) :test #'string=)))
     (loop for month in months
-       do (let ((posts (remove-if-not (lambda (x)
-                                        (from-month month x)
-                                        posts))))
-            (render-index posts)))))
+       do (let ((posts (remove-if-not (lambda (x) (search month (post-date x))
+                                              *posts*))))
+            (write-index posts (format nil "date/~a.html" (subseq month 0 7))
+                         (format nil "Posts from ~a" (subseq month 0 7)))))))
 
 (defun render-indices ()
   (render-by-20)
-  (render-by-tag))
+  (render-by-tag)
+  (render-by-month))
