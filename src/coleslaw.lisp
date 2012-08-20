@@ -21,22 +21,8 @@ on files that match the given extension."
                                      ,@body))
                                 `,body))) ,path)))
 
-(defun compile-blog ()
-  (let ((staging #p"/tmp/coleslaw/"))
-    ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
-    (if (probe-file staging)
-        (delete-files staging :recursive t)
-        (ensure-directories-exist staging))
-    (with-current-directory staging
-      (let ((css-dir (app-path "themes/~a/css/" (theme *config*)))
-            (static-dir (merge-pathnames "static/" (repo *config*))))
-        (dolist (dir (list css-dir static-dir))
-          (run-program "cp" `("-R" ,dir "."))))
-      (render-posts)
-      (render-indices))
-    (deploy staging)))
-
 (defun render-page (path html)
+  "Populate the base template with the provided HTML and write it out to PATH."
   (ensure-directories-exist path)
   (with-open-file (out path
                    :direction :output
@@ -53,6 +39,22 @@ on files that match the given extension."
                                   :license (license *config*)
                                   :credits (author *config*)))))
       (write content out))))
+
+(defun compile-blog ()
+  "Compile the blog to a staging directory in /tmp."
+  (let ((staging #p"/tmp/coleslaw/"))
+    ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
+    (if (probe-file staging)
+        (delete-files staging :recursive t)
+        (ensure-directories-exist staging))
+    (with-current-directory staging
+      (let ((css-dir (app-path "themes/~a/css/" (theme *config*)))
+            (static-dir (merge-pathnames "static/" (repo *config*))))
+        (dolist (dir (list css-dir static-dir))
+          (run-program "cp" `("-R" ,dir "."))))
+      (render-posts)
+      (render-indices))
+    (deploy staging)))
 
 (defun update-symlink (name target)
   "Update the symlink NAME to point to TARGET."

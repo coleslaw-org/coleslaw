@@ -1,6 +1,7 @@
 (in-package :coleslaw)
 
-(defparameter *posts* (make-hash-table :test #'equal))
+(defparameter *posts* (make-hash-table :test #'equal)
+  "A hash table to store all the posts and their metadata.")
 
 (defclass post ()
   ((slug :initform nil :initarg :slug :accessor post-slug)
@@ -12,6 +13,7 @@
    (aliases :initform nil :initarg :aliases :accessor post-aliases)))
 
 (defun render-posts ()
+  "Iterate through the files in the repo to render+write the posts out to disk."
   (do-files (file (repo *config*) "post")
     (with-open-file (in file)
       (let ((post (read-post in)))
@@ -35,10 +37,12 @@
                               :next nil))))
 
 (defun slug-char-p (char)
+  "Determine if CHAR is a valid slug (i.e. URL) character."
   (or (char<= #\0 char #\9)
       (char<= #\a char #\z)
       (char<= #\A char #\Z)
       (member char '(#\_ #\-))))
 
 (defun slugify (string)
+  "Return a version of STRING suitable for use as a URL."
   (remove-if-not #'slug-char-p (substitute #\- #\Space string)))
