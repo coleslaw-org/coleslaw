@@ -1,19 +1,10 @@
-Everything.
-
-THE OVERHAUL:
-Where is the data? (mongodb, postgresql, flat files, lisp data persisted with cl-store or similar, etc)
-What views are supported? (tag-based, reverse-chronological, single-post, etc)
-How is the data edited? (web-admin-interface-p)
-Who serves the data? (S3, Lisp server (hunchentoot/etc), System HTTPD (lighttpd/apache/etc)
-How are comments handled? (Cloud service (disqus/etc), Stored and generated locally, disabled)
-
 Old Coleslaw: Allow choices.
 New Coleslaw: Screw choices!
 "You can have it in any color as long as its black."
 
-What views are supported? tag-based, reverse-chronological, single-post
+What views are supported? tag-based, reverse-chronological, by-month, single-post
 Where is the data? git
-How is the data edited? git status/inotify
+How are update done? check for new commits every *interval*, possibly switch to commit hooks later
 Post generation? Static
 What is the post format? (markdown, plaintext, rst, etc, anything with a parser plugin!)
 How are comments handled? They're not supported.
@@ -21,21 +12,12 @@ What about themes? Templates are themes. DUH.
 Plugins? Injection support for HEAD and BODY. What about predicate-based injection?
 How is it served? Hunchentoot, Lighttpd, S3, whomever!
 
-Historical Shifts
-It's interesting to note two things.
-1) Blogs went from static->dynamic->static being hip.
--- Some of this was motivated by technological fashion.
-2) Comments went from being inessential->essential->inessential.
--- This latter point is largely related to shifts in social networks.
--- No more livejournal, RSS feeds don't promote communities.
--- Blogs are platforms designed for content syndication/publishing, not intelligent discourse.
-
-Move over May-2007 to present.
-
 TODO:
 ; implement read-post, render-by-month
 ; fix plugins: s3, wordpress
+; doc themes and plugins
 ; implement plugins: atom, markdown, pygment/highlighting
+; actually start using this for redlinernotes.com? Move over May-2007 to present.
 ;; Incremental compile: only "touched" posts+tags+months. By-20 must be redone, of course.
 ;; ^^ Long as we're overhauling, maybe come up with a commithook scheme that runs main
 ;; and main becomes load-config, compile-theme, compile-blog?
