@@ -5,6 +5,16 @@
 If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   (merge-pathnames (apply 'format nil path args) coleslaw-conf:*basedir*))
 
+(defun to-pathname (file parent)
+  "Convert an iolib file-path back to a pathname."
+  (merge-pathnames (file-path-namestring file) parent))
+
+(defmacro do-files ((var path) &body body)
+  "For each file under PATH, run BODY."
+  `(iolib.os:mapdir (lambda (x)
+                      (let ((,var (to-pathname x ,path)))
+                        ,@body)) ,path))
+
 (defun compile-blog ()
   (let ((staging #p"/tmp/coleslaw/"))
     ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
