@@ -33,3 +33,12 @@
                               ; TODO: Populate prev and next with links.
                               :prev nil
                               :next nil))))
+
+(defun slug-char-p (char)
+  (or (char<= #\0 char #\9)
+      (char<= #\a char #\z)
+      (char<= #\A char #\Z)
+      (member char '(#\_ #\-))))
+
+(defun slugify (string)
+  (remove-if-not #'slug-char-p (substitute #\- #\Space string)))
