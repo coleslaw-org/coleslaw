@@ -20,17 +20,16 @@
 
 (defun read-post (stream)
   "Make a POST instance based on the data from STREAM."
-  (make-instance 'post
-                 :slug (make-slug post))
   )
 
 (defun write-post (slug post)
   "Write out the HTML for POST in SLUG.html."
-  (render-page (format nil "~a.html" slug)
+  (render-page (format nil "posts/~a.html" slug)
                (funcall (theme-fn "POST")
                         (list :title (post-title post)
                               :tags (post-tags post)
                               :date (post-date post)
                               :content (post-content post)
+                              ; TODO: Populate prev and next with links.
                               :prev nil
                               :next nil))))
