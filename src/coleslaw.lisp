@@ -36,6 +36,24 @@ on files that match the given extension."
       (render-indices))
     (deploy staging)))
 
+(defun render-page (path html)
+  (ensure-directories-exist path)
+  (with-open-file (out path
+                   :direction :output
+                   :if-does-not-exist :create)
+    (let ((content (funcall (theme-fn "BASE")
+                            (list :title (title *config*)
+                                  :siteroot (domain *config*)
+                                  :navigation (sitenav *config*)
+                                  :content html
+                                  :head-inject (apply #'concatenate 'string
+                                                      (gethash :head *injections*))
+                                  :body-inject (apply #'concatenate 'string
+                                                      (gethash :body *injections*))
+                                  :license (license *config*)
+                                  :credits (author *config*)))))
+      (write content out))))
+
 (defun update-symlink (name target)
   "Update the symlink NAME to point to TARGET."
   (run-program "ln" (list "-sfn" (namestring target) name)))

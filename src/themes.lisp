@@ -16,6 +16,9 @@
 (defun theme-package (&key (name (theme *config*)))
   (find-package (string-upcase (concatenate 'string "coleslaw.theme." name))))
 
+(defun theme-fn (name)
+  (find-symbol name (theme-package)))
+
 (defun compile-theme (&key (theme-dir (app-path "themes/~a/" (theme *config*))))
   (do-files (file theme-dir "tmpl")
     (compile-template :common-lisp-backend file)))

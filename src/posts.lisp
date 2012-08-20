@@ -1,6 +1,6 @@
 (in-package :coleslaw)
 
-(defparameter *metadata* (make-hash-table :test #'equal))
+(defparameter *posts* (make-hash-table :test #'equal))
 
 (defclass post ()
   ((slug :initform nil :initarg :slug :accessor post-slug)
@@ -15,24 +15,22 @@
   (do-files (file (repo *config*) "post")
     (with-open-file (in file)
       (let ((post (read-post in)))
-        (setf (gethash (post-slug post) *metadata*) post))))
-  (maphash #'write-post *metadata*))
+        (setf (gethash (post-slug post) *posts*) post))))
+  (maphash #'write-post *posts*))
 
 (defun read-post (stream)
   "Make a POST instance based on the data from STREAM."
-
+  (make-instance 'post
+                 :slug (make-slug post))
   )
 
 (defun write-post (slug post)
   "Write out the HTML for POST in SLUG.html."
-  (with-open-file (out (format nil "~a.html" slug)
-                       :direction :output
-                       :if-does-not-exist :create)
-    (let ((content (funcall (theme-fn "POST")
-                            (list :title (post-title post)
-                                  :tags (post-tags post)
-                                  :date (post-date post)
-                                  :content (post-content post)
-                                  :prev nil
-                                  :next nil))))
-      (write content out))))
+  (render-page (format nil "~a.html" slug)
+               (funcall (theme-fn "POST")
+                        (list :title (post-title post)
+                              :tags (post-tags post)
+                              :date (post-date post)
+                              :content (post-content post)
+                              :prev nil
+                              :next nil))))
