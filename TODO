@@ -33,9 +33,12 @@ It's interesting to note two things.
 Move over May-2007 to present.
 
 TODO:
+; implement read-post, render-by-month
 ; fix plugins: s3, wordpress
 ; implement plugins: atom, markdown, pygment/highlighting
 ;; Incremental compile: only "touched" posts+tags+months. By-20 must be redone, of course.
+;; ^^ Long as we're overhauling, maybe come up with a commithook scheme that runs main
+;; and main becomes load-config, compile-theme, compile-blog?
 ;; support old URLs via use of post-aliases?
 ;;; plugins: analytics, logging/monitoring, crossposting, disqus
 ;;;; write a proper version of escape considering wild pathnames and valid URL issues
