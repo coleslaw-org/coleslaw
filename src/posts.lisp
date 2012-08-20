@@ -15,8 +15,8 @@
   (do-files (file (repo *config*) "post")
     (with-open-file (in file)
       (let ((post (read-post in)))
-        (setf (gethash (post-slug post) *metadata*) post)))
-    (maphash #'write-post *metadata*)))
+        (setf (gethash (post-slug post) *metadata*) post))))
+  (maphash #'write-post *metadata*))
 
 (defun read-post (stream)
   "Make a POST instance based on the data from STREAM."
