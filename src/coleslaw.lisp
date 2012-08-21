@@ -25,7 +25,7 @@ on files that match the given extension."
   "Populate the base template with the provided HTML and write it out to PATH."
   (let ((filepath (merge-pathnames path (staging *config*))))
     (ensure-directories-exist filepath)
-    (with-open-file (out path
+    (with-open-file (out filepath
                          :direction :output
                          :if-does-not-exist :create)
       (let ((content (funcall (theme-fn "BASE")
