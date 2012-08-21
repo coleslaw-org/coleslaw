@@ -55,8 +55,8 @@
   "Render the indices to view posts by tag."
   (loop for tag in (all-tags)
      do (flet ((match-tag (post)
-                 (member tag post :test #'string= :key #'post-tags)))
-          (let ((posts (remove-if-not #'match-tag posts)))
+                 (member tag (post-tags post) :test #'string=)))
+          (let ((posts (remove-if-not #'match-tag (hash-table-values *posts*))))
             (write-index posts (format nil "tag/~a.html" tag)
                          (format nil "Posts tagged ~a" tag))))))
 

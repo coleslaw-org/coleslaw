@@ -13,13 +13,10 @@ Plugins? Injection support for HEAD and BODY. What about predicate-based injecti
 How is it served? Hunchentoot, Lighttpd, S3, whomever!
 
 TODO:
-; blockers to use this for redlinernotes: rss/atom feed, markdown support
+; blockers to use this for redlinernotes: prev/next, rss/atom feed, markdown support
 ; after that, focus on injections for code highlighting and latex
 
 ; doc themes and plugins
-; populate prev and next links
-; implement plugins: atom, markdown, pygment/highlighting
-; actually start using this for redlinernotes.com? Move over May-2007 to present.
 ; fix plugins: s3
 ;; Incremental compile: only "touched" posts+tags+months. By-20 must be redone, of course.
 ;; ^^ Long as we're overhauling, maybe come up with a commithook scheme that runs main

@@ -5,9 +5,13 @@
 If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   (merge-pathnames (apply 'format nil path args) coleslaw-conf:*basedir*))
 
-(defun to-pathname (file parent)
+(defun to-pathname (file &optional (parent coleslaw-conf:*basedir*))
   "Convert an iolib file-path back to a pathname."
   (merge-pathnames (file-path-namestring file) parent))
+
+(defun read-symlink (path)
+  "A trivial wrapper over iolib.os that returns the pathname in the symlink PATH."
+  (to-pathname (iolib.os:read-symlink path)))
 
 (defmacro do-files ((var path &optional extension) &body body)
   "For each file under PATH, run BODY. If EXTENSION is provided, only run BODY
@@ -67,7 +71,7 @@ on files that match the given extension."
   (:documentation "Deploy DIR, updating the .prev and .curr symlinks.")
   (:method (dir)
     (let ((new-build (app-path "generated/~a" (get-universal-time))))
-      (run-program "mv" (list dir (namestring new-build)))
+      (run-program "mv" (mapcar #'namestring (list dir new-build)))
       (when (probe-file (app-path ".prev"))
         (delete-directory-and-files (read-symlink (app-path ".prev"))))
       (when (probe-file (app-path ".curr"))
