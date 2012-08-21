@@ -1,19 +1,19 @@
-(eval-when (:compile-toplevel)
-  (ql:quickload '(cxml cl-ppcre)))
+(eval-when (:load-toplevel)
+  (ql:quickload '(coleslaw cxml cl-ppcre local-time)))
 
 (defpackage :coleslaw-import
-  (:use :cl :coleslaw :cxml)
+  (:use :cl :cxml)
+  (:import-from :coleslaw #:slugify
+                          #:load-config
+                          #:*config*
+                          #:repo)
   (:import-from :local-time #:+short-month-names+
                             #:encode-timestamp)
   (:import-from :cl-ppcre #:regex-replace-all))
 
 (in-package :coleslaw-import)
 
-(defgeneric import-post (service post &key static-p)
-  (:documentation "Import POST into *storage*. The method to construct the POST
-object is determined by SERVICE."))
-
-(defmethod import-post ((service (eql :wordpress)) post &key static-p)
+(defun import-post (post)
   (labels ((nodes (name)
              (dom:get-elements-by-tag-name post name))
            (value (node)
@@ -23,61 +23,32 @@ object is determined by SERVICE."))
              (let ((nodes (nodes name)))
                (if (string= "category" name)
                    (loop for node across nodes collecting (value node))
-                   (when (plusp (length nodes)) (value (elt nodes 0))))))
-           (public-p ()
-             (string= "publish" (node-val "wp:status")))
-           (post-p ()
-             (string= "post" (node-val "wp:post_type")))
-           (make-timestamp (pubdate)
-             (let* ((date (cl-ppcre:split " " (subseq pubdate 5)))
-                    (time (cl-ppcre:split ":" (fourth date))))
-               (encode-timestamp 0
-                                 (parse-integer (third time))
-                                 (parse-integer (second time))
-                                 (parse-integer (first time))
-                                 (parse-integer (first date))
-                                 (position (second date) +short-month-names+
-                                           :test #'string=)
-                                 (parse-integer (third date))))))
-    (when (and (public-p)
-               (post-p))
-      (let ((new-post (make-post (node-val "title")
-                                 (node-val "category")
-                                 (make-timestamp (node-val "pubDate"))
-                                 (regex-replace-all (string #\Newline)
-                                                    (node-val "content:encoded")
-                                                    "<br>")
-                                 :aliases (parse-integer (node-val "wp:post_id"))))
-            (comments (nodes "wp:comment")))
-        (add-post new-post (post-id new-post))
-        (when static-p
-          (ensure-directories-exist coleslaw::*input-dir*)
-          (export-post new-post))))))
+                   (when (plusp (length nodes)) (value (elt nodes 0)))))))
+    (when (and (string= "publish" (node-val "wp:status")) ; is it public?
+               (string= "post" (node-val "wp:post_type"))) ; is it a post?
+      (export-post (node-val "title") (node-val "category") (node-val "pubDate")
+                   (regex-replace-all (string #\Newline)
+                                      (node-val "content:encoded") "<br>")
+                   (format nil "~a.post" (slugify (node-val "title")))))))
 
-(defmethod export-post (post)
-  (let ((filepath (merge-pathnames (format nil "~5,'0d-~a.post"
-                                           (post-id post)
-                                           (coleslaw::escape (post-title post)))
-                                   coleslaw::*input-dir*)))
-    (with-open-file (out filepath :direction :output
-                     :if-exists :supersede :if-does-not-exist :create)
-      ;; TODO: What other data/metadata should we write out?
-      (format out ";;;;;~%")
-      (format out "title: ~A~%" (post-title post))
-      (format out "tags: ~A~%" (coleslaw::pretty-list (post-tags post)))
-      (format out "date: ~A~%" (coleslaw::year-month (post-date post)))
-      (format out ";;;;;~%")
-      (format out "~A~%" (post-content post)))))
+(defun export-post (title tags date content path)
+  (with-open-file (out (merge-pathnames path (repo *config*))
+                   :direction :output
+                   :if-exists :supersede
+                   :if-does-not-exist :create)
+    ;; TODO: What other data/metadata should we write out?
+    (format out ";;;;;~%")
+    (format out "title: ~A~%" title)
+    (format out "tags: ~A~%" (format nil "~{~A, ~}" tags))
+    (format out "date: ~A~%" date)
+    (format out "type: html~%") ; post format: html, md, rst, etc
+    (format out ";;;;;~%")
+    (format out "~A~%" (post-content post))))
 
-(defgeneric import-posts (service filepath &key static-p)
-  (:documentation "Import the posts (and potentially comments or other data)
-from FILEPATH, converting them to appropriate coleslaw objects and inserting
-them into *storage*. The method to parse the file is determined by SERVICE.
-If STATIC-P is true, the posts will also be written into *.html files in
-*input-dir*."))
-
-(defmethod import-posts ((service (eql :wordpress)) filepath &key static-p)
+(defun import-posts (filepath)
   (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
          (posts (dom:get-elements-by-tag-name xml "item")))
-    (loop for post across posts do
-         (import-post service post :static-p static-p))))
+    (load-config)
+    (ensure-directories-exist (repo *config*))
+    (dolist (post posts)
+      (import-post post))))
