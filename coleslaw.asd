@@ -1,11 +1,11 @@
 (defsystem #:coleslaw
   :name "coleslaw-core"
   :description "Flexible Lisp Blogware"
-  :version "0.0.3"
+  :version "0.4"
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
-  :depends-on (:closure-template :iolib.os :alexandria)
+  :depends-on (:closure-template :iolib.os :alexandria :cl-fad)
   :serial t
   :components ((:file "packages")
                (:file "config")

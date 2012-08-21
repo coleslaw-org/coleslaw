@@ -17,13 +17,13 @@ If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   "For each file under PATH, run BODY. If EXTENSION is provided, only run BODY
 on files that match the given extension."
   (alexandria:with-gensyms (ext)
-    `(iolib.os:mapdir (lambda (x)
-                        (let* ((,var (to-pathname x ,path))
-                               ,@(when extension `((,ext (pathname-type ,var)))))
-                          ,@(if extension
-                                `((when (and ,ext (string= ,ext ,extension))
-                                     ,@body))
-                                `,body))) ,path)))
+    `(mapcar (lambda (,var)
+               ,@(if extension
+                     `((let ((,ext (pathname-type ,var)))
+                         (when (and ,ext (string= ,ext ,extension))
+                           ,@body)))
+                     `,body))
+             (list-directory ,path))))
 
 (defun render-page (path html)
   "Populate the base template with the provided HTML and write it out to PATH."
@@ -49,7 +49,7 @@ on files that match the given extension."
   (let ((staging #p"/tmp/coleslaw/"))
     ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
     (when (probe-file staging)
-      (delete-files staging :recursive t))
+      (delete-directory-and-files staging))
     (ensure-directories-exist staging)
     (with-current-directory staging
       (let ((css-dir (app-path "themes/~a/css/" (theme *config*)))
@@ -72,7 +72,7 @@ on files that match the given extension."
     (let ((new-build (app-path "generated/~a" (get-universal-time))))
       (run-program "mv" (list dir (namestring new-build)))
       (when (probe-file (app-path ".prev"))
-        (delete-files (read-symlink (app-path ".prev")) :recursive t))
+        (delete-directory-and-files (read-symlink (app-path ".prev"))))
       (when (probe-file (app-path ".curr"))
         (update-symlink ".prev" (read-symlink (app-path ".curr"))))
       (update-symlink ".curr" new-build))))
