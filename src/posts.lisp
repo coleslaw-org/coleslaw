@@ -13,10 +13,14 @@
 
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
+  (clrhash *posts*)
   (do-files (file (repo *config*) "post")
     (with-open-file (in file)
       (let ((post (read-post in)))
-        (setf (gethash (post-slug post) *posts*) post))))
+        (if (gethash (post-slug post) *posts*)
+            (error "There is already an existing post with the slug ~a."
+                   (post-slug post))
+            (setf (gethash (post-slug post) *posts*) post)))))
   (maphash #'write-post *posts*))
 
 (defgeneric render-content (text format)
@@ -38,8 +42,6 @@
     (check-header)
     (let ((args (loop for field in '("title" "tags" "date" "format")
                    for line = (read-line in nil)
-                   when (not (search field line :test #'string=))
-                   do (error "The provided file lacks the field ~a." field)
                    appending (list (make-keyword field)
                                    (aref (parse-field (read-line in)) 0)))))
     (check-header)
