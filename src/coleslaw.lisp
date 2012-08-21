@@ -5,6 +5,10 @@
 If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   (merge-pathnames (apply 'format nil path args) coleslaw-conf:*basedir*))
 
+(defun make-keyword (string)
+  "Return a keyword matching STRING."
+  (intern (string-upcase string) :keyword))
+
 (defun to-pathname (file parent)
   "Convert an iolib file-path back to a pathname."
   (merge-pathnames (file-path-namestring file) parent))
@@ -44,15 +48,15 @@ on files that match the given extension."
   "Compile the blog to a staging directory in /tmp."
   (let ((staging #p"/tmp/coleslaw/"))
     ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
-    (if (probe-file staging)
-        (delete-files staging :recursive t)
-        (ensure-directories-exist staging))
+    (when (probe-file staging)
+      (delete-files staging :recursive t))
+    (ensure-directories-exist staging)
     (with-current-directory staging
       (let ((css-dir (app-path "themes/~a/css/" (theme *config*)))
             (static-dir (merge-pathnames "static/" (repo *config*))))
         (dolist (dir (list css-dir static-dir))
           (when (probe-file dir)
-            (run-program "cp" `("-R" ,dir ".")))))
+            (run-program "cp" `("-R" ,(namestring dir) ".")))))
       (render-posts)
       (render-indices))
     (deploy staging)

@@ -27,16 +27,15 @@
     (format nil "~a-~2,'0d-~2,'0d ~a" year (position month +short-month-names+
                                                      :test #'string=) date time)))
 
-(defun import-post (post)
+(defun import-post (post &optional (since nil since-supplied-p))
   (when (and (string= "publish" (node-val "wp:status" post)) ; is it public?
              (string= "post" (node-val "wp:post_type" post)) ; is it a post?
-             (string>= (get-timestamp post) "2007-05"))
-    (let ((content (node-val "content:encoded" post))
-          (slug (slugify (node-val "title" post))))
+             (or (not since-supplied-p) (string>= (get-timestamp post) since)))
+    (let ((slug (slugify (node-val "title" post))))
       (when (string= "" slug)
         (error "No valid slug-title for post ~a." (get-timestamp post)))
       (export-post (node-val "title" post) (node-val "category" post)
-                   (get-timestamp post) content
+                   (get-timestamp post) (node-val "content:encoded" post)
                    (format nil "~a.post" slug)))))
 
 (defun export-post (title tags date content path)
@@ -47,15 +46,15 @@
     ;; TODO: What other data/metadata should we write out?
     (format out ";;;;;~%")
     (format out "title: ~A~%" title)
-    (format out "tags: ~A~%" (format nil "~{~A, ~}" tags))
+    (format out "tags: ~A~%" (format nil "~{~A~^, ~}" tags))
     (format out "date: ~A~%" date)
     (format out "format: html~%") ; post format: html, md, rst, etc
     (format out ";;;;;~%")
     (format out "~A~%" (regex-replace-all (string #\Newline) content "<br>"))))
 
-(defun import-posts (filepath)
+(defun import-posts (filepath &optional since)
   (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
          (posts (dom:get-elements-by-tag-name xml "item")))
     (load-config)
     (ensure-directories-exist (repo *config*))
-    (loop for post across posts do (import-post post))))
+    (loop for post across posts do (import-post post since))))

@@ -40,9 +40,11 @@
                    for line = (read-line in nil)
                    when (not (search field line :test #'string=))
                    do (error "The provided file lacks the field ~a." field)
-                   appending (list (intern (string-upcase field) :keyword)
+                   appending (list (make-keyword field)
                                    (aref (parse-field (read-line in)) 0)))))
     (check-header)
+    (setf (getf args :tags) (cl-ppcre:split ", " (getf args :tags))
+          (getf args :format) (make-keyword (getf args :format)))
     (apply 'make-instance 'blog
            (append args (list :content (slurp-remainder)
                               :slug (slugify (getf args :title))))))))
