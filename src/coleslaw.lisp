@@ -42,7 +42,7 @@ on files that match the given extension."
                                                       (gethash :body *injections*))
                                   :license (license *config*)
                                   :credits (author *config*)))))
-      (write content out))))
+      (write-line content out))))
 
 (defun compile-blog ()
   "Compile the blog to a staging directory in /tmp."
