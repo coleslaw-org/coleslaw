@@ -43,11 +43,11 @@
   "Render the indices to view posts in reverse chronological order by 20."
   (flet ((by-20 (posts start)
            (let ((index (* 20 (1- start))))
-             (subseq posts index (min (length posts) (+ index 19))))))
+             (subseq posts index (min (length posts) (+ index 20))))))
     (let ((posts (sort *posts* #'string> :key #'post-date)))
-      (loop for i from 1 then (1+ i)
-         until (> (* (1- i) 20) (length posts))
-         do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts")))))
+      (loop for i = 1 then (1+ i)
+         do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts")
+         until (> (* i 20) (length posts))))))
 
 (defun render-by-tag ()
   "Render the indices to view posts by tag."
