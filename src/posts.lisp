@@ -39,7 +39,7 @@
     (let ((args (loop for field in '("title" "tags" "date" "format")
                    for line = (read-line in nil)
                    when (not (search field line :test #'string=))
-                   do (error "The provided file lacks the expected header.")
+                   do (error "The provided file lacks the field ~a." field)
                    appending (list (intern (string-upcase field) :keyword)
                                    (aref (parse-field (read-line in)) 0)))))
     (check-header)
