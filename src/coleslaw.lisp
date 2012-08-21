@@ -5,10 +5,6 @@
 If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   (merge-pathnames (apply 'format nil path args) coleslaw-conf:*basedir*))
 
-(defun make-keyword (string)
-  "Return a keyword matching STRING."
-  (intern (string-upcase string) :keyword))
-
 (defun to-pathname (file parent)
   "Convert an iolib file-path back to a pathname."
   (merge-pathnames (file-path-namestring file) parent))

@@ -6,7 +6,8 @@
                           #:read-symlink
                           #:run-program)
   (:import-from :iolib.pathnames #:file-path-namestring)
-  (:import-from :alexandria #:hash-table-values)
+  (:import-from :alexandria #:hash-table-values
+                            #:make-keyword)
   (:export #:main
            #:add-injection
            #:render-content
