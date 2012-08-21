@@ -9,8 +9,7 @@
    (tags :initform nil :initarg :tags :accessor post-tags)
    (date :initform nil :initarg :date :accessor post-date)
    (format :initform nil :initarg :format :accessor post-format)
-   (content :initform nil :initarg :content :accessor post-content)
-   (aliases :initform nil :initarg :aliases :accessor post-aliases)))
+   (content :initform nil :initarg :content :accessor post-content)))
 
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
@@ -25,9 +24,28 @@
   (:method (text (format (eql :html)))
     text))
 
-(defun read-post (stream)
-  "Make a POST instance based on the data from STREAM."
-  )
+(defun read-post (in)
+  "Make a POST instance based on the data from the stream IN."
+  (flet ((check-header ()
+           (unless (string= (read-line in) ";;;;;")
+             (error "The provided file lacks the expected header.")))
+         (parse-field (str)
+           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
+         (slurp-remainder ()
+           (read-sequence (make-string (- (file-length in)
+                                          (file-position in))
+                                       :element-type 'character) in)))
+    (check-header)
+    (let ((args (loop for field in '("title" "tags" "date" "format")
+                   for line = (read-line in nil)
+                   when (not (search field line :test #'string=))
+                   do (error "The provided file lacks the expected header.")
+                   appending (list (intern (string-upcase field) :keyword)
+                                   (aref (parse-field (read-line in)) 0)))))
+    (check-header)
+    (apply 'make-instance 'blog
+           (append args (list :content (slurp-remainder)
+                              :slug (slugify (getf args :title))))))))
 
 (defun write-post (slug post)
   "Write out the HTML for POST in SLUG.html."

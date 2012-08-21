@@ -41,7 +41,7 @@
     (format out "title: ~A~%" title)
     (format out "tags: ~A~%" (format nil "~{~A, ~}" tags))
     (format out "date: ~A~%" date)
-    (format out "type: html~%") ; post format: html, md, rst, etc
+    (format out "format: html~%") ; post format: html, md, rst, etc
     (format out ";;;;;~%")
     (format out "~A~%" (post-content post))))
 

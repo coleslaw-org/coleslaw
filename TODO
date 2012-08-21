@@ -13,8 +13,7 @@ Plugins? Injection support for HEAD and BODY. What about predicate-based injecti
 How is it served? Hunchentoot, Lighttpd, S3, whomever!
 
 TODO:
-; implement read-post
-; fix plugins: s3, wordpress
+; fix plugins: s3
 ; doc themes and plugins
 ; implement plugins: atom, markdown, pygment/highlighting
 ; actually start using this for redlinernotes.com? Move over May-2007 to present.
