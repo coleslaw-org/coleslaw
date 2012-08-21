@@ -11,8 +11,8 @@
    (format :initform nil :initarg :format :accessor post-format)
    (content :initform nil :initarg :content :accessor post-content)))
 
-(defun render-posts ()
-  "Iterate through the files in the repo to render+write the posts out to disk."
+(defun load-posts ()
+  "Read the stored .post files from the repo."
   (clrhash *posts*)
   (do-files (file (repo *config*) "post")
     (with-open-file (in file)
@@ -20,7 +20,11 @@
         (if (gethash (post-slug post) *posts*)
             (error "There is already an existing post with the slug ~a."
                    (post-slug post))
-            (setf (gethash (post-slug post) *posts*) post)))))
+            (setf (gethash (post-slug post) *posts*) post))))))
+
+(defun render-posts ()
+  "Iterate through the files in the repo to render+write the posts out to disk."
+  (load-posts)
   (maphash #'write-post *posts*))
 
 (defgeneric render-content (text format)
