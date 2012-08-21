@@ -71,6 +71,7 @@ on files that match the given extension."
   (:documentation "Deploy DIR, updating the .prev and .curr symlinks.")
   (:method (dir)
     (let ((new-build (app-path "generated/~a" (get-universal-time))))
+      (ensure-directories-exist new-build)
       (run-program "mv" (mapcar #'namestring (list dir new-build)))
       (when (probe-file (app-path ".prev"))
         (delete-directory-and-files (read-symlink (app-path ".prev"))))
