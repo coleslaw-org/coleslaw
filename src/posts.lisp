@@ -42,11 +42,11 @@
     (check-header)
     (let ((args (loop for field in '("title" "tags" "date" "format")
                    for line = (read-line in nil)
-                   appending (list (make-keyword field)
+                   appending (list (make-keyword (string-upcase field))
                                    (aref (parse-field line) 0)))))
     (check-header)
     (setf (getf args :tags) (cl-ppcre:split ", " (getf args :tags))
-          (getf args :format) (make-keyword (getf args :format)))
+          (getf args :format) (make-keyword (string-upcase (getf args :format))))
     (apply 'make-instance 'post
            (append args (list :content (read-line in nil)
                               :slug (slugify (getf args :title))))))))
