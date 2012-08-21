@@ -23,33 +23,34 @@ on files that match the given extension."
 
 (defun render-page (path html)
   "Populate the base template with the provided HTML and write it out to PATH."
-  (ensure-directories-exist path)
-  (with-open-file (out path
-                   :direction :output
-                   :if-does-not-exist :create)
-    (let ((content (funcall (theme-fn "BASE")
-                            (list :title (title *config*)
-                                  :siteroot (domain *config*)
-                                  :navigation (sitenav *config*)
-                                  :content html
-                                  :head-inject (apply #'concatenate 'string
-                                                      (gethash :head *injections*))
-                                  :body-inject (apply #'concatenate 'string
-                                                      (gethash :body *injections*))
-                                  :license (license *config*)
-                                  :credits (author *config*)))))
-      (write-line content out))))
+  (let ((filepath (merge-pathnames path (staging *config*))))
+    (ensure-directories-exist filepath)
+    (with-open-file (out path
+                         :direction :output
+                         :if-does-not-exist :create)
+      (let ((content (funcall (theme-fn "BASE")
+                              (list :title (title *config*)
+                                    :siteroot (domain *config*)
+                                    :navigation (sitenav *config*)
+                                    :content html
+                                    :head-inject (apply #'concatenate 'string
+                                                        (gethash :head *injections*))
+                                    :body-inject (apply #'concatenate 'string
+                                                        (gethash :body *injections*))
+                                    :license (license *config*)
+                                    :credits (author *config*)))))
+        (write-line content out)))))
 
 (defun compile-blog ()
   "Compile the blog to a staging directory in /tmp."
-  (let ((staging #p"/tmp/coleslaw/"))
+  (let ((staging (staging *config*)))
     ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
     (when (probe-file staging)
       (delete-directory-and-files staging))
     (ensure-directories-exist staging)
     (with-current-directory staging
-      (let ((css-dir (app-path "themes/~a/css/" (theme *config*)))
-            (static-dir (merge-pathnames "static/" (repo *config*))))
+      (let ((css-dir (app-path "themes/~a/css" (theme *config*)))
+            (static-dir (merge-pathnames "static" (repo *config*))))
         (dolist (dir (list css-dir static-dir))
           (when (probe-file dir)
             (run-program "cp" `("-R" ,(namestring dir) ".")))))
