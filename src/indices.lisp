@@ -2,13 +2,15 @@
 
 (defun all-months ()
   "Retrieve a list of all months with published posts."
-  (remove-duplicates (mapcar (lambda (x) (subseq (post-date x) 0 7))
-                             (hash-table-values *posts*)) :test #'string=))
+  (sort (remove-duplicates (mapcar (lambda (x) (subseq (post-date x) 0 7))
+                                   (hash-table-values *posts*)) :test #'string=)
+        #'string<))
 
 (defun all-tags ()
   "Retrieve a list of all tags used in posts."
-  (reduce (lambda (x y) (union x y :test #'string=))
-          (mapcar #'post-tags (hash-table-values *posts*))))
+  (sort (reduce (lambda (x y) (union x y :test #'string=))
+                (mapcar #'post-tags (hash-table-values *posts*)))
+        #'string<))
 
 (defun taglinks ()
   "Generate links to all the tag indices."
