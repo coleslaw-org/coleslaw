@@ -13,6 +13,9 @@ Plugins? Injection support for HEAD and BODY. What about predicate-based injecti
 How is it served? Hunchentoot, Lighttpd, S3, whomever!
 
 TODO:
+; blockers to use this for redlinernotes: rss/atom feed, markdown support
+; after that, focus on injections for code highlighting and latex
+
 ; doc themes and plugins
 ; populate prev and next links
 ; implement plugins: atom, markdown, pygment/highlighting
