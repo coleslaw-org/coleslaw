@@ -69,7 +69,7 @@
   (or (char<= #\0 char #\9)
       (char<= #\a char #\z)
       (char<= #\A char #\Z)
-      (member char '(#\_ #\-))))
+      (member char '(#\_ #\- #\.))))
 
 (defun slugify (string)
   "Return a version of STRING suitable for use as a URL."
