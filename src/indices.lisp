@@ -2,27 +2,33 @@
 
 (defun all-months ()
   "Retrieve a list of all months with published posts."
-  (sort (remove-duplicates (mapcar (lambda (x) (subseq (post-date x) 0 7))
-                                   (hash-table-values *posts*)) :test #'string=)
-        #'string<))
+  (remove-duplicates (mapcar (lambda (x) (get-month (post-date x)))
+                             (hash-table-values *posts*)) :test #'string=))
 
 (defun all-tags ()
   "Retrieve a list of all tags used in posts."
-  (sort (reduce (lambda (x y) (union x y :test #'string=))
-                (mapcar #'post-tags (hash-table-values *posts*)))
-        #'string<))
+  (reduce (lambda (x y) (union x y :test #'string=))
+          (mapcar #'post-tags (hash-table-values *posts*))))
 
 (defun taglinks ()
   "Generate links to all the tag indices."
-  (loop for tag in (all-tags)
+  (loop for tag in (sort (all-tags) #'string<)
      collect (list :url (format nil "~a/tag/~a.html" (domain *config*) tag)
                    :name tag)))
 
 (defun monthlinks ()
   "Generate links to all the month indices."
-  (loop for month in (all-months)
+  (loop for month in (sort (all-months) #'string<)
      collect (list :url (format nil "~a/date/~a.html" (domain *config*) month)
                    :name month)))
+
+(defun get-month (timestamp)
+  "Extract the YYYY-MM portion of TIMESTAMP."
+  (subseq timestamp 0 7))
+
+(defun by-date (posts)
+  "Sort POSTS in reverse chronological order."
+  (sort posts #'string> :key #'post-date))
 
 (defun write-index (posts filename title)
   "Write out the HTML for POSTS to FILENAME.html."
@@ -48,7 +54,7 @@
   (flet ((by-20 (posts start)
            (let ((index (* 20 (1- start))))
              (subseq posts index (min (length posts) (+ index 20))))))
-    (let ((posts (sort (hash-table-values *posts*) #'string> :key #'post-date)))
+    (let ((posts (by-date (hash-table-value *posts*))))
       (loop for i = 1 then (1+ i)
          do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts")
          until (> (* i 20) (length posts))))))
@@ -59,19 +65,19 @@
      do (flet ((match-tag (post)
                  (member tag (post-tags post) :test #'string=)))
           (let ((posts (remove-if-not #'match-tag (hash-table-values *posts*))))
-            (write-index posts (format nil "tag/~a.html" tag)
+            (write-index (by-date posts)
+                         (format nil "tag/~a.html" tag)
                          (format nil "Posts tagged ~a" tag))))))
 
 (defun render-by-month ()
   "Render the indices to view posts by month."
-  (let ((months (remove-duplicates (mapcar (lambda (x) (subseq (post-date x) 0 7))
-                                           (hash-table-values *posts*))
-                                   :test #'string=)))
-    (loop for month in months
-       do (let ((posts (remove-if-not (lambda (x) (search month (post-date x)))
-                                      (hash-table-values *posts*))))
-            (write-index posts (format nil "date/~a.html" (subseq month 0 7))
-                         (format nil "Posts from ~a" (subseq month 0 7)))))))
+  (loop for month in (all-months)
+     do (flet ((match-month (post)
+                 (search month (post-date post))))
+          (let ((posts (remove-if-not #'match-month (hash-table-values *posts*))))
+            (write-index (by-date posts)
+                         (format nil "date/~a.html" month)
+                         (format nil "Posts from ~a" month))))))
 
 (defun render-indices ()
   "Render the indices to view posts in groups of 20, by month, and by tag."
