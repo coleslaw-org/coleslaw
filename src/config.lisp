@@ -2,6 +2,7 @@
 
 (defclass blog ()
   ((author :initarg :author :initform "" :accessor author)
+   (deploy :initarg :deploy :initform nil :accessor deploy)
    (domain :initarg :domain :initform "" :accessor domain)
    (license :initarg :license :initform "CC-BY-SA" :accessor license)
    (plugins :initarg :plugins :initform '() :accessor plugins)

@@ -36,8 +36,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
             (run-program "cp" `("-R" ,(namestring dir) ".")))))
       (render-posts)
       (render-indices)
-      (render-feed))
-    (deploy staging)))
+      (render-feed))))
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
@@ -46,18 +45,21 @@ If RAW is non-nil, write the content without wrapping it in the base template."
 (defgeneric deploy (dir)
   (:documentation "Deploy DIR, updating the .prev and .curr symlinks.")
   (:method (dir)
-    (let ((new-build (app-path "generated/~a" (get-universal-time))))
+    (let ((new-build (app-path "generated/~a" (get-universal-time)))
+          (prev (merge-pathnames ".prev" (deploy *config*)))
+          (curr (merge-pathnames ".curr" (deploy *config*))))
       (ensure-directories-exist new-build)
       (with-current-directory coleslaw-conf:*basedir*
         (run-program "mv" (mapcar #'namestring (list dir new-build)))
-        (when (probe-file (app-path ".prev"))
-          (delete-directory-and-files (read-symlink (app-path ".prev"))))
-        (when (probe-file (app-path ".curr"))
-          (update-symlink ".prev" (read-symlink (app-path ".curr"))))
-        (update-symlink ".curr" new-build)))))
+        (when (probe-file prev)
+          (delete-directory-and-files (read-symlink prev)))
+        (when (probe-file curr)
+          (update-symlink prev (read-symlink curr)))
+        (update-symlink curr new-build)))))
 
 (defun main ()
   "Load the user's config, then compile and deploy the blog."
   (load-config)
   (compile-theme)
-  (compile-blog))
+  (compile-blog)
+  (deploy (staging *config*)))

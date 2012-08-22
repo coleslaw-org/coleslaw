@@ -9,7 +9,6 @@
   :serial t
   :components ((:file "packages")
                (:file "config")
-               (:file "git")
                (:file "util")
                (:file "plugins")
                (:file "themes")
