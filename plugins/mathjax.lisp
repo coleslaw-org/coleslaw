@@ -10,8 +10,4 @@
 src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\">
 </script>")
 
-(defmethod enable ()
-  (coleslaw::add-injection *mathjax-header* :head))
-
-(defmethod disable ()
-  (coleslaw::remove-injection *mathjax-header* :head))
+(coleslaw:add-injection *mathjax-header* :head)

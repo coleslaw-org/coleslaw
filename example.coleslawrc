@@ -1,7 +1,7 @@
 (:author "Brit Butler"
  :domain "http://blog.redlinernotes.com"
  :license "CC-BY-SA"
- :plugins nil
+ :plugins (markdown mathjax)
  :repo "/home/redline/projects/coleslaw/ignore/input/"
  :sitenav ""
  :title "Improved Means for Achieving Deteriorated Ends"
