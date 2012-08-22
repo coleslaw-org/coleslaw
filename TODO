@@ -17,6 +17,4 @@ TODO:
 ; doc themes and plugins
 ; fix plugins: s3
 ;; Incremental compile: only "touched" posts+tags+months. By-20 must be redone, of course.
-;; support old URLs via use of post-aliases?
 ;;; plugins: analytics, logging/monitoring, crossposting, disqus
-;;;; write a proper version of escape considering wild pathnames and valid URL issues
