@@ -5,10 +5,7 @@
 resulting pathnames. It is expected that the matching *.lisp files
 are in the plugins folder in coleslaw's source directory."
   (let ((files (mapcar (lambda (sym)
-                         (merge-pathnames
-                          (concatenate 'string "plugins/"
-                                       (string-downcase (symbol-name sym)))
-                          coleslaw-conf:*basedir*))
+                         (app-path "plugins/~a" (string-downcase (symbol-name sym))))
                        plugins)))
     (map nil (lambda (file)
                (compile-file file)
