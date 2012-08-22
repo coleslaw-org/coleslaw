@@ -10,9 +10,9 @@
   (reduce (lambda (x y) (union x y :test #'string=))
           (mapcar #'post-tags (hash-table-values *posts*))))
 
-(defun taglinks ()
-  "Generate links to all the tag indices."
-  (loop for tag in (sort (all-tags) #'string<)
+(defun taglinks (&optional tags)
+  "Generate links to all the tag indices or those in TAGS."
+  (loop for tag in (or tags (sort (all-tags) #'string<))
      collect (list :url (format nil "~a/tag/~a.html" (domain *config*) tag)
                    :name tag)))
 

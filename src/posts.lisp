@@ -66,7 +66,7 @@
   (render-page (post-url post)
                (funcall (theme-fn "POST")
                         (list :title (post-title post)
-                              :tags (post-tags post)
+                              :tags (taglinks (post-tags post))
                               :date (post-date post)
                               :content (render-content (post-content post)
                                                        (post-format post))
