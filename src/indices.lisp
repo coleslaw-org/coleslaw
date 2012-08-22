@@ -30,7 +30,7 @@
   "Sort POSTS in reverse chronological order."
   (sort posts #'string> :key #'post-date))
 
-(defun write-index (posts filename title)
+(defun write-index (posts filename title &optional prev next)
   "Write out the HTML for POSTS to FILENAME.html."
   (let ((content (loop for post in posts
                     collect (list :url (format nil "~a/posts/~a.html"
@@ -45,18 +45,19 @@
                                 :monthlinks (monthlinks)
                                 :title title
                                 :posts content
-                                ; TODO: Populate prev and next with links.
-                                :prev nil
-                                :next nil)))))
+                                :prev (and prev (format nil "~d.html" prev))
+                                :next (and next (format nil "~d.html" next)))))))
 
 (defun render-by-20 ()
   "Render the indices to view posts in reverse chronological order by 20."
   (flet ((by-20 (posts start)
            (let ((index (* 20 (1- start))))
              (subseq posts index (min (length posts) (+ index 20))))))
-    (let ((posts (by-date (hash-table-value *posts*))))
+    (let ((posts (by-date (hash-table-values *posts*))))
       (loop for i = 1 then (1+ i)
-         do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts")
+         do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts"
+                         (and (plusp (1- i)) (1- i))
+                         (and (< (* i 20) (length posts)) (1+ i)))
          until (> (* i 20) (length posts))))))
 
 (defun render-by-tag ()

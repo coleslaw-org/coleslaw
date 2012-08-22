@@ -22,10 +22,20 @@
                    (post-slug post))
             (setf (gethash (post-slug post) *posts*) post))))))
 
+(defun post-url (post)
+  "Return the relative URL for a given post."
+  (format nil "posts/~a.html" (post-slug post)))
+
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
   (load-posts)
-  (maphash #'write-post *posts*))
+  (loop with posts = (sort (hash-table-values *posts*) #'string< :key #'post-date)
+     for i from 1 upto (length posts)
+     for prev = nil then post
+     for post = (nth (1- i) posts)
+     for next = (nth (1+ i) posts)
+     do (write-post post :prev (and prev (post-url prev))
+                         :next (and next (post-url next)))))
 
 (defgeneric render-content (text format)
   (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
@@ -51,18 +61,17 @@
            (append args (list :content (read-line in nil)
                               :slug (slugify (getf args :title))))))))
 
-(defun write-post (slug post)
+(defun write-post (post &key prev next)
   "Write out the HTML for POST in SLUG.html."
-  (render-page (format nil "posts/~a.html" slug)
+  (render-page (post-url post)
                (funcall (theme-fn "POST")
                         (list :title (post-title post)
                               :tags (post-tags post)
                               :date (post-date post)
                               :content (render-content (post-content post)
                                                        (post-format post))
-                              ; TODO: Populate prev and next with links.
-                              :prev nil
-                              :next nil))))
+                              :prev prev
+                              :next next))))
 
 (defun slug-char-p (char)
   "Determine if CHAR is a valid slug (i.e. URL) character."
