@@ -24,7 +24,7 @@
 
 (defun post-url (post)
   "Return the relative URL for a given post."
-  (format nil "posts/~a.html" (post-slug post)))
+  (format nil "~a.html" (post-slug post)))
 
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
