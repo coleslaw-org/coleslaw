@@ -3,7 +3,6 @@
 (defclass blog ()
   ((author :initarg :author :initform "" :accessor author)
    (domain :initarg :domain :initform "" :accessor domain)
-   (interval :initarg :interval :initform 600 :accessor interval)
    (license :initarg :license :initform "CC-BY-SA" :accessor license)
    (plugins :initarg :plugins :initform '() :accessor plugins)
    (repo :initarg :repo :initform #p"/" :accessor repo)

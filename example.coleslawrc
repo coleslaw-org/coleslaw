@@ -1,6 +1,5 @@
 (:author "Brit Butler"
- :domain "http://redlinernotes.com"
- :interval 600
+ :domain "http://blog.redlinernotes.com"
  :license "CC-BY-SA"
  :plugins nil
  :repo "/home/redline/projects/coleslaw/ignore/input/"

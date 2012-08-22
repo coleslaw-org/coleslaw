@@ -37,8 +37,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
       (render-posts)
       (render-indices)
       (render-feed))
-    (deploy staging)
-    (setf (last-published) (last-commit))))
+    (deploy staging)))
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
@@ -58,8 +57,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
         (update-symlink ".curr" new-build)))))
 
 (defun main ()
+  "Load the user's config, then compile and deploy the blog."
   (load-config)
   (compile-theme)
-  (loop do (if (blog-update-p)
-               (compile-blog)
-               (sleep (interval *config*)))))
+  (compile-blog))
