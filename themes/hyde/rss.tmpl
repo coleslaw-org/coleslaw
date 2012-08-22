@@ -23,7 +23,8 @@
       <guid isPermaLink="true">{$siteroot}/{$post.url}</guid>
       <content:encoded>{$post.content |noAutoescape}</content:encoded>
     </item>
-    {% endfor %}
+    {/foreach}
 
   </channel>
 </rss>
+{/template}
