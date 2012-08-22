@@ -58,7 +58,8 @@
     (setf (getf args :tags) (cl-ppcre:split ", " (getf args :tags))
           (getf args :format) (make-keyword (string-upcase (getf args :format))))
     (apply 'make-instance 'post
-           (append args (list :content (read-line in nil)
+           (append args (list :content (render-content (read-line in nil)
+                                                       (getf args :format))
                               :slug (slugify (getf args :title))))))))
 
 (defun write-post (post &key prev next)
@@ -68,8 +69,7 @@
                         (list :title (post-title post)
                               :tags (taglinks (post-tags post))
                               :date (post-date post)
-                              :content (render-content (post-content post)
-                                                       (post-format post))
+                              :content (post-content post)
                               :prev prev
                               :next next))))
 
