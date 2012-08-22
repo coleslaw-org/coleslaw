@@ -63,21 +63,22 @@ on files that match the given extension."
     (deploy staging)
     (setf (last-published) (last-commit))))
 
-(defun update-symlink (name target)
-  "Update the symlink NAME to point to TARGET."
-  (run-program "ln" (list "-sfn" (namestring target) name)))
+(defun update-symlink (path target)
+  "Update the symlink at PATH to point to TARGET."
+  (run-program "ln" (list "-sfn" (namestring target) (namestring path))))
 
 (defgeneric deploy (dir)
   (:documentation "Deploy DIR, updating the .prev and .curr symlinks.")
   (:method (dir)
     (let ((new-build (app-path "generated/~a" (get-universal-time))))
       (ensure-directories-exist new-build)
-      (run-program "mv" (mapcar #'namestring (list dir new-build)))
-      (when (probe-file (app-path ".prev"))
-        (delete-directory-and-files (read-symlink (app-path ".prev"))))
-      (when (probe-file (app-path ".curr"))
-        (update-symlink ".prev" (read-symlink (app-path ".curr"))))
-      (update-symlink ".curr" new-build))))
+      (with-current-directory coleslaw-conf:*basedir*
+        (run-program "mv" (mapcar #'namestring (list dir new-build)))
+        (when (probe-file (app-path ".prev"))
+          (delete-directory-and-files (read-symlink (app-path ".prev"))))
+        (when (probe-file (app-path ".curr"))
+          (update-symlink ".prev" (read-symlink (app-path ".curr"))))
+        (update-symlink ".curr" new-build)))))
 
 (defun main ()
   (load-config)
