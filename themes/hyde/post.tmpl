@@ -5,7 +5,7 @@
   <h1 class="title">{$title}</h1>{\n}
   <div class="tags">{\n}
     Tagged as {foreach $tag in $tags}
-                <a href="{$tag.url |noAutoescape}">{$tag.name}</a>
+                <a href="../{$tag.url |noAutoescape}">{$tag.name}</a>
                     {if not isLast($tag)}, {/if}
               {/foreach}
   </div>{\n}

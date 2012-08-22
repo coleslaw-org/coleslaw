@@ -16,7 +16,7 @@
 <div id="tagsoup">
   <p>This blog covers
     {foreach $taglink in $taglinks}
-      <a href="{$taglink.url |noAutoescape}">{$taglink.name}</a>
+      <a href="{$siteroot}/{$taglink.url |noAutoescape}">{$taglink.name}</a>
       {if not isLast($taglink)}, {/if}
     {/foreach}
 </div>
@@ -25,7 +25,7 @@
 <div id="monthsoup">
   <p>View posts from
     {foreach $monthlink in $monthlinks}
-      <a href="{$monthlink.url |noAutoescape}">{$monthlink.name}</a>
+      <a href="{$siteroot}/{$monthlink.url |noAutoescape}">{$monthlink.name}</a>
       {if not isLast($monthlink)}, {/if}
     {/foreach}
 </div>

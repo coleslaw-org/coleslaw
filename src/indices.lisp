@@ -13,14 +13,12 @@
 (defun taglinks (&optional tags)
   "Generate links to all the tag indices or those in TAGS."
   (loop for tag in (or tags (sort (all-tags) #'string<))
-     collect (list :url (format nil "~a/tag/~a.html" (domain *config*) tag)
-                   :name tag)))
+     collect (list :url (format nil "tag/~a.html" tag) :name tag)))
 
 (defun monthlinks ()
   "Generate links to all the month indices."
   (loop for month in (sort (all-months) #'string<)
-     collect (list :url (format nil "~a/date/~a.html" (domain *config*) month)
-                   :name month)))
+     collect (list :url (format nil "date/~a.html" month) :name month)))
 
 (defun get-month (timestamp)
   "Extract the YYYY-MM portion of TIMESTAMP."
@@ -30,11 +28,13 @@
   "Sort POSTS in reverse chronological order."
   (sort posts #'string> :key #'post-date))
 
-(defun write-index (posts filename title &optional prev next)
+(defun write-index (posts filename title &key prev next (relative t))
   "Write out the HTML for POSTS to FILENAME.html."
   (let ((content (loop for post in posts
-                    collect (list :url (format nil "~a/posts/~a"
-                                               (domain *config*) (post-url post))
+                    collect (list :url (if relative
+                                           (format nil "../posts/~a" (post-url post))
+                                           (format nil "~a/posts/~a"
+                                                   (domain *config*) (post-url post)))
                                   :title (post-title post)
                                   :date (post-date post)
                                   :content (render-content (post-content post)
@@ -43,6 +43,7 @@
                  (funcall (theme-fn "INDEX")
                           (list :taglinks (taglinks)
                                 :monthlinks (monthlinks)
+                                :siteroot (domain *config*)
                                 :title title
                                 :posts content
                                 :prev (and prev (format nil "~d.html" prev))
@@ -56,8 +57,9 @@
     (let ((posts (by-date (hash-table-values *posts*))))
       (loop for i = 1 then (1+ i)
          do (write-index (by-20 posts i) (format nil "~d.html" i) "Recent Posts"
-                         (and (plusp (1- i)) (1- i))
-                         (and (< (* i 20) (length posts)) (1+ i)))
+                         :prev (and (plusp (1- i)) (1- i))
+                         :next (and (< (* i 20) (length posts)) (1+ i))
+                         :relative nil)
          until (> (* i 20) (length posts))))))
 
 (defun render-by-tag ()
