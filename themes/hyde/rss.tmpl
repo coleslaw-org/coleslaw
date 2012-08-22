@@ -20,7 +20,7 @@
       {foreach $tag in $post.tags}
         <category>{$tag |noAutoescape}</category>
       {/foreach}
-      <content:encoded>{$post.content |noAutoescape}</content:encoded>
+      <description>{$post.content |noAutoescape}</description>
     </item>
     {/foreach}
 
