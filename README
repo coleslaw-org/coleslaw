@@ -22,7 +22,7 @@ References:
 
 This software should be portable to any conforming Common Lisp implementation but this guide will assume SBCL is installed. Testing has also been done on CCL.
 Server side setup:
-* Clone or create the git repo for your blog.
+* Setup git and create a bare repo as shown [here](http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server).
 * Install Lisp and Quicklisp.
 * For now, git clone https://github.com/redline6561/coleslaw.git and add
            (push "/path/to/coleslaw/" asdf:*central-registry*) to your lisp's init file. (e.g. ~/.sbclrc for SBCL)
@@ -32,6 +32,7 @@ Server side setup:
 * Edit your-blog/.git/hooks/post-receieve and insert:
 sbcl --eval "(progn (ql:quickload :coleslaw) (coleslaw:main) (sb-ext:quit))" # or (sb-ext:exit) on SBCL >= 1.0.57
 * chmod +x your-blog/.git/hooks/post-receive
+* Create or clone your blog repo locally. And add your server as a remote with git remote add prod git@my-host.com:/absolute/path/to/repo.git
 Now whenever you push a new commit to the server, coleslaw will update your blog automatically!
 The only thing left to do is point a web server of your choice at the symlink /path/to/coleslaw/.curr
 
