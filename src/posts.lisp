@@ -42,6 +42,11 @@
   (:method (text (format (eql :html)))
     text))
 
+(defmethod render-content (text (format (eql :md)))
+  (let ((3bmd-code-blocks:*code-blocks* t))
+    (with-output-to-string (str)
+      (3bmd:parse-string-and-print-to-stream text str))))
+
 (defun read-post (in)
   "Make a POST instance based on the data from the stream IN."
   (flet ((check-header ()
