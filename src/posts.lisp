@@ -33,7 +33,7 @@
      for i from 1 upto (length posts)
      for prev = nil then post
      for post = (nth (1- i) posts)
-     for next = (nth (1+ i) posts)
+     for next = (nth i posts)
      do (write-post post :prev (and prev (post-url prev))
                          :next (and next (post-url next)))))
 
