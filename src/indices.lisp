@@ -33,7 +33,8 @@
 (defun write-index (posts filename title &optional prev next)
   "Write out the HTML for POSTS to FILENAME.html."
   (let ((content (loop for post in posts
-                    collect (list :url (format nil "posts/~a.html" (post-slug post))
+                    collect (list :url (format nil "~a/posts/~a.html"
+                                               (domain *config*) (post-slug post))
                                   :title (post-title post)
                                   :date (post-date post)
                                   :content (render-content (post-content post)
