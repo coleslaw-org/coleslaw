@@ -1,16 +1,18 @@
 Coleslaw aims to be flexible blog software suitable for replacing a single-user static site compiler such as Jekyll.
 
+Full docs coming soon...
+
 Features:
 * Git for storage
+* RSS feeds!
 * Plugins to...
 ** Import from wordpress
 ** Use Mathjax/LaTeX
-** Host on Amazon S3
 
 Forthcoming:
 * Markdown support
 * RST support
-* Atom or RSS feeds
+* Host on Amazon S3
 * Code highlighting
 
 References:

@@ -1,4 +1,5 @@
 (defpackage :coleslaw
+  (:documentation "Homepage: <a href=\"http://github.com/redline6561/coleslaw\">Github</a>")
   (:use :cl :closure-template)
   (:import-from :cl-fad #:delete-directory-and-files
                         #:list-directory)
@@ -10,4 +11,5 @@
   (:export #:main
            #:add-injection
            #:render-content
+           #:render-feed
            #:deploy))

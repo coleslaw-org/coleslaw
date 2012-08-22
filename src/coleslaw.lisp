@@ -25,8 +25,9 @@ on files that match the given extension."
                      `,body))
              (list-directory ,path))))
 
-(defun render-page (path html)
-  "Populate the base template with the provided HTML and write it out to PATH."
+(defun render-page (path html &optional raw)
+  "Populate the base template with the provided HTML and write it out to PATH.
+If RAW is non-nil, write the content without wrapping it in the base template."
   (let ((filepath (merge-pathnames path (staging *config*))))
     (ensure-directories-exist filepath)
     (with-open-file (out filepath
@@ -43,7 +44,7 @@ on files that match the given extension."
                                                         (gethash :body *injections*))
                                     :license (license *config*)
                                     :credits (author *config*)))))
-        (write-line content out)))))
+        (write-line (if raw html content) out)))))
 
 (defun compile-blog ()
   "Compile the blog to a staging directory in /tmp."
