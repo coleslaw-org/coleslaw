@@ -7,20 +7,19 @@
     <title>{$title}</title>
     <link>{$siteroot}</link>
     <atom:link href="{$siteroot}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>{$title}</description>
     <language>en-us</language>
     <pubDate>{$pubdate}</pubDate>
 
     {foreach $post in $posts}
     <item>
       <title>{$post.title}</title>
-      <link>{$siteroot}/{$post.url}</link>
+      <link>{$siteroot}/posts/{$post.url}</link>
       <pubDate>{$post.date}</pubDate>
       <author>{$author}</author>
-      {foreach $tag in $tags}
+      <guid isPermaLink="true">{$siteroot}/posts/{$post.url}</guid>
+      {foreach $tag in $post.tags}
         <category>{$tag |noAutoescape}</category>
       {/foreach}
-      <guid isPermaLink="true">{$siteroot}/{$post.url}</guid>
       <content:encoded>{$post.content |noAutoescape}</content:encoded>
     </item>
     {/foreach}

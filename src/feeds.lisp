@@ -30,8 +30,8 @@
                                    :content (xml-escape (post-content post))))))
     (render-page "rss.xml"
                  (funcall (theme-fn "RSS")
-                          :pubdate (make-pubdate)
-                          :title (title *config*)
-                          :siteroot (domain *config*)
-                          :author (author *config*)
-                          :posts content)) t))
+                          (list :pubdate (make-pubdate)
+                                :title (title *config*)
+                                :siteroot (domain *config*)
+                                :author (author *config*)
+                                :posts content)) t)))
