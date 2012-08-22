@@ -63,7 +63,7 @@
 
 (defun write-post (post &key prev next)
   "Write out the HTML for POST in SLUG.html."
-  (render-page (post-url post)
+  (render-page (format nil "posts/~a" (post-url post))
                (funcall (theme-fn "POST")
                         (list :title (post-title post)
                               :tags (taglinks (post-tags post))
