@@ -59,7 +59,8 @@ on files that match the given extension."
           (when (probe-file dir)
             (run-program "cp" `("-R" ,(namestring dir) ".")))))
       (render-posts)
-      (render-indices))
+      (render-indices)
+      (render-feed))
     (deploy staging)
     (setf (last-published) (last-commit))))
 

@@ -1,0 +1,29 @@
+{namespace coleslaw.theme.hyde}
+
+{template rss}
+<?xml version="1.0"?>{\n}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{$title}</title>
+    <link>{$siteroot}</link>
+    <atom:link href="{$siteroot}/rss.xml" rel="self" type="application/rss+xml" />
+    <description>{$title}</description>
+    <language>en-us</language>
+    <pubDate>{$pubdate}</pubDate>
+
+    {foreach $post in $posts}
+    <item>
+      <title>{$post.title}</title>
+      <link>{$siteroot}/{$post.url}</link>
+      <pubDate>{$post.date}</pubDate>
+      <author>{$author}</author>
+      {foreach $tag in $tags}
+        <category>{$tag |noAutoescape}</category>
+      {/foreach}
+      <guid isPermaLink="true">{$siteroot}/{$post.url}</guid>
+      <content:encoded>{$post.content |noAutoescape}</content:encoded>
+    </item>
+    {% endfor %}
+
+  </channel>
+</rss>

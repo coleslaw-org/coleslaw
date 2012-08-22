@@ -5,7 +5,7 @@
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
-  :depends-on (:closure-template :iolib.os :alexandria :cl-fad)
+  :depends-on (:closure-template :iolib.os :alexandria :cl-fad :local-time)
   :serial t
   :components ((:file "packages")
                (:file "config")
@@ -13,6 +13,7 @@
                (:file "themes")
                (:file "plugins")
                (:file "coleslaw")
+               (:file "feeds")
                (:file "posts")
                (:file "indices"))
   :in-order-to ((test-op (load-op coleslaw-tests)))
