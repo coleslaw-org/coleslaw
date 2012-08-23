@@ -13,19 +13,36 @@ a.anchor { color: black }
 .tag-high { font-size: 1.8em; font-weight: 800 }
 .navigation { font-size: 1.2em; border-bottom: 1px solid }
 body { background-color: white; font-family: Vollkorn; font-size: 14pt }
-.highlight { background-color: (unquote light-yellow) }
-.highlight .symbol, .highlight .default, .highlight .comment { background-color: white; font-weight: normal; color: black }
-.highlight i { font-style: normal }
-.highlight i .symbol { font-weight: bold; color: (unquote red1) }
-.highlight .paren1, .highlight .paren2, .highlight .paren3, .highlight .paren4, .highlight .paren5, .highlight .paren6 { background-color: inherit }
-.highlight .paren1:hover, .highlight .paren2:hover, .highlight .paren3:hover, .highlight .paren4:hover, .highlight .paren5:hover, .highlight .paren6:hover { font-weight: bold; color: white }
-.highlight .string { font-style: italic; font-weight: light; color: #992900 }
-.highlight .paren1:hover { background-color: #DB7859 }
-.highlight .paren2:hover { background-color: #1B804C }
-.highlight .paren3:hover { background-color: #9F214E }
-.highlight .paren4:hover { background-color: #DBA059 }
-.highlight .paren5:hover { background-color: #B64926 }
-.highlight .paren6:hover { background-color: #64A422 }
-.highlight .comment { color: (unquote red2) }
-pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed; background-color: white; padding: .75em .5em; font-family: (unquote mono-font) }
+pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
+      background-color: white; padding: .75em .5em; font-family: (unquote mono-font) }
 tt { font-size: .9em; font-family: (unquote mono-font) }
+
+/* Stolen from lisppaste for the colorize output of 3bmd */
+.paste { background-color: #F4F4F4; color: black; }
+.paste:hover { background-color: #F4F4F4; color: black; }
+.symbol { color : #770055; background-color : transparent; border: 0px; margin: 0px;}
+.special { color : #FF5000; background-color : inherit; }
+.keyword { color : #770000; background-color : inherit; }
+.comment { color : #007777; background-color : inherit; }
+.string { color : #777777; background-color : inherit; }
+.atom { color : #314F4F; background-color : inherit; }
+.macro { color : #FF5000; background-color : inherit; }
+.variable { color : #36648B; background-color : inherit; }
+.function { color : #8B4789; background-color : inherit; }
+.attribute { color : #FF5000; background-color : inherit; }
+.character { color : #0055AA; background-color : inherit; }
+.syntaxerror { color : #FF0000; background-color : inherit; }
+.diff-deleted { color : #5F2121; background-color : inherit; }
+.diff-added { color : #215F21; background-color : inherit; }
+span.paren1 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren1:hover { color : inherit; background-color : #BAFFFF; }
+span.paren2 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren2:hover { color : inherit; background-color : #FFCACA; }
+span.paren3 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren3:hover { color : inherit; background-color : #FFFFBA; }
+span.paren4 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren4:hover { color : inherit; background-color : #CACAFF; }
+span.paren5 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren5:hover { color : inherit; background-color : #CAFFCA; }
+span.paren6 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren6:hover { color : inherit; background-color : #FFBAFF; }
