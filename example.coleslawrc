@@ -1,8 +1,9 @@
 (:author "Brit Butler"
+ :deploy "/home/git/blog/"
  :domain "http://blog.redlinernotes.com"
  :license "CC-BY-SA"
- :plugins (markdown mathjax)
- :repo "/home/redline/projects/coleslaw/ignore/input/"
+ :plugins (mathjax)
+ :repo "/home/git/tmp/improvedmeans/"
  :sitenav ""
  :title "Improved Means for Achieving Deteriorated Ends"
  :theme "hyde")

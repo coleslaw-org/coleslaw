@@ -1,0 +1,8 @@
+GIT_REPO=$HOME/improvedmeans.git
+# TMP_GIT_CLONE _must_ match the :repo arg in coleslawrc excluding trailing slash
+TMP_GIT_CLONE=$HOME/tmp/improvedmeans
+
+git clone $GIT_REPO $TMP_GIT_CLONE
+sbcl --eval "(progn (ql:quickload 'coleslaw) (coleslaw:main) (sb-ext:quit))"
+rm -Rf $TMP_GIT_CLONE
+exit
