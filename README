@@ -29,10 +29,8 @@ Server side setup:
              -- You may need to (require 'asdf) in that file first or even create it! (Don't panic.)
       This is only temporarily necessary until coleslaw is in quicklisp.
 * cp coleslaw/example.coleslawrc ~/.coleslawrc # and edit as necessary for your repo location, deploy location, etc
-* Edit your-blog/.git/hooks/post-receieve and insert:
-sbcl --eval "(progn (ql:quickload :coleslaw) (coleslaw:main) (sb-ext:quit))" # or (sb-ext:exit) on SBCL >= 1.0.57
+* cp coleslaw/example.post-receieve your-blog.git/hooks/post-receive
 * chmod +x your-blog/.git/hooks/post-receive
-* Create or clone your blog repo locally. And add your server as a remote with git remote add prod git@my-host.com:/absolute/path/to/repo.git
+* Create or clone your blog repo locally. Add your server as a remote with git remote add prod git@my-host.com:path/to/repo.git
 Now whenever you push a new commit to the server, coleslaw will update your blog automatically!
 The only thing left to do is point a web server of your choice at the symlink /path/to/coleslaw/.curr
-
