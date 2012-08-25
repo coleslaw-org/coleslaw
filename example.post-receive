@@ -3,6 +3,7 @@ GIT_REPO=$HOME/improvedmeans.git
 TMP_GIT_CLONE=$HOME/tmp/improvedmeans
 
 git clone $GIT_REPO $TMP_GIT_CLONE
-sbcl --eval "(progn (ql:quickload 'coleslaw) (coleslaw:main) (sb-ext:quit))"
+sbcl --eval "(ql:quickload 'coleslaw)" --eval "(coleslaw:main)" \
+     --eval "(sb-ext:quit))"
 rm -Rf $TMP_GIT_CLONE
 exit
