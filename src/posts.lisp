@@ -54,6 +54,8 @@
              (error "The provided file lacks the expected header.")))
          (parse-field (str)
            (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
+         (read-tags (str)
+           (mapcar #'string-downcase (cl-ppcre:split ", " str)))
          (slurp-remainder ()
            (let ((seq (make-string (- (file-length in) (file-position in)))))
              (read-sequence seq in)
@@ -64,7 +66,7 @@
                    appending (list (make-keyword (string-upcase field))
                                    (aref (parse-field line) 0)))))
       (check-header)
-      (setf (getf args :tags) (cl-ppcre:split ", " (getf args :tags))
+      (setf (getf args :tags) (read-tags (getf args :tags))
             (getf args :format) (make-keyword (string-upcase (getf args :format))))
       (apply 'make-instance 'post
              (append args (list :content (render-content (slurp-remainder)
