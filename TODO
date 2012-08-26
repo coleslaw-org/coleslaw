@@ -13,7 +13,6 @@ Plugins? Injection support for HEAD and BODY. What about predicate-based injecti
 How is it served? Hunchentoot, Lighttpd, S3, whomever!
 
 TODO:
-; test mathjax+markdown
 ; doc themes and plugins
 ; fix plugins: s3
 ;; Incremental compile: only "touched" posts+tags+months. By-20 must be redone, of course.
