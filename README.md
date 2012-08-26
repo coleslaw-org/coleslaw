@@ -47,3 +47,6 @@ The XML will be read and placed into .post files in the :repo location specified
 # Writing your own plugins
 For now, see the [API](http://redlinernotes.com/docs/coleslaw.html) the [mathjax plugin](https://github.com/redline6561/coleslaw/blob/master/plugins/mathjax.lisp) for an example.
 A proper guide about this should be written later.
+
+# Theming
+A default theme, hyde, is provided. Themes are made using Google's closure-template and the source for [hyde](https://github.com/redline6561/coleslaw/tree/master/themes/hyde) should be simple and instructive until I can provide better docs.
