@@ -60,7 +60,8 @@
                          :prev (and (plusp (1- i)) (1- i))
                          :next (and (< (* i 20) (length posts)) (1+ i))
                          :relative nil)
-         until (> (* i 20) (length posts))))))
+         until (> (* i 20) (length posts)))
+      (update-symlink "index.html" "1.html"))))
 
 (defun render-by-tag ()
   "Render the indices to view posts by tag."
