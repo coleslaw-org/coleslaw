@@ -5,8 +5,9 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 # Features
 * Git for storage
 * RSS feeds!
-* Markdown Support with Code Highlighting provided by [colorize]().
+* Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize).
   * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Objective-C, Diff.
+  * Python, Erlang, Haskell, Objective-C, and Diff are in my local colorize fork only for the moment.
 * Plugins to...
   * Use LaTeX (inside pairs of $$) via Mathjax
   * Import from wordpress
