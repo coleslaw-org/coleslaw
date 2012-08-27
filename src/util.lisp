@@ -14,13 +14,12 @@ If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
   (to-pathname (iolib.os:read-symlink path)))
 
 (defmacro do-files ((var path &optional extension) &body body)
-  "For each file under PATH, run BODY. If EXTENSION is provided, only run BODY
+  "For each file on PATH, run BODY. If EXTENSION is provided, only run BODY
 on files that match the given extension."
   (alexandria:with-gensyms (ext)
-    `(mapcar (lambda (,var)
-               ,@(if extension
-                     `((let ((,ext (pathname-type ,var)))
-                         (when (and ,ext (string= ,ext ,extension))
-                           ,@body)))
-                     `,body))
-             (list-directory ,path))))
+    `(dolist (,var (cl-fad:list-directory ,path))
+       ,@(if extension
+             `((let ((,ext (pathname-type ,var)))
+                 (when (and ,ext (string= ,ext ,extension))
+                   ,@body)))
+             `,body))))

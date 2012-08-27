@@ -1,8 +1,6 @@
 (defpackage :coleslaw
   (:documentation "Homepage: <a href=\"http://github.com/redline6561/coleslaw\">Github</a>")
   (:use :cl :closure-template)
-  (:import-from :cl-fad #:delete-directory-and-files
-                        #:list-directory)
   (:import-from :iolib.os #:with-current-directory
                           #:run-program)
   (:import-from :iolib.pathnames #:file-path-namestring)
