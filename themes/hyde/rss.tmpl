@@ -18,9 +18,9 @@
       <author>{$author}</author>
       <guid isPermaLink="true">{$siteroot}/posts/{$post.url}</guid>
       {foreach $tag in $post.tags}
-        <category>{$tag |noAutoescape}</category>
+        <category><![CDATA[ {$tag} ]]></category>
       {/foreach}
-      <description>{$post.content |noAutoescape}</description>
+      <description><![CDATA[ {$post.content} ]]></description>
     </item>
     {/foreach}
 

@@ -15,10 +15,6 @@
                        (local-time:now))))
     (local-time:format-rfc1123-timestring nil timestamp)))
 
-(defun xml-escape (string)
-  "Escape the given string for XML."
-  (format nil "<![CDATA[ ~A ]]>" string))
-
 (defun render-feed ()
   "Render and write the feed for the site."
   (let* ((posts (subseq (by-date (hash-table-values *posts*)) 0 10))
@@ -26,8 +22,8 @@
                      collect (list :title (post-title post)
                                    :url (post-url post)
                                    :date (make-pubdate (post-date post))
-                                   :tags (mapcar #'xml-escape (post-tags post))
-                                   :content (xml-escape (post-content post))))))
+                                   :tags (post-tags post)
+                                   :content (post-content post)))))
     (render-page "rss.xml"
                  (funcall (theme-fn "RSS")
                           (list :pubdate (make-pubdate)
