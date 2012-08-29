@@ -24,3 +24,31 @@ on files that match the given extension."
                  (when (and ,ext (string= ,ext ,extension))
                    ,@body)))
              `,body))))
+
+(defun current-directory ()
+  "Return the operating system's current directory."
+  #+sbcl (sb-posix:getcwd)
+  #+ccl (current-directory)
+  #+ecl (si:getcwd)
+  #+cmucl (unix:unix-current-directory)
+  #+clisp (ext:cd)
+  #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
+
+(defun (setf current-directory) (path)
+  "Change the operating system's current directory to PATH."
+  #+sbcl (sb-posix:chdir pathspec)
+  #+ccl (setf (current-directory) pathspec)
+  #+ecl (si:chdir pathspec)
+  #+cmucl (unix:unix-chdir (namestring pathspec))
+  #+clisp (ext:cd pathspec)
+  #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
+
+(defmacro with-current-directory (to-path &body body)
+  "Change the current OS directory to TO-PATH and execute BODY in
+an UNWIND-PROTECT, then change back to the current directory."
+  (alexandria:with-gensyms (old)
+    `(let ((,old (current-directory)))
+       (unwind-protect (progn
+                         (setf (current-directory) ,to-path)
+                         ,@body)
+         (setf (current-directory) ,old)))))
