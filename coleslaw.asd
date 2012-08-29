@@ -6,7 +6,7 @@
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
   :depends-on (:alexandria :closure-template :3bmd :3bmd-ext-code-blocks
-               :local-time :iolib.os :cl-fad)
+               :local-time :trivial-shell :iolib.os :cl-fad)
   :serial t
   :components ((:file "packages")
                (:file "config")
