@@ -1,17 +1,16 @@
 (defsystem #:coleslaw
   :name "coleslaw-core"
   :description "Flexible Lisp Blogware"
-  :version "0.5"
+  :version "0.6"
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
-  :depends-on (:alexandria :closure-template :3bmd :3bmd-ext-code-blocks
-               :local-time :trivial-shell :cl-fad)
+  :depends-on (:closure-template :3bmd :3bmd-ext-code-blocks
+               :alexandria :local-time :trivial-shell :cl-fad)
   :serial t
   :components ((:file "packages")
-               (:file "config")
                (:file "util")
-               (:file "plugins")
+               (:file "config")
                (:file "themes")
                (:file "coleslaw")
                (:file "feeds")

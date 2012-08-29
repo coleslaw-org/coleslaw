@@ -15,6 +15,17 @@
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
 
+(defun load-plugins (plugins)
+  "Resolve the path of each symbol in PLUGINS and call LOAD on the
+resulting pathnames. It is expected that the matching *.lisp files
+are in the plugins folder in coleslaw's source directory."
+  (let ((files (mapcar (lambda (sym)
+                         (app-path "plugins/~a" (string-downcase (symbol-name sym))))
+                       plugins)))
+    (map nil (lambda (file)
+               (compile-file file)
+               (load file)) files)))
+
 (defun load-config (&optional (dir (user-homedir-pathname)))
   "Load the coleslaw configuration from DIR/.coleslawrc. DIR is ~ by default."
   (with-open-file (in (merge-pathnames ".coleslawrc" dir))
