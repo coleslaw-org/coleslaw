@@ -5,7 +5,8 @@ BUGS:
 ; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
 
 TODO:
-; doc themes and plugins
-; fix plugins: s3
-;; Incremental compile: only "touched" posts+tags+months. By-20 must be redone, of course.
-;;; plugins: analytics, logging/monitoring, crossposting, disqus
+; figure out how to make render-page support predicate based injections. -> 0.7
+; doc themes and plugins, disqus and s3. -> 0.8
+; unit tests -> 0.9
+; Incremental compilation: only "touched" posts+tags+months and by-n. -> 1.0
+;; possible plugins: analytics, logging/monitoring, crossposting

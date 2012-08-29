@@ -30,4 +30,4 @@
                                 :title (title *config*)
                                 :siteroot (domain *config*)
                                 :author (author *config*)
-                                :posts content)) t)))
+                                :posts content)) :raw t)))

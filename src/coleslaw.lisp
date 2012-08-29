@@ -1,6 +1,6 @@
 (in-package :coleslaw)
 
-(defun render-page (path html &optional raw)
+(defun render-page (path html &key raw)
   "Populate the base template with the provided HTML and write it out to PATH.
 If RAW is non-nil, write the content without wrapping it in the base template."
   (let ((filepath (merge-pathnames path (staging *config*))))
