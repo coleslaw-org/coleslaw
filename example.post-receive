@@ -1,9 +1,11 @@
 GIT_REPO=$HOME/improvedmeans.git
 # TMP_GIT_CLONE _must_ match the :repo arg in coleslawrc excluding trailing slash
 TMP_GIT_CLONE=$HOME/tmp/improvedmeans
+LISP=sbcl
 
 git clone $GIT_REPO $TMP_GIT_CLONE
-sbcl --eval "(ql:quickload 'coleslaw)" --eval "(coleslaw:main)" \
-     --eval "(sb-ext:quit)"
+# Only ccl and sbcl support the eval switch
+# Other lisps will take some patching but (quit) is universal
+$LISP --eval "(ql:quickload 'coleslaw)" --eval "(coleslaw:main)" --eval "(quit)"
 rm -Rf $TMP_GIT_CLONE
 exit
