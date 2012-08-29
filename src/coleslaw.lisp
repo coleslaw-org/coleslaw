@@ -32,14 +32,10 @@ If RAW is non-nil, write the content without wrapping it in the base template."
           (static-dir (merge-pathnames "static" (repo *config*))))
       (dolist (dir (list css-dir static-dir))
         (when (probe-file dir)
-          (shell-command (format nil "cp -R ~a ." dir)))))
+          (run-program "cp -R ~a ." dir))))
     (render-posts)
     (render-indices)
     (render-feed)))
-
-(defun update-symlink (path target)
-  "Update the symlink at PATH to point to TARGET."
-  (shell-command (format nil "ln -sfn ~a ~a" target path)))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")
@@ -51,7 +47,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
             (curr (deploy-path ".curr")))
         (ensure-directories-exist new-build)
         (with-current-directory coleslaw-conf:*basedir*
-          (shell-command (format nil "mv ~a ~a" staging new-build))
+          (run-program "mv ~a ~a" staging new-build)
           (if (and (probe-file prev) (equal prev (truename prev)))
               (delete-file prev)
               (cl-fad:delete-directory-and-files (truename prev)))
