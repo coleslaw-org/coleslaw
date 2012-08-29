@@ -1,16 +1,10 @@
-Old Coleslaw: Allow choices.
-New Coleslaw: Screw choices!
-"You can have it in any color as long as its black."
-
-What views are supported? tag-based, reverse-chronological, by-month, single-post
-Where is the data? git
-How are update done? check for new commits every *interval*, possibly switch to commit hooks later
-Post generation? Static
-What is the post format? (markdown, plaintext, rst, etc, anything with a parser plugin!)
-How are comments handled? They're not supported.
 What about themes? Templates are themes. DUH.
 Plugins? Injection support for HEAD and BODY. What about predicate-based injection?
-How is it served? Hunchentoot, Lighttpd, S3, whomever!
+
+BUGS:
+; Generated directories aren't being collected properly.
+; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
+; Post-receive hook on server doesn't appear to be executing. Invoking manually behaves as expected. What's going on here?
 
 TODO:
 ; doc themes and plugins
