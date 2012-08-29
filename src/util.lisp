@@ -36,19 +36,19 @@ on files that match the given extension."
 
 (defun (setf current-directory) (path)
   "Change the operating system's current directory to PATH."
-  #+sbcl (sb-posix:chdir pathspec)
-  #+ccl (setf (current-directory) pathspec)
-  #+ecl (si:chdir pathspec)
-  #+cmucl (unix:unix-chdir (namestring pathspec))
-  #+clisp (ext:cd pathspec)
+  #+sbcl (sb-posix:chdir path)
+  #+ccl (setf (current-directory) path)
+  #+ecl (si:chdir path)
+  #+cmucl (unix:unix-chdir (namestring path))
+  #+clisp (ext:cd path)
   #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
 
-(defmacro with-current-directory (to-path &body body)
-  "Change the current OS directory to TO-PATH and execute BODY in
+(defmacro with-current-directory (path &body body)
+  "Change the current OS directory to PATH and execute BODY in
 an UNWIND-PROTECT, then change back to the current directory."
   (alexandria:with-gensyms (old)
     `(let ((,old (current-directory)))
        (unwind-protect (progn
-                         (setf (current-directory) ,to-path)
+                         (setf (current-directory) ,path)
                          ,@body)
          (setf (current-directory) ,old)))))
