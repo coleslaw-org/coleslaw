@@ -2,9 +2,11 @@ What about themes? Templates are themes. DUH.
 Plugins? Injection support for HEAD and BODY. What about predicate-based injection?
 
 BUGS:
-; Generated directories aren't being collected properly.
-; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
+; Generated directories aren't being removed properly.
 ; Post-receive hook on server doesn't appear to be executing. Invoking manually behaves as expected. What's going on here?
+;; Suspect these issues are related. read-symlink doesn't return a directory pathname which causes cl-fad:delete-directory-and-files to blowup. Maybe stop using iolib for symlinks? What is portable?
+;;; Propose replacing iolib based symlink code with something that uses DIRECTORY and/or TRUENAME.
+; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
 
 TODO:
 ; doc themes and plugins
