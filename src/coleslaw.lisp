@@ -62,6 +62,6 @@ If RAW is non-nil, write the content without wrapping it in the base template."
 (defun main ()
   "Load the user's config, then compile and deploy the blog."
   (load-config)
-  (compile-theme (app-path "themes/~a/" (theme *config*)))
+  (compile-theme)
   (compile-blog (staging *config*))
   (deploy (staging *config*)))
