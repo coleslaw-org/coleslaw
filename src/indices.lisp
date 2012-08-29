@@ -66,7 +66,7 @@
 (defun render-by-tag (tags)
   "Render the indices to view posts by tag for each tag in TAGS."
   (dolist (tag tags)
-    (let ((posts (remove-if-not (lambda (post) (member tag (post-tags post)) :test #'string=)
+    (let ((posts (remove-if-not (lambda (post) (member tag (post-tags post) :test #'string=))
                                 (hash-table-values *posts*))))
       (write-index (by-date posts)
                    (format nil "tag/~a.html" tag)
