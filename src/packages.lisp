@@ -3,7 +3,6 @@
   (:use :cl :closure-template)
   (:import-from :iolib.os #:with-current-directory
                           #:run-program)
-  (:import-from :iolib.pathnames #:file-path-namestring)
   (:import-from :alexandria #:hash-table-values
                             #:make-keyword)
   (:export #:main

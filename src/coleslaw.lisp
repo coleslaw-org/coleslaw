@@ -53,9 +53,9 @@ If RAW is non-nil, write the content without wrapping it in the base template."
         (with-current-directory coleslaw-conf:*basedir*
           (run-program "mv" (mapcar #'namestring (list staging new-build)))
           (when (probe-file prev)
-            (cl-fad:delete-directory-and-files (read-symlink prev)))
+            (cl-fad:delete-directory-and-files (truename prev)))
           (when (probe-file curr)
-            (update-symlink prev (read-symlink curr)))
+            (update-symlink prev (truename curr)))
           (update-symlink curr new-build))))))
 
 (defun main ()
