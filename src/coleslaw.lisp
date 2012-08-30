@@ -34,7 +34,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
         (run-program "cp -R ~a ." dir)))
     (render-posts)
     (render-indices)
-    (render-feed)))
+    (render-feeds)))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")
