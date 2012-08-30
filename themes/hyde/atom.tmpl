@@ -22,7 +22,7 @@
       <name>{$author}</name>
       <uri>{$siteroot}</uri>
     </author>
-    <content type="html">{$post.content}</content>
+    <content type="html">{$post.content |noAutoescape}</content>
   </entry>
   {/foreach}
 
