@@ -50,7 +50,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
           (let ((dest (truename prev)))
             (if (equal prev dest)
                 (delete-file prev)
-                (cl-fad:delete-directory-and-files dest))))
+                (run-program "rm -R ~a" dest))))
         (when (probe-file curr)
           (update-symlink prev (truename curr)))
         (update-symlink curr new-build)))))
