@@ -40,7 +40,7 @@
                                   :content (render-content (post-content post)
                                                            (post-format post))))))
     (render-page filename
-                 (funcall (theme-fn "INDEX")
+                 (funcall (theme-fn 'index)
                           (list :taglinks (taglinks)
                                 :monthlinks (monthlinks)
                                 :siteroot (domain *config*)

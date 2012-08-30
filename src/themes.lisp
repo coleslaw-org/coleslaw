@@ -14,7 +14,7 @@
 
 (defun theme-fn (name)
   "Find the symbol NAME inside the current theme's package."
-  (find-symbol name (theme-package)))
+  (find-symbol (princ-to-string name) (theme-package)))
 
 (defun compile-theme (&key (theme-dir (app-path "themes/~a/" (theme *config*))))
   "Iterate over the files in THEME-DIR, compiling them when they are templates."

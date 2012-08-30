@@ -8,7 +8,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
     (with-open-file (out filepath
                          :direction :output
                          :if-does-not-exist :create)
-      (let ((content (funcall (theme-fn "BASE")
+      (let ((content (funcall (theme-fn 'base)
                               (list :title (title *config*)
                                     :siteroot (domain *config*)
                                     :navigation (sitenav *config*)

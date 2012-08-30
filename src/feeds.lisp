@@ -25,7 +25,7 @@
                                    :tags (post-tags post)
                                    :content (post-content post)))))
     (render-page "rss.xml"
-                 (funcall (theme-fn "RSS")
+                 (funcall (theme-fn 'rss)
                           (list :pubdate (make-pubdate)
                                 :title (title *config*)
                                 :siteroot (domain *config*)
