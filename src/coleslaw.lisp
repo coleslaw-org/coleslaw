@@ -46,7 +46,8 @@ If RAW is non-nil, write the content without wrapping it in the base template."
              (curr (app-path ".curr")))
         (ensure-directories-exist new-build)
         (run-program "mv ~a ~a" staging new-build)
-        (if (and (probe-file prev) (equal prev (truename prev)))
+        ; KLUDGE: Is there a better way to portably catch dead symlinks?
+        (if (and (probe-file prev) (equal prev (ignore-errors (truename prev))))
             (delete-file prev)
             (cl-fad:delete-directory-and-files (truename prev)))
         (when (probe-file curr)
