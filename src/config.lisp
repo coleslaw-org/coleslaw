@@ -16,16 +16,24 @@
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
 
+(defun enable-plugin (file &rest args)
+  "Given a path to a plugin, FILE, compile+load it, then call its ENABLE function."
+  (compile-file file)
+  (load file)
+  (let* ((pkgname (format nil "coleslaw-~a" (pathname-name file)))
+         (plugin-pkg (find-package (string-upcase pkgname))))
+    (apply (find-symbol "ENABLE" plugin-pkg) args)))
+
 (defun load-plugins (plugins)
-  "Resolve the path of each symbol in PLUGINS and call LOAD on the
-resulting pathnames. It is expected that the matching *.lisp files
+  "Compile and load the listed PLUGINS. It is expected that matching *.lisp files
 are in the plugins folder in coleslaw's source directory."
-  (let ((files (mapcar (lambda (sym)
-                         (app-path "plugins/~a" (string-downcase (symbol-name sym))))
-                       plugins)))
-    (map nil (lambda (file)
-               (compile-file file)
-               (load file)) files)))
+  (flet ((plugin-path (name)
+           (app-path "plugins/~a" (string-downcase (symbol-name sym)))))
+    (dolist (plugin plugins)
+      (etypecase plugin
+        (list (destructuring-bind (name &rest args) plugin
+                (apply 'enable-plugin (plugin-path name) args)))
+        (symbol (enable-plugin (plugin-path plugin)))))))
 
 (defun load-config (&optional (dir (user-homedir-pathname)))
   "Load the coleslaw configuration from DIR/.coleslawrc. DIR is ~ by default."

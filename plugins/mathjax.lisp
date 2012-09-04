@@ -14,4 +14,5 @@
 src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\">
 </script>")
 
-(coleslaw:add-injection *mathjax-header* :head)
+(defun enable ()
+  (coleslaw:add-injection *mathjax-header* :head))
