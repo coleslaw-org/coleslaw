@@ -25,7 +25,7 @@ If RAW is non-nil, write the content without wrapping it in the base template."
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
   ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
   (when (probe-file staging)
-    (cl-fad:delete-directory-and-files staging))
+    (run-program "rm -R ~a" staging))
   (ensure-directories-exist staging)
   (with-current-directory staging
     (dolist (dir (list (app-path "themes/~a/css" (theme *config*))

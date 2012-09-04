@@ -39,8 +39,8 @@ Coleslaw expects post files to be formatted as follows:
 ```
 ;;;;;
 title: foo
-date: yyyy-mm-dd timestamp
 tags: bar, baz
+date: yyyy-mm-dd timestamp
 format: html (for raw html) or md (for markdown)
 ;;;;;
 your post
