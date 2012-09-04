@@ -18,7 +18,7 @@
 (defun render-feeds ()
   "Render and write the feed for the site."
   (let* ((bydate (by-date (hash-table-values *posts*)))
-	 (posts (subseq bydate 0 (when (>= (length bydate) 10) 10)))
+	 (posts (subseq bydate 0 (min (length bydate) 10)))
          (content (loop for post in posts
                      collect (list :title (post-title post)
                                    :url (post-url post)
