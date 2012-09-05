@@ -13,8 +13,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 * Git for storage
 * RSS feeds!
 * Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize).
-  * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Objective-C, Diff.
-  * Python, Erlang, Haskell, Objective-C, and Diff are in my local colorize fork only for the moment.
+  * Currently supports: Common Lisp, Emacs Lisp, Scheme, Clojure, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
 * Plugins to...
   * Use LaTeX (inside pairs of $$) via Mathjax
   * Import from wordpress
@@ -24,13 +23,12 @@ This software should be portable to any conforming Common Lisp implementation bu
 Server side setup:
 
 1. Setup git and create a bare repo as shown [here](http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server).
-2. Install Lisp and Quicklisp.
-3. For now, git clone https://github.com/redline6561/coleslaw.git inside ~/quicklisp/local-projects/. This is only temporarily necessary until coleslaw is in quicklisp.
-4. ```cp coleslaw/example.coleslawrc ~/.coleslawrc``` # and edit as necessary
-5. ```cp coleslaw/example.post-receieve your-blog.git/hooks/post-receive``` # and edit as necessary
-6. ```chmod +x your-blog/.git/hooks/post-receive```
-7. Create or clone your blog repo locally. Add your server as a remote with ```git remote add prod git@my-host.com:path/to/repo.git```
-8. Point the web server of your choice at the symlink /path/to/deploy-dir/.curr/
+2. Install Lisp and [Quicklisp](http://quicklisp.org/).
+3. ```wget -c https://raw.github.com/redline6561/coleslaw/master/example.coleslawrc -O ~/.coleslawrc``` # and edit as necessary
+4. ```wget -c https://raw.github.com/redline6561/coleslaw/master/example.post-receieve -O your-blog.git/hooks/post-receive``` # and edit as necessary
+5. ```chmod +x your-blog/.git/hooks/post-receive```
+6. Create or clone your blog repo locally. Add your server as a remote with ```git remote add prod git@my-host.com:path/to/repo.git```
+7. Point the web server of your choice at the symlink /path/to/deploy-dir/.curr/
 
 Now whenever you push a new commit to the server, coleslaw will update your blog automatically! You may need to git push -u prod master the first time.
 
