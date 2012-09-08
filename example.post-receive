@@ -4,8 +4,7 @@ TMP_GIT_CLONE=$HOME/tmp/improvedmeans
 LISP=sbcl
 
 git clone $GIT_REPO $TMP_GIT_CLONE
-# Only ccl and sbcl support the eval switch
-# Other lisps will take some patching but (quit) is universal
-$LISP --eval "(ql:quickload 'coleslaw)" --eval "(coleslaw:main)" --eval "(quit)"
+# Only ccl and sbcl support the eval switch, other lisps require a patch here
+$LISP --eval "(ql:quickload 'coleslaw)" --eval "(coleslaw:main)" --eval "(trival-shell:exit)"
 rm -Rf $TMP_GIT_CLONE
 exit
