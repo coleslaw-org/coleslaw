@@ -15,20 +15,11 @@
                        (local-time:now))))
     (local-time:format-rfc1123-timestring nil timestamp)))
 
-(defun render-feeds ()
-  "Render and write the feed for the site."
-  (let* ((bydate (by-date (hash-table-values *posts*)))
-	 (posts (subseq bydate 0 (min (length bydate) 10)))
-         (content (loop for post in posts
-                     collect (list :title (post-title post)
-                                   :url (post-url post)
-                                   :date (make-pubdate (post-date post))
-                                   :tags (post-tags post)
-                                   :content (post-content post))))
-         (tmpl-args (list :pubdate (make-pubdate)
-                          :title (title *config*)
-                          :siteroot (domain *config*)
-                          :author (author *config*)
-                          :posts content)))
-    (render-page "rss.xml" (funcall (theme-fn 'rss) tmpl-args) :raw t)
-    (render-page "feed.atom" (funcall (theme-fn 'atom) tmpl-args) :raw t)))
+(defun render-feeds (feeds)
+  "Render and write the given FEEDS for the site."
+  (let* ((by-date (by-date (hash-table-values *posts*)))
+         (posts (subseq by-date 0 (min (length by-date) 10))))
+    (render-page (make-instance 'index :path "rss.xml" :posts posts) :rss)
+    (render-page (make-instance 'index :path "feed.atom" :posts posts) :atom)
+    (dolist (feed feeds)
+      (render-page feed :rss))))

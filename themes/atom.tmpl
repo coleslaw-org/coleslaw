@@ -4,23 +4,23 @@
 <?xml version="1.0"?>{\n}
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title>{$title}</title>
-  <link href="{$siteroot}"/>
-  <link type="application/atom+xml" rel="self" href="{$siteroot}/atom.xml"/>
+  <title>{$config.title}</title>
+  <link href="{$config.domain}"/>
+  <link type="application/atom+xml" rel="self" href="{$config.domain}/atom.xml"/>
   <updated>{$pubdate}</updated>
   <author>
-    <name>{$author}</name>
+    <name>{$config.author}</name>
   </author>
 
-  {foreach $post in $posts}
+  {foreach $post in $content.posts}
   <entry>
-    <link type="text/html" rel="alternate" href="{$post.url}"/>
+    <link type="text/html" rel="alternate" href="{$config.domain}/posts/{$post.slug}.html"/>
     <title>{$post.title}</title>
     <published>{$post.date}</published>
     <updated>{$post.date}</updated>
     <author>
-      <name>{$author}</name>
-      <uri>{$siteroot}</uri>
+      <name>{$config.author}</name>
+      <uri>{$config.domain}</uri>
     </author>
     <content type="html">{$post.content |noAutoescape}</content>
   </entry>

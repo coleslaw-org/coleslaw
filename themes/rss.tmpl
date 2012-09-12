@@ -4,19 +4,19 @@
 <?xml version="1.0"?>{\n}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{$title}</title>
-    <link>{$siteroot}</link>
-    <atom:link href="{$siteroot}/rss.xml" rel="self" type="application/rss+xml" />
+    <title>{$config.title}</title>
+    <link>{$config.domain}</link>
+    <atom:link href="{$config.domain}/rss.xml" rel="self" type="application/rss+xml" />
     <language>en-us</language>
     <pubDate>{$pubdate}</pubDate>
 
-    {foreach $post in $posts}
+    {foreach $post in $content.posts}
     <item>
       <title>{$post.title}</title>
-      <link>{$siteroot}/posts/{$post.url}</link>
+      <link>{$config.domain}/posts/{$post.slug}.html</link>
       <pubDate>{$post.date}</pubDate>
-      <author>{$author}</author>
-      <guid isPermaLink="true">{$siteroot}/posts/{$post.url}</guid>
+      <author>{$config.author}</author>
+      <guid isPermaLink="true">{$config.domain}/posts/{$post.slug}.html</guid>
       {foreach $tag in $post.tags}
         <category><![CDATA[ {$tag} ]]></category>
       {/foreach}

@@ -35,7 +35,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
         (run-program "cp -R ~a ." dir)))
     (render-posts)
     (render-indices)
-    (render-feeds)))
+    (render-feeds (feeds *config*))))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")

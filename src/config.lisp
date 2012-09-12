@@ -4,6 +4,7 @@
   ((author :initarg :author :initform "" :accessor author)
    (deploy :initarg :deploy :initform nil :accessor deploy)
    (domain :initarg :domain :initform "" :accessor domain)
+   (feeds :initarg :feeds :initform nil :accessor feeds)
    (license :initarg :license :initform "CC-BY-SA" :accessor license)
    (plugins :initarg :plugins :initform '() :accessor plugins)
    (repo :initarg :repo :initform #p"/" :accessor repo)
