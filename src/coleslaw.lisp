@@ -1,29 +1,28 @@
 (in-package :coleslaw)
 
-(defun render-page (path html &key raw)
-  "Populate the base template with the provided HTML and write it out to PATH.
-If RAW is non-nil, write the content without wrapping it in the base template."
-  (let ((filepath (merge-pathnames path (staging *config*))))
+(defgeneric render (content &key &allow-other-keys)
+  (:documentation "Render the given CONTENT to HTML."))
+
+(defun render-page (content &optional theme-fn &rest render-args)
+  "Render the given CONTENT to disk using THEME-FN if supplied.
+Additional args to render CONTENT can be passed via RENDER-ARGS."
+  (let* ((path (etypecase content
+                 (post (format nil "posts/~a.html" (post-slug post)))
+                 (index (index-path index))))
+         (filepath (merge-pathnames path (staging *config*)))
+         (page (funcall (theme-fn (or theme-fn 'base))
+                        (list :config *config*
+                              :content (apply 'render content render-args)
+                              :body-inject (gethash :body *injections*)
+                              :head-inject (gethash :head *injections*)))))
     (ensure-directories-exist filepath)
     (with-open-file (out filepath
-                         :direction :output
-                         :if-does-not-exist :create)
-      (let ((content (funcall (theme-fn 'base)
-                              (list :title (title *config*)
-                                    :siteroot (domain *config*)
-                                    :navigation (sitenav *config*)
-                                    :content html
-                                    :head-inject (apply #'concatenate 'string
-                                                        (gethash :head *injections*))
-                                    :body-inject (apply #'concatenate 'string
-                                                        (gethash :body *injections*))
-                                    :license (license *config*)
-                                    :credits (author *config*)))))
-        (write-line (if raw html content) out)))))
+                     :direction :output
+                     :if-does-not-exist :create)
+      (write page :stream out))))
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
-  ; TODO: More incremental compilation? Don't regen whole blog unnecessarily.
   (when (probe-file staging)
     (run-program "rm -R ~a" staging))
   (ensure-directories-exist staging)
