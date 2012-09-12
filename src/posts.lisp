@@ -31,7 +31,6 @@
 
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
-  (load-posts)
   (loop with posts = (sort (hash-table-values *posts*) #'string< :key #'post-date)
      for i from 1 upto (length posts)
      for prev = nil then post

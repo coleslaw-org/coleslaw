@@ -57,6 +57,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
 (defun main ()
   "Load the user's config, then compile and deploy the blog."
   (load-config)
+  (load-posts)
   (compile-theme (theme *config*))
   (compile-blog (staging *config*))
   (deploy (staging *config*)))

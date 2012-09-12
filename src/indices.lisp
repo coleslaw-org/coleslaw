@@ -35,41 +35,39 @@
   "Sort POSTS in reverse chronological order."
   (sort posts #'string> :key #'post-date))
 
-(defun render-by-n (posts &optional n)
-  "Render the indices to view POSTS in reverse chronological order by N."
-  (flet ((by-n (posts start)
-           (let ((index (* n (1- start))))
-             (subseq posts index (min (length posts) (+ index n))))))
-    (loop for i = 1 then (1+ i)
-       do (render-page (make-instance 'index :path (format nil "~d.html" i)
-                                      :posts (by-n posts i)
-                                      :title "Recent Posts")
-                       nil
-                       :prev (and (plusp (1- i)) (1- i))
-                       :next (and (< (* i n) (length posts)) (1+ i)))
-       until (> (* i n) (length posts))))
-  (update-symlink "index.html" "1.html"))
-
-(defun render-by-tag (posts tags)
-  "Render the indices to view POSTS by tag for each tag in TAGS."
-  (dolist (tag tags)
-    (let ((posts (remove-if-not (lambda (post) (member tag (post-tags post)
+(defun index-by-tag (tag posts)
+  "Return an index of all POSTS matching the given TAG."
+  (let ((content (remove-if-not (lambda (post) (member tag (post-tags post)
                                                        :test #'string=)) posts)))
-      (render-page (make-instance 'index :path (format nil "tag/~a.html" tag)
-                                         :posts (by-date posts)
-                                         :title (format nil "Posts tagged ~a" tag))))))
+    (make-instance 'index :path (format nil "tag/~a.html" tag)
+                          :posts (by-date content)
+                          :title "Posts tagged ~a" tag)))
 
-(defun render-by-month (posts months)
-  "Render the indices to view POSTS by month for each month in MONTHS."
-  (dolist (month months)
-    (let ((posts (remove-if-not (lambda (post) (search month (post-date post))) posts)))
-      (render-page (make-instance 'index :path (format nil "date/~a.html" month)
-                                         :posts (by-date posts)
-                                         :title (format nil "Posts from ~a" month))))))
+(defun index-by-month (month posts)
+  "Return an index of all POSTS matching the given MONTH."
+  (let ((content (remove-if-not (lambda (post) (search month (post-date post)))
+                                posts)))
+    (make-instance 'index :path (format nil "date/~a.html" month)
+                          :posts (by-date content)
+                          :title (format nil "Posts from ~a" month))))
+
+(defun index-by-n (i posts &optional (step 10))
+  "Return the index for the Ith page of POSTS in reverse chronological order."
+  (make-instance 'index :path (format nil "~d.html" i)
+                        :posts (let ((index (* step (1- i))))
+                                 (subseq posts index (min (length posts)
+                                                          (+ index step))))
+                        :title "Recent Posts"))
 
 (defun render-indices ()
   "Render the indices to view posts in groups of size N, by month, and by tag."
   (let ((posts (hash-table-values *posts*)))
-    (render-by-n (by-date posts) 10)
-    (render-by-tag posts (all-tags))
-    (render-by-month posts (all-months))))
+    (dolist (tag (all-tags))
+      (render-page (index-by-tag tag posts)))
+    (dolist (month (all-months))
+      (render-page (index-by-month month posts)))
+    (dolist (i (ceiling (length posts) 10))
+      (render-page (index-by-n i (by-date posts)) nil
+                   :prev (and (plusp (1- i)) (1- i))
+                   :next (and (< (* i 10) (length posts)) (1+ i)))))
+  (update-symlink "index.html" "1.html"))
