@@ -25,8 +25,17 @@
     </div>
     {if $bodyInject} {$bodyInject |noAutoescape} {/if}
     <div class="fineprint">
-      Unless otherwise credited all material {if $config.license} {$config.license} {else} © {/if}
-      {$config.credits}
+      <hr>
+      Unless otherwise credited all material
+      {if $config.license}
+        {$config.license}
+      {else}
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+          <img alt="Creative Commons License" style="border-width:0" src="{$config.domain}/css/cc-by-sa.png" />
+        </a>
+      {/if}
+      by {$config.author}
+      <img align="right" src="{$config.domain}/css/logo_small.jpg" />
     </div>
   </body>
 </html>
