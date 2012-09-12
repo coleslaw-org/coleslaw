@@ -37,34 +37,34 @@
   (let ((content (remove-if-not (lambda (post) (member tag (post-tags post)
                                                        :test #'string=)) posts)))
     (make-instance 'index :path (format nil "tag/~a.html" tag)
-                          :posts (by-date content)
-                          :title "Posts tagged ~a" tag)))
+                          :posts content
+                          :title (format nil "Posts tagged ~a" tag))))
 
 (defun index-by-month (month posts)
   "Return an index of all POSTS matching the given MONTH."
   (let ((content (remove-if-not (lambda (post) (search month (post-date post)))
                                 posts)))
     (make-instance 'index :path (format nil "date/~a.html" month)
-                          :posts (by-date content)
+                          :posts content
                           :title (format nil "Posts from ~a" month))))
 
 (defun index-by-n (i posts &optional (step 10))
   "Return the index for the Ith page of POSTS in reverse chronological order."
-  (make-instance 'index :path (format nil "~d.html" i)
-                        :posts (let ((index (* step (1- i))))
+  (make-instance 'index :path (format nil "~d.html" (1+ i))
+                        :posts (let ((index (* step i)))
                                  (subseq posts index (min (length posts)
                                                           (+ index step))))
                         :title "Recent Posts"))
 
 (defun render-indices ()
   "Render the indices to view posts in groups of size N, by month, and by tag."
-  (let ((posts (hash-table-values *posts*)))
+  (let ((posts (by-date (hash-table-values *posts*))))
     (dolist (tag (all-tags))
       (render-page (index-by-tag tag posts)))
     (dolist (month (all-months))
       (render-page (index-by-month month posts)))
-    (dolist (i (ceiling (length posts) 10))
-      (render-page (index-by-n i (by-date posts)) nil
-                   :prev (and (plusp (1- i)) (1- i))
-                   :next (and (< (* i 10) (length posts)) (1+ i)))))
+    (dotimes (i (ceiling (length posts) 10))
+      (render-page (index-by-n i posts) nil
+                   :prev (and (plusp i) i)
+                   :next (and (< (* i 10) (length posts)) (+ 2 i)))))
   (update-symlink "index.html" "1.html"))

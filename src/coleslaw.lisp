@@ -7,8 +7,8 @@
   "Render the given CONTENT to disk using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
   (let* ((path (etypecase content
-                 (post (format nil "posts/~a.html" (post-slug post)))
-                 (index (index-path index))))
+                 (post (format nil "posts/~a.html" (post-slug content)))
+                 (index (index-path content))))
          (filepath (merge-pathnames path (staging *config*)))
          (page (funcall (theme-fn (or theme-fn 'base))
                         (list :config *config*
@@ -21,7 +21,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
     (with-open-file (out filepath
                      :direction :output
                      :if-does-not-exist :create)
-      (write page :stream out))))
+      (write-line page out))))
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
