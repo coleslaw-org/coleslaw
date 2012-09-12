@@ -16,15 +16,18 @@
   "Find the symbol NAME inside the current theme's package."
   (find-symbol (princ-to-string name) (theme-package)))
 
-(defun compile-theme (&key (theme-dir (app-path "themes/~a/" (theme *config*))))
-  "Iterate over the files in THEME-DIR, compiling them when they are templates."
-  (do-files (file theme-dir "tmpl")
+(defun compile-theme (theme)
+  "Locate and compile the templates for the given THEME."
+  (do-files (file (app-path "themes/~a/" theme) "tmpl")
+    (compile-template :common-lisp-backend file))
+  (do-files (file (app-path "themes/") "tmpl")
     (compile-template :common-lisp-backend file)))
 
 ;; DOCUMENTATION
 ;; A theme directory should be named after the theme and contain *.tmpl files
 ;; that define the following functions in a coleslaw.theme.$NAME namespace.
-;; Required templates follow with suggested args (args will be in plists):
-;; {template base} // title navigation siteroot content credits &key license headInject bodyInject
-;; {template post} // title tags date content prev next &key comments
-;; {template index} // title posts prev next &key taglinks monthlinks count
+;; Required templates:
+;; {template base}
+;; {template post}
+;; {template index}
+
