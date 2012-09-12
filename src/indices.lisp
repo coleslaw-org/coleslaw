@@ -10,8 +10,7 @@
            (list :tags (all-tags)
                  :months (all-months)
                  :config *config*
-                 :title (index-title index)
-                 :posts (index-posts index)
+                 :index content
                  :prev prev
                  :next next)))
 

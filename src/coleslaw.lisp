@@ -12,7 +12,9 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
          (filepath (merge-pathnames path (staging *config*)))
          (page (funcall (theme-fn (or theme-fn 'base))
                         (list :config *config*
-                              :content (apply 'render content render-args)
+                              :content content
+                              :raw (apply 'render content render-args)
+                              :pubdate (make-pubdate)
                               :body-inject (gethash :body *injections*)
                               :head-inject (gethash :head *injections*)))))
     (ensure-directories-exist filepath)
