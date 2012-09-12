@@ -1,33 +1,33 @@
 {namespace coleslaw.theme.hyde}
 
 {template index}
-<h1 class="title">{$title}</h1>
-{foreach $post in $posts}
+<h1 class="title">{$index.title}</h1>
+{foreach $post in $index.posts}
   <div class="article-meta">
-    <a class="article-title" href="{$post.url}">{$post.title}</a>
+    <a class="article-title" href="{$config.domain}/posts/{$post.slug}.html">{$post.title}</a>
     <div class="date"> posted on {$post.date}</div>
     <div class="article">{$post.content |noAutoescape}</div>
   </div>
 {/foreach}
 <div id="relative-nav">
-  {if $prev} <a href="{$prev}">Previous</a> {/if}
-  {if $next} <a href="{$next}">Next</a> {/if}
+  {if $prev} <a href="{$prev}.html">Previous</a> {/if}
+  {if $next} <a href="{$next}.html">Next</a> {/if}
 </div>
-{if $taglinks}
+{if $tags}
 <div id="tagsoup">
   <p>This blog covers
-    {foreach $taglink in $taglinks}
-      <a href="{$siteroot}/{$taglink.url |noAutoescape}">{$taglink.name}</a>
-      {if not isLast($taglink)}, {/if}
+    {foreach $tag in $tags}
+      <a href="{$config.domain}/tag/{$tag}.html">{$tag}</a>
+      {if not isLast($tag)}, {/if}
     {/foreach}
 </div>
 {/if}
-{if $monthlinks}
+{if $months}
 <div id="monthsoup">
   <p>View posts from
-    {foreach $monthlink in $monthlinks}
-      <a href="{$siteroot}/{$monthlink.url |noAutoescape}">{$monthlink.name}</a>
-      {if not isLast($monthlink)}, {/if}
+    {foreach $month in $months}
+      <a href="{$config.domain}/date/{$month}.html">{$month}</a>
+      {if not isLast($month)}, {/if}
     {/foreach}
 </div>
 {/if}
