@@ -11,6 +11,13 @@
    (format :initform nil :initarg :format :accessor post-format)
    (content :initform nil :initarg :content :accessor post-content)))
 
+(defmethod render ((content post) &key prev next)
+  (funcall (theme-fn 'post)
+           (list :config *config*
+                 :post content
+                 :prev prev
+                 :next next)))
+
 (defun load-posts ()
   "Read the stored .post files from the repo."
   (clrhash *posts*)
@@ -22,10 +29,6 @@
                    (post-slug post))
             (setf (gethash (post-slug post) *posts*) post))))))
 
-(defun post-url (post)
-  "Return the relative URL for a given post."
-  (format nil "~a.html" (post-slug post)))
-
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
   (load-posts)
@@ -34,8 +37,7 @@
      for prev = nil then post
      for post = (nth (1- i) posts)
      for next = (nth i posts)
-     do (write-post post :prev (and prev (post-url prev))
-                         :next (and next (post-url next)))))
+     do (render-page post nil :prev prev :next next)))
 
 (defgeneric render-content (text format)
   (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
@@ -72,17 +74,6 @@
              (append args (list :content (render-content (slurp-remainder)
                                                          (getf args :format))
                                 :slug (slugify (getf args :title))))))))
-
-(defun write-post (post &key prev next)
-  "Write out the HTML for POST in SLUG.html."
-  (render-page (format nil "posts/~a" (post-url post))
-               (funcall (theme-fn 'post)
-                        (list :title (post-title post)
-                              :tags (taglinks (post-tags post))
-                              :date (post-date post)
-                              :content (post-content post)
-                              :prev prev
-                              :next next))))
 
 (defun slug-char-p (char)
   "Determine if CHAR is a valid slug (i.e. URL) character."
