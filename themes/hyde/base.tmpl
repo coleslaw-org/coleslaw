@@ -4,25 +4,29 @@
 <!doctype html>{\n}
 <html>
   <head>
-    <title>{$title}</title>
+    <title>{$config.title}</title>
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
     <link href="http://fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
-    <link href= "{$siteroot}/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="alternate" href="{$siteroot}/rss.xml" type="application/rss+xml" />
+    <link href= "{$config.domain}/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="alternate" href="{$config.domain}/rss.xml" type="application/rss+xml" />
     {if $headInject} {$headInject |noAutoescape} {/if}
   </head>
   <body>
     <div class="navigation">
-      {$navigation |noAutoescape}
-      <a href="{$siteroot}">{$title}</a>
+      {foreach $link in $config.sitenav}
+        <a href="{$link.url}">{$link.name}</a>
+        {sp} | {sp}
+      {/foreach}
+      <a href="{$config.domain}">{$config.title}</a>
     </div>
     <div id="content">
       {$content |noAutoescape}
     </div>
     {if $bodyInject} {$bodyInject |noAutoescape} {/if}
     <div class="fineprint">
-      Unless otherwise credited all material {if $license} {$license} {else} © {/if} {$credits}
+      Unless otherwise credited all material {if $config.license} {$config.license} {else} © {/if}
+      {$config.credits}
     </div>
   </body>
 </html>
