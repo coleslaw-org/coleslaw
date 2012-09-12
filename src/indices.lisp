@@ -6,13 +6,12 @@
    (title :initform nil :initarg :title :accessor index-title)))
 
 (defmethod render ((content index) &key prev next)
-  (funcall (theme-fn 'index)
-           (list :tags (all-tags)
-                 :months (all-months)
-                 :config *config*
-                 :index content
-                 :prev prev
-                 :next next)))
+  (funcall (theme-fn 'index) (list :tags (all-tags)
+                                   :months (all-months)
+                                   :config *config*
+                                   :index content
+                                   :prev prev
+                                   :next next)))
 
 (defun all-months ()
   "Retrieve a list of all months with published posts."

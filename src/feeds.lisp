@@ -22,4 +22,6 @@
     (render-page (make-instance 'index :path "rss.xml" :posts posts) :rss)
     (render-page (make-instance 'index :path "feed.atom" :posts posts) :atom)
     (dolist (feed feeds)
-      (render-page feed :rss))))
+      (let ((index (index-by-tag feed by-tag)))
+        (setf (index-path index) (format nil "tag/~a-rss.xml" feed))
+        (render-page index :rss)))))

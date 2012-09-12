@@ -12,11 +12,10 @@
    (content :initform nil :initarg :content :accessor post-content)))
 
 (defmethod render ((content post) &key prev next)
-  (funcall (theme-fn 'post)
-           (list :config *config*
-                 :post content
-                 :prev prev
-                 :next next)))
+  (funcall (theme-fn 'post) (list :config *config*
+                                  :post content
+                                  :prev prev
+                                  :next next)))
 
 (defun load-posts ()
   "Read the stored .post files from the repo."
