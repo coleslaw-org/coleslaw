@@ -14,11 +14,11 @@
   </head>
   <body>
     <div class="navigation">
+      <a href="{$config.domain}">{$config.title}</a> |
       {foreach $link in $config.sitenav}
         <a href="{$link.url}">{$link.name}</a>
-        {sp} | {sp}
+        {if not isLast($link)} | {/if}
       {/foreach}
-      <a href="{$config.domain}">{$config.title}</a>
     </div>
     <div id="content">
       {$raw |noAutoescape}

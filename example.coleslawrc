@@ -4,10 +4,10 @@
  :feeds ("lisp")
  :plugins (mathjax)
  :repo "/home/git/tmp/improvedmeans/"
- :sitenav (:url "http://redlinernotes.com/" :name "Home"
-           :url "http://twitter.com/redline6561" :name "Twitter"
-           :url "http://github.com/redline6561" :name "Code"
-           :url "http://soundcloud.com/redlinernotes" :name "Music"
-           :url "http://redlinernotes.com/docs/talks/" :name "Talks")
+ :sitenav ((:url "http://redlinernotes.com/" :name "Home")
+           (:url "http://twitter.com/redline6561" :name "Twitter")
+           (:url "http://github.com/redline6561" :name "Code")
+           (:url "http://soundcloud.com/redlinernotes" :name "Music")
+           (:url "http://redlinernotes.com/docs/talks/" :name "Talks"))
  :title "Improved Means for Achieving Deteriorated Ends"
  :theme "hyde")

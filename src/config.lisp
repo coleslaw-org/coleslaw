@@ -5,7 +5,7 @@
    (deploy :initarg :deploy :initform nil :accessor deploy)
    (domain :initarg :domain :initform "" :accessor domain)
    (feeds :initarg :feeds :initform nil :accessor feeds)
-   (license :initarg :license :initform "CC-BY-SA" :accessor license)
+   (license :initarg :license :initform nil :accessor license)
    (plugins :initarg :plugins :initform '() :accessor plugins)
    (repo :initarg :repo :initform #p"/" :accessor repo)
    (sitenav :initarg :sitenav :initform "" :accessor sitenav)
