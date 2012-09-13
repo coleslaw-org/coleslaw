@@ -30,12 +30,9 @@
 
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
-  (loop with posts = (sort (hash-table-values *posts*) #'string< :key #'post-date)
-     for i from 1 upto (length posts)
-     for prev = nil then post
-     for post = (nth (1- i) posts)
-     for next = (nth i posts)
-     do (render-page post nil :prev prev :next next)))
+    (loop for (prev post next) on (append '(nil) (sort (hash-table-values *posts*)
+                                                       #'string< :key #'post-date))
+       while post do (render-page post nil :prev prev :next next)))
 
 (defgeneric render-content (text format)
   (:documentation "Compile TEXT from the given FORMAT to HTML for display.")

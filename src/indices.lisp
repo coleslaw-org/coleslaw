@@ -66,5 +66,5 @@
     (dotimes (i (ceiling (length posts) 10))
       (render-page (index-by-n i posts) nil
                    :prev (and (plusp i) i)
-                   :next (and (< (* i 10) (length posts)) (+ 2 i)))))
+                   :next (and (< (* (1+ i) 10) (length posts)) (+ 2 i)))))
   (update-symlink "index.html" "1.html"))
