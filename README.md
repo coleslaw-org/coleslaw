@@ -17,6 +17,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 * Plugins to...
   * Use LaTeX (inside pairs of $$) via Mathjax
   * Import from wordpress
+* There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
 
 ## Installation
 This software should be portable to any conforming Common Lisp implementation but this guide will assume SBCL is installed. Testing has also been done on CCL.
