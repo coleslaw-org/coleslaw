@@ -1,12 +1,18 @@
 (in-package :coleslaw)
 
-(defparameter *injections* (make-hash-table :test #'equal)
-  "A hash table for storing JS to inject in the theme templates.")
+(defparameter *injections* ()
+  "A list that stores pairs of (string . predicate) to inject in the page.")
 
-(defgeneric add-injection (str location)
-  (:documentation "Add STR to the list of elements injected in LOCATION.")
-  (:method ((str string) location)
-    (pushnew str (gethash location *injections*) :test #'string=)))
+(defun add-injection (injection location)
+  (push injection (getf *injections* location)))
+
+(defun find-injections (content)
+  (flet ((injections-for (location)
+           (loop for (injection . predicate) in (getf *injections* location)
+              when (funcall predicate content)
+              collect injection)))
+    (list :head (injections-for :head)
+          :body (injections-for :body))))
 
 (defun theme-package (&key (name (theme *config*)))
   "Find the package matching the theme NAME."
@@ -30,4 +36,3 @@
 ;; {template base}
 ;; {template post}
 ;; {template index}
-

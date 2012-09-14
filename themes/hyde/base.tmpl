@@ -10,7 +10,11 @@
     <link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
     <link href= "{$config.domain}/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" href="{$config.domain}/rss.xml" type="application/rss+xml" />
-    {if $headInject} {$headInject |noAutoescape} {/if}
+    {if $injections.head}
+      {foreach $injection in $injections.head}
+        {$injection |noAutoescape}
+      {/foreach}
+    {/if}
   </head>
   <body>
     <div class="navigation">
@@ -23,7 +27,11 @@
     <div id="content">
       {$raw |noAutoescape}
     </div>
-    {if $bodyInject} {$bodyInject |noAutoescape} {/if}
+    {if $injections.body}
+      {foreach $injection in $injections.body}
+        {$injection |noAutoescape}
+      {/foreach}
+    {/if}
     <div class="fineprint">
       <hr>
       Unless otherwise credited all material

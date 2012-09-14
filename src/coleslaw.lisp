@@ -15,8 +15,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                               :content content
                               :raw (apply 'render content render-args)
                               :pubdate (make-pubdate)
-                              :body-inject (gethash :body *injections*)
-                              :head-inject (gethash :head *injections*)))))
+                              :injections (find-injections content)))))
     (ensure-directories-exist filepath)
     (with-open-file (out filepath
                      :direction :output
