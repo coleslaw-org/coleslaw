@@ -27,7 +27,7 @@
     (format nil "~a-~2,'0d-~2,'0d ~a" year (position month +short-month-names+
                                                      :test #'string=) date time)))
 
-(defun import-post (post &optional (since nil since-supplied-p))
+(defun import-post (post output &optional (since nil since-supplied-p))
   (when (and (string= "publish" (node-val "wp:status" post)) ; is it public?
              (string= "post" (node-val "wp:post_type" post)) ; is it a post?
              (or (not since-supplied-p) (string>= (get-timestamp post) since)))
@@ -36,10 +36,10 @@
         (error "No valid slug-title for post ~a." (get-timestamp post)))
       (export-post (node-val "title" post) (node-val "category" post)
                    (get-timestamp post) (node-val "content:encoded" post)
-                   (format nil "~a.post" slug)))))
+                   (format nil "~a.post" slug) output))))
 
-(defun export-post (title tags date content path)
-  (with-open-file (out (merge-pathnames path (repo *config*))
+(defun export-post (title tags date content path output)
+  (with-open-file (out (merge-pathnames path (or output (repo *config*)))
                    :direction :output
                    :if-exists :supersede
                    :if-does-not-exist :create)
@@ -52,13 +52,13 @@
     (format out ";;;;;~%")
     (format out "~A~%" (regex-replace-all (string #\Newline) content "<br>"))))
 
-(defun import-posts (filepath &optional since)
+(defun import-posts (filepath output &optional since)
   (when (probe-file filepath)
     (ensure-directories-exist (repo *config*))
     (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
            (posts (dom:get-elements-by-tag-name xml "item")))
-      (loop for post across posts do (import-post post since))
+      (loop for post across posts do (import-post post output since))
       (delete-file filepath))))
 
-(defun enable (&key filepath)
-  (import-posts filepath))
+(defun enable (&key filepath output)
+  (import-posts filepath output))
