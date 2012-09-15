@@ -1,5 +1,6 @@
 (defpackage :coleslaw-disqus
-  (:use :cl :coleslaw))
+  (:use :cl)
+  (:import-from :coleslaw #:add-injection))
 
 (in-package :coleslaw-disqus)
 
@@ -21,5 +22,5 @@
      <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>")
 
 (defun enable (&key shortname)
-  (coleslaw:add-injection (list (format nil *disqus-header* shortname)
-                                (lambda (x) (typep x post))) :head))
+  (add-injection (list (format nil *disqus-header* shortname)
+                       (lambda (x) (typep x post))) :head))

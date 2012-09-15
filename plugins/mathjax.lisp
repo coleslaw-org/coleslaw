@@ -1,5 +1,10 @@
 (defpackage :coleslaw-mathjax
-  (:use :cl :coleslaw))
+  (:use :cl)
+  (:import-from :coleslaw #:add-injection
+                          #:post
+                          #:index
+                          #:post-tags
+                          #:index-posts))
 
 (in-package :coleslaw-mathjax)
 
@@ -21,4 +26,4 @@ src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLor
              (etypecase content
                (post (math-post-p content))
                (index (some #'math-post-p (index-posts content))))))
-    (coleslaw:add-injection (list *mathjax-header* #'mathjax-p) :head)))
+    (add-injection (list *mathjax-header* #'mathjax-p) :head)))
