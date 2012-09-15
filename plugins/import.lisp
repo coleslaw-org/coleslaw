@@ -53,8 +53,12 @@
     (format out "~A~%" (regex-replace-all (string #\Newline) content "<br>"))))
 
 (defun import-posts (filepath &optional since)
-  (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
-         (posts (dom:get-elements-by-tag-name xml "item")))
-    (load-config)
+  (when (probe-file filepath)
     (ensure-directories-exist (repo *config*))
-    (loop for post across posts do (import-post post since))))
+    (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
+           (posts (dom:get-elements-by-tag-name xml "item")))
+      (loop for post across posts do (import-post post since))
+      (delete-file filepath))))
+
+(defun enable (&key filepath)
+  (import-posts filepath))

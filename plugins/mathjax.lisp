@@ -15,4 +15,10 @@ src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLor
 </script>")
 
 (defun enable ()
-  (coleslaw:add-injection *mathjax-header* :head))
+  (labels ((math-post-p (post)
+             (member "math" (post-tags post) :test #'string=))
+           (mathjax-p (content)
+             (etypecase content
+               (post (math-post-p content))
+               (index (some #'math-post-p (index-posts content))))))
+    (coleslaw:add-injection (list *mathjax-header* #'mathjax-p) :head)))

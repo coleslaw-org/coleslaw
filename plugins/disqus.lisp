@@ -3,9 +3,6 @@
 
 (in-package :coleslaw-disqus)
 
-;; Should be added to plugins like so:
-; :plugins (mathjax (disqus :shortname "mysite-disqus-shortname"))
-
 (defvar *disqus-header*
   "<div id=\"disqus_thread\"></div>
      <script type=\"text/javascript\">
@@ -24,4 +21,5 @@
      <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>")
 
 (defun enable (&key shortname)
-  (coleslaw:add-injection (format nil *disqus-header* shortname) :head))
+  (coleslaw:add-injection (list (format nil *disqus-header* shortname)
+                                (lambda (x) (typep x post))) :head))
