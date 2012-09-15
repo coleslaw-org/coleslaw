@@ -4,7 +4,14 @@
   "A list that stores pairs of (string . predicate) to inject in the page.")
 
 (defun add-injection (injection location)
-  (push injection (getf *injections* location)))
+  "Adds an INJECTION to a given LOCATION for rendering. The INJECTION should be
+a string which will always be added or a (string . lambda). In the latter case,
+the lambda takes a single argument, a content object, i.e. a POST or INDEX, and
+any return value other than nil indicates the injection should be added."
+  (let ((result (etypecase injection
+                  (string (list injection #'identity))
+                  (list injection))))
+    (push result (getf *injections* location))))
 
 (defun find-injections (content)
   (flet ((injections-for (location)
