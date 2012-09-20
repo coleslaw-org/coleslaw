@@ -1,7 +1,8 @@
 (defpackage :coleslaw-disqus
   (:use :cl)
   (:export #:enable)
-  (:import-from :coleslaw #:add-injection))
+  (:import-from :coleslaw #:add-injection
+                          #:post))
 
 (in-package :coleslaw-disqus)
 
