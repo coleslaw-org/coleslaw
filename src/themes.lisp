@@ -15,7 +15,7 @@ any return value other than nil indicates the injection should be added."
 
 (defun find-injections (content)
   (flet ((injections-for (location)
-           (loop for (injection . predicate) in (getf *injections* location)
+           (loop for (injection predicate) in (getf *injections* location)
               when (funcall predicate content)
               collect injection)))
     (list :head (injections-for :head)
