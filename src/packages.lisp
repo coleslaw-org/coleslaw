@@ -6,7 +6,9 @@
                             #:mappend)
   (:import-from :closure-template #:compile-template)
   (:export #:main
+           #:blog
+           #:post
+           #:index
            #:add-injection
            #:render-content
-           #:render
            #:deploy))

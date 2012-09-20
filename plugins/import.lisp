@@ -3,6 +3,7 @@
 
 (defpackage :coleslaw-import
   (:use :cl :cxml)
+  (:export #:enable)
   (:import-from :coleslaw #:slugify
                           #:load-config
                           #:*config*

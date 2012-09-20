@@ -1,6 +1,6 @@
 # coleslaw
 
-<img src="https://raw.github.com/redline6561/coleslaw/master/logo_medium.jpg" alt="coleslaw logo" align="right"/>
+<img src="https://raw.github.com/redline6561/coleslaw/master/themes/hyde/css/logo_medium.jpg" alt="coleslaw logo" align="right"/>
 
 > [Czeslaw Milosz](http://blog.redlinernotes.com/tag/milosz.html) was the writer-in-residence at UNC c. 1992.
 > I used to see him all the time at the Hardback Cafe, always sitting at a two-top
@@ -39,7 +39,7 @@ Coleslaw expects post files to be formatted as follows:
 ;;;;;
 title: foo
 tags: bar, baz
-date: yyyy-mm-dd timestamp
+date: yyyy-mm-dd hh:mm:ss
 format: html (for raw html) or md (for markdown)
 ;;;;;
 your post

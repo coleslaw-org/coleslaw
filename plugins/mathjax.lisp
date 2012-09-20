@@ -1,5 +1,6 @@
 (defpackage :coleslaw-mathjax
   (:use :cl)
+  (:export #:enable)
   (:import-from :coleslaw #:add-injection
                           #:post
                           #:index
