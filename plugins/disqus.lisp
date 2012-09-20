@@ -25,4 +25,4 @@
 
 (defun enable (&key shortname)
   (add-injection (list (format nil *disqus-header* shortname)
-                       (lambda (x) (typep x post))) :head))
+                       (lambda (x) (typep x 'post))) :head))
