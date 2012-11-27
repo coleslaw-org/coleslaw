@@ -8,7 +8,7 @@ If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
 (defun run-program (program &rest args)
   "Take a PROGRAM and execute the corresponding shell command. If ARGS is provided,
 use (apply 'format nil PROGRAM ARGS) as the value of PROGRAM."
-  (trivial-shell:shell-command (apply 'format nil program args)))
+  (inferior-shell:run (apply 'format nil program args) :show t))
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
@@ -28,7 +28,7 @@ on files that match the given extension."
 (defun current-directory ()
   "Return the operating system's current directory."
   #+sbcl (sb-posix:getcwd)
-  #+ccl (current-directory)
+  #+ccl (ccl:current-directory)
   #+ecl (si:getcwd)
   #+cmucl (unix:unix-current-directory)
   #+clisp (ext:cd)
@@ -37,7 +37,7 @@ on files that match the given extension."
 (defun (setf current-directory) (path)
   "Change the operating system's current directory to PATH."
   #+sbcl (sb-posix:chdir path)
-  #+ccl (setf (current-directory) path)
+  #+ccl (setf (ccl:current-directory) path)
   #+ecl (si:chdir path)
   #+cmucl (unix:unix-chdir (namestring path))
   #+clisp (ext:cd path)
