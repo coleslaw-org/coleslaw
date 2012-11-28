@@ -21,7 +21,7 @@
            (subseq list 0 (min (length list) 10))))
     (let* ((by-date (by-date (hash-table-values *posts*)))
            (posts (first-10 by-date)))
-      (render-page (make-instance 'index :path "rss.xml" :posts posts) :rss)
+      (render-page (make-instance 'index :path "rss.xml" :posts posts) :rss-feed)
       (render-page (make-instance 'index :path "feed.atom" :posts posts) :atom-feed)
       (dolist (feed feeds)
         (let ((index (index-by-tag feed by-date)))
