@@ -1,9 +1,13 @@
 (in-package :coleslaw)
 
-(defun app-path (path &rest args)
-  "Take a relative PATH and return the corresponding pathname beneath coleslaw.
+(defun rel-path (base path &rest args)
+  "Take a relative PATH and return the corresponding pathname beneath BASE.
 If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
-  (merge-pathnames (apply 'format nil path args) coleslaw-conf:*basedir*))
+  (merge-pathnames (apply 'format nil path args) base))
+
+(defun app-path (path &rest args)
+  "Return a relative path beneath coleslaw."
+  (apply 'rel-path coleslaw-conf:*basedir* path args))
 
 (defun run-program (program &rest args)
   "Take a PROGRAM and execute the corresponding shell command. If ARGS is provided,

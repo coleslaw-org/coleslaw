@@ -11,11 +11,40 @@
    (format :initform nil :initarg :format :accessor post-format)
    (content :initform nil :initarg :content :accessor post-content)))
 
-(defmethod render ((content post) &key prev next)
+(defmethod render ((object post) &key prev next)
   (funcall (theme-fn 'post) (list :config *config*
-                                  :post content
+                                  :post object
                                   :prev prev
                                   :next next)))
+
+(defmethod page-path ((post post))
+  (rel-path (staging *config*) "posts/~a.html" (post-slug post)))
+
+(defun read-post (in)
+  "Make a POST instance based on the data from the stream IN."
+  (flet ((check-header ()
+           (unless (string= (read-line in) ";;;;;")
+             (error "The provided file lacks the expected header.")))
+         (parse-field (str)
+           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
+         (field-name (line)
+           (subseq line 0 (position #\: line)))
+         (read-tags (str)
+           (mapcar #'string-downcase (cl-ppcre:split ", " str)))
+         (slurp-remainder ()
+           (let ((seq (make-string (- (file-length in) (file-position in)))))
+             (read-sequence seq in)
+             (remove #\Nul seq))))
+    (check-header)
+    (let ((args (loop for line = (read-line in nil) until (string= line ";;;;;")
+                   appending (list (make-keyword (string-upcase (field-name line)))
+                                   (aref (parse-field line) 0)))))
+      (setf (getf args :tags) (read-tags (getf args :tags))
+            (getf args :format) (make-keyword (string-upcase (getf args :format))))
+      (apply 'make-instance 'post
+             (append args (list :content (render-content (slurp-remainder)
+                                                         (getf args :format))
+                                :slug (slugify (getf args :title))))))))
 
 (defun load-posts ()
   "Read the stored .post files from the repo."
@@ -30,45 +59,10 @@
 
 (defun render-posts ()
   "Iterate through the files in the repo to render+write the posts out to disk."
-    (loop for (prev post next) on (append '(nil) (sort (hash-table-values *posts*)
-                                                       #'string< :key #'post-date))
-       while post do (render-page post nil :prev prev :next next)))
-
-(defgeneric render-content (text format)
-  (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
-  (:method (text (format (eql :html)))
-    text))
-
-(defmethod render-content (text (format (eql :md)))
-  (let ((3bmd-code-blocks:*code-blocks* t))
-    (with-output-to-string (str)
-      (3bmd:parse-string-and-print-to-stream text str))))
-
-(defun read-post (in)
-  "Make a POST instance based on the data from the stream IN."
-  (flet ((check-header ()
-           (unless (string= (read-line in) ";;;;;")
-             (error "The provided file lacks the expected header.")))
-         (parse-field (str)
-           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
-         (read-tags (str)
-           (mapcar #'string-downcase (cl-ppcre:split ", " str)))
-         (slurp-remainder ()
-           (let ((seq (make-string (- (file-length in) (file-position in)))))
-             (read-sequence seq in)
-             (remove #\Nul seq))))
-    (check-header)
-    (let ((args (loop for field in '("title" "tags" "date" "format")
-                   for line = (read-line in nil)
-                   appending (list (make-keyword (string-upcase field))
-                                   (aref (parse-field line) 0)))))
-      (check-header)
-      (setf (getf args :tags) (read-tags (getf args :tags))
-            (getf args :format) (make-keyword (string-upcase (getf args :format))))
-      (apply 'make-instance 'post
-             (append args (list :content (render-content (slurp-remainder)
-                                                         (getf args :format))
-                                :slug (slugify (getf args :title))))))))
+  (loop for (prev post next) on (append '(nil) (sort (hash-table-values *posts*)
+                                                     #'string< :key #'post-date))
+     while post do (write-page (page-path post)
+                               (render-page post nil :prev prev :next next))))
 
 (defun slug-char-p (char)
   "Determine if CHAR is a valid slug (i.e. URL) character."

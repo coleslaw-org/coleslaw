@@ -1,26 +1,37 @@
 (in-package :coleslaw)
 
-(defgeneric render (content &key &allow-other-keys)
-  (:documentation "Render the given CONTENT to HTML."))
+(defgeneric render (object &key &allow-other-keys)
+  (:documentation "Render the given OBJECT to HTML."))
+
+(defgeneric render-content (text format)
+  (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
+  (:method (text (format (eql :html)))
+    text)
+  (:method (test (format (eql :md)))
+    (let ((3bmd-code-blocks:*code-blocks* t))
+      (with-output-to-string (str)
+        (3bmd:parse-string-and-print-to-stream text str)))))
+
+(defgeneric page-path (content)
+  (:documentation "The path to store CONTENT at once rendered."))
 
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
-  (let* ((path (etypecase content
-                 (post (format nil "posts/~a.html" (post-slug content)))
-                 (index (index-path content))))
-         (filepath (merge-pathnames path (staging *config*)))
-         (page (funcall (theme-fn (or theme-fn 'base))
-                        (list :config *config*
-                              :content content
-                              :raw (apply 'render content render-args)
-                              :pubdate (make-pubdate)
-                              :injections (find-injections content)))))
-    (ensure-directories-exist filepath)
-    (with-open-file (out filepath
-                     :direction :output
-                     :if-does-not-exist :create)
-      (write-line page out))))
+  (funcall (theme-fn (or theme-fn 'base))
+           (list :config *config*
+                 :content content
+                 :raw (apply 'render content render-args)
+                 :pubdate (make-pubdate)
+                 :injections (find-injections content))))
+
+(defun write-page (filepath page)
+  "Write the given PAGE to FILEPATH."
+  (ensure-directories-exist filepath)
+  (with-open-file (out filepath
+                   :direction :output
+                   :if-does-not-exist :create)
+    (write-line page out)))
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
