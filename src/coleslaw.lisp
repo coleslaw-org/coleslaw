@@ -12,8 +12,8 @@
       (with-output-to-string (str)
         (3bmd:parse-string-and-print-to-stream text str)))))
 
-(defgeneric page-path (content)
-  (:documentation "The path to store CONTENT at once rendered."))
+(defgeneric page-path (object)
+  (:documentation "The path to store OBJECT at once rendered."))
 
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.

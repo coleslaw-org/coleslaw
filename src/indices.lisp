@@ -1,17 +1,30 @@
 (in-package :coleslaw)
 
 (defclass index ()
-  ((path :initform nil :initarg :path :accessor index-path)
+  ((id :initform nil :initarg :id :accessor index-id)
    (posts :initform nil :initarg :posts :accessor index-posts)
    (title :initform nil :initarg :title :accessor index-title)))
 
-(defmethod render ((content index) &key prev next)
+(defmethod render ((object index) &key prev next)
   (funcall (theme-fn 'index) (list :tags (all-tags)
                                    :months (all-months)
                                    :config *config*
-                                   :index content
+                                   :index object
                                    :prev prev
                                    :next next)))
+
+(defclass tag-index (index) ())
+(defclass date-index (index) ())
+(defclass int-index (index) ())
+
+(defmethod page-path ((object index))
+  (rel-path (staging *config*) (index-id object)))
+(defmethod page-path ((object tag-index))
+  (rel-path (staging *config*) "tag/~a.html" (index-id object)))
+(defmethod page-path ((object date-index))
+  (rel-path (staging *config*) "date/~a.html" (index-id object)))
+(defmethod page-path ((object int-index))
+  (rel-path (staging *config*) "~d.html" (index-id object)))
 
 (defun all-months ()
   "Retrieve a list of all months with published posts."
@@ -36,35 +49,40 @@
   "Return an index of all POSTS matching the given TAG."
   (let ((content (remove-if-not (lambda (post) (member tag (post-tags post)
                                                        :test #'string=)) posts)))
-    (make-instance 'index :path (format nil "tag/~a.html" tag)
-                          :posts content
-                          :title (format nil "Posts tagged ~a" tag))))
+    (make-instance 'tag-index :id tag
+                              :posts content
+                              :title (format nil "Posts tagged ~a" tag))))
 
 (defun index-by-month (month posts)
   "Return an index of all POSTS matching the given MONTH."
   (let ((content (remove-if-not (lambda (post) (search month (post-date post)))
                                 posts)))
-    (make-instance 'index :path (format nil "date/~a.html" month)
-                          :posts content
-                          :title (format nil "Posts from ~a" month))))
+    (make-instance 'date-index :id month
+                               :posts content
+                               :title (format nil "Posts from ~a" month))))
 
 (defun index-by-n (i posts &optional (step 10))
   "Return the index for the Ith page of POSTS in reverse chronological order."
-  (make-instance 'index :path (format nil "~d.html" (1+ i))
-                        :posts (let ((index (* step i)))
-                                 (subseq posts index (min (length posts)
-                                                          (+ index step))))
-                        :title "Recent Posts"))
+  (make-instance 'int-index :id (1+ i)
+                            :posts (let ((index (* step i)))
+                                     (subseq posts index (min (length posts)
+                                                              (+ index step))))
+                            :title "Recent Posts"))
 
 (defun render-indices ()
   "Render the indices to view posts in groups of size N, by month, and by tag."
   (let ((posts (by-date (hash-table-values *posts*))))
     (dolist (tag (all-tags))
-      (render-page (index-by-tag tag posts)))
+      (let ((index (index-by-tag tag posts)))
+        (write-page (page-path index) (render-page index))))
     (dolist (month (all-months))
-      (render-page (index-by-month month posts)))
+      (let ((index (index-by-month month posts)))
+        (write-page (page-path index) (render-page index))))
     (dotimes (i (ceiling (length posts) 10))
-      (render-page (index-by-n i posts) nil
-                   :prev (and (plusp i) i)
-                   :next (and (< (* (1+ i) 10) (length posts)) (+ 2 i)))))
+      (let ((index (index-by-n i posts)))
+        (write-page (page-path index)
+                    (render-page index nil
+                                 :prev (and (plusp i) i)
+                                 :next (and (< (* (1+ i) 10) (length posts))
+                                            (+ 2 i)))))))
   (update-symlink "index.html" "1.html"))

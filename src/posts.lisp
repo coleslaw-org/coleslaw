@@ -17,8 +17,8 @@
                                   :prev prev
                                   :next next)))
 
-(defmethod page-path ((post post))
-  (rel-path (staging *config*) "posts/~a.html" (post-slug post)))
+(defmethod page-path ((object post))
+  (rel-path (staging *config*) "posts/~a.html" (post-slug object)))
 
 (defun read-post (in)
   "Make a POST instance based on the data from the stream IN."
