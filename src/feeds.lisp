@@ -1,13 +1,5 @@
 (in-package :coleslaw)
 
-(defun date-to-timestamp (date)
-  "Convert a post DATE to a local-time timestamp."
-  (destructuring-bind (date time) (cl-ppcre:split " " date)
-    (apply 'local-time:encode-timestamp 0
-           (mapcar #'parse-integer
-                   (append (reverse (cl-ppcre:split ":" time))
-                           (reverse (cl-ppcre:split "-" date)))))))
-
 (defun make-pubdate (&optional date)
   "Make a RFC1123 pubdate representing the current time or DATE, when supplied."
   (let ((timestamp (if date
