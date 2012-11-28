@@ -11,13 +11,15 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 
 ## Features
 * Git for storage
-* RSS feeds!
+* RSS and ATOM feeds!
 * Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize).
-  * Currently supports: Common Lisp, Emacs Lisp, Scheme, Clojure, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
-* Plugins to...
-  * Use LaTeX (inside pairs of $$) via Mathjax
-  * Import from wordpress
+  * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
+* Plugins for...
+  * Comments via Disqus
+  * Using LaTeX (inside pairs of $$) via Mathjax
+  * Importing posts from wordpress
 * There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
+* Example sites: [redlinernotes](http://redlinernotes.com/blog/) and [(lisp :is 'fun)](http://blub.co.za/).
 
 ## Installation
 This software should be portable to any conforming Common Lisp implementation but this guide will assume SBCL is installed. Testing has also been done on CCL.
