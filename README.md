@@ -11,7 +11,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 
 ## Features
 * Git for storage
-* RSS and ATOM feeds!
+* RSS and Atom feeds!
 * Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize).
   * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
 * Plugins for...
