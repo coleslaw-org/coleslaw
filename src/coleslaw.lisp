@@ -7,7 +7,7 @@
   (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
   (:method (text (format (eql :html)))
     text)
-  (:method (test (format (eql :md)))
+  (:method (text (format (eql :md)))
     (let ((3bmd-code-blocks:*code-blocks* t))
       (with-output-to-string (str)
         (3bmd:parse-string-and-print-to-stream text str)))))
