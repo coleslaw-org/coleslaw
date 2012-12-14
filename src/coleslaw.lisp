@@ -15,6 +15,12 @@
 (defgeneric page-path (object)
   (:documentation "The path to store OBJECT at once rendered."))
 
+(defmethod page-path :around ((object object))
+  (let ((result (namestring (call-next-method))))
+    (if (position #\. result)
+        result
+        (concatenate 'string result ".html"))))
+
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
@@ -26,15 +32,12 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                  :injections (find-injections content))))
 
 (defun write-page (filepath page)
-  "Write the given PAGE to FILEPATH.html unless an extension is present."
-  (let ((path (if (position #\. filepath)
-                  filepath
-                  (concatenate 'string filepath ".html"))))
-    (ensure-directories-exist path)
-    (with-open-file (out path
-                     :direction :output
-                     :if-does-not-exist :create)
-      (write-line page out))))
+  "Write the given PAGE to FILEPATH."
+  (ensure-directories-exist filepath)
+  (with-open-file (out filepath
+                   :direction :output
+                   :if-does-not-exist :create)
+    (write-line page out)))
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
