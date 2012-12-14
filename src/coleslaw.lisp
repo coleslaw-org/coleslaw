@@ -15,11 +15,11 @@
 (defgeneric page-path (object)
   (:documentation "The path to store OBJECT at once rendered."))
 
-(defmethod page-path :around ((object object))
-  (let ((result (namestring (call-next-method))))
-    (if (position #\. result)
+(defmethod page-path :around ((object t))
+  (let ((result (call-next-method)))
+    (if (pathname-type result)
         result
-        (concatenate 'string result ".html"))))
+        (make-pathname :type "html" :defaults result))))
 
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.
