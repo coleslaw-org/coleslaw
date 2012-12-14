@@ -20,11 +20,11 @@
 (defmethod page-path ((object index))
   (rel-path (staging *config*) (index-id object)))
 (defmethod page-path ((object tag-index))
-  (rel-path (staging *config*) "tag/~a.html" (index-id object)))
+  (rel-path (staging *config*) "tag/~a" (index-id object)))
 (defmethod page-path ((object date-index))
-  (rel-path (staging *config*) "date/~a.html" (index-id object)))
+  (rel-path (staging *config*) "date/~a" (index-id object)))
 (defmethod page-path ((object int-index))
-  (rel-path (staging *config*) "~d.html" (index-id object)))
+  (rel-path (staging *config*) "~d" (index-id object)))
 
 (defun all-months ()
   "Retrieve a list of all months with published posts."

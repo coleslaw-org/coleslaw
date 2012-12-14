@@ -18,7 +18,7 @@
                                   :next next)))
 
 (defmethod page-path ((object post))
-  (rel-path (staging *config*) "posts/~a.html" (post-slug object)))
+  (rel-path (staging *config*) "posts/~a" (post-slug object)))
 
 (defun read-post (in)
   "Make a POST instance based on the data from the stream IN."

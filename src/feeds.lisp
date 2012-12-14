@@ -19,6 +19,6 @@
       (write-page (page-path atom) (render-page atom :atom-feed))
       (dolist (feed feeds)
         (let ((index (index-by-tag feed by-date)))
-          (setf (index-id index) (format nil "tag/~a.xml" feed)
+          (setf (index-id index) (format nil "~a-rss.xml" feed)
                 (index-posts index) (first-10 (index-posts index)))
           (write-page (page-path index) (render-page index :rss-feed)))))))
