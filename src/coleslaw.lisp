@@ -72,9 +72,10 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
           (update-symlink prev (truename curr)))
         (update-symlink curr new-build)))))
 
-(defun main ()
-  "Load the user's config, then compile and deploy the blog."
-  (load-config)
+(defun main (config-key)
+  "Load the user's config section corresponding to CONFIG-KEY, then
+compile and deploy the blog."
+  (load-config config-key)
   (load-posts)
   (compile-theme (theme *config*))
   (compile-blog (staging *config*))

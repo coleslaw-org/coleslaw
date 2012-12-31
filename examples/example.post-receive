@@ -1,0 +1,34 @@
+########## CONFIGURATION VALUES ##########
+
+# TMP_GIT_CLONE _must_ match one of the following in coleslawrc: 
+#   * The :repo argument (for a single-site setup) _or_
+#   * An alist key (for a multi-site setup)
+TMP_GIT_CLONE=$HOME/tmp/improvedmeans/
+
+# Set LISP to your preferred implementation. The following
+# implementations are currently supported:
+#   * sbcl
+#   * ccl
+LISP=sbcl
+
+########## DON'T EDIT ANYTHING BELOW THIS LINE ##########
+
+if cd `dirname "$0"`/..; then
+    GIT_REPO=`pwd`
+    cd $OLDPWD || exit 1
+else
+    exit 1
+fi
+
+git clone $GIT_REPO $TMP_GIT_CLONE || exit 1
+
+if [ $LISP = sbcl ]; then
+    sbcl --eval "(ql:quickload 'coleslaw)" --eval "(coleslaw:main \"$TMP_GIT_CLONE\")"
+elif [ $LISP = ccl ]; then
+    echo "(ql:quickload 'coleslaw)(coleslaw:main \"$TMP_GIT_CLONE\")" | ccl -b
+else
+    exit 1
+fi
+
+rm -rf $TMP_GIT_CLONE
+exit
