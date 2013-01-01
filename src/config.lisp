@@ -48,7 +48,7 @@ are in the plugins folder in coleslaw's source directory."
           ;; Multi-site config: load config section for CONFIG-KEY.
           (let* ((config-key-pathname (cl-fad:pathname-as-directory config-key))
                  (section (assoc config-key-pathname config-form
-                                 :key #'(lambda (str) (cl-fad:pathname-as-directory str))
+                                 :key #'cl-fad:pathname-as-directory
                                  :test #'equal)))
             (if section
                 (setf *config* (apply #'make-instance 'blog (cdr section))
