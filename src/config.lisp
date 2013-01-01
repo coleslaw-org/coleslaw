@@ -51,9 +51,8 @@ are in the plugins folder in coleslaw's source directory."
                                  :key #'(lambda (str) (cl-fad:pathname-as-directory str))
                                  :test #'equal)))
             (if section
-                (progn 
-                  (setf *config* (apply #'make-instance 'blog (cdr section)))
-                  (setf (slot-value *config* 'repo) config-key))
-                (error 'unknown-config-section-error 
+                (setf *config* (apply #'make-instance 'blog (cdr section))
+                      (repo *config*) config-key)
+                (error 'unknown-config-section-error
                        :text (format nil "In ~A: No such key: '~A'." in config-key)))))
       (load-plugins (plugins *config*)))))
