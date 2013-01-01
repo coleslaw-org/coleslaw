@@ -29,25 +29,21 @@
 (defun all-months ()
   "Retrieve a list of all months with published posts."
   (sort (remove-duplicates (mapcar (lambda (x) (get-month (post-date x)))
-                                   (hash-table-values *posts*)) :test #'string=)
+                                   (hash-table-values *content*)) :test #'string=)
         #'string>))
 
 (defun all-tags ()
   "Retrieve a list of all tags used in posts."
-  (sort (remove-duplicates (mappend 'post-tags (hash-table-values *posts*))
+  (sort (remove-duplicates (mappend 'content-tags (hash-table-values *content*))
                            :test #'string=) #'string<))
 
 (defun get-month (timestamp)
   "Extract the YYYY-MM portion of TIMESTAMP."
   (subseq timestamp 0 7))
 
-(defun by-date (posts)
-  "Sort POSTS in reverse chronological order."
-  (sort posts #'string> :key #'post-date))
-
 (defun index-by-tag (tag posts)
   "Return an index of all POSTS matching the given TAG."
-  (let ((content (remove-if-not (lambda (post) (member tag (post-tags post)
+  (let ((content (remove-if-not (lambda (post) (member tag (content-tags post)
                                                        :test #'string=)) posts)))
     (make-instance 'tag-index :id tag
                               :posts content
@@ -71,7 +67,7 @@
 
 (defun render-indices ()
   "Render the indices to view posts in groups of size N, by month, and by tag."
-  (let ((posts (by-date (hash-table-values *posts*))))
+  (let ((posts (by-date (hash-table-values *content*))))
     (dolist (tag (all-tags))
       (let ((index (index-by-tag tag posts)))
         (write-page (page-path index) (render-page index))))

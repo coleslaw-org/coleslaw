@@ -49,7 +49,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                        (merge-pathnames "static" (repo *config*))))
       (when (probe-file dir)
         (run-program "cp -R ~a ." dir)))
-    (render-posts)
+    (do-ctypes (publish (class-name ctype)))
     (render-indices)
     (render-feeds (feeds *config*))))
 
@@ -76,7 +76,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
   "Load the user's config section corresponding to CONFIG-KEY, then
 compile and deploy the blog."
   (load-config config-key)
-  (load-posts)
+  (load-content)
   (compile-theme (theme *config*))
   (compile-blog (staging *config*))
   (deploy (staging *config*)))
