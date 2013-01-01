@@ -14,6 +14,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 * RSS and Atom feeds!
 * Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize).
   * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
+* [Multi-site publishing](http://blub.co.za/posts/Adding-multi-site-support-to-Coleslaw.html) support.
 * Plugins for...
   * Comments via Disqus
   * Using LaTeX (inside pairs of $$) via Mathjax
