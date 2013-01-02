@@ -2,8 +2,7 @@
 
 (defclass post (content)
   ((title :initform nil :initarg :title :accessor post-title)
-   (format :initform nil :initarg :format :accessor post-format)
-   (content :initform nil :initarg :content :accessor post-content)))
+   (format :initform nil :initarg :format :accessor post-format)))
 
 (defmethod render ((object post) &key prev next)
   (funcall (theme-fn 'post) (list :config *config*
@@ -17,10 +16,10 @@
 (defmethod initialize-instance :after ((object post) &key)
   (with-accessors ((title post-title)
                    (format post-format)
-                   (content post-content)) object
+                   (text content-text)) object
       (setf (content-slug object) (slugify title)
             format (make-keyword (string-upcase format))
-            content (render-content content format))))
+            text (render-content text format))))
 
 (defmethod discover ((content-type (eql :post)))
   (purge-all 'post)

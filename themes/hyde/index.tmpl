@@ -6,7 +6,7 @@
   <div class="article-meta">
     <a class="article-title" href="{$config.domain}/posts/{$post.slug}.html">{$post.title}</a>
     <div class="date"> posted on {$post.date}</div>
-    <div class="article">{$post.content |noAutoescape}</div>
+    <div class="article">{$post.text |noAutoescape}</div>
   </div>
 {/foreach}
 <div id="relative-nav">

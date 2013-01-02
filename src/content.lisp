@@ -6,7 +6,8 @@
 (defclass content ()
   ((tags :initform nil :initarg :tags :accessor content-tags)
    (slug :initform nil :initarg :slug :accessor content-slug)
-   (date :initform nil :initarg :date :accessor content-date)))
+   (date :initform nil :initarg :date :accessor content-date)
+   (text :initform nil :initarg :text :accessor content-text)))
 
 (defun construct (content-type args)
   "Create an instance of CONTENT-TYPE with the given ARGS."
@@ -42,7 +43,7 @@ If PLIST-P is non-nil, a single plist is returned with :content holding the text
             (content (slurp-remainder in)))
         (setf (getf meta :tags) (read-delimited (getf meta :tags)))
         (if plist-p
-            (append meta (list :content content))
+            (append meta (list :text content))
             (values meta content))))))
 
 (defun find-all (content-type)
