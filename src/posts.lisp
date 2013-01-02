@@ -14,11 +14,11 @@
 (defmethod page-path ((object post))
   (rel-path (staging *config*) "posts/~a" (content-slug object)))
 
-(defmethod initialize-instance :after ((post post) &key)
+(defmethod initialize-instance :after ((object post) &key)
   (with-accessors ((title post-title)
                    (format post-format)
-                   (content post-content)) post
-      (setf (content-slug post) (slugify title)
+                   (content post-content)) object
+      (setf (content-slug object) (slugify title)
             format (make-keyword (string-upcase format))
             content (render-content content format))))
 

@@ -11,7 +11,7 @@
   "Render and write the given FEEDS for the site."
   (flet ((first-10 (list)
            (subseq list 0 (min (length list) 10))))
-    (let* ((by-date (by-date (hash-table-values *posts*)))
+    (let* ((by-date (by-date (find-all 'post)))
            (posts (first-10 by-date))
            (rss (make-instance 'index :id "rss.xml" :posts posts))
            (atom (make-instance 'index :id "feed.atom" :posts posts)))

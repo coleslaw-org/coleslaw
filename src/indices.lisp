@@ -28,7 +28,7 @@
 
 (defun all-months ()
   "Retrieve a list of all months with published posts."
-  (sort (remove-duplicates (mapcar (lambda (x) (get-month (post-date x)))
+  (sort (remove-duplicates (mapcar (lambda (x) (get-month (content-date x)))
                                    (hash-table-values *content*)) :test #'string=)
         #'string>))
 
@@ -51,7 +51,7 @@
 
 (defun index-by-month (month posts)
   "Return an index of all POSTS matching the given MONTH."
-  (let ((content (remove-if-not (lambda (post) (search month (post-date post)))
+  (let ((content (remove-if-not (lambda (post) (search month (content-date post)))
                                 posts)))
     (make-instance 'date-index :id month
                                :posts content
@@ -67,7 +67,7 @@
 
 (defun render-indices ()
   "Render the indices to view posts in groups of size N, by month, and by tag."
-  (let ((posts (by-date (hash-table-values *content*))))
+  (let ((posts (by-date (find-all 'post))))
     (dolist (tag (all-tags))
       (let ((index (index-by-tag tag posts)))
         (write-page (page-path index) (render-page index))))
