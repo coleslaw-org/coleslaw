@@ -7,6 +7,7 @@
   (:import-from :closure-template #:compile-template)
   (:export #:main
            #:blog
+           #:content
            #:post
            #:index
            #:add-injection

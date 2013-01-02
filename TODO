@@ -8,6 +8,7 @@ TODO:
 ; Add SHOUT content type. Add shout indices by month. Twitter\Disqus integration with shouts?
 ;; needs: shout template or just render function, publish analog for indices of a given ctype?
 ;; Indices fundamentally don't know about content-types. Is that a problem?
+;; Rename index.posts to something else?
 0.next
 ; improve date check/error reporting. -> 0.9
 ; doc themes and plugins, s3+hunchentoot. -> 0.9
