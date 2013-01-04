@@ -66,19 +66,19 @@
                             :title "Recent Posts"))
 
 (defun render-indices ()
-  "Render the indices to view posts in groups of size N, by month, and by tag."
-  (let ((posts (by-date (find-all 'post))))
+  "Render the indices to view content in groups of size N, by month, and by tag."
+  (let ((results (by-date (hash-table-values *content*))))
     (dolist (tag (all-tags))
-      (let ((index (index-by-tag tag posts)))
+      (let ((index (index-by-tag tag results)))
         (write-page (page-path index) (render-page index))))
     (dolist (month (all-months))
-      (let ((index (index-by-month month posts)))
+      (let ((index (index-by-month month results)))
         (write-page (page-path index) (render-page index))))
-    (dotimes (i (ceiling (length posts) 10))
-      (let ((index (index-by-n i posts)))
+    (dotimes (i (ceiling (length results) 10))
+      (let ((index (index-by-n i results)))
         (write-page (page-path index)
                     (render-page index nil
                                  :prev (and (plusp i) i)
-                                 :next (and (< (* (1+ i) 10) (length posts))
+                                 :next (and (< (* (1+ i) 10) (length results))
                                             (+ 2 i)))))))
   (update-symlink "index.html" "1.html"))
