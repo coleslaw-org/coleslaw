@@ -59,12 +59,14 @@ If PLIST-P is non-nil, a single plist is returned with :content holding the text
 (defmacro do-ctypes (&body body)
   "Iterate over the subclasses of CONTENT performing BODY with ctype lexically
 bound to the current subclass."
-  `(loop for ctype in (closer-mop:class-direct-subclasses (find-class 'content))
-      do ,@body))
+  (alexandria:with-gensyms (ctypes)
+    `(let ((,ctypes (closer-mop:class-direct-subclasses (find-class 'content))))
+       (loop for ctype in (mapcar (compose 'make-keyword 'class-name) ,ctypes)
+          do ,@body))))
 
 (defun load-content ()
   "Load all content stored in the blog's repo."
-  (do-ctypes (discover (class-name ctype))))
+  (do-ctypes (discover ctype)))
 
 (defun by-date (content)
   "Sort CONTENT in reverse chronological order."
