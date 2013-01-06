@@ -4,12 +4,12 @@ BUGS:
 ; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
 
 TODO:
-0.8
-; Add SHOUT content type. Add shout indices by month. Twitter\Disqus integration with shouts?
-;; needs: shout template or just render function, publish analog for indices of a given ctype?
+0.9
+; Add SHOUT content type.
+;; needs: shout template/render function. Twitter\Disqus integration with shouts?
 ;; Indices fundamentally don't know about content-types. Is that a problem?
 ;; Rename index.posts to something else?
-0.next
+Coleslaw.next
 ; improve date check/error reporting. -> 0.9
 ; doc themes and plugins, s3+hunchentoot. -> 0.9
 ; unit tests -> 0.9
