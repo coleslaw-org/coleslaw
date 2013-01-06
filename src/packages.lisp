@@ -7,9 +7,13 @@
   (:import-from :closure-template #:compile-template)
   (:export #:main
            #:blog
+           #:deploy
            #:content
            #:post
            #:index
-           #:add-injection
+           #:page-path
+           #:discover
+           #:publish
+           #:render
            #:render-content
-           #:deploy))
+           #:add-injection))
