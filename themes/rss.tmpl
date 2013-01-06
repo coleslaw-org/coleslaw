@@ -20,7 +20,7 @@
       {foreach $tag in $post.tags}
         <category><![CDATA[ {$tag} ]]></category>
       {/foreach}
-      <description><![CDATA[ {$post.content |noAutoescape} ]]></description>
+      <description><![CDATA[ {$post.text |noAutoescape} ]]></description>
     </item>
     {/foreach}
 
