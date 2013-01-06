@@ -3,12 +3,17 @@
   (:use :cl)
   (:import-from :alexandria #:hash-table-values
                             #:make-keyword
-                            #:mappend)
+                            #:mappend
+                            #:compose)
   (:import-from :closure-template #:compile-template)
   (:export #:main
            #:blog
+           #:content
            #:post
            #:index
-           #:add-injection
+           #:page-path
+           #:discover
+           #:publish
+           #:render
            #:render-content
-           #:deploy))
+           #:add-injection))

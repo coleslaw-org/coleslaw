@@ -58,43 +58,86 @@ else
 <pre>Homepage: <a href="http://github.com/redline6561/coleslaw">Github</a></pre></div>
 <div class="frame">
 <div class="labeltitle">
+<span class="expander" onclick="expand(this, 'classes');">-</span>Classes</div>
+<div id="classes">
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="blog_class" href="#blog_class">blog</a>
+<span class="lambdalist">(standard-object)</span>
+<span class="symboltype">class</span></div>
+<div class="documentation">
+<pre></pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="content_class" href="#content_class">content</a>
+<span class="lambdalist">(standard-object)</span>
+<span class="symboltype">class</span></div>
+<div class="documentation">
+<pre></pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="index_class" href="#index_class">index</a>
+<span class="lambdalist">(standard-object)</span>
+<span class="symboltype">class</span></div>
+<div class="documentation">
+<pre></pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="post_class" href="#post_class">post</a>
+<span class="lambdalist">(content)</span>
+<span class="symboltype">class</span></div>
+<div class="documentation">
+<pre></pre></div></div></div></div>
+<div class="frame">
+<div class="labeltitle">
 <span class="expander" onclick="expand(this, 'functions');">-</span>Functions</div>
 <div id="functions">
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="add-injection_func" href="#add-injection_func">add-injection</a>
-<span class="lambdalist">str location</span>
-<span class="symboltype">standard-generic-function</span></div>
+<span class="lambdalist">injection location</span>
+<span class="symboltype">function</span></div>
 <div class="documentation">
-<pre>Add STR to the list of elements injected in LOCATION.</pre></div></div>
+<pre>Adds an INJECTION to a given LOCATION for rendering. The INJECTION should be
+a string which will always be added or a (string . lambda). In the latter case,
+the lambda takes a single argument, a content object, i.e. a POST or INDEX, and
+any return value other than nil indicates the injection should be added.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
-<a class="symbolname" name="deploy_func" href="#deploy_func">deploy</a>
-<span class="lambdalist">staging</span>
+<a class="symbolname" name="discover_func" href="#discover_func">discover</a>
+<span class="lambdalist">content-type</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>Deploy the STAGING dir, updating the .prev and .curr symlinks.</pre></div></div>
-<div class="symboldecl">
-<div class="definition">
-<a class="symbolname" name="(setf deploy)_func" href="#(setf deploy)_func">(setf deploy)</a>
-<span class="lambdalist">new-value object</span>
-<span class="symboltype">standard-generic-function</span></div>
-<div class="documentation">
-<pre>:undocumented</pre></div></div>
+<pre>Load all content of the given CONTENT-TYPE from disk.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="main_func" href="#main_func">main</a>
-<span class="lambdalist"></span>
+<span class="lambdalist">config-key</span>
 <span class="symboltype">function</span></div>
 <div class="documentation">
-<pre>Load the user's config, then compile and deploy the blog.</pre></div></div>
+<pre>Load the user's config section corresponding to CONFIG-KEY, then
+compile and deploy the blog.</pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="page-path_func" href="#page-path_func">page-path</a>
+<span class="lambdalist">object</span>
+<span class="symboltype">standard-generic-function</span></div>
+<div class="documentation">
+<pre>The path to store OBJECT at once rendered.</pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="publish_func" href="#publish_func">publish</a>
+<span class="lambdalist">content-type</span>
+<span class="symboltype">standard-generic-function</span></div>
+<div class="documentation">
+<pre>Write pages to disk for all content of the given CONTENT-TYPE.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="render_func" href="#render_func">render</a>
-<span class="lambdalist">content &key next prev &allow-other-keys</span>
+<span class="lambdalist">object &key next prev &allow-other-keys</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>Render the given CONTENT to HTML.</pre></div></div>
+<pre>Render the given OBJECT to HTML.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="render-content_func" href="#render-content_func">render-content</a>

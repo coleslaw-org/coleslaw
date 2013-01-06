@@ -2,9 +2,9 @@
   (:use :cl)
   (:export #:enable)
   (:import-from :coleslaw #:add-injection
-                          #:post
+                          #:content
                           #:index
-                          #:post-tags
+                          #:content-tags
                           #:index-posts))
 
 (in-package :coleslaw-mathjax)
@@ -21,10 +21,10 @@ src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLor
 </script>")
 
 (defun enable ()
-  (labels ((math-post-p (post)
-             (member "math" (post-tags post) :test #'string=))
-           (mathjax-p (content)
-             (etypecase content
-               (post (math-post-p content))
-               (index (some #'math-post-p (index-posts content))))))
+  (labels ((math-post-p (obj)
+             (member "math" (content-tags obj) :test #'string=))
+           (mathjax-p (obj)
+             (etypecase obj
+               (content (math-post-p obj))
+               (index (some #'math-post-p (index-posts obj))))))
     (add-injection (list *mathjax-header* #'mathjax-p) :head)))

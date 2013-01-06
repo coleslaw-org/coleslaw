@@ -1,7 +1,7 @@
 (defsystem #:coleslaw
   :name "coleslaw-core"
   :description "Flexible Lisp Blogware"
-  :version "0.7"
+  :version "0.8"
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
@@ -12,12 +12,14 @@
                :local-time
                :inferior-shell
                :cl-fad
-               :cl-ppcre)
+               :cl-ppcre
+               :closer-mop)
   :serial t
   :components ((:file "packages")
                (:file "util")
                (:file "config")
                (:file "themes")
+               (:file "content")
                (:file "posts")
                (:file "indices")
                (:file "feeds")
