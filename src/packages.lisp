@@ -7,7 +7,6 @@
   (:import-from :closure-template #:compile-template)
   (:export #:main
            #:blog
-           #:deploy
            #:content
            #:post
            #:index
