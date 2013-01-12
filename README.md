@@ -29,7 +29,7 @@ Server side setup:
 1. Setup git and create a bare repo as shown [here](http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server).
 2. Install Lisp and [Quicklisp](http://quicklisp.org/).
 3. ```wget -c https://raw.github.com/redline6561/coleslaw/master/examples/single-site.coleslawrc -O ~/.coleslawrc``` # and edit as necessary
-4. ```wget -c https://raw.github.com/redline6561/coleslaw/master/examples/example.post-receieve -O your-blog.git/hooks/post-receive``` # and edit as necessary
+4. ```wget -c https://raw.github.com/redline6561/coleslaw/master/examples/example.post-receive -O your-blog.git/hooks/post-receive``` # and edit as necessary
 5. ```chmod +x your-blog/.git/hooks/post-receive```
 6. Create or clone your blog repo locally. Add your server as a remote with ```git remote add prod git@my-host.com:path/to/repo.git```
 7. Point the web server of your choice at the symlink /path/to/deploy-dir/.curr/
