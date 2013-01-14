@@ -1,6 +1,7 @@
 (defpackage :coleslaw-analytics
   (:use :cl)
-  (:export #:enable))
+  (:export #:enable)
+  (:import-from :coleslaw #:add-injection))
 
 (in-package :coleslaw-analytics)
 
