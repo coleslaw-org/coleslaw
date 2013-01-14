@@ -17,6 +17,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 * [Multi-site publishing](http://blub.co.za/posts/Adding-multi-site-support-to-Coleslaw.html) support.
 * Plugins for...
   * Comments via Disqus
+  * Analytics via Google
   * Using LaTeX (inside pairs of $$) via Mathjax
   * Importing posts from wordpress
 * There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
