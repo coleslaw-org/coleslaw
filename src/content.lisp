@@ -19,9 +19,8 @@
 (defgeneric publish (content-type)
   (:documentation "Write pages to disk for all content of the given CONTENT-TYPE."))
 
-(defun read-content (file &optional plist-p)
-  "Returns two values, a list of metadata from FILE, and the content as a string.
-If PLIST-P is non-nil, a single plist is returned with :content holding the text."
+(defun read-content (file)
+  "Returns a plist of metadata from FILE with :text holding the content as a string."
   (flet ((slurp-remainder (stream)
            (let ((seq (make-string (- (file-length stream)
                                       (file-position stream)))))
@@ -42,9 +41,7 @@ If PLIST-P is non-nil, a single plist is returned with :content holding the text
                                      (aref (parse-field line) 0))))
             (content (slurp-remainder in)))
         (setf (getf meta :tags) (read-delimited (getf meta :tags)))
-        (if plist-p
-            (append meta (list :text content))
-            (values meta content))))))
+        (append meta (list :text content))))))
 
 (defun find-all (content-type)
   "Return a list of all instances of a given CONTENT-TYPE."

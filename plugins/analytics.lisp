@@ -22,4 +22,3 @@
 
 (defun enable (&key tracking-code)
   (add-injection (format nil *analytics-js* tracking-code) :head))
-

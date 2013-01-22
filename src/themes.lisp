@@ -1,6 +1,6 @@
 (in-package :coleslaw)
 
-(defparameter *injections* ()
+(defparameter *injections* '()
   "A list that stores pairs of (string . predicate) to inject in the page.")
 
 (defun add-injection (injection location)

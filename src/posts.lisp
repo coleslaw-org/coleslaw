@@ -24,7 +24,7 @@
 (defmethod discover ((content-type (eql :post)))
   (purge-all 'post)
   (do-files (file (repo *config*) "post")
-    (let ((post (construct 'post (read-content file t))))
+    (let ((post (construct 'post (read-content file))))
       (if (gethash (content-slug post) *content*)
           (error "There is already an existing post with the slug ~a."
                  (content-slug post))

@@ -16,4 +16,5 @@
            #:publish
            #:render
            #:render-content
+           #:read-content
            #:add-injection))

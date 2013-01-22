@@ -28,14 +28,14 @@
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
-  (sort (remove-duplicates (mapcar (lambda (x) (get-month (content-date x)))
-                                   (hash-table-values *content*)) :test #'string=)
-        #'string>))
+  (let ((months (mapcar (lambda (x) (get-month (content-date x)))
+                        (hash-table-values *content*))))
+    (sort (remove-duplicates months :test #'string=) #'string>)))
 
 (defun all-tags ()
   "Retrieve a list of all tags used in content."
-  (sort (remove-duplicates (mappend 'content-tags (hash-table-values *content*))
-                           :test #'string=) #'string<))
+  (let ((tags (mappend #'content-tags (hash-table-values *content*))))
+    (sort (remove-duplicates tags :test #'string=) #'string<)))
 
 (defun get-month (timestamp)
   "Extract the YYYY-MM portion of TIMESTAMP."
@@ -43,27 +43,25 @@
 
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (let ((results (remove-if-not (lambda (obj) (member tag (content-tags obj)
-                                                      :test #'string=)) content)))
+  (flet ((valid-p (obj) (member tag (content-tags obj) :test #'string=)))
     (make-instance 'tag-index :id tag
-                              :posts results
+                              :posts (remove-if-not valid-p content)
                               :title (format nil "Posts tagged ~a" tag))))
 
 (defun index-by-month (month content)
   "Return an index of all CONTENT matching the given MONTH."
-  (let ((results (remove-if-not (lambda (obj) (search month (content-date obj)))
-                                content)))
+  (flet ((valid-p (obj) (search month (content-date obj))))
     (make-instance 'date-index :id month
-                               :posts results
+                               :posts (remove-if-not valid-p content)
                                :title (format nil "Posts from ~a" month))))
 
 (defun index-by-n (i content &optional (step 10))
   "Return the index for the Ith page of CONTENT in reverse chronological order."
-  (make-instance 'int-index :id (1+ i)
-                            :posts (let ((index (* step i)))
-                                     (subseq content index (min (length content)
-                                                                (+ index step))))
-                            :title "Recent Posts"))
+  (let* ((start (* step i))
+         (results (subseq content start (min (length content) (+ start step)))))
+    (make-instance 'int-index :id (1+ i)
+                              :posts results
+                              :title "Recent Posts")))
 
 (defun render-indices ()
   "Render the indices to view content in groups of size N, by month, and by tag."
