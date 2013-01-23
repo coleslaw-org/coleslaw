@@ -58,9 +58,9 @@
 (defun index-by-n (i content &optional (step 10))
   "Return the index for the Ith page of CONTENT in reverse chronological order."
   (let* ((start (* step i))
-         (results (subseq content start (min (length content) (+ start step)))))
+         (end (min (length content) (+ start step))))
     (make-instance 'int-index :id (1+ i)
-                              :posts results
+                              :posts (subseq content start end)
                               :title "Recent Posts")))
 
 (defun render-indices ()

@@ -1,3 +1,7 @@
+## Changes for 0.9 (2013-xx-xx):
+
+* Add support for analytics via Google.
+
 ## Changes for 0.8 (2013-01-06):
 
 * Add support for new [content types](http://blog.redlinernotes.com/posts/Lessons-from-Coleslaw.html).
