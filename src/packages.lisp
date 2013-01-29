@@ -7,6 +7,7 @@
                             #:compose)
   (:import-from :closure-template #:compile-template)
   (:export #:main
+           #:*config*
            #:blog
            #:content
            #:post
