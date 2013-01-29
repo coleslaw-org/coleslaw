@@ -6,17 +6,15 @@
   (:import-from #:hunchentoot :create-folder-dispatcher-and-handler
                               :create-static-file-dispatcher-and-handler
                               :*dispatch-table*)
-  (:import-from #:coleslaw :deploy
-                           :*config*)
+  (:import-from #:coleslaw :deploy)
   (:export #:enable))
 
 (in-package :coleslaw-heroku)
 
 (defmethod deploy :after (staging)
-  (let ((blog (merge-pathnames ".curr/" (deploy *config*))))
-    (push (create-folder-dispatcher-and-handler "/" blog)
-          *dispatch-table*)
-    (push (create-static-file-dispatcher-and-handler "/" (merge-pathnames "index.html" blog))
-          *dispatch-table*)))
+  (push (create-folder-dispatcher-and-handler "/" "/app/.curr/")
+        *dispatch-table*)
+  (push (create-static-file-dispatcher-and-handler "/" "/app/.curr/index.html")
+        *dispatch-table*))
 
 (defun enable ())
