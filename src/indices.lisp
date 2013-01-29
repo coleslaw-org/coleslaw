@@ -45,14 +45,14 @@
   "Return an index of all CONTENT matching the given TAG."
   (flet ((valid-p (obj) (member tag (content-tags obj) :test #'string=)))
     (make-instance 'tag-index :id tag
-                              :posts (remove-if-not valid-p content)
+                              :posts (remove-if-not #'valid-p content)
                               :title (format nil "Posts tagged ~a" tag))))
 
 (defun index-by-month (month content)
   "Return an index of all CONTENT matching the given MONTH."
   (flet ((valid-p (obj) (search month (content-date obj))))
     (make-instance 'date-index :id month
-                               :posts (remove-if-not valid-p content)
+                               :posts (remove-if-not #'valid-p content)
                                :title (format nil "Posts from ~a" month))))
 
 (defun index-by-n (i content &optional (step 10))
