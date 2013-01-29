@@ -1,3 +1,6 @@
+(eval-when (:compile-toplevel :load-toplevel)
+  (ql:quickload '(hunchentoot)))
+
 (defpackage :coleslaw-heroku
   (:use :cl)
   (:import-from #:hunchentoot :create-folder-dispatcher-and-handler
