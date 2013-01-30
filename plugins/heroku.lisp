@@ -1,5 +1,5 @@
 (eval-when (:compile-toplevel :load-toplevel)
-  (ql:quickload '(hunchentoot)))
+  (ql:quickload 'hunchentoot))
 
 (defpackage :coleslaw-heroku
   (:use :cl)
