@@ -4,8 +4,8 @@
 (defpackage :coleslaw-rst
   (:use :cl)
   (:import-from :coleslaw #:render-content)
-  (:import-from :cl-docutils #:read-rst
-                             #:write-html)
+  (:import-from :docutils #:read-rst
+                          #:write-html)
   (:export #:enable))
 
 (in-package :coleslaw-rst)
