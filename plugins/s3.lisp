@@ -44,8 +44,7 @@ and the secret key on the second.")
                   :content-type (content-type (pathname-type filepath))))))
 
 (defun dir->s3 (dir)
-  (flet ((upload (file)
-           (s3-sync file dir :public-p t)))
+  (flet ((upload (file) (s3-sync file dir)))
     (cl-fad:walk-directory dir #'upload)))
 
 (defmethod deploy :after (staging)
