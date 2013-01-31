@@ -1,6 +1,9 @@
 ## Changes for 0.9 (2013-xx-xx):
 
 * Add support for analytics via Google.
+* Add support for Restructured Text via cl-docutils.
+* Add support for deploying to Amazon S3.
+* Add a heroku plugin to ease hunchentoot deployments. (thanks @jsmpereira!)
 
 ## Changes for 0.8 (2013-01-06):
 

@@ -1,12 +1,18 @@
 (eval-when (:compile-toplevel)
-  (ql:quickload '(zs3)))
+  (ql:quickload 'zs3))
 
 (defpackage :coleslaw-s3
-  (:use :cl :coleslaw :zs3))
+  (:use :cl :zs3)
+  (:import-from :coleslaw #:deploy)
+  (:import-from :zs3 #:all-keys
+                     #:etag
+                     #:file-etag
+                     #:put-file)
+  (:export #:enable))
 
 (in-package :coleslaw-s3)
 
-(defparameter *credentials* (get-credentials :s3)
+(defparameter *credentials* nil
   "The credentials to authenticate with Amazon Web Services.
 Stored in a file with the access key on the first line
 and the secret key on the second.")
@@ -26,34 +32,29 @@ and the secret key on the second.")
 (defun content-type (extension)
   (cdr (assoc extension *content-type-map* :test #'equal)))
 
-(defun init ()
-  (unless *credentials*
-    (set-credentials :s3 (file-credentials "~/.aws"))
-    (setf *credentials* (get-credentials :s3))))
+(defun stale-keys ()
+  (loop for key being the hash-values in *cache* collecting key))
 
-(defun stale-keys (&key cache)
-  (loop for key being the hash-values in cache collecting key))
+(defun s3-sync (filepath dir)
+  (let ((etag (file-etag filepath))
+        (key (enough-namestring filepath dir)))
+    (if (gethash etag *cache*)
+        (remhash etag *cache*)
+        (put-file filepath *bucket* key :public t
+                  :content-type (content-type (pathname-type filepath))))))
 
-(defun s3-sync (filepath &key bucket dir public-p cache)
-  (flet ((compute-key (namestring)
-           (subseq namestring (length (namestring (truename dir))))))
-    (let* ((etag (file-etag filepath))
-           (namestring (namestring filepath))
-           (key (compute-key namestring)))
-      (if (gethash etag cache)
-          (remhash etag cache)
-          (put-file filepath bucket key :public public-p
-                    :content-type (content-type (pathname-type filepath)))))))
+(defun dir->s3 (dir)
+  (flet ((upload (file)
+           (s3-sync file dir :public-p t)))
+    (cl-fad:walk-directory dir #'upload)))
 
-(defun dir->s3 (dir &key bucket cache public-p)
-  (cl-fad:walk-directory dir (lambda (file)
-                               (s3-sync file :cache cache :dir dir
-                                        :bucket bucket :public-p public-p))))
+(defmethod deploy :after (staging)
+  (let ((blog (deploy coleslaw::*config*)))
+    (loop for key across (all-keys *bucket*)
+       do (setf (gethash (etag key) *cache*) key))
+    (dir->s3 blog)
+    (delete-objects (stale-keys) *bucket*)))
 
-(defmethod coleslaw::render-site :after ()
-  (init)
-  (let* ((keys (all-keys *bucket*)))
-    (loop for key across keys do (setf (gethash (etag key) *cache*) key))
-    (dir->s3 coleslaw::*output-dir* :bucket *bucket* :cache *cache* :public-p t)
-    (when (stale-keys :cache *cache*)
-      (delete-objects (stale-keys) *bucket*))))
+(defun enable (&key auth-file bucket)
+  (setf *credentials* (file-credentials auth-file)
+        *bucket* bucket))
