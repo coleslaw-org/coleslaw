@@ -5,13 +5,14 @@ BUGS:
 
 TODO:
 0.9
+; Add HACKING.md docs, i.e. formalize workflow+releases. No more landing broken stuff on master!
+; Document available plugins.
+; Document plugin API.
+Coleslaw.next
 ; Add SHOUT content type.
 ;; needs: shout template/render function. Twitter\Disqus integration with shouts?
-;; Indices fundamentally don't know about content-types. Is that a problem?
 ;; Rename index.posts to something else?
-Coleslaw.next
-; improve date check/error reporting. -> 0.9
-; doc themes and plugins, s3+hunchentoot. -> 0.9
-; unit tests -> 0.9
+; Document theming/template system.
+; unit tests
 ; Incremental compilation: only "touched" posts+tags+months and by-n. -> 1.0
-;; possible plugins: analytics, logging/monitoring, crossposting
+
