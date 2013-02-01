@@ -29,6 +29,15 @@ on files that match the given extension."
                    ,@body)))
              `,body))))
 
+(defun exit ()
+  "Exit the lisp system returning a 0 status code."
+  #+sbcl (sb-ext:quit)
+  #+ccl (ccl:quit)
+  #+ecl (si:quit)
+  #+cmucl (ext:quit)
+  #+clisp (ext:quit)
+  #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
+
 (defun current-directory ()
   "Return the operating system's current directory."
   #+sbcl (sb-posix:getcwd)
@@ -46,15 +55,6 @@ on files that match the given extension."
   #+cmucl (unix:unix-chdir (namestring path))
   #+clisp (ext:cd path)
   #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
-
-(defun exit ()
-  "Exit the lisp system returning a 0 status code."
-  #+sbcl (sb-ext:quit)
-  #+ccl (ccl:quit)
-  #+ecl (si:quit)
-  #+cmucl (ext:quit)
-  #+clisp (ext:quit)
-  #-(or sbcl ccl ecl clisp) (error "Not implemented yet."))
 
 (defmacro with-current-directory (path &body body)
   "Change the current OS directory to PATH and execute BODY in

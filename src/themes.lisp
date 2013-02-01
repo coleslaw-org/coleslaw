@@ -14,6 +14,7 @@ any return value other than nil indicates the injection should be added."
     (push result (getf *injections* location))))
 
 (defun find-injections (content)
+  "Iterate over *INJECTIONS* collecting any that should be added to CONTENT."
   (flet ((injections-for (location)
            (loop for (injection predicate) in (getf *injections* location)
               when (funcall predicate content)
@@ -35,11 +36,3 @@ any return value other than nil indicates the injection should be added."
     (compile-template :common-lisp-backend file))
   (do-files (file (app-path "themes/") "tmpl")
     (compile-template :common-lisp-backend file)))
-
-;; DOCUMENTATION
-;; A theme directory should be named after the theme and contain *.tmpl files
-;; that define the following functions in a coleslaw.theme.$NAME namespace.
-;; Required templates:
-;; {template base}
-;; {template post}
-;; {template index}

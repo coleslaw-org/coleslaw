@@ -16,3 +16,11 @@ Coleslaw.next
 ; unit tests
 ; Incremental compilation: only "touched" posts+tags+months and by-n. -> 1.0
 
+;; DOCUMENTATION
+;; A theme directory should be named after the theme and contain *.tmpl files
+;; that define the following functions in a coleslaw.theme.$NAME namespace.
+;; Required templates:
+;; {template base}
+;; {template post}
+;; {template index}
+
