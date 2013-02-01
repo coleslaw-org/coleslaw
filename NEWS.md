@@ -4,6 +4,7 @@
 * Add support for Restructured Text via cl-docutils.
 * Add support for deploying to Amazon S3.
 * Add a heroku plugin to ease hunchentoot deployments. (thanks @jsmpereira!)
+* Ensure coleslaw exits after MAIN. Fixes issue #13.
 
 ## Changes for 0.8 (2013-01-06):
 
