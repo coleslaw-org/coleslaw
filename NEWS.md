@@ -1,5 +1,6 @@
 ## Changes for 0.9 (2013-xx-xx):
 
+* INCOMPATIBLE CHANGE: All :plugins in .coleslawrc must be lists. (i.e. (mathjax) not mathjax)
 * Add support for analytics via Google.
 * Add support for Restructured Text via cl-docutils.
 * Add support for deploying to Amazon S3.

@@ -2,7 +2,7 @@
  :deploy "/home/git/blog/"
  :domain "http://blog.redlinernotes.com"
  :feeds ("lisp")
- :plugins (mathjax
+ :plugins ((mathjax)
            (disqus :shortname "my-site-name")
            (analytics :tracking-code "foo"))
  :repo "/home/git/tmp/improvedmeans/"

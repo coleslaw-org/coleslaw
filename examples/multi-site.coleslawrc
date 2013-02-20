@@ -2,7 +2,7 @@
                                       :deploy "/home/coleslaw/www/lisp-is-fun/"
                                       :domain "http://blub.co.za"
                                       :feeds ("lisp")
-                                      :plugins (mathjax)
+                                      :plugins ((mathjax))
                                       :sitenav ((:url "http://twitter.com/ralph_moeritz" :name "Twitter")
                                                 (:url "http://github.com/ralph-moeritz" :name "Code"))
                                       :title "(lisp :is 'fun)"
@@ -11,7 +11,7 @@
                                   :deploy "/home/coleslaw/www/musings/"
                                   :domain "http://musings.co.za"
                                   :feeds ("opinion")
-                                  :plugins (mathjax)
+                                  :plugins ((mathjax))
                                   :sitenav ((:url "http://twitter.com/ralph_moeritz" :name "Twitter")
                                             (:url "http://github.com/ralph-moeritz" :name "Code"))
                                   :title "Musings"

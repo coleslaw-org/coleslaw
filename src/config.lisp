@@ -33,10 +33,8 @@ are in the plugins folder in coleslaw's source directory."
   (flet ((plugin-path (sym)
            (app-path "plugins/~a" (string-downcase (symbol-name sym)))))
     (dolist (plugin plugins)
-      (etypecase plugin
-        (list (destructuring-bind (name &rest args) plugin
-                (apply 'enable-plugin (plugin-path name) args)))
-        (symbol (enable-plugin (plugin-path plugin)))))))
+      (destructuring-bind (name &rest args) plugin
+        (apply 'enable-plugin (plugin-path name) args)))))
 
 (defun load-config (config-key &optional (dir (user-homedir-pathname)))
   "Load the coleslaw configuration for CONFIG-KEY from DIR/.coleslawrc. DIR is ~ by default."
