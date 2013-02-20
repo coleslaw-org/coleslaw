@@ -55,7 +55,7 @@
 
 (defun import-posts (filepath output &optional since)
   (when (probe-file filepath)
-    (ensure-directories-exist (repo *config*))
+    (ensure-directories-exist (or output (repo *config*)))
     (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
            (posts (dom:get-elements-by-tag-name xml "item")))
       (loop for post across posts do (import-post post output since))

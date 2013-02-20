@@ -1,4 +1,4 @@
-## Changes for 0.9 (2013-xx-xx):
+## Changes for 0.9 (2013-02-20):
 
 * INCOMPATIBLE CHANGE: All :plugins in .coleslawrc must be lists. (i.e. (mathjax) not mathjax)
 * Add support for analytics via Google.
@@ -6,6 +6,7 @@
 * Add support for deploying to Amazon S3.
 * Add a heroku plugin to ease hunchentoot deployments. (thanks @jsmpereira!)
 * Ensure coleslaw exits after MAIN. Fixes issue #13.
+* Greatly improved docs for the various plugins and plugin API.
 
 ## Changes for 0.8 (2013-01-06):
 

@@ -16,7 +16,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
   * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
 * [Multi-site publishing](http://blub.co.za/posts/Adding-multi-site-support-to-Coleslaw.html) support.
 
-* A Plugin API and plugins for...
+* A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [plugins](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
   * Comments via Disqus
   * Analytics via Google
   * Deploying to Amazon S3.
@@ -52,22 +52,6 @@ format: html (for raw html) or md (for markdown)
 ;;;;;
 your post
 ```
-
-## Importing from Wordpress
-There is a "plugin" to import from wordpress. At some point, it should be turned into a standalone script. Until then...
-
-1. Export your posts from wordpress.
-2. In your lisp of choice, do the following:
-   1. ```(ql:quickload 'coleslaw)```
-   2. ```(in-package :coleslaw)```
-   3. ```(load-plugins '(import))```
-   4. ```(coleslaw-import::import-posts "/path/to/export.xml")```
-
-The XML will be read and placed into .post files in the :repo location specified in your [.coleslawrc](http://github.com/redline6561/coleslaw/blob/master/examples/single-site.coleslawrc).
-
-## Writing your own plugins
-For now, see the [API](http://redlinernotes.com/docs/coleslaw.html) and the [existing plugins](https://github.com/redline6561/coleslaw/tree/master/plugins) for an example.
-A proper guide about this will be written later.
 
 ## Theming
 A default theme, hyde, is provided. Themes are made using Google's closure-template and the source for [hyde](https://github.com/redline6561/coleslaw/tree/master/themes/hyde) should be simple and instructive until I can provide better docs.
