@@ -23,4 +23,4 @@
 
 * **New content types**, for example a bookmark-like content type such as ["shouts"](http://paste.lisp.org/display/134453). This has not yet been attempted as a plugin but should be possible without much difficulty.
 
-* **New service integrations**, for example crossposting to twitter/facebook/tumblr/livejournal/etc, should also be possible by adding an :after hook to the deploy method as with hosting. Alternately, an :after hook on the [`render`](the [`render`](http://redlinernotes.com/docs/coleslaw.html#render_func) method might be used.
+* **New service integrations**, for example crossposting to twitter/facebook/tumblr/livejournal/etc, should also be possible by adding an :after hook to the deploy method as with hosting. Alternately, an :after hook on the [`render`](http://redlinernotes.com/docs/coleslaw.html#render_func) method might be used.
