@@ -4,11 +4,8 @@ BUGS:
 ; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
 
 TODO:
-0.9
-; Add HACKING.md docs, i.e. formalize workflow+releases. No more landing broken stuff on master!
-; Document available plugins.
-; Document plugin API.
 Coleslaw.next
+; Add HACKING.md docs, i.e. formalize workflow+releases. No more landing broken stuff on master!
 ; Add SHOUT content type.
 ;; needs: shout template/render function. Twitter\Disqus integration with shouts?
 ;; Rename index.posts to something else?

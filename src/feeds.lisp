@@ -1,11 +1,8 @@
 (in-package :coleslaw)
 
-(defun make-pubdate (&optional date)
-  "Make a RFC1123 pubdate representing the current time or DATE, when supplied."
-  (let ((timestamp (if date
-                       (date-to-timestamp date)
-                       (local-time:now))))
-    (local-time:format-rfc1123-timestring nil timestamp)))
+(defun make-pubdate ()
+  "Make a RFC1123 pubdate representing the current time."
+  (local-time:format-rfc1123-timestring nil (local-time:now)))
 
 (defun render-feeds (feeds)
   "Render and write the given FEEDS for the site."
