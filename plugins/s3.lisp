@@ -2,13 +2,9 @@
   (ql:quickload 'zs3))
 
 (defpackage :coleslaw-s3
-  (:use :cl :zs3)
+  (:use :cl)
   (:import-from :coleslaw #:deploy
                           #:*config*)
-  (:import-from :zs3 #:all-keys
-                     #:etag
-                     #:file-etag
-                     #:put-file)
   (:export #:enable))
 
 (in-package :coleslaw-s3)
@@ -37,12 +33,12 @@ and the secret key on the second.")
   (loop for key being the hash-values in *cache* collecting key))
 
 (defun s3-sync (filepath dir)
-  (let ((etag (file-etag filepath))
+  (let ((etag (zs3:file-etag filepath))
         (key (enough-namestring filepath dir)))
     (if (gethash etag *cache*)
         (remhash etag *cache*)
-        (put-file filepath *bucket* key :public t
-                  :content-type (content-type (pathname-type filepath))))))
+        (zs3:put-file filepath *bucket* key :public t
+                      :content-type (content-type (pathname-type filepath))))))
 
 (defun dir->s3 (dir)
   (flet ((upload (file) (s3-sync file dir)))
@@ -50,11 +46,11 @@ and the secret key on the second.")
 
 (defmethod deploy :after (staging)
   (let ((blog (deploy *config*)))
-    (loop for key across (all-keys *bucket*)
-       do (setf (gethash (etag key) *cache*) key))
+    (loop for key across (zs3:all-keys *bucket*)
+       do (setf (gethash (zs3:etag key) *cache*) key))
     (dir->s3 blog)
-    (delete-objects (stale-keys) *bucket*)))
+    (zs3:delete-objects (stale-keys) *bucket*)))
 
 (defun enable (&key auth-file bucket)
-  (setf *credentials* (file-credentials auth-file)
+  (setf *credentials* (zs3:file-credentials auth-file)
         *bucket* bucket))

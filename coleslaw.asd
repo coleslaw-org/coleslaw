@@ -1,5 +1,5 @@
 (defsystem #:coleslaw
-  :name "coleslaw-core"
+  :name "coleslaw"
   :description "Flexible Lisp Blogware"
   :version "0.9"
   :license "BSD"
