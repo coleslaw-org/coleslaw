@@ -24,7 +24,7 @@
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
-  (funcall (theme-fn (or theme-fn 'base))
+  (funcall (or theme-fn (theme-fn 'base))
            (list :config *config*
                  :content content
                  :raw (apply 'render content render-args)

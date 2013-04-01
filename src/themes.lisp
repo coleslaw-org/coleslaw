@@ -22,13 +22,13 @@ any return value other than nil indicates the injection should be added."
     (list :head (injections-for :head)
           :body (injections-for :body))))
 
-(defun theme-package (&key (name (theme *config*)))
+(defun theme-package (name)
   "Find the package matching the theme NAME."
   (find-package (string-upcase (concatenate 'string "coleslaw.theme." name))))
 
-(defun theme-fn (name)
-  "Find the symbol NAME inside the current theme's package."
-  (find-symbol (princ-to-string name) (theme-package)))
+(defun theme-fn (name &optional (package (theme *config*)))
+  "Find the symbol NAME inside PACKAGE which defaults to the theme package."
+  (find-symbol (princ-to-string name) (theme-package package)))
 
 (defun compile-theme (theme)
   "Locate and compile the templates for the given THEME."

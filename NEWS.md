@@ -1,3 +1,7 @@
+## Changes for 0.9.1 (2013-04-xx):
+
+* Make ATOM and RSS templates a separate "generic" theme. (thanks @woudshoo!)
+
 ## Changes for 0.9 (2013-02-20):
 
 * INCOMPATIBLE CHANGE: All :plugins in .coleslawrc must be lists. (i.e. (mathjax) not mathjax)
