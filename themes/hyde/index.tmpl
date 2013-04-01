@@ -17,8 +17,8 @@
 <div id="tagsoup">
   <p>This blog covers
     {foreach $tag in $tags}
-      <a href="{$config.domain}/tag/{$tag}.html">{$tag}</a>
-      {if not isLast($tag)}, {/if}
+      <a href="{$config.domain}/tag/{$tag}.html">{$tag}</a>{nil}
+      {if not isLast($tag)},{sp}{/if}
     {/foreach}
 </div>
 {/if}
@@ -26,8 +26,8 @@
 <div id="monthsoup">
   <p>View posts from
     {foreach $month in $months}
-      <a href="{$config.domain}/date/{$month}.html">{$month}</a>
-      {if not isLast($month)}, {/if}
+      <a href="{$config.domain}/date/{$month}.html">{$month}</a>{nil}
+      {if not isLast($month)},{sp}{/if}
     {/foreach}
 </div>
 {/if}
