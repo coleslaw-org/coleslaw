@@ -75,8 +75,9 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
 (defun main (config-key)
   "Load the user's config section corresponding to CONFIG-KEY, then
 compile and deploy the blog."
-  (load-config config-key)
-  (load-content)
-  (compile-theme (theme *config*))
-  (compile-blog (staging *config*))
-  (deploy (staging *config*)))
+  (let (*injections*) 
+    (load-config config-key)
+    (load-content)
+    (compile-theme (theme *config*))
+    (compile-blog (staging *config*))
+    (deploy (staging *config*))))
