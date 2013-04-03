@@ -22,6 +22,14 @@
 
 **Example**: ```(mathjax)```
 
+### Options
+
+`:force`, when specified with a true value, will force the inclusion of MathJax, even if no posts are tagged "math".  Default value is `nil`.
+
+`:mathjax-url` specifies the location of the `MathJax.js`.  The default value is `"http://cdn.mathjax.org/mathjax/latest/MathJax.js"`.  This is useful if you want to force a specific value of MathJax, or if you have a local copy of MathJax and want to use that version.
+
+`:config` allows the specification of the config parameter of `MathJax.js`.  The default value is `"TeX-AMS-MML_HTMLorMML"`.  
+
 ## ReStructuredText
 
 **Description**: Some people really like [ReStructuredText](http://docutils.sourceforge.net/rst.html). Who knows why? But it only took one method to add, so yeah! Just create a post with ```format: rst``` and the plugin will do the rest.
