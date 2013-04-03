@@ -30,7 +30,7 @@
 
 `:config` allows the specification of the config parameter of `MathJax.js`.  The default value is `"TeX-AMS-MML_HTMLorMML"`.  
 
-`:mathjax-config` allows specifying the content of the `...` in a `MathJax.Hub.Config ({ ... });` section.  The default is `tex2jax: {inlineMath: [['$$','$$']]}`, which allows display equations to be enclosed in `$$`. 
+`:mathjax-config` allows specifying the content of the `...` in a `MathJax.Hub.Config ({ ... });` section.  The default is `tex2jax: {inlineMath: [['$$','$$']]}`, which allows display equations to be enclosed in `$$`.  If a `nil` argument is supplied the whole `<script>` section containing the `MathJax.Hub.Config` will be omitted.
 
 ## ReStructuredText
 

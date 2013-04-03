@@ -42,7 +42,7 @@ src=\"~A?config=~A\">
 
     (let ((mathjax-header 
 	   (concatenate 'string
-			(format nil *mathjax-config-header* mathjax-config)
+			(if mathjax-config (format nil *mathjax-config-header* mathjax-config) "")
 			(if config
 			    (format nil *mathjax-load-header-with-config* mathjax-url config)
 			    (format nil *mathjax-load-header-no-config* mathjax-url)))))
