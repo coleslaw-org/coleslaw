@@ -30,6 +30,8 @@
 
 `:config` allows the specification of the config parameter of `MathJax.js`.  The default value is `"TeX-AMS-MML_HTMLorMML"`.  
 
+`:mathjax-config` allows specifying the content of the `...` in a `MathJax.Hub.Config ({ ... });` section.  The default is `tex2jax: {inlineMath: [['$$','$$']]}`, which allows display equations to be enclosed in `$$`. 
+
 ## ReStructuredText
 
 **Description**: Some people really like [ReStructuredText](http://docutils.sourceforge.net/rst.html). Who knows why? But it only took one method to add, so yeah! Just create a post with ```format: rst``` and the plugin will do the rest.

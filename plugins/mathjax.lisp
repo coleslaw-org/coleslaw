@@ -11,12 +11,12 @@
 
 (defvar *mathjax-config-header* "<script type=\"text/x-mathjax-config\">
   MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [['$$','$$']]
-    }
+    ~A
   });
 </script>
 ")
+
+(defvar *default-mathjax-config* "tex2jax: {inlineMath: [['$$','$$']]}")
 
 (defvar *mathjax-load-header-no-config* "<script type=\"text/javascript\"
 src=\"~A\"> 
@@ -30,7 +30,8 @@ src=\"~A?config=~A\">
 
 (defun enable (&key force 
 		 (mathjax-url "http://cdn.mathjax.org/mathjax/latest/MathJax.js")
-		 (config "TeX-AMS-MML_HTMLorMML"))
+		 (config "TeX-AMS-MML_HTMLorMML")
+		 (mathjax-config *default-mathjax-config*))
   (labels ((math-post-p (obj)
              (member "math" (content-tags obj) :test #'string=))
            (mathjax-p (obj)
@@ -41,7 +42,7 @@ src=\"~A?config=~A\">
 
     (let ((mathjax-header 
 	   (concatenate 'string
-			*mathjax-config-header*
+			(format nil *mathjax-config-header* mathjax-config)
 			(if config
 			    (format nil *mathjax-load-header-with-config* mathjax-url config)
 			    (format nil *mathjax-load-header-no-config* mathjax-url)))))
