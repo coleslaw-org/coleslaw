@@ -24,13 +24,13 @@
 
 ### Options
 
-`:force`, when specified with a true value, will force the inclusion of MathJax, even if no posts are tagged "math".  Default value is `nil`.
+`:force`, when non-nil, will force the inclusion of MathJax on all posts.  Default value is `nil`.
 
-`:mathjax-url` specifies the location of the `MathJax.js`.  The default value is `"http://cdn.mathjax.org/mathjax/latest/MathJax.js"`.  This is useful if you want to force a specific value of MathJax, or if you have a local copy of MathJax and want to use that version.
+`:location` specifies the location of the `MathJax.js` file.  The default value is `"http://cdn.mathjax.org/mathjax/latest/MathJax.js"`.  This is useful if you have a local copy of MathJax and want to use that version.
 
-`:config` allows the specification of the config parameter of `MathJax.js`.  The default value is `"TeX-AMS-MML_HTMLorMML"`.  
+`:preset` allows the specification of the config parameter of `MathJax.js`.  The default value is `"TeX-AMS-MML_HTMLorMML"`.
 
-`:mathjax-config` allows specifying the content of the `...` in a `MathJax.Hub.Config ({ ... });` section.  The default is `tex2jax: {inlineMath: [['$$','$$']]}`, which allows display equations to be enclosed in `$$`.  If a `nil` argument is supplied the whole `<script>` section containing the `MathJax.Hub.Config` will be omitted.
+`:config` is used as supplementary inline configuration to the `MathJax.Hub.Config ({ ... });`. It is unused by default.
 
 ## ReStructuredText
 
