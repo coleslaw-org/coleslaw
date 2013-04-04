@@ -9,9 +9,9 @@
 
 (in-package :coleslaw-mathjax)
 
-(defvar *mathjax-header* "<script type=\"text/x-mathjax-config\">
-  MathJax.Hub.Config({~@[~A~]});
-</script>
+(defvar *mathjax-header* "~@[<script type=\"text/x-mathjax-config\">
+  MathJax.Hub.Config({~A});
+</script>~]
 <script type=\"text/javascript\" src=\"~A~@[?config=~A~]\"></script>")
 
 (defun enable (&key force config (preset "TeX-AMS-MML_HTMLorMML")
