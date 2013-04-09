@@ -82,10 +82,11 @@ compile and deploy the blog."
   (deploy (staging *config*)))
 
 (defun preview (path &optional (content-type 'post))
-  "Render the content at PATH and save it to ~/tmp.html, loading the
-user's config and theme if necessary."
+  "Render the content at PATH under user's configured repo and save it to
+~/tmp.html. Load the user's config and theme if necessary."
   (unless *config*
     (load-config nil)
     (compile-theme (theme *config*)))
-  (let ((object (construct content-type (read-content path))))
-    (write-page "~/tmp.html" (render-page object))))
+  (let* ((file (rel-path (repo *config*) path))
+         (content (construct content-type (read-content file))))
+    (write-page "~/tmp.html" (render-page content))))
