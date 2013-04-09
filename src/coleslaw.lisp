@@ -36,6 +36,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
   (ensure-directories-exist filepath)
   (with-open-file (out filepath
                    :direction :output
+                   :if-exists :overwrite
                    :if-does-not-exist :create)
     (write-line page out)))
 
