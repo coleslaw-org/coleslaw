@@ -21,7 +21,7 @@
       <a href="{$config.domain}">{$config.title}</a> |
       {foreach $link in $config.sitenav}
         <a href="{$link.url}">{$link.name}</a>
-        {if not isLast($link)} | {/if}
+        {if not isLast($link)} {sp}|{sp} {/if}
       {/foreach}
     </div>
     <div id="content">
