@@ -2,6 +2,8 @@
 
 * Added a PREVIEW function for REPL use.
 * Make ATOM and RSS templates a separate "generic" theme. (thanks @woudshoo!)
+* Fixed bug where repeatedly loading plugins caused them to appear in the page more than once. (thanks @woudshoo!)
+* Fixes to spacing in navigation and tagsoup. (thanks @woudshoo!)
 
 ## Changes for 0.9 (2013-02-20):
 

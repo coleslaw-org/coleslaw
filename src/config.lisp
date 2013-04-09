@@ -30,6 +30,7 @@
 (defun load-plugins (plugins)
   "Compile and load the listed PLUGINS. It is expected that matching *.lisp files
 are in the plugins folder in coleslaw's source directory."
+  (setf *injections* nil)
   (flet ((plugin-path (sym)
            (app-path "plugins/~a" (string-downcase (symbol-name sym)))))
     (dolist (plugin plugins)
