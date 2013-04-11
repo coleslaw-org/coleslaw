@@ -1,4 +1,4 @@
-## Changes for 0.9.1 (2013-04-xx):
+## Changes for 0.9.1 (2013-04-10):
 
 * Added a PREVIEW function for REPL use.
 * Make ATOM and RSS templates a separate "generic" theme. (thanks @woudshoo!)
