@@ -64,6 +64,15 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
              (curr (rel-path dest ".curr")))
         (ensure-directories-exist new-build)
         (run-program "mv ~a ~a" staging new-build)
+        (when (github *config*)
+          (let ((cname-filename (rel-path "" "~a/CNAME" new-build))
+                (stripped-url (subseq (domain *config*)
+                                      (+ 2 (position #\/ (domain *config*))))))
+            (format t "~a" cname-filename)
+            (with-open-file (cname cname-filename
+                                   :direction :output
+                                   :if-exists :supersede)
+              (format cname "~a~%" stripped-url))))
         (when (probe-file prev)
           (let ((dest (truename prev)))
             (if (equal prev dest)
