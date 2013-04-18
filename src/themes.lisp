@@ -22,9 +22,17 @@ any return value other than nil indicates the injection should be added."
     (list :head (injections-for :head)
           :body (injections-for :body))))
 
+(define-condition theme-does-not-exist-error (error)
+  ((theme :initarg :theme :reader theme))
+  (:report (lambda (c stream)
+	     (format stream "THEME-DOES-NOT-EXIST-ERROR cannot find theme: '~A'" (theme c)))))
+
 (defun theme-package (name)
-  "Find the package matching the theme NAME."
-  (find-package (string-upcase (concatenate 'string "coleslaw.theme." name))))
+  "Find the package matching the theme NAME.  
+It will signal an error when it cannot find the package for the theme."
+  (or (find-package (string-upcase (concatenate 'string "coleslaw.theme." name)))
+      (error 'theme-does-not-exist-error
+	     :theme name)))
 
 (defun theme-fn (name &optional (package (theme *config*)))
   "Find the symbol NAME inside PACKAGE which defaults to the theme package."
