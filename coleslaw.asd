@@ -19,7 +19,6 @@
                (:file "util")
                (:file "config")
                (:file "themes")
-               (:file "tags")
                (:file "content")
                (:file "posts")
                (:file "indices")

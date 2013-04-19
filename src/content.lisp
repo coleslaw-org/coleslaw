@@ -3,6 +3,14 @@
 (defparameter *content* (make-hash-table :test #'equal)
   "A hash table to store all the site content and metadata.")
 
+(defclass tag ()
+  ((name :initform nil :initarg :name :accessor tag-name)
+   (slug :initform nil :Initarg :slug :accessor tag-slug)))
+
+(defun make-tag (str)
+  "Takes a string and returns a TAG instance with a name and slug."
+  (make-instance 'tag :name (string-trim " " str) :slug (slugify str)))
+
 (defclass content ()
   ((tags :initform nil :initarg :tags :accessor content-tags)
    (slug :initform nil :initarg :slug :accessor content-slug)
@@ -31,10 +39,7 @@
          (field-name (line)
            (make-keyword (string-upcase (subseq line 0 (position #\: line)))))
          (read-tags (str)
-           (mapcar (lambda (name) 
-		     (let ((name (string-trim " " name)))
-		       (make-instance 'tag :name name :slug (slugify name))))
-                   (cl-ppcre:split "," str))))
+           (mapcar #'make-tag (cl-ppcre:split "," str))))
     (with-open-file (in file)
       (unless (string= (read-line in) ";;;;;")
         (error "The provided file lacks the expected header."))
