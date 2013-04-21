@@ -44,10 +44,7 @@
 
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (labels ((tag-slug= (a b)
-             (string= (tag-slug a) (tag-slug b)))
-           (valid-p (obj)
-             (member tag (content-tags obj) :test #'tag-slug=)))
+  (flet ((valid-p (obj) (member tag (content-tags obj) :test #'tag-slug=)))
     (make-instance 'tag-index :id (tag-slug tag)
                    :posts (remove-if-not #'valid-p content)
                    :title (format nil "Posts tagged ~a" (tag-name tag)))))

@@ -11,6 +11,10 @@
   "Takes a string and returns a TAG instance with a name and slug."
   (make-instance 'tag :name (string-trim " " str) :slug (slugify str)))
 
+(defun tag-slug= (a b)
+  "Test if the slugs for tag A and B are equal."
+  (string= (tag-slug a) (tag-slug b)))
+
 (defclass content ()
   ((tags :initform nil :initarg :tags :accessor content-tags)
    (slug :initform nil :initarg :slug :accessor content-slug)
