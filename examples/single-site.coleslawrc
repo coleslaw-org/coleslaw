@@ -1,6 +1,7 @@
 (:author "Brit Butler"
  :deploy "/home/git/blog/"
  :domain "http://blog.redlinernotes.com"
+ :github-pages nil
  :feeds ("lisp")
  :plugins ((mathjax)
            (disqus :shortname "my-site-name")
