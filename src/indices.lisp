@@ -79,6 +79,6 @@
                                  :prev (and (plusp i) i)
                                  :next (and (< (* (1+ i) 10) (length results))
                                             (+ 2 i)))))))
-  (if make-symlink
+  (if make-symlink-p
     (update-symlink "index.html" "1.html")
     (run-program "cp 1.html index.html")))

@@ -51,7 +51,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (when (probe-file dir)
         (run-program "cp -R ~a ." dir)))
     (do-ctypes (publish ctype))
-    (render-indices (not (github *config*)))
+    (render-indices (not (github-pages *config*)))
     (render-feeds (feeds *config*))))
 
 (defgeneric deploy (staging)
@@ -64,7 +64,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
              (curr (rel-path dest ".curr")))
         (ensure-directories-exist new-build)
         (run-program "mv ~a ~a" staging new-build)
-        (when (github *config*)
+        (when (github-pages *config*)
           (let ((cname-filename (rel-path "" "~a/CNAME" new-build))
                 (stripped-url (puri:uri-host (puri:parse-uri
                                                (domain *config*)))))
