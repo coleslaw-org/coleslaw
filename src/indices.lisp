@@ -63,7 +63,7 @@
                               :posts (subseq content start end)
                               :title "Recent Posts")))
 
-(defun render-indices ()
+(defun render-indices (make-symlink-p)
   "Render the indices to view content in groups of size N, by month, and by tag."
   (let ((results (by-date (hash-table-values *content*))))
     (dolist (tag (all-tags))
@@ -79,4 +79,6 @@
                                  :prev (and (plusp i) i)
                                  :next (and (< (* (1+ i) 10) (length results))
                                             (+ 2 i)))))))
-  (update-symlink "index.html" "1.html"))
+  (if make-symlink
+    (update-symlink "index.html" "1.html")
+    (run-program "cp 1.html index.html")))

@@ -13,7 +13,8 @@
                :inferior-shell
                :cl-fad
                :cl-ppcre
-               :closer-mop)
+               :closer-mop
+               :puri)
   :serial t
   :components ((:file "packages")
                (:file "util")
