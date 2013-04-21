@@ -17,7 +17,7 @@
 (defun enable (&key force config (preset "TeX-AMS-MML_HTMLorMML")
                  (location "http://cdn.mathjax.org/mathjax/latest/MathJax.js"))
   (labels ((math-post-p (obj)
-             (member "math" (content-tags obj) :test #'string=))
+             (member (make-tag "math") (content-tags obj) :test #'tag-slug=))
            (mathjax-p (obj)
              (or force
                  (etypecase obj
