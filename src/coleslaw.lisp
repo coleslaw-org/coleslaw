@@ -57,7 +57,6 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")
   (:method (staging)
-   ))
     (let* ((dest (deploy *config*))
            (new-build (rel-path dest "generated/~a" (get-universal-time)))
            (prev (rel-path dest ".prev"))
