@@ -13,7 +13,7 @@
   "The domain CNAME for github to serve pages from.")
 
 (defmethod deploy :after (staging)
-  (let ((base (deploy *config*)))
+  (let ((base (truename (rel-path (deploy *config*) ".curr"))))
     (delete-file (rel-path base "index.html"))
     (cl-fad:copy-file (rel-path base "1.html") (rel-path base "index.html"))
     (with-open-file (out (rel-path base "CNAME")
