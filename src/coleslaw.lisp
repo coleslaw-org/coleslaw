@@ -36,7 +36,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
   (ensure-directories-exist filepath)
   (with-open-file (out filepath
                    :direction :output
-                   :if-exists :overwrite
+                   :if-exists :supersede
                    :if-does-not-exist :create)
     (write-line page out)))
 
@@ -51,7 +51,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (when (probe-file dir)
         (run-program "cp -R ~a ." dir)))
     (do-ctypes (publish ctype))
-    (render-indices (not (github-pages *config*)))
+    (render-indices)
     (render-feeds (feeds *config*))))
 
 (defgeneric deploy (staging)
@@ -63,14 +63,6 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
            (curr (rel-path dest ".curr")))
       (ensure-directories-exist new-build)
       (run-program "mv ~a ~a" staging new-build)
-      (when (github-pages *config*)
-        (let ((cname-filename (rel-path "" "~a/CNAME" new-build))
-              (stripped-url (puri:uri-host (puri:parse-uri
-                                            (domain *config*)))))
-          (with-open-file (cname cname-filename
-                                 :direction :output
-                                 :if-exists :supersede)
-                          (format cname "~a~%" stripped-url))))
       (when (probe-file prev)
         (delete-directory-and-files (truename prev) :if-does-not-exist :ignore))
       (when (probe-file curr)
