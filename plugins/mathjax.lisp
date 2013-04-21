@@ -5,7 +5,9 @@
                           #:content
                           #:index
                           #:content-tags
-                          #:index-posts))
+                          #:index-posts
+                          #:make-tag
+                          #:tag-slug=))
 
 (in-package :coleslaw-mathjax)
 
