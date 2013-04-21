@@ -67,7 +67,6 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
         (let ((cname-filename (rel-path "" "~a/CNAME" new-build))
               (stripped-url (puri:uri-host (puri:parse-uri
                                             (domain *config*)))))
-          (format t "~a" cname-filename)
           (with-open-file (cname cname-filename
                                  :direction :output
                                  :if-exists :supersede)
