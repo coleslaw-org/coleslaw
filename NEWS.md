@@ -1,3 +1,9 @@
+## Changes for 0.9.2 (2013-05-xx):
+
+* A plugin for Github Pages support. (thanks @mrordinaire!)
+* A new and improved implementation of tags. (thanks @woudshoo!)
+* A THEME-DOES-NOT-EXIST error is raised when the theme can't be found.
+
 ## Changes for 0.9.1 (2013-04-10):
 
 * Added a PREVIEW function for REPL use.

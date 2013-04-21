@@ -3,6 +3,14 @@
 (defparameter *content* (make-hash-table :test #'equal)
   "A hash table to store all the site content and metadata.")
 
+(defclass tag ()
+  ((name :initform nil :initarg :name :accessor tag-name)
+   (slug :initform nil :Initarg :slug :accessor tag-slug)))
+
+(defun make-tag (str)
+  "Takes a string and returns a TAG instance with a name and slug."
+  (make-instance 'tag :name (string-trim " " str) :slug (slugify str)))
+
 (defclass content ()
   ((tags :initform nil :initarg :tags :accessor content-tags)
    (slug :initform nil :initarg :slug :accessor content-slug)
@@ -30,8 +38,8 @@
            (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
          (field-name (line)
            (make-keyword (string-upcase (subseq line 0 (position #\: line)))))
-         (read-delimited (str &optional (delimiter ", "))
-           (mapcar #'string-downcase (cl-ppcre:split delimiter str))))
+         (read-tags (str)
+           (mapcar #'make-tag (cl-ppcre:split "," str))))
     (with-open-file (in file)
       (unless (string= (read-line in) ";;;;;")
         (error "The provided file lacks the expected header."))
@@ -40,7 +48,7 @@
                      appending (list (field-name line)
                                      (aref (parse-field line) 0))))
             (content (slurp-remainder in)))
-        (setf (getf meta :tags) (read-delimited (getf meta :tags)))
+        (setf (getf meta :tags) (read-tags (getf meta :tags)))
         (append meta (list :text content))))))
 
 (defun find-all (content-type)

@@ -17,9 +17,10 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
 * [Multi-site publishing](http://blub.co.za/posts/Adding-multi-site-support-to-Coleslaw.html) support.
 * Github's pages support
 
-* A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [plugins](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
+* A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [**plugins**](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
   * Comments via Disqus
   * Analytics via Google
+  * Hosting via Github Pages
   * Deploying to Amazon S3.
   * Using LaTeX (inside pairs of $$) via Mathjax
   * Using ReStructured Text

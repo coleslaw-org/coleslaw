@@ -34,8 +34,9 @@
 
 (defun all-tags ()
   "Retrieve a list of all tags used in content."
-  (let ((tags (mappend #'content-tags (hash-table-values *content*))))
-    (sort (remove-duplicates tags :test #'string=) #'string<)))
+  (let* ((dupes (mappend #'content-tags (hash-table-values *content*)))
+         (tags (remove-duplicates dupes :test #'string= :key #'tag-slug)))
+    (sort tags #'string< :key #'tag-name)))
 
 (defun get-month (timestamp)
   "Extract the YYYY-MM portion of TIMESTAMP."
@@ -43,10 +44,13 @@
 
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (flet ((valid-p (obj) (member tag (content-tags obj) :test #'string=)))
-    (make-instance 'tag-index :id tag
-                              :posts (remove-if-not #'valid-p content)
-                              :title (format nil "Posts tagged ~a" tag))))
+  (labels ((tag-slug= (a b)
+             (string= (tag-slug a) (tag-slug b)))
+           (valid-p (obj)
+             (member tag (content-tags obj) :test #'tag-slug=)))
+    (make-instance 'tag-index :id (tag-slug tag)
+                   :posts (remove-if-not #'valid-p content)
+                   :title (format nil "Posts tagged ~a" (tag-name tag)))))
 
 (defun index-by-month (month content)
   "Return an index of all CONTENT matching the given MONTH."
