@@ -16,6 +16,12 @@
 
 **Example**: ```(disqus :shortname "disqus-provided-unique-id")```
 
+## Hosting via Github Pages
+
+**Description**: Allows hosting with CNAMEs via [github-pages](http://pages.github.com/). Parses the host from the `:domain` section of your config by default. Pass in a string to override.
+
+**Example**: ```(gh-pages :cname t)```
+
 ## LaTeX via Mathjax
 
 **Description**: Provides LaTeX support through [Mathjax](http://www.mathjax.org/) for posts tagged with "math" and indexes containing such posts. Any text enclosed in $$ will be rendered, for example, ```$$ \lambda \scriptstyle{f}. (\lambda x. (\scriptstyle{f} (x x)) \lambda x. (\scriptstyle{f} (x x))) $$```.

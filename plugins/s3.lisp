@@ -1,4 +1,4 @@
-(eval-when (:compile-toplevel)
+(eval-when (:compile-toplevel :load-toplevel)
   (ql:quickload 'zs3))
 
 (defpackage :coleslaw-s3

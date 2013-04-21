@@ -5,7 +5,6 @@
    (deploy :initarg :deploy :initform nil :accessor deploy)
    (domain :initarg :domain :initform "" :accessor domain)
    (feeds :initarg :feeds :initform nil :accessor feeds)
-   (github-pages :initarg :github-pages :initform nil :accessor github-pages)
    (license :initarg :license :initform nil :accessor license)
    (plugins :initarg :plugins :initform nil :accessor plugins)
    (repo :initarg :repo :initform #p"/" :accessor repo)
