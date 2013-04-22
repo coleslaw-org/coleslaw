@@ -58,6 +58,17 @@ else
 <pre>Homepage: <a href="http://github.com/redline6561/coleslaw">Github</a></pre></div>
 <div class="frame">
 <div class="labeltitle">
+<span class="expander" onclick="expand(this, 'vars');">-</span>Variables</div>
+<div id="vars">
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="*config*_vars" href="#*config*_vars">*config*</a>: 
+<span class="value">NIL</span>
+<span class="symboltype">variable</span></div>
+<div class="documentation">
+<pre>A variable to store the blog configuration and plugin settings.</pre></div></div></div></div>
+<div class="frame">
+<div class="labeltitle">
 <span class="expander" onclick="expand(this, 'classes');">-</span>Classes</div>
 <div id="classes">
 <div class="symboldecl">
@@ -126,11 +137,26 @@ compile and deploy the blog.</pre></div></div>
 <pre>The path to store OBJECT at once rendered.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
+<a class="symbolname" name="preview_func" href="#preview_func">preview</a>
+<span class="lambdalist">path &optional (content-type 'post)</span>
+<span class="symboltype">function</span></div>
+<div class="documentation">
+<pre>Render the content at PATH under user's configured repo and save it to
+~/tmp.html. Load the user's config and theme if necessary.</pre></div></div>
+<div class="symboldecl">
+<div class="definition">
 <a class="symbolname" name="publish_func" href="#publish_func">publish</a>
 <span class="lambdalist">content-type</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
 <pre>Write pages to disk for all content of the given CONTENT-TYPE.</pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="read-content_func" href="#read-content_func">read-content</a>
+<span class="lambdalist">file</span>
+<span class="symboltype">function</span></div>
+<div class="documentation">
+<pre>Returns a plist of metadata from FILE with :text holding the content as a string.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="render_func" href="#render_func">render</a>
