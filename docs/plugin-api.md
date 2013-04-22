@@ -19,7 +19,7 @@
 
 * **New markup formats**, for example the [ReStructuredText plugin](http://github.com/redline6561/coleslaw/blob/master/plugins/rst.lisp), can be created by definining an appropriate `render-content` method. The method takes `text` and `format` arguments and is [EQL-specialized](http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html#defmethod) on the format. Format should be a keyword matching the file extension (or pathname-type) of the markup format. (eg. `:rst` for ReStructuredText)
 
-* **New hosting options**, for example the [Amazon S3 plugin](http://github.com/redline6561/coleslaw/blob/master/plugins/s3.lisp), can be created by definining a `deploy :after` method. The method takes a staging directory, likely uninteresting in the `:after` stage. But by importing `*config*` from the coleslaw package and getting its deploy location with `(deploy *config*)` a number of interesting options become possible.
+* **New hosting options**, for example the [Amazon S3 plugin](http://github.com/redline6561/coleslaw/blob/master/plugins/s3.lisp), can be created by definining a `deploy :after` method. The method takes a staging directory, likely uninteresting in the `:after` stage. But by importing `*config*` from the coleslaw package and getting its deploy location with `(deploy-dir *config*)` a number of interesting options become possible.
 
 * **New content types**, for example a bookmark-like content type such as ["shouts"](http://paste.lisp.org/display/134453). This has not yet been attempted as a plugin but should be possible without much difficulty.
 

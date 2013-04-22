@@ -9,7 +9,8 @@
 
 (defun make-tag (str)
   "Takes a string and returns a TAG instance with a name and slug."
-  (make-instance 'tag :name (string-trim " " str) :slug (slugify str)))
+  (let ((trimmed (string-trim " " str)))
+    (make-instance 'tag :name trimmed :slug (slugify trimmed))))
 
 (defun tag-slug= (a b)
   "Test if the slugs for tag A and B are equal."

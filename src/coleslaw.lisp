@@ -57,7 +57,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")
   (:method (staging)
-    (let* ((dest (deploy *config*))
+    (let* ((dest (deploy-dir *config*))
            (new-build (rel-path dest "generated/~a" (get-universal-time)))
            (prev (rel-path dest ".prev"))
            (curr (rel-path dest ".curr")))
@@ -75,8 +75,9 @@ compile and deploy the blog."
   (load-config config-key)
   (load-content)
   (compile-theme (theme *config*))
-  (compile-blog (staging *config*))
-  (deploy (staging *config*)))
+  (let ((blog (staging-dir *config*)))
+    (compile-blog blog)
+    (deploy blog)))
 
 (defun preview (path &optional (content-type 'post))
   "Render the content at PATH under user's configured repo and save it to

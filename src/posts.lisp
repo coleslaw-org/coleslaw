@@ -11,7 +11,7 @@
                                   :next next)))
 
 (defmethod page-path ((object post))
-  (rel-path (staging *config*) "posts/~a" (content-slug object)))
+  (rel-path (staging-dir *config*) "posts/~a" (content-slug object)))
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-accessors ((title post-title)

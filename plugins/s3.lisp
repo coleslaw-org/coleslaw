@@ -4,6 +4,7 @@
 (defpackage :coleslaw-s3
   (:use :cl)
   (:import-from :coleslaw #:deploy
+                          #:deploy-dir
                           #:*config*)
   (:export #:enable))
 
@@ -45,7 +46,7 @@ and the secret key on the second.")
     (cl-fad:walk-directory dir #'upload)))
 
 (defmethod deploy :after (staging)
-  (let ((blog (deploy *config*)))
+  (let ((blog (deploy-dir *config*)))
     (loop for key across (zs3:all-keys *bucket*)
        do (setf (gethash (zs3:etag key) *cache*) key))
     (dir->s3 blog)

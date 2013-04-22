@@ -1,5 +1,5 @@
 (:author "Brit Butler"
- :deploy "/home/git/blog/"
+ :deploy-dir "/home/git/blog/"
  :domain "http://blog.redlinernotes.com"
  :feeds ("lisp")
  :plugins ((mathjax)
@@ -11,5 +11,6 @@
            (:url "http://github.com/redline6561" :name "Code")
            (:url "http://soundcloud.com/redlinernotes" :name "Music")
            (:url "http://redlinernotes.com/docs/talks/" :name "Talks"))
+ :staging-dir "/tmp/coleslaw/"
  :title "Improved Means for Achieving Deteriorated Ends"
  :theme "hyde")
