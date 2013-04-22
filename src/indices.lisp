@@ -28,7 +28,7 @@
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
-  (let ((months (mapcar (lambda (x) (get-month (content-date x)))
+  (let ((months (mapcar (lambda (x) (subseq (content-date x) 0 7))
                         (hash-table-values *content*))))
     (sort (remove-duplicates months :test #'string=) #'string>)))
 
@@ -38,23 +38,17 @@
          (tags (remove-duplicates dupes :test #'string= :key #'tag-slug)))
     (sort tags #'string< :key #'tag-name)))
 
-(defun get-month (timestamp)
-  "Extract the YYYY-MM portion of TIMESTAMP."
-  (subseq timestamp 0 7))
-
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (flet ((valid-p (obj) (member tag (content-tags obj) :test #'tag-slug=)))
-    (make-instance 'tag-index :id (tag-slug tag)
-                   :posts (remove-if-not #'valid-p content)
-                   :title (format nil "Posts tagged ~a" (tag-name tag)))))
+  (make-instance 'tag-index :id (tag-slug tag)
+                 :posts (remove-if-not (lambda (x) (tag-p tag x)) content)
+                 :title (format nil "Posts tagged ~a" (tag-name tag))))
 
 (defun index-by-month (month content)
   "Return an index of all CONTENT matching the given MONTH."
-  (flet ((valid-p (obj) (search month (content-date obj))))
-    (make-instance 'date-index :id month
-                               :posts (remove-if-not #'valid-p content)
-                               :title (format nil "Posts from ~a" month))))
+  (make-instance 'date-index :id month
+                 :posts (remove-if-not (lambda (x) (month-p month x)) content)
+                 :title (format nil "Posts from ~a" month)))
 
 (defun index-by-n (i content &optional (step 10))
   "Return the index for the Ith page of CONTENT in reverse chronological order."

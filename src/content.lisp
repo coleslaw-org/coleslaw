@@ -25,6 +25,14 @@
   "Create an instance of CONTENT-TYPE with the given ARGS."
   (apply 'make-instance content-type args))
 
+(defun tag-p (tag obj)
+  "Test if OBJ is tagged with TAG."
+  (member tag (content-tags obj) :test #'tag-slug=))
+
+(defun month-p (month obj)
+  "Test if OBJ was written in MONTH."
+  (search month (content-date obj)))
+
 (defgeneric discover (content-type)
   (:documentation "Load all content of the given CONTENT-TYPE from disk."))
 
