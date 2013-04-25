@@ -22,7 +22,7 @@
       <name>{$config.author}</name>
       <uri>{$config.domain}</uri>
     </author>
-    <content type="html">{$post.text |noAutoescape}</content>
+    <content type="html">{$post.text |escapeHtml}</content>
   </entry>
   {/foreach}
 
