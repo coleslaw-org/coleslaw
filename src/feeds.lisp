@@ -19,7 +19,7 @@
   "Render the default RSS and ATOM feeds along with any TAG-FEEDS."
   (let ((posts (by-date (find-all 'post))))
     (dolist (feed '((:path "rss.xml" :template :rss-feed)
-                    (:path "feed.atom" :template :atom-feed)))
+                    (:path "atom.xml" :template :atom-feed)))
       (apply #'render-feed posts feed))
     (dolist (feed tag-feeds)
       (apply #'render-feed posts (list :path (format nil "~A-rss.xml" feed)
