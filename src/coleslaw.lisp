@@ -55,7 +55,6 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (when (probe-file dir)
         (run-program "cp -R ~a ." dir)))
     (do-ctypes (publish ctype))
-    (render-sitemap)
     (render-indices)
     (render-feeds (feeds *config*))))
 

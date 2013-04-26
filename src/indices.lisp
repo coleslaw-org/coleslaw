@@ -16,17 +16,15 @@
 (defclass tag-index (index) ())
 (defclass date-index (index) ())
 (defclass int-index (index) ())
-(defclass url-index (index)
-  ((urls :initform nil :initarg :urls :accessor urls)
-   (pubdate :initform (local-time:format-rfc3339-timestring nil
-                                                            (local-time:now))
-            :initarg :pubdate
-            :accessor index-pubdate)))
 
 (defmethod page-url ((object index))
   (index-id object))
+(defmethod page-url ((object tag-index))
+  (format nil "tags/~a" (index-id object)))
 (defmethod page-url ((object date-index))
   (format nil "date/~a" (index-id object)))
+(defmethod page-url ((object int-index))
+  (format nil "~d" (index-id object)))
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
@@ -42,7 +40,7 @@
 
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (make-instance 'tag-index :id (page-url tag)
+  (make-instance 'tag-index :id (tag-slug tag)
                  :posts (remove-if-not (lambda (x) (tag-p tag x)) content)
                  :title (format nil "Posts tagged ~a" (tag-name tag))))
 
@@ -56,7 +54,7 @@
   "Return the index for the Ith page of CONTENT in reverse chronological order."
   (let* ((start (* step i))
          (end (min (length content) (+ start step))))
-    (make-instance 'int-index :id (format nil "~d" (1+ i))
+    (make-instance 'int-index :id (1+ i)
                               :posts (subseq content start end)
                               :title "Recent Posts")))
 
