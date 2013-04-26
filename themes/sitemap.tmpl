@@ -5,7 +5,7 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     {foreach $url in $content.urls}
     <url>
-        <loc>{$config.domain}{$url}</loc>
+        <loc>{$config.domain}/{$url}</loc>
     </url>
     {/foreach}
 </urlset>
