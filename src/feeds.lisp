@@ -5,7 +5,7 @@
   (local-time:format-rfc1123-timestring nil (local-time:now)))
 
 (defun render-sitemap ()
-  "Render sitemap.xml under document root"
+  "Render sitemap.xml and write robots.txt under document root"
   (let* ((template (theme-fn :sitemap "feeds"))
          (urls (append '("" "robots.txt") ; empty string is for root url
                        (mapcar #'page-url (find-all 'post))
