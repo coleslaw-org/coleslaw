@@ -17,7 +17,11 @@
 (defclass date-index (index) ())
 (defclass int-index (index) ())
 (defclass url-index (index)
-  ((urls :initform nil :initarg :urls :accessor urls)))
+  ((urls :initform nil :initarg :urls :accessor urls)
+   (pubdate :initform (local-time:format-rfc3339-timestring nil
+                                                            (local-time:now))
+            :initarg :pubdate
+            :accessor index-pubdate)))
 
 (defmethod page-url ((object index))
   (index-id object))

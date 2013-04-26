@@ -6,6 +6,7 @@
     {foreach $url in $content.urls}
     <url>
         <loc>{$config.domain}/{$url}</loc>
+        <lastmod>{$content.pubdate}</lastmod>
     </url>
     {/foreach}
 </urlset>
