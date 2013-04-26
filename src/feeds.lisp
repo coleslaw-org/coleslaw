@@ -4,6 +4,20 @@
   "Make a RFC1123 pubdate representing the current time."
   (local-time:format-rfc1123-timestring nil (local-time:now)))
 
+(defun render-sitemap ()
+  "Render sitemap.xml under document root"
+  (let* ((template (theme-fn :sitemap "feeds"))
+         (urls (cons "" ; for root url
+                     (append (mapcar #'page-url (find-all 'post))
+                             (mapcar #'page-url (all-tags))
+                             (mapcar #'(lambda (m)
+                                         (format nil "date/~a.html" m))
+                                     (all-months)))))
+         (index (make-instance 'url-index
+                               :id "sitemap.xml"
+                               :urls urls)))
+    (write-page (page-path index) (render-page index template))))
+
 (defun render-feed (posts &key path template tag)
   (flet ((first-10 (list) (subseq list 0 (min (length list) 10)))
          (tag-posts (list) (remove-if-not (lambda (x) (tag-p tag x)) list)))

@@ -7,6 +7,9 @@
   ((name :initform nil :initarg :name :accessor tag-name)
    (slug :initform nil :Initarg :slug :accessor tag-slug)))
 
+(defmethod page-url ((object tag))
+  (format nil "tag/~a" (tag-slug object)))
+
 (defun make-tag (str)
   "Takes a string and returns a TAG instance with a name and slug."
   (let ((trimmed (string-trim " " str)))

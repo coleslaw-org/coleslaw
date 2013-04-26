@@ -12,14 +12,18 @@
       (with-output-to-string (str)
         (3bmd:parse-string-and-print-to-stream text str)))))
 
-(defgeneric page-path (object)
-  (:documentation "The path to store OBJECT at once rendered."))
+(defgeneric page-url (object)
+  (:documentation "The url to the object, without the domain"))
 
-(defmethod page-path :around ((object t))
+(defmethod page-url :around ((object t))
   (let ((result (call-next-method)))
-    (if (pathname-type result)
-        result
-        (make-pathname :type "html" :defaults result))))
+    (namestring (if (pathname-type result)
+                  result
+                  (make-pathname :type "html" :defaults result)))))
+
+(defun page-path (object)
+  "The path to store OBJECT at once rendered."
+  (rel-path (staging-dir *config*) (page-url object)))
 
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.
@@ -51,6 +55,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (when (probe-file dir)
         (run-program "cp -R ~a ." dir)))
     (do-ctypes (publish ctype))
+    (render-sitemap)
     (render-indices)
     (render-feeds (feeds *config*))))
 

@@ -16,15 +16,13 @@
 (defclass tag-index (index) ())
 (defclass date-index (index) ())
 (defclass int-index (index) ())
+(defclass url-index (index)
+  ((urls :initform nil :initarg :urls :accessor urls)))
 
-(defmethod page-path ((object index))
-  (rel-path (staging-dir *config*) (index-id object)))
-(defmethod page-path ((object tag-index))
-  (rel-path (staging-dir *config*) "tag/~a" (index-id object)))
-(defmethod page-path ((object date-index))
-  (rel-path (staging-dir *config*) "date/~a" (index-id object)))
-(defmethod page-path ((object int-index))
-  (rel-path (staging-dir *config*) "~d" (index-id object)))
+(defmethod page-url ((object index))
+  (index-id object))
+(defmethod page-url ((object date-index))
+  (format nil "date/~a" (index-id object)))
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
@@ -40,7 +38,7 @@
 
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (make-instance 'tag-index :id (tag-slug tag)
+  (make-instance 'tag-index :id (page-url tag)
                  :posts (remove-if-not (lambda (x) (tag-p tag x)) content)
                  :title (format nil "Posts tagged ~a" (tag-name tag))))
 
@@ -54,7 +52,7 @@
   "Return the index for the Ith page of CONTENT in reverse chronological order."
   (let* ((start (* step i))
          (end (min (length content) (+ start step))))
-    (make-instance 'int-index :id (1+ i)
+    (make-instance 'int-index :id (format nil "~d" (1+ i))
                               :posts (subseq content start end)
                               :title "Recent Posts")))
 
