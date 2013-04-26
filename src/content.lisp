@@ -67,7 +67,7 @@
 (defun find-all (content-type)
   "Return a list of all instances of a given CONTENT-TYPE."
   (loop for val being the hash-values in *content*
-     when (eql content-type (type-of val)) collect val))
+     when (typep val content-type) collect val))
 
 (defun purge-all (content-type)
   "Remove all instances of CONTENT-TYPE from *content*."

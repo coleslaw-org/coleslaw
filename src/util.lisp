@@ -1,9 +1,13 @@
 (in-package :coleslaw)
 
+(defun fmt (fmt-str &rest args)
+  "A convenient FORMAT interface for string building."
+  (apply 'format nil fmt-str args))
+
 (defun rel-path (base path &rest args)
   "Take a relative PATH and return the corresponding pathname beneath BASE.
-If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
-  (merge-pathnames (apply 'format nil path args) base))
+If ARGS is provided, use (fmt path args) as the value of PATH."
+  (merge-pathnames (fmt path args) base))
 
 (defun app-path (path &rest args)
   "Return a relative path beneath coleslaw."
@@ -11,8 +15,8 @@ If ARGS is provided, use (apply 'format nil PATH ARGS) as the value of PATH."
 
 (defun run-program (program &rest args)
   "Take a PROGRAM and execute the corresponding shell command. If ARGS is provided,
-use (apply 'format nil PROGRAM ARGS) as the value of PROGRAM."
-  (inferior-shell:run (apply 'format nil program args) :show t))
+use (fmt program args) as the value of PROGRAM."
+  (inferior-shell:run (fmt program args) :show t))
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
