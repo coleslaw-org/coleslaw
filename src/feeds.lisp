@@ -7,15 +7,24 @@
 (defun render-sitemap ()
   "Render sitemap.xml under document root"
   (let* ((template (theme-fn :sitemap "feeds"))
-         (urls (cons "" ; for root url
-                     (append (mapcar #'page-url (find-all 'post))
-                             (mapcar #'page-url (all-tags))
-                             (mapcar #'(lambda (m)
-                                         (format nil "date/~a.html" m))
-                                     (all-months)))))
+         (urls (append '("" "robots.txt") ; empty string is for root url
+                       (mapcar #'page-url (find-all 'post))
+                       (mapcar #'page-url (all-tags))
+                       (mapcar #'(lambda (m)
+                                   (format nil "date/~a.html" m))
+                               (all-months))))
          (index (make-instance 'url-index
                                :id "sitemap.xml"
                                :urls urls)))
+    (with-open-file (robots (rel-path (staging-dir *config*) "robots.txt")
+                            :direction :output
+                            :if-exists :supersede)
+      (format robots
+              "User-agent: *~%Disallow: ~2%Sitemap: ~a~%"
+              (concatenate 'string
+                           (domain *config*)
+                           "/"
+                           (page-url index))))
     (write-page (page-path index) (render-page index template))))
 
 (defun render-feed (posts &key path template tag)
