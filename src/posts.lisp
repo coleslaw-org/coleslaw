@@ -11,7 +11,7 @@
                                   :next next)))
 
 (defmethod page-url ((object post))
-  (rel-path "posts/~a" (content-slug object)))
+  (format nil "posts/~a" (content-slug object)))
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-accessors ((title post-title)
