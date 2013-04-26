@@ -20,7 +20,7 @@
 (defmethod page-url ((object index))
   (index-id object))
 (defmethod page-url ((object tag-index))
-  (format nil "tags/~a" (index-id object)))
+  (format nil "tag/~a" (index-id object)))
 (defmethod page-url ((object date-index))
   (format nil "date/~a" (index-id object)))
 (defmethod page-url ((object int-index))
