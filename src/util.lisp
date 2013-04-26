@@ -1,6 +1,6 @@
 (in-package :coleslaw)
 
-(defun fmt (fmt-str &rest args)
+(defun fmt (fmt-str args)
   "A convenient FORMAT interface for string building."
   (apply 'format nil fmt-str args))
 
