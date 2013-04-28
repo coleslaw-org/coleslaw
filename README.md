@@ -20,13 +20,14 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
   * Comments via Disqus
   * Analytics via Google
   * Hosting via Github Pages
-  * Deploying to Amazon S3.
+  * Deploying to Amazon S3
   * Using LaTeX (inside pairs of $$) via Mathjax
   * Using ReStructured Text
+  * Sitemap generation
   * Importing posts from wordpress
 
 * There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
-* Example sites: [redlinernotes](http://redlinernotes.com/blog/) and [(lisp :is 'fun)](http://blub.co.za/).
+* Example sites: [redlinernotes](http://redlinernotes.com/blog/), [Nothing Really Matters](http://ironhead.xs4all.nl/), and [(lisp :is 'fun)](http://blub.co.za/).
 
 ## Installation
 This software should be portable to any conforming Common Lisp implementation but this guide will assume SBCL is installed. Testing has also been done on CCL.
