@@ -13,17 +13,17 @@
         (3bmd:parse-string-and-print-to-stream text str)))))
 
 (defgeneric page-url (object)
-  (:documentation "The url to the object, without the domain"))
+  (:documentation "The url to the object, without the domain."))
 
 (defmethod page-url :around ((object t))
   (let ((result (call-next-method)))
-    (namestring (if (pathname-type result)
-                  result
-                  (make-pathname :type "html" :defaults result)))))
+    (if (pathname-type result)
+        result
+        (make-pathname :type "html" :defaults result))))
 
 (defun page-path (object)
   "The path to store OBJECT at once rendered."
-  (rel-path (staging-dir *config*) (page-url object)))
+  (rel-path (staging-dir *config*) (namestring (page-url object))))
 
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to disk using THEME-FN if supplied.
