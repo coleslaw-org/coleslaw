@@ -37,8 +37,9 @@ are in the plugins folder in coleslaw's source directory."
       (destructuring-bind (name &rest args) plugin
         (apply 'enable-plugin (plugin-path name) args)))))
 
-(defun load-config (config-key &optional (dir (user-homedir-pathname)))
-  "Load the coleslaw configuration for CONFIG-KEY from DIR/.coleslawrc. DIR is ~ by default."
+(defun load-config (&optional config-key (dir (user-homedir-pathname)))
+  "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY
+if necessary. DIR is ~ by default."
   (with-open-file (in (merge-pathnames ".coleslawrc" dir))
     (let ((config-form (read in)))
       (if (symbolp (car config-form))
