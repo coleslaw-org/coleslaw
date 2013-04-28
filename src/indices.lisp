@@ -17,14 +17,14 @@
 (defclass date-index (index) ())
 (defclass int-index (index) ())
 
-(defmethod page-path ((object index))
-  (rel-path (staging-dir *config*) (index-id object)))
-(defmethod page-path ((object tag-index))
-  (rel-path (staging-dir *config*) "tag/~a" (index-id object)))
-(defmethod page-path ((object date-index))
-  (rel-path (staging-dir *config*) "date/~a" (index-id object)))
-(defmethod page-path ((object int-index))
-  (rel-path (staging-dir *config*) "~d" (index-id object)))
+(defmethod page-url ((object index))
+  (index-id object))
+(defmethod page-url ((object tag-index))
+  (format nil "tag/~a" (index-id object)))
+(defmethod page-url ((object date-index))
+  (format nil "date/~a" (index-id object)))
+(defmethod page-url ((object int-index))
+  (format nil "~d" (index-id object)))
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
