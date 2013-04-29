@@ -1,23 +1,6 @@
-What about themes? Templates are themes. DUH.
-
-BUGS:
-; Slugs aren't unicode safe. See [reddit discussion](http://www.reddit.com/r/lisp/comments/yvh6g/coleslaw_jekylllike_static_blogware_in_500_lines/) and [mozilla code](https://github.com/mozilla/unicode-slugify/blob/master/slugify/__init__.py).
-
 TODO:
 Coleslaw.next
 ; Add HACKING.md docs, i.e. formalize workflow+releases. No more landing broken stuff on master!
-; Add SHOUT content type.
 ;; needs: shout template/render function. Twitter\Disqus integration with shouts?
 ;; Rename index.posts to something else?
-; Document theming/template system.
-; unit tests
 ; Incremental compilation: only "touched" posts+tags+months and by-n. -> 1.0
-
-;; DOCUMENTATION
-;; A theme directory should be named after the theme and contain *.tmpl files
-;; that define the following functions in a coleslaw.theme.$NAME namespace.
-;; Required templates:
-;; {template base}
-;; {template post}
-;; {template index}
-
