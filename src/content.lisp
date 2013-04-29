@@ -34,9 +34,6 @@
   "Test if OBJ was written in MONTH."
   (search month (content-date obj)))
 
-(defgeneric discover (content-type)
-  (:documentation "Load all content of the given CONTENT-TYPE from disk."))
-
 (defgeneric publish (content-type)
   (:documentation "Write pages to disk for all content of the given CONTENT-TYPE."))
 
@@ -74,13 +71,23 @@
   (dolist (obj (find-all content-type))
     (remhash (content-slug obj) *content*)))
 
+(defun discover (content-type)
+  "Load all content of the given CONTENT-TYPE from disk."
+  (purge-all content-type)
+  (let ((file-type (string-downcase (princ-to-string content-type))))
+    (do-files (file (repo *config*) file-type)
+      (let ((obj (construct content-type (read-content file))))
+        (if (gethash (content-slug obj) *content*)
+            (error "There is already existing content with the slug ~a."
+                   (content-slug obj))
+            (setf (gethash (content-slug obj) *content*) obj))))))
+
 (defmacro do-ctypes (&body body)
   "Iterate over the subclasses of CONTENT performing BODY with ctype lexically
 bound to the current subclass."
   (alexandria:with-gensyms (ctypes)
     `(let ((,ctypes (closer-mop:class-direct-subclasses (find-class 'content))))
-       (loop for ctype in (mapcar (compose 'make-keyword 'class-name) ,ctypes)
-          do ,@body))))
+       (loop for ctype in (mapcar #'class-name ,ctypes) do ,@body))))
 
 (defun load-content ()
   "Load all content stored in the blog's repo."

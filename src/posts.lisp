@@ -21,15 +21,6 @@
             format (make-keyword (string-upcase format))
             text (render-content text format))))
 
-(defmethod discover ((content-type (eql :post)))
-  (purge-all 'post)
-  (do-files (file (repo *config*) "post")
-    (let ((post (construct 'post (read-content file))))
-      (if (gethash (content-slug post) *content*)
-          (error "There is already an existing post with the slug ~a."
-                 (content-slug post))
-          (setf (gethash (content-slug post) *content*) post)))))
-
 (defmethod publish ((content-type (eql :post)))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))
      while post do (write-page (page-path post)

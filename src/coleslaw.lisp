@@ -54,7 +54,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                        (merge-pathnames "static" (repo *config*))))
       (when (probe-file dir)
         (run-program "cp -R ~a ." dir)))
-    (do-ctypes (publish ctype))
+    (do-ctypes (publish (make-keyword ctype)))
     (render-indices)
     (render-feeds (feeds *config*))))
 
