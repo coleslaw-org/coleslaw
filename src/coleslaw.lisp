@@ -56,6 +56,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
         (run-program "cp -R ~a ." dir)))
     (do-ctypes (publish (make-keyword ctype)))
     (render-indices)
+    (update-symlink "index.html" "1.html")
     (render-feeds (feeds *config*))))
 
 (defgeneric deploy (staging)
