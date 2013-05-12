@@ -6,7 +6,6 @@
                             #:mappend
                             #:compose)
   (:import-from :closure-template #:compile-template)
-  (:import-from :cl-fad #:delete-directory-and-files)
   (:export #:main
            #:preview
            #:*config*
