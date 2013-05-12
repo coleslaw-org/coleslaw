@@ -1,4 +1,4 @@
-## Changes for 0.9.2 (2013-05-xx):
+## Changes for 0.9.2 (2013-05-11):
 
 * **INCOMPATIBLE CHANGE**: Renamed staging, deploy config options staging-dir, deploy-dir.
 * A plugin for Github Pages support. (thanks @mrordinaire!)
