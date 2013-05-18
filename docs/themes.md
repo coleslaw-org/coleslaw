@@ -219,7 +219,7 @@ Good luck!
 
 As mentioned earlier, most files have a file name which is a slug of
 some sort. So if you want to create a link to a tag file you should
-do something like this: `<a href="${config.domain}/tags/$tag.slug">$tag.name</a>`.
+do something like this: `<a href="${config.domain}/tags/{$tag.slug}">{$tag.name}</a>`.
 
 [clt]: https://developers.google.com/closure/templates/
 [ovr]: https://github.com/redline6561/coleslaw/blob/master/docs/overview.md
