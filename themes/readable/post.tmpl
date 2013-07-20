@@ -1,0 +1,21 @@
+{namespace coleslaw.theme.readable}
+
+{template post}
+<div class="row-fluid">{\n}
+  <h1 class="page-header">{$post.title}</h1>{\n}
+  <p>Tagged as 
+    {foreach $tag in $post.tags}
+      <a href="../tag/{$tag.slug}.html">{$tag.name}</a>{nil}
+      {if not isLast($tag)},{sp}{/if}
+    {/foreach}
+  </p>
+  <p class="date-posted">Written on {$post.date}</p>
+
+  {$post.text |noAutoescape}
+  
+  <ul class="pager">
+    {if $prev}<li class="previous"><a href="{$config.domain}/posts/{$prev.slug}.html">&larr; Previous</a></li>{/if}{\n}
+    {if $next}<li class="next"><a href="{$config.domain}/posts/{$next.slug}.html">Next &rarr;</a></li>{/if}{\n}
+  </ul>
+</div>{\n}
+{/template}
