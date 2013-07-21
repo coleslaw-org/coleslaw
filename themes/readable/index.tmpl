@@ -1,0 +1,32 @@
+{namespace coleslaw.theme.readable}
+
+{template index}
+<h1 class="page-header">{$index.title}</h1>
+{foreach $post in $index.posts}
+  <div class="row-fluid">
+    <h1><a href="{$config.domain}/posts/{$post.slug}.html">{$post.title}</a></h1>
+    <p class="date-posted">posted on {$post.date}</p>
+    {$post.text |noAutoescape}
+  </div>
+{/foreach}
+{if $tags}
+<div class="row-fluid">
+  <p>This blog covers
+    {foreach $tag in $tags}
+      <a href="{$config.domain}/tag/{$tag.slug}.html">{$tag.name}</a>{nil}
+      {if not isLast($tag)},{sp}{/if}
+    {/foreach}
+  </p>
+</div>
+{/if}
+{if $months}
+<div class="row-fluid">
+  <p>View posts from
+    {foreach $month in $months}
+      <a href="{$config.domain}/date/{$month}.html">{$month}</a>{nil}
+      {if not isLast($month)},{sp}{/if}
+    {/foreach}
+  </p>
+</div>
+{/if}
+{/template}
