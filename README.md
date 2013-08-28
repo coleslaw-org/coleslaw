@@ -27,7 +27,7 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
   * Importing posts from wordpress
 
 * There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
-* Example sites: [redlinernotes](http://redlinernotes.com/blog/), [Nothing Really Matters](http://ironhead.xs4all.nl/), and [(lisp :is 'fun)](http://blub.co.za/).
+* Example sites: [redlinernotes](http://redlinernotes.com/blog/) and [Nothing Really Matters](http://ironhead.xs4all.nl/).
 
 ## Installation
 This software should be portable to any conforming Common Lisp implementation but this guide will assume SBCL is installed. Testing has also been done on CCL.
