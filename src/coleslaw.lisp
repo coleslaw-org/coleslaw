@@ -44,7 +44,8 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
   (with-open-file (out filepath
                    :direction :output
                    :if-exists :supersede
-                   :if-does-not-exist :create)
+                   :if-does-not-exist :create
+                   :external-format '(:utf-8))
     (write-line page out)))
 
 (defun compile-blog (staging)

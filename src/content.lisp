@@ -50,7 +50,7 @@
            (make-keyword (string-upcase (subseq line 0 (position #\: line)))))
          (read-tags (str)
            (mapcar #'make-tag (cl-ppcre:split "," str))))
-    (with-open-file (in file)
+    (with-open-file (in file :external-format '(:utf-8))
       (unless (string= (read-line in) (separator *config*))
         (error "The provided file lacks the expected header."))
       (let ((meta (loop for line = (read-line in nil)
