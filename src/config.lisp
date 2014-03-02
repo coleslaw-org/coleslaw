@@ -1,17 +1,20 @@
 (in-package :coleslaw)
 
 (defclass blog ()
-  ((author      :initarg :author      :accessor author)
-   (deploy-dir  :initarg :deploy-dir  :accessor deploy-dir)
-   (domain      :initarg :domain      :accessor domain)
-   (feeds       :initarg :feeds       :accessor feeds)
-   (license     :initarg :license     :accessor license)
-   (plugins     :initarg :plugins     :accessor plugins)
-   (repo        :initarg :repo        :accessor repo)
-   (sitenav     :initarg :sitenav     :accessor sitenav)
-   (staging-dir :initarg :staging-dir :accessor staging-dir)
-   (title       :initarg :title       :accessor title)
-   (theme       :initarg :theme       :accessor theme)))
+  ((author          :initarg :author         :accessor author)
+   (deploy-dir      :initarg :deploy-dir     :accessor deploy-dir)
+   (domain          :initarg :domain         :accessor domain)
+   (feeds           :initarg :feeds          :accessor feeds)
+   (license         :initarg :license        :accessor license)
+   (plugins         :initarg :plugins        :accessor plugins)
+   (repo            :initarg :repo           :accessor repo)
+   (sitenav         :initarg :sitenav        :accessor sitenav)
+   (staging-dir     :initarg :staging-dir    :accessor staging-dir)
+   (postsdir        :initarg :postsdir       :accessor postsdir      :initform "posts") 
+   (separator       :initarg :separator      :accessor separator     :initform ";;;;;")
+   (pageext         :initarg :pageext        :accessor pageext       :initform ".html")
+   (title           :initarg :title          :accessor title)
+   (theme           :initarg :theme          :accessor theme)))
 
 (define-condition unknown-config-section-error (error)
   ((text :initarg :text :reader text)))
@@ -37,10 +40,18 @@ are in the plugins folder in coleslaw's source directory."
       (destructuring-bind (name &rest args) plugin
         (apply 'enable-plugin (plugin-path name) args)))))
 
-(defun load-config (&optional config-key (dir (user-homedir-pathname)))
+(defun discover-config-path (&optional (path ""))
+  (let ((default-path (make-pathname :directory (namestring (user-homedir-pathname)) :name ".coleslawrc"))
+        (custom-path (make-pathname :directory path :name ".coleslawrc")))
+    (cond
+      ((file-exists-p custom-path) custom-path)
+      ((file-exists-p default-path) default-path))))
+
+(defun load-config (config-key)
   "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY
 if necessary. DIR is ~ by default."
-  (with-open-file (in (merge-pathnames ".coleslawrc" dir))
+
+  (with-open-file (in (discover-config-path config-key))
     (let ((config-form (read in)))
       (if (symbolp (car config-form))
           ;; Single site config: ignore CONFIG-KEY.

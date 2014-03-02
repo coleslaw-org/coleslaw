@@ -16,10 +16,16 @@
   (:documentation "The url to the object, without the domain."))
 
 (defmethod page-url :around ((object t))
-  (let ((result (call-next-method)))
+  (let ((result (call-next-method))
+        (extension (if (string-equal (pageext *config*) "/")
+                       "html"
+                       (pageext *config*))))
+    (when (string= (char extension 0) ".")
+      (setf extension (string-trim "." extension)))
     (if (pathname-type result)
         result
-        (make-pathname :type "html" :defaults result))))
+        (make-pathname :type extension :defaults result)
+        )))
 
 (defun page-path (object)
   "The path to store OBJECT at once rendered."
@@ -46,8 +52,6 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
-  (when (probe-file staging)
-    (run-program "rm -R ~a" staging))
   (ensure-directories-exist staging)
   (with-current-directory staging
     (dolist (dir (list (app-path "themes/~a/css" (theme *config*))
@@ -55,7 +59,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                        (app-path "themes/~a/js" (theme *config*))
                        (merge-pathnames "static" (repo *config*))))
       (when (probe-file dir)
-        (run-program "cp -R ~a ." dir)))
+        (run-program "rsync --delete -raz ~a ." dir)))
     (do-ctypes (publish (make-keyword ctype)))
     (render-indices)
     (update-symlink "index.html" "1.html")
@@ -88,9 +92,10 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
 (defun preview (path &optional (content-type 'post))
   "Render the content at PATH under user's configured repo and save it to
 ~/tmp.html. Load the user's config and theme if necessary."
-  (unless *config*
-    (load-config nil)
-    (compile-theme (theme *config*)))
-  (let* ((file (rel-path (repo *config*) path))
-         (content (construct content-type (read-content file))))
-    (write-page "~/tmp.html" (render-page content))))
+  (let ((current-working-directory (cl-fad:pathname-directory-pathname path)))
+    (unless *config*
+      (load-config (namestring current-working-directory))
+      (compile-theme (theme *config*)))
+    (let* ((file (rel-path (repo *config*) path))
+           (content (construct content-type (read-content file))))
+      (write-page "tmp.html" (render-page content)))))
