@@ -5,6 +5,7 @@
                             #:make-keyword
                             #:mappend
                             #:compose)
+  (:import-from :cl-fad #:file-exists-p)
   (:import-from :closure-template #:compile-template)
   (:export #:main
            #:preview

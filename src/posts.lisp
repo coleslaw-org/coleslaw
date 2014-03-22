@@ -2,7 +2,20 @@
 
 (defclass post (content)
   ((title :initform nil :initarg :title :accessor post-title)
+   (author :initform nil :initarg :author :accessor post-author)
    (format :initform nil :initarg :format :accessor post-format)))
+
+(defmethod initialize-instance :after ((object post) &key)
+  (with-accessors ((title post-title)
+                   (author post-author)
+                   (format post-format)
+                   (text content-text)) object
+      (setf (content-slug object) (slugify title)
+            format (make-keyword (string-upcase format))
+            text (render-content text format)
+            author (if author
+                       author
+                       (author *config*)))))
 
 (defmethod render ((object post) &key prev next)
   (funcall (theme-fn 'post) (list :config *config*
@@ -11,15 +24,7 @@
                                   :next next)))
 
 (defmethod page-url ((object post))
-  (format nil "posts/~a" (content-slug object)))
-
-(defmethod initialize-instance :after ((object post) &key)
-  (with-accessors ((title post-title)
-                   (format post-format)
-                   (text content-text)) object
-      (setf (content-slug object) (slugify title)
-            format (make-keyword (string-upcase format))
-            text (render-content text format))))
+  (format nil "~a/~a" (posts-dir *config*) (content-slug object)))
 
 (defmethod publish ((content-type (eql :post)))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))
