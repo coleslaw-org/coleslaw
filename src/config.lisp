@@ -10,9 +10,9 @@
    (repo            :initarg :repo           :accessor repo)
    (sitenav         :initarg :sitenav        :accessor sitenav)
    (staging-dir     :initarg :staging-dir    :accessor staging-dir)
-   (postsdir        :initarg :postsdir       :accessor postsdir      :initform "posts") 
-   (separator       :initarg :separator      :accessor separator     :initform ";;;;;")
-   (pageext         :initarg :pageext        :accessor pageext       :initform ".html")
+   (posts-dir       :initarg :posts-dir      :accessor posts-dir      :initform "posts")
+   (separator       :initarg :separator      :accessor separator      :initform ";;;;;")
+   (page-ext        :initarg :page-ext       :accessor page-ext       :initform "html")
    (title           :initarg :title          :accessor title)
    (theme           :initarg :theme          :accessor theme)))
 
@@ -41,11 +41,12 @@ are in the plugins folder in coleslaw's source directory."
         (apply 'enable-plugin (plugin-path name) args)))))
 
 (defun discover-config-path (&optional (path ""))
-  (let ((default-path (make-pathname :directory (namestring (user-homedir-pathname)) :name ".coleslawrc"))
-        (custom-path (make-pathname :directory path :name ".coleslawrc")))
-    (cond
-      ((file-exists-p custom-path) custom-path)
-      ((file-exists-p default-path) default-path))))
+  "Checks the project directory for a coleslawrc and if one
+doesn't exist, uses the coleslawrc in the home directory."
+  (let ((rel-path (make-pathname :directory path :name ".coleslawrc")))
+    (if (file-exists-p rel-path)
+        rel-path
+        (make-pathname :directory (namestring (user-homedir-pathname)) :name ".coleslawrc"))))
 
 (defun load-config (config-key)
   "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY

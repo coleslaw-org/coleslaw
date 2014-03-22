@@ -24,7 +24,7 @@
                                   :next next)))
 
 (defmethod page-url ((object post))
-  (format nil "~a/~a" (postsdir *config*) (content-slug object)))
+  (format nil "~a/~a" (posts-dir *config*) (content-slug object)))
 
 (defmethod publish ((content-type (eql :post)))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))

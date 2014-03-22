@@ -17,11 +17,9 @@
 
 (defmethod page-url :around ((object t))
   (let ((result (call-next-method))
-        (extension (if (string-equal (pageext *config*) "/")
+        (extension (if (string= (page-ext *config*) "/")
                        "html"
-                       (pageext *config*))))
-    (when (string= (char extension 0) ".")
-      (setf extension (string-trim "." extension)))
+                       (page-ext *config*))))
     (if (pathname-type result)
         result
         (make-pathname :type extension :defaults result)
