@@ -13,9 +13,7 @@
       (setf (content-slug object) (slugify title)
             format (make-keyword (string-upcase format))
             text (render-content text format)
-            author (if author
-                       author
-                       (author *config*)))))
+            author (or author (author *config*)))))
 
 (defmethod render ((object post) &key prev next)
   (funcall (theme-fn 'post) (list :config *config*

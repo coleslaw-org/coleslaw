@@ -22,8 +22,7 @@
                        (page-ext *config*))))
     (if (pathname-type result)
         result
-        (make-pathname :type extension :defaults result)
-        )))
+        (make-pathname :type extension :defaults result))))
 
 (defun page-path (object)
   "The path to store OBJECT at once rendered."
