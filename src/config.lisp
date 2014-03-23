@@ -41,17 +41,16 @@ are in the plugins folder in coleslaw's source directory."
         (apply 'enable-plugin (plugin-path name) args)))))
 
 (defun discover-config-path (&optional (path ""))
-  "Checks the project directory for a coleslawrc and if one
-doesn't exist, uses the coleslawrc in the home directory."
-  (let ((rel-path (make-pathname :directory path :name ".coleslawrc")))
-    (if (file-exists-p rel-path)
-        rel-path
-        (make-pathname :directory (namestring (user-homedir-pathname)) :name ".coleslawrc"))))
+  "Check the supplied PATH for a .coleslawrc and if one
+doesn't exist, use the .coleslawrc in the home directory."
+  (let ((custom-path (rel-path path ".coleslawrc")))
+    (if (file-exists-p custom-path)
+        custom-path
+        (rel-path (user-homedir-pathname) ".coleslawrc"))))
 
 (defun load-config (config-key)
   "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY
 if necessary. DIR is ~ by default."
-
   (with-open-file (in (discover-config-path config-key))
     (let ((config-form (read in)))
       (if (symbolp (car config-form))
