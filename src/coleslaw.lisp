@@ -78,13 +78,13 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (update-symlink curr new-build))))
 
 (defun main (&optional config-key)
-  "Load the user's config file, then compile and deploy the blog."
+  "Load the user's config file, then compile and deploy the site."
   (load-config config-key)
   (load-content)
   (compile-theme (theme *config*))
-  (let ((blog (staging-dir *config*)))
-    (compile-blog blog)
-    (deploy blog)))
+  (let ((dir (staging-dir *config*)))
+    (compile-blog dir)
+    (deploy dir)))
 
 (defun preview (path &optional (content-type 'post))
   "Render the content at PATH under user's configured repo and save it to

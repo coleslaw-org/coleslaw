@@ -9,7 +9,7 @@
    (plugins         :initarg :plugins        :accessor plugins)
    (repo            :initarg :repo           :accessor repo)
    (sitenav         :initarg :sitenav        :accessor sitenav)
-   (staging-dir     :initarg :staging-dir    :accessor staging-dir)
+   (staging-dir     :initarg :staging-dir    :accessor staging-dir    :initform "/tmp/coleslaw/")
    (posts-dir       :initarg :posts-dir      :accessor posts-dir      :initform "posts")
    (separator       :initarg :separator      :accessor separator      :initform ";;;;;")
    (page-ext        :initarg :page-ext       :accessor page-ext       :initform "html")
@@ -40,7 +40,7 @@ are in the plugins folder in coleslaw's source directory."
       (destructuring-bind (name &rest args) plugin
         (apply 'enable-plugin (plugin-path name) args)))))
 
-(defun discover-config-path (&optional (path ""))
+(defun discover-config-path (path)
   "Check the supplied PATH for a .coleslawrc and if one
 doesn't exist, use the .coleslawrc in the home directory."
   (let ((custom-path (rel-path path ".coleslawrc")))
@@ -48,7 +48,7 @@ doesn't exist, use the .coleslawrc in the home directory."
         custom-path
         (rel-path (user-homedir-pathname) ".coleslawrc"))))
 
-(defun load-config (config-key)
+(defun load-config (&optional (config-key ""))
   "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY
 if necessary. DIR is ~ by default."
   (with-open-file (in (discover-config-path config-key))
