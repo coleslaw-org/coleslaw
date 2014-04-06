@@ -64,7 +64,7 @@
 
 (defun render-indices ()
   "Render the indices to view content in groups of size N, by month, and by tag."
-  (let ((results (by-date (hash-table-values *content*))))
+  (let ((results (by-date (find-all 'post))))
     (dolist (tag (all-tags))
       (render-index (index-by-tag tag results)))
     (dolist (month (all-months))
