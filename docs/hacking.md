@@ -39,6 +39,18 @@ generator.  Content Types were added in 0.8 as a step towards making
 limitations. Chiefly, the association between Content Types, their
 template, and their inclusion in an INDEX is presently ad-hoc.
 
+### Current Content Types & Indices
+
+There are 3 INDEX subclasses at present: TAG-INDEX, DATE-INDEX, and
+NUMERIC-INDEX, for grouping content by tags, publishing date, and
+reverse chronological order, respectively. Currently, there is only 1
+content type: POST, for blog entries.
+
+I'm planning to add a content type PAGE, for static pages. It should
+be a pretty straightforward subclass of CONTENT with the necessary
+methods: `render`, `page-url` and `publish`, but will require a small
+tweak to prevent showing up in any INDEX.
+
 ### Templates and Theming
 
 User configs are allowed to specify a theme, otherwise the default is
@@ -107,6 +119,16 @@ Unfortunately, this does not solve:
    types and indices. Indices include *ALL* objects in the `*content*`
    hash table. This may be undesirable and doesn't permit indices
    dedicated to particular content types.
+
+### New Content Type: Shouts!
+
+I've also toyed with the idea of a content type called a SHOUT, which
+would be used primarily to reference or embed other content, sort of a
+mix between a retweet and a del.icio.us bookmark. We encounter plenty
+of great things on the web. Most of mine winds up forgotten in browser
+tabs or stored on twitter's servers. It would be cool to see SHOUTs as
+a plugin, probably with a dedicated SHOUT-INDEX, and some sort of
+oEmbed/embed.ly/noembed support.
 
 ### Layouts and Paths
 

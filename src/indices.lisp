@@ -7,7 +7,7 @@
 
 (defclass tag-index (index) ())
 (defclass date-index (index) ())
-(defclass int-index (index) ())
+(defclass numeric-index (index) ())
 
 (defmethod page-url ((object index))
   (index-id object))
@@ -15,7 +15,7 @@
   (format nil "tag/~a" (index-id object)))
 (defmethod page-url ((object date-index))
   (format nil "date/~a" (index-id object)))
-(defmethod page-url ((object int-index))
+(defmethod page-url ((object numeric-index))
   (format nil "~d" (index-id object)))
 
 (defmethod render ((object index) &key prev next)
@@ -54,7 +54,7 @@
   "Return the index for the Ith page of CONTENT in reverse chronological order."
   (let* ((start (* step i))
          (end (min (length content) (+ start step))))
-    (make-instance 'int-index :id (1+ i)
+    (make-instance 'numeric-index :id (1+ i)
                               :posts (subseq content start end)
                               :title "Recent Posts")))
 
