@@ -59,7 +59,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (when (probe-file dir)
         (run-program "rsync --delete -raz ~a ." dir)))
     (do-ctypes (publish (make-keyword ctype)))
-    (render-indices)
+    (render-indexes)
     (update-symlink "index.html" "1.html")
     (render-feeds (feeds *config*))))
 

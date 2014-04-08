@@ -39,7 +39,7 @@ generator.  Content Types were added in 0.8 as a step towards making
 limitations. Chiefly, the association between Content Types, their
 template, and their inclusion in an INDEX is presently ad-hoc.
 
-### Current Content Types & Indices
+### Current Content Types & Indexes
 
 There are 3 INDEX subclasses at present: TAG-INDEX, DATE-INDEX, and
 NUMERIC-INDEX, for grouping content by tags, publishing date, and
@@ -89,7 +89,7 @@ the objects of that content type by iterating over the objects in an
 appropriate fashion, rendering them, and passing the result to
 `write-page` (which should probably just be renamed to `write-file`).
 
-After this, `render-indices` and `render-feeds` are called, and an
+After this, `render-indexes` and `render-feeds` are called, and an
 'index.html' symlink is created to point to the first reverse
 chronological index.
 
@@ -116,8 +116,8 @@ Unfortunately, this does not solve:
    was installed in the theme package. The plugin would need to do
    this itself or the template would need to be included in 'core'.
 2. More seriously, there is no formal relationship between content
-   types and indices. Indices include *ALL* objects in the `*content*`
-   hash table. This may be undesirable and doesn't permit indices
+   types and indexes. Indices include *ALL* objects in the `*content*`
+   hash table. This may be undesirable and doesn't permit indexes
    dedicated to particular content types.
 
 ### New Content Type: Shouts!
@@ -142,7 +142,7 @@ by banging on the config or specify the path in its `enable` options.
 ### Incremental Compilation
 
 Incremental compilation is doable, even straightforward if you ignore
-indices. It is also preferable to building the site in parallel as
+indexes. It is also preferable to building the site in parallel as
 avoiding work is better than using more workers. Moreover, being
 able to determine (and expose) what files just changed enables new
 functionality such as plugins that cross-post to tumblr.
@@ -158,6 +158,6 @@ things the existing deployment model would not work as it involves
 rebuilding the entire site. In all likelihood we would want to update
 the site 'in-place'. Atomicity of filesystem operations would be a
 reasonable concern. Also, every numbered INDEX would have to be
-regenerated along with any tag or month indices matching the
+regenerated along with any tag or month indexes matching the
 modified files. If incremental compilation is a goal, simply
-disabling the indices may be appropriate for certain users.
+disabling the indexes may be appropriate for certain users.
