@@ -9,9 +9,9 @@
          (tag-posts (list) (remove-if-not (lambda (x) (tag-p tag x)) list)))
     (let ((template (theme-fn template "feeds"))
           (index (if tag
-                     (make-instance 'tag-index :id path
+                     (make-instance 'tag-index :slug path
                                     :posts (first-10 (tag-posts posts)))
-                     (make-instance 'index :id path
+                     (make-instance 'index :slug path
                                     :posts (first-10 posts)))))
       (write-page (page-path index) (render-page index template)))))
 
