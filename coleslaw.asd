@@ -21,7 +21,7 @@
                (:file "themes")
                (:file "content")
                (:file "posts")
-               (:file "indices")
+               (:file "indexes")
                (:file "feeds")
                (:file "coleslaw"))
   :in-order-to ((test-op (load-op coleslaw-tests)))
