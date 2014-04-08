@@ -9,14 +9,21 @@
 (defclass date-index (index) ())
 (defclass numeric-index (index) ())
 
-(defmethod page-url ((object index))
-  (index-id object))
+(defclass feed (index)
+  (format :initform nil :initarg :format :accessor feed-format))
+(defclass tag-feed (feed) ())
+
 (defmethod page-url ((object tag-index))
-  (format nil "tag/~a" (index-id object)))
+  (format nil "tag/~a" (index-slug object)))
 (defmethod page-url ((object date-index))
-  (format nil "date/~a" (index-id object)))
+  (format nil "date/~a" (index-slug object)))
 (defmethod page-url ((object numeric-index))
-  (format nil "~d" (index-id object)))
+  (format nil "~d" (index-slug object)))
+
+(defmethod page-url ((object feed))
+  (format nil "~(~a~).xml" (feed-format object)))
+(defmethod page-url ((object tag-feed))
+  (format nil "tag/~a~(~a~).xml" (index-slug object) (feed-format object)))
 
 (defmethod render ((object index) &key prev next)
   (funcall (theme-fn 'index) (list :tags (all-tags)
@@ -50,27 +57,40 @@
                  :posts (remove-if-not (lambda (x) (month-p month x)) content)
                  :title (format nil "Posts from ~a" month)))
 
-(defun index-by-n (i content &optional (step 10))
+(defun index-by-n (i content)
   "Return the index for the Ith page of CONTENT in reverse chronological order."
-  (let* ((start (* step i))
-         (end (min (length content) (+ start step))))
+  (let ((content (subseq content (* 10 i))))
     (make-instance 'numeric-index :slug (1+ i)
-                              :posts (subseq content start end)
-                              :title "Recent Posts")))
+                   :posts (take-up-to 10 content)
+                   :title "Recent Posts")))
+
+(defun render-feed (feed)
+  "Render the given FEED to both RSS and ATOM."
+  (let ((theme-fn (theme-fn (feed-format feed) "feeds")))
+    (write-page (page-path feed) (render-page feed theme-fn))))
 
 (defun render-index (index &rest render-args)
   "Render the given INDEX using RENDER-ARGS if provided."
   (write-page (page-path index) (apply #'render-page index nil render-args)))
 
-(defun render-indexes ()
-  "Render the indexes to view content in groups of size N, by month, and by tag."
-  (let ((results (by-date (find-all 'post))))
+(defun render-indexes (tag-feeds)
+  "Render the indexes to view content in groups of size N, by month, or by tag,
+along with RSS and ATOM feeds and any supplied TAG-FEEDS."
+  (let ((content (by-date (find-all 'post))))
     (dolist (tag (all-tags))
-      (render-index (index-by-tag tag results)))
+      (render-index (index-by-tag tag content)))
     (dolist (month (all-months))
-      (render-index (index-by-month month results)))
-    (dotimes (i (ceiling (length results) 10))
-      (render-index (index-by-n i results)
+      (render-index (index-by-month month content)))
+    (dotimes (i (ceiling (length content) 10))
+      (render-index (index-by-n i content)
                     :prev (and (plusp i) i)
-                    :next (and (< (* (1+ i) 10) (length results))
-                               (+ 2 i))))))
+                    :next (and (< (* (1+ i) 10) (length content))
+                               (+ 2 i))))
+    (dolist (format '(rss atom))
+      (dolist (tag tag-feeds)
+        (let ((posts (remove-if-now (lambda (x) (tag-p (make-tag tag) x)) content)))
+          (render-feed (make-instance 'tag-feed :posts (take-up-to 10 posts)
+                                      :format format
+                                      :slug tag))))
+      (render-feed (make-instance 'feed :posts (take-up-to 10 content)
+                                  :format format)))))

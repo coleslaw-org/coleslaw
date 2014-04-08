@@ -69,3 +69,11 @@ an UNWIND-PROTECT, then change back to the current directory."
                          (setf (current-directory) ,path)
                          ,@body)
          (setf (current-directory) ,old)))))
+
+(defun take-up-to (n seq)
+  "Take elements from SEQ until all elements or N have been taken."
+  (subseq seq 0 (min (length seq) n)))
+
+(defun make-pubdate ()
+  "Make a RFC1123 pubdate representing the current time."
+  (local-time:format-rfc1123-timestring nil (local-time:now)))

@@ -41,10 +41,11 @@ template, and their inclusion in an INDEX is presently ad-hoc.
 
 ### Current Content Types & Indexes
 
-There are 3 INDEX subclasses at present: TAG-INDEX, DATE-INDEX, and
-NUMERIC-INDEX, for grouping content by tags, publishing date, and
-reverse chronological order, respectively. Currently, there is only 1
-content type: POST, for blog entries.
+There are 5 INDEX subclasses at present: TAG-INDEX, DATE-INDEX,
+NUMERIC-INDEX, FEED, and TAG-FEED. Respectively, they support
+grouping content by tags, publishing date, and reverse chronological
+order. Feeds exist to special case RSS and ATOM generation.
+Currently, there is only 1 content type: POST, for blog entries.
 
 I'm planning to add a content type PAGE, for static pages. It should
 be a pretty straightforward subclass of CONTENT with the necessary
@@ -89,9 +90,8 @@ the objects of that content type by iterating over the objects in an
 appropriate fashion, rendering them, and passing the result to
 `write-page` (which should probably just be renamed to `write-file`).
 
-After this, `render-indexes` and `render-feeds` are called, and an
-'index.html' symlink is created to point to the first reverse
-chronological index.
+After this, `render-indexes` is called, and an 'index.html' symlink
+is created to point to the first reverse chronological index.
 
 - `(deploy dir)`
 
@@ -116,7 +116,7 @@ Unfortunately, this does not solve:
    was installed in the theme package. The plugin would need to do
    this itself or the template would need to be included in 'core'.
 2. More seriously, there is no formal relationship between content
-   types and indexes. Indices include *ALL* objects in the `*content*`
+   types and indexes. Indexes include *ALL* objects in the `*content*`
    hash table. This may be undesirable and doesn't permit indexes
    dedicated to particular content types.
 

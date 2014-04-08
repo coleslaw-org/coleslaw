@@ -59,9 +59,8 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
       (when (probe-file dir)
         (run-program "rsync --delete -raz ~a ." dir)))
     (do-ctypes (publish (make-keyword ctype)))
-    (render-indexes)
-    (update-symlink "index.html" "1.html")
-    (render-feeds (feeds *config*))))
+    (render-indexes (feeds *config*))
+    (update-symlink "index.html" "1.html")))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")
