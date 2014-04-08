@@ -16,13 +16,10 @@
   (:documentation "The url to the object, without the domain."))
 
 (defmethod page-url :around ((object t))
-  (let ((result (call-next-method))
-        (extension (if (string= (page-ext *config*) "/")
-                       "html"
-                       (page-ext *config*))))
+  (let ((result (call-next-method)))
     (if (pathname-type result)
         result
-        (make-pathname :type extension :defaults result))))
+        (make-pathname :type (page-ext *config*) :defaults result))))
 
 (defun page-path (object)
   "The path to store OBJECT at once rendered."

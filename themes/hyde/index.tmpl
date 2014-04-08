@@ -4,20 +4,20 @@
 <h1 class="title">{$index.title}</h1>
 {foreach $post in $index.posts}
   <div class="article-meta">
-    <a class="article-title" href="{$config.domain}/posts/{$post.slug}.html">{$post.title}</a>
+    <a class="article-title" href="{$config.domain}/posts/{$post.slug}{$config.pageExt}">{$post.title}</a>
     <div class="date"> posted on {$post.date}</div>
     <div class="article">{$post.text |noAutoescape}</div>
   </div>
 {/foreach}
 <div id="relative-nav">
-  {if $prev} <a href="{$prev}.html">Previous</a> {/if}
-  {if $next} <a href="{$next}.html">Next</a> {/if}
+  {if $prev} <a href="{$prev}{$config.pageExt}">Previous</a> {/if}
+  {if $next} <a href="{$next}{$config.pageExt}">Next</a> {/if}
 </div>
 {if $tags}
 <div id="tagsoup">
   <p>This blog covers
     {foreach $tag in $tags}
-      <a href="{$config.domain}/tag/{$tag.slug}.html">{$tag.name}</a>{nil}
+      <a href="{$config.domain}/tag/{$tag.slug}{$config.pageExt}">{$tag.name}</a>{nil}
       {if not isLast($tag)},{sp}{/if}
     {/foreach}
 </div>
@@ -26,7 +26,7 @@
 <div id="monthsoup">
   <p>View posts from
     {foreach $month in $months}
-      <a href="{$config.domain}/date/{$month}.html">{$month}</a>{nil}
+      <a href="{$config.domain}/date/{$month}{$config.pageExt}">{$month}</a>{nil}
       {if not isLast($month)},{sp}{/if}
     {/foreach}
 </div>
