@@ -1,5 +1,9 @@
 (in-package :coleslaw)
 
+(defun construct (class-name args)
+  "Create an instance of CLASS-NAME with the given ARGS."
+  (apply 'make-instance class-name args))
+
 (defun fmt (fmt-str args)
   "A convenient FORMAT interface for string building."
   (apply 'format nil fmt-str args))

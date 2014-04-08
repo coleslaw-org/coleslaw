@@ -55,14 +55,14 @@ if necessary. DIR is ~ by default."
     (let ((config-form (read in)))
       (if (symbolp (car config-form))
           ;; Single site config: ignore CONFIG-KEY.
-          (setf *config* (apply #'make-instance 'blog config-form))
+          (setf *config* (construct 'blog config-form))
           ;; Multi-site config: load config section for CONFIG-KEY.
           (let* ((config-key-pathname (cl-fad:pathname-as-directory config-key))
                  (section (assoc config-key-pathname config-form
                                  :key #'cl-fad:pathname-as-directory
                                  :test #'equal)))
             (if section
-                (setf *config* (apply #'make-instance 'blog (cdr section))
+                (setf *config* (construct 'blog (cdr section))
                       (repo *config*) config-key)
                 (error 'unknown-config-section-error
                        :text (format nil "In ~A: No such key: '~A'." in config-key)))))

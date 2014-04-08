@@ -22,10 +22,6 @@
    (date :initform nil :initarg :date :accessor content-date)
    (text :initform nil :initarg :text :accessor content-text)))
 
-(defun construct (content-type args)
-  "Create an instance of CONTENT-TYPE with the given ARGS."
-  (apply 'make-instance content-type args))
-
 (defun tag-p (tag obj)
   "Test if OBJ is tagged with TAG."
   (member tag (content-tags obj) :test #'tag-slug=))
