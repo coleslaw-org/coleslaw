@@ -55,7 +55,8 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                        (merge-pathnames "static" (repo *config*))))
       (when (probe-file dir)
         (run-program "rsync --delete -raz ~a ." dir)))
-    (do-ctypes (publish (make-keyword ctype)))
+    (do-subclasses (ctype content)
+      (publish (make-keyword ctype)))
     (render-indexes (feeds *config*))
     (update-symlink "index.html" "1.html")))
 

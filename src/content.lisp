@@ -70,7 +70,7 @@
 (defun discover (content-type)
   "Load all content of the given CONTENT-TYPE from disk."
   (purge-all content-type)
-  (let ((file-type (string-downcase (princ-to-string content-type))))
+  (let ((file-type (string-downcase (symbol-name content-type))))
     (do-files (file (repo *config*) file-type)
       (let ((obj (construct content-type (read-content file))))
         (if (gethash (content-slug obj) *content*)
@@ -78,16 +78,10 @@
                    (content-slug obj))
             (setf (gethash (content-slug obj) *content*) obj))))))
 
-(defmacro do-ctypes (&body body)
-  "Iterate over the subclasses of CONTENT performing BODY with ctype lexically
-bound to the current subclass."
-  (alexandria:with-gensyms (ctypes)
-    `(let ((,ctypes (closer-mop:class-direct-subclasses (find-class 'content))))
-       (loop for ctype in (mapcar #'class-name ,ctypes) do ,@body))))
-
 (defun load-content ()
   "Load all content stored in the blog's repo."
-  (do-ctypes (discover ctype)))
+  (do-subclasses (ctype content)
+    (discover ctype)))
 
 (defun by-date (content)
   "Sort CONTENT in reverse chronological order."

@@ -4,6 +4,13 @@
   "Create an instance of CLASS-NAME with the given ARGS."
   (apply 'make-instance class-name args))
 
+(defmacro do-subclasses ((var class) &body body)
+  "Iterate over the subclasses of CLASS performing BODY with VAR
+lexically bound to the current subclass' class-name."
+  (alexandria:with-gensyms (klasses)
+    `(let ((,klasses (closer-mop:class-direct-subclasses (find-class ',class))))
+       (loop for ,var in (mapcar #'class-name ,klasses) do ,@body))))
+
 (defun fmt (fmt-str args)
   "A convenient FORMAT interface for string building."
   (apply 'format nil fmt-str args))
