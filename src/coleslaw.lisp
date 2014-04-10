@@ -19,7 +19,7 @@
   (let ((result (call-next-method)))
     (if (pathname-type result)
         result
-        (make-pathname :type (page-ext *config*) :defaults result))))
+        (make-pathname :type "html" :defaults result))))
 
 (defun page-path (object)
   "The path to store OBJECT at once rendered."

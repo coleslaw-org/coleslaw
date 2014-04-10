@@ -39,6 +39,7 @@ generator.  Content Types were added in 0.8 as a step towards making
 limitations. Chiefly, the association between Content Types, their
 template, and their inclusion in an INDEX is presently ad-hoc.
 
+// TODO: Write something about class-names as file-extension/eql-specializers!
 ### Current Content Types & Indexes
 
 There are 5 INDEX subclasses at present: TAG-INDEX, DATE-INDEX,
