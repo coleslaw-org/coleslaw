@@ -56,4 +56,4 @@ your post
 ```
 
 ## Theming
-A default theme, hyde, is provided. Themes are made using Google's closure-template and the source for [hyde](https://github.com/redline6561/coleslaw/tree/master/themes/hyde) should be simple and instructive until I can provide better docs.
+Two themes are provided: hyde and readable (based on [bootswatch readable](http://bootswatch.com/readable/)). Hyde is the default. A guide to creating themes for coleslaw lives [here](https://github.com/redline6561/coleslaw/blob/master/docs/themes.md).

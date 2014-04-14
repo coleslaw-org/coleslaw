@@ -4,9 +4,10 @@ The theming support in coleslaw is very flexible and relatively easy
 to use. However it does require some knowledge of HTML, CSS, and how
 coleslaw processes content.
 
-To understand how coleslaw processes a blog, a look at the [overview][ovr]
-documentation may prove useful. This document will focus mainly on the
-template engine and how you can influence the resulting HTML.
+To understand how coleslaw processes a blog, a look at the
+[overview][ovr] and [hacking][hck] documentation may prove
+useful. This document will focus mainly on the template engine and how
+you can influence the resulting HTML.
 
 **NOTE**: Themes are not able to change the generated file names or the
 generated file structure on disk. They can change the resulting HTML, nothing more.
@@ -219,7 +220,8 @@ Good luck!
 
 As mentioned earlier, most files have a file name which is a slug of
 some sort. So if you want to create a link to a tag file you should
-do something like this: `<a href="${config.domain}/tags/{$tag.slug}">{$tag.name}</a>`.
+do something like this: `<a href="${config.domain}/tags/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>`.
 
 [clt]: https://developers.google.com/closure/templates/
 [ovr]: https://github.com/redline6561/coleslaw/blob/master/docs/overview.md
+[hck]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
