@@ -105,7 +105,6 @@
   (dolist (feed (find-all 'feed))
     (render-feed feed)))
 
-;; TODO: tag-feed isn't reached by do-subclasses!
 (defclass tag-feed (feed) ())
 
 (defmethod page-url ((object tag-feed))
@@ -130,12 +129,12 @@
 (defun all-months ()
   "Retrieve a list of all months with published content."
   (let ((months (mapcar (lambda (x) (subseq (content-date x) 0 7))
-                        (hash-table-values *content*))))
+                        (find-all 'post))))
     (sort (remove-duplicates months :test #'string=) #'string>)))
 
 (defun all-tags ()
   "Retrieve a list of all tags used in content."
-  (let* ((dupes (mappend #'content-tags (hash-table-values *content*)))
+  (let* ((dupes (mappend #'content-tags (find-all 'post)))
          (tags (remove-duplicates dupes :test #'string= :key #'tag-slug)))
     (sort tags #'string< :key #'tag-name)))
 

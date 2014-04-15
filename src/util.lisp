@@ -7,10 +7,13 @@
 (defmacro do-subclasses ((var class) &body body)
   "Iterate over the subclasses of CLASS performing BODY with VAR
 lexically bound to the current subclass' class-name."
-  (alexandria:with-gensyms (klass klasses)
-    `(let* ((,klass (if (typep ,class 'class) ,class (find-class ',class)))
-            (,klasses (closer-mop:class-direct-subclasses ,klass)))
-       (loop for ,var in ,klasses do ,@body))))
+  (alexandria:with-gensyms (klasses all-subclasses)
+    `(labels ((,all-subclasses (class)
+                (let ((subclasses (closer-mop:class-direct-subclasses class)))
+                  (append subclasses (loop for subclass in subclasses
+                                        nconc (,all-subclasses subclass))))))
+       (let ((,klasses (,all-subclasses (find-class ',class))))
+         (loop for ,var in ,klasses do ,@body)))))
 
 (defun fmt (fmt-str args)
   "A convenient FORMAT interface for string building."
