@@ -22,7 +22,6 @@
                (:file "content")
                (:file "posts")
                (:file "indexes")
-               (:file "feeds")
                (:file "coleslaw"))
   :in-order-to ((test-op (load-op coleslaw-tests)))
   :perform (test-op :after (op c)
