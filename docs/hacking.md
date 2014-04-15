@@ -59,11 +59,12 @@ User configs are allowed to specify a theme, otherwise the default is
 used. A theme consists of a directory under "themes/" containing css,
 images, and at least 3 templates: Base, Index, and Post.
 
-**Coleslaw** exclusively uses
+**Coleslaw** uses
 [cl-closure-template](https://github.com/archimag/cl-closure-template)
-for templating which is a well documented CL implementation of
-Google's Closure Templates. Each template file should be in a
-namespace like `coleslaw.theme.theme-name`.
+exclusively for templating. **cl-closure-template** is a well
+documented CL implementation of Google's Closure Templates. Each
+template file should contain a namespace like
+`coleslaw.theme.theme-name`.
 
 Each template creates a lisp function in the theme's package when
 loaded. These functions take a property list (or plist) as an argument

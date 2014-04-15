@@ -10,7 +10,7 @@
 (defclass numeric-index (index) ())
 
 (defclass feed (index)
-  (format :initform nil :initarg :format :accessor feed-format))
+  ((format :initform nil :initarg :format :accessor feed-format)))
 (defclass tag-feed (feed) ())
 
 (defmethod page-url ((object tag-index))
