@@ -21,7 +21,8 @@
 
 (defun tag-p (tag obj)
   "Test if OBJ is tagged with TAG."
-  (member tag (content-tags obj) :test #'tag-slug=))
+  (let ((tag (if (typep tag 'tag) tag (make-tag tag))))
+    (member tag (content-tags obj) :test #'tag-slug=)))
 
 (defun month-p (month obj)
   "Test if OBJ was written in MONTH."
@@ -50,11 +51,6 @@
             (content (slurp-remainder in)))
         (setf (getf meta :tags) (read-tags (getf meta :tags)))
         (append meta (list :text content))))))
-
-(defun load-content ()
-  "Load all content stored in the blog's repo."
-  (do-subclasses (ctype content)
-    (discover ctype)))
 
 (defun by-date (content)
   "Sort CONTENT in reverse chronological order."

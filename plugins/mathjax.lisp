@@ -4,10 +4,8 @@
   (:import-from :coleslaw #:add-injection
                           #:content
                           #:index
-                          #:content-tags
-                          #:index-posts
-                          #:make-tag
-                          #:tag-slug=))
+                          #:tag-p
+                          #:index-posts))
 
 (in-package :coleslaw-mathjax)
 
@@ -19,7 +17,8 @@
 (defun enable (&key force config (preset "TeX-AMS-MML_HTMLorMML")
                  (location "http://cdn.mathjax.org/mathjax/latest/MathJax.js"))
   (labels ((math-post-p (obj)
-             (member (make-tag "math") (content-tags obj) :test #'tag-slug=))
+             ;; Would it be better to test against latex than math, here?
+             (tag-p "math" obj))
            (mathjax-p (obj)
              (or force
                  (etypecase obj

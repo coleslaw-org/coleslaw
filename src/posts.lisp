@@ -24,7 +24,7 @@
 (defmethod page-url ((object post))
   (format nil "~a/~a" (posts-dir *config*) (content-slug object)))
 
-(defmethod publish ((content-type (eql :post)))
+(defmethod publish ((doc-type (eql (find-class 'post))))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))
      while post do (write-page (page-path post)
                                (render-page post nil :prev prev :next next))))

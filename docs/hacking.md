@@ -42,7 +42,7 @@ template, and their inclusion in an INDEX is presently ad-hoc.
 // TODO: Write something about class-names as file-extension/eql-specializers!
 ### Current Content Types & Indexes
 
-There are 5 INDEX subclasses at present: TAG-INDEX, DATE-INDEX,
+There are 5 INDEX subclasses at present: TAG-INDEX, MONTH-INDEX,
 NUMERIC-INDEX, FEED, and TAG-FEED. Respectively, they support
 grouping content by tags, publishing date, and reverse chronological
 order. Feeds exist to special case RSS and ATOM generation.
@@ -71,6 +71,7 @@ loaded. These functions take a property list (or plist) as an argument
 and return rendered HTML.  **Coleslaw** defines a helper called
 `theme-fn` for easy access to the template functions.
 
+// TODO: Update for changes to compile-blog, indexes refactor, etc.
 ### The Lifecycle of a Page
 
 - `(load-content)`
@@ -83,6 +84,7 @@ e.g. ".post" for POSTs. Objects of the appropriate class are created
 from each matching file and inserted into the `*content*` hash-table.
 
 - `(compile-blog dir)`
+
 
 Compilation starts by ensuring the staging directory (`/tmp/coleslaw/`
 by default) exists, cd'ing there, and copying over any necessary theme

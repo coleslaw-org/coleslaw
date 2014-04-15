@@ -5,27 +5,6 @@
    (posts :initform nil :initarg :posts :accessor index-posts)
    (title :initform nil :initarg :title :accessor index-title)))
 
-(defclass tag-index (index) ())
-(defclass date-index (index) ())
-(defclass numeric-index (index) ())
-
-(defclass feed (index)
-  ((format :initform nil :initarg :format :accessor feed-format)))
-;; TODO: tag-feed isn't reached by do-subclasses!
-(defclass tag-feed (feed) ())
-
-(defmethod page-url ((object tag-index))
-  (format nil "tag/~a" (index-slug object)))
-(defmethod page-url ((object date-index))
-  (format nil "date/~a" (index-slug object)))
-(defmethod page-url ((object numeric-index))
-  (format nil "~d" (index-slug object)))
-
-(defmethod page-url ((object feed))
-  (format nil "~(~a~).xml" (feed-format object)))
-(defmethod page-url ((object tag-feed))
-  (format nil "tag/~a~(~a~).xml" (index-slug object) (feed-format object)))
-
 (defmethod render ((object index) &key prev next)
   (funcall (theme-fn 'index) (list :tags (all-tags)
                                    :months (all-months)
@@ -33,6 +12,120 @@
                                    :index object
                                    :prev prev
                                    :next next)))
+
+;;; Index by Tag
+
+(defclass tag-index (index) ())
+
+(defmethod page-url ((object tag-index))
+  (format nil "tag/~a" (index-slug object)))
+
+(defmethod discover ((doc-type (eql (find-class 'tag-index))))
+  (purge-all (class-name doc-type))
+  (let ((content (by-date (find-all 'post))))
+    (dolist (tag (all-tags))
+      (add-document (index-by-tag tag content)))))
+
+(defun index-by-tag (tag content)
+  "Return an index of all CONTENT matching the given TAG."
+  (make-instance 'tag-index :slug (tag-slug tag)
+                 :posts (remove-if-not (lambda (x) (tag-p tag x)) content)
+                 :title (format nil "Posts tagged ~a" (tag-name tag))))
+
+(defmethod publish ((doc-type (eql (find-class 'tag-index))))
+  (dolist (index (find-all 'tag-index))
+    (render-index index)))
+
+;;; Index by Month
+
+(defclass month-index (index) ())
+
+(defmethod page-url ((object month-index))
+  (format nil "date/~a" (index-slug object)))
+
+(defmethod discover ((doc-type (eql (find-class 'month-index))))
+  (purge-all (class-name doc-type))
+  (let ((content (by-date (find-all 'post))))
+    (dolist (month (all-months))
+      (add-document (index-by-month month content)))))
+
+(defun index-by-month (month content)
+  "Return an index of all CONTENT matching the given MONTH."
+  (make-instance 'month-index :slug month
+                 :posts (remove-if-not (lambda (x) (month-p month x)) content)
+                 :title (format nil "Posts from ~a" month)))
+
+(defmethod publish ((doc-type (eql (find-class 'month-index))))
+  (dolist (index (find-all 'month-index))
+    (render-index index)))
+
+;;; Reverse Chronological Index
+
+(defclass numeric-index (index) ())
+
+(defmethod page-url ((object numeric-index))
+  (format nil "~d" (index-slug object)))
+
+(defmethod discover ((doc-type (eql (find-class 'numeric-index))))
+  (purge-all (class-name doc-type))
+  (let ((content (by-date (find-all 'post))))
+    (dotimes (i (ceiling (length content) 10))
+      (add-document (index-by-n i content)))))
+
+(defun index-by-n (i content)
+  "Return the index for the Ith page of CONTENT in reverse chronological order."
+  (let ((content (subseq content (* 10 i))))
+    (make-instance 'numeric-index :slug (1+ i)
+                   :posts (take-up-to 10 content)
+                   :title "Recent Posts")))
+
+(defmethod publish ((doc-type (eql (find-class 'numeric-index))))
+  (let ((indexes (sort (find-all 'numeric-index) #'< :key #'index-slug)))
+    (dolist (index indexes)
+      (let ((prev (1- (index-slug index)))
+            (next (1+ (index-slug index))))
+        (render-index index :prev (when (plusp prev) prev)
+                            :next (when (<= next (length indexes)) next))))))
+
+;;; Atom and RSS Feeds
+
+(defclass feed (index)
+  ((format :initform nil :initarg :format :accessor feed-format)))
+
+(defmethod page-url ((object feed))
+  (format nil "~(~a~).xml" (feed-format object)))
+
+(defmethod discover ((doc-type (eql (find-class 'feed))))
+  (let ((content (take-up-to 10 (by-date (find-all 'post)))))
+    (dolist (format '(rss atom))
+      (let ((feed (make-instance 'feed :posts content :format format)))
+        (add-document feed)))))
+
+(defmethod publish ((doc-type (eql (find-class 'feed))))
+  (dolist (feed (find-all 'feed))
+    (render-feed feed)))
+
+;; TODO: tag-feed isn't reached by do-subclasses!
+(defclass tag-feed (feed) ())
+
+(defmethod page-url ((object tag-feed))
+  (format nil "tag/~a~(~a~).xml" (index-slug object) (feed-format object)))
+
+(defmethod discover ((doc-type (eql (find-class 'tag-feed))))
+  (let ((content (by-date (find-all 'post))))
+    (dolist (tag (feeds *config*))
+      (let ((posts (remove-if-not (lambda (x) (tag-p tag x)) content)))
+        (dolist (format '(rss atom))
+          (let ((feed (make-instance 'tag-feed :posts (take-up-to 10 posts)
+                                     :format format
+                                     :slug tag)))
+            (add-document feed)))))))
+
+(defmethod publish ((doc-type (eql (find-class 'tag-feed))))
+  (dolist (feed (find-all 'tag-feed))
+    (render-feed feed)))
+
+;;; Helper Functions
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
@@ -46,25 +139,6 @@
          (tags (remove-duplicates dupes :test #'string= :key #'tag-slug)))
     (sort tags #'string< :key #'tag-name)))
 
-(defun index-by-tag (tag content)
-  "Return an index of all CONTENT matching the given TAG."
-  (make-instance 'tag-index :slug (tag-slug tag)
-                 :posts (remove-if-not (lambda (x) (tag-p tag x)) content)
-                 :title (format nil "Posts tagged ~a" (tag-name tag))))
-
-(defun index-by-month (month content)
-  "Return an index of all CONTENT matching the given MONTH."
-  (make-instance 'date-index :slug month
-                 :posts (remove-if-not (lambda (x) (month-p month x)) content)
-                 :title (format nil "Posts from ~a" month)))
-
-(defun index-by-n (i content)
-  "Return the index for the Ith page of CONTENT in reverse chronological order."
-  (let ((content (subseq content (* 10 i))))
-    (make-instance 'numeric-index :slug (1+ i)
-                   :posts (take-up-to 10 content)
-                   :title "Recent Posts")))
-
 (defun render-feed (feed)
   "Render the given FEED to both RSS and ATOM."
   (let ((theme-fn (theme-fn (feed-format feed) "feeds")))
@@ -73,25 +147,3 @@
 (defun render-index (index &rest render-args)
   "Render the given INDEX using RENDER-ARGS if provided."
   (write-page (page-path index) (apply #'render-page index nil render-args)))
-
-(defun render-indexes (tag-feeds)
-  "Render the indexes to view content in groups of size N, by month, or by tag,
-along with RSS and ATOM feeds and any supplied TAG-FEEDS."
-  (let ((content (by-date (find-all 'post))))
-    (dolist (tag (all-tags))
-      (render-index (index-by-tag tag content)))
-    (dolist (month (all-months))
-      (render-index (index-by-month month content)))
-    (dotimes (i (ceiling (length content) 10))
-      (render-index (index-by-n i content)
-                    :prev (and (plusp i) i)
-                    :next (and (< (* (1+ i) 10) (length content))
-                               (+ 2 i))))
-    (dolist (format '(rss atom))
-      (dolist (tag tag-feeds)
-        (let ((posts (remove-if-now (lambda (x) (tag-p (make-tag tag) x)) content)))
-          (render-feed (make-instance 'tag-feed :posts (take-up-to 10 posts)
-                                      :format format
-                                      :slug tag))))
-      (render-feed (make-instance 'feed :posts (take-up-to 10 content)
-                                  :format format)))))

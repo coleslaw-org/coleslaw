@@ -7,6 +7,13 @@
 (defvar *site* (make-hash-table :test #'equal)
   "An in-memory database to hold all site documents, keyed on page-url.")
 
+(defun add-document (doc)
+  "Add DOC to the in-memory database. If a matching entry is present, error."
+  (let ((url (page-url doc)))
+    (if (gethash url *site*)
+        (error "There is already an existing document with the url ~a" url)
+        (setf (gethash url *site*) doc))))
+
 ;; Class Methods
 
 (defun find-all (doc-type)
@@ -25,15 +32,12 @@
 (defgeneric discover (doc-type)
   (:documentation "Load all documents of the given DOC-TYPE into memory.")
   (:method (doc-type)
-    (purge-all doc-type)
     (let* ((class-name (class-name doc-type))
            (file-type (string-downcase (symbol-name class-name))))
+      (purge-all class-name)
       (do-files (file (repo *config*) file-type)
         (let ((obj (construct class-name (read-content file))))
-          (if (gethash (page-url obj) *site*)
-              (error "There is already existing content with the url ~a."
-                     (page-url obj))
-              (setf (gethash (page-url obj) *site*) obj)))))))
+          (add-document obj))))))
 
 ;; Instance Methods
 
