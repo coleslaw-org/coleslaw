@@ -18,12 +18,12 @@
 (in-package :coleslaw-sitemap)
 
 (defmethod deploy :before (staging)
-  "Render sitemap.xml under document root"
+  "Render sitemap.xml under document root."
   (declare (ignore staging))
   (let ((urls (append '("" "sitemap.xml") ; empty string is for root url
-                      (mapcar #'page-url (find-all 'coleslaw:post)))))
+                      (mapcar #'page-url (hash-table-values coleslaw::*site*)))))
     (write-page (rel-path (staging-dir *config*) "sitemap.xml")
-                (funcall (theme-fn 'sitemap "feeds")
+                (funcall (theme-fn 'sitemap "sitemap")
                          (list :config *config*
                                :urls urls
                                :pubdate (format-timestring nil (now)))))))
