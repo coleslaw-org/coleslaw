@@ -1,8 +1,5 @@
 (in-package :coleslaw)
 
-(defgeneric render (object &key &allow-other-keys)
-  (:documentation "Render the given OBJECT to HTML."))
-
 (defgeneric render-content (text format)
   (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
   (:method (text (format (eql :html)))
@@ -11,15 +8,6 @@
     (let ((3bmd-code-blocks:*code-blocks* t))
       (with-output-to-string (str)
         (3bmd:parse-string-and-print-to-stream text str)))))
-
-(defgeneric page-url (object)
-  (:documentation "The url to the object, without the domain."))
-
-(defmethod page-url :around ((object t))
-  (let ((result (call-next-method)))
-    (if (pathname-type result)
-        result
-        (make-pathname :type "html" :defaults result))))
 
 (defun page-path (object)
   "The path to store OBJECT at once rendered."

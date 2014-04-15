@@ -11,6 +11,7 @@
 
 (defclass feed (index)
   ((format :initform nil :initarg :format :accessor feed-format)))
+;; TODO: tag-feed isn't reached by do-subclasses!
 (defclass tag-feed (feed) ())
 
 (defmethod page-url ((object tag-index))

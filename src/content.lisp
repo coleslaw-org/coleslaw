@@ -1,8 +1,5 @@
 (in-package :coleslaw)
 
-(defparameter *content* (make-hash-table :test #'equal)
-  "A hash table to store all the site content and metadata.")
-
 (defclass tag ()
   ((name :initform nil :initarg :name :accessor tag-name)
    (slug :initform nil :Initarg :slug :accessor tag-slug)))
@@ -30,9 +27,6 @@
   "Test if OBJ was written in MONTH."
   (search month (content-date obj)))
 
-(defgeneric publish (content-type)
-  (:documentation "Write pages to disk for all content of the given CONTENT-TYPE."))
-
 (defun read-content (file)
   "Returns a plist of metadata from FILE with :text holding the content as a string."
   (flet ((slurp-remainder (stream)
@@ -56,27 +50,6 @@
             (content (slurp-remainder in)))
         (setf (getf meta :tags) (read-tags (getf meta :tags)))
         (append meta (list :text content))))))
-
-(defun find-all (content-type)
-  "Return a list of all instances of a given CONTENT-TYPE."
-  (loop for val being the hash-values in *content*
-     when (typep val content-type) collect val))
-
-(defun purge-all (content-type)
-  "Remove all instances of CONTENT-TYPE from *content*."
-  (dolist (obj (find-all content-type))
-    (remhash (content-slug obj) *content*)))
-
-(defun discover (content-type)
-  "Load all content of the given CONTENT-TYPE from disk."
-  (purge-all content-type)
-  (let ((file-type (string-downcase (symbol-name content-type))))
-    (do-files (file (repo *config*) file-type)
-      (let ((obj (construct content-type (read-content file))))
-        (if (gethash (content-slug obj) *content*)
-            (error "There is already existing content with the slug ~a."
-                   (content-slug obj))
-            (setf (gethash (content-slug obj) *content*) obj))))))
 
 (defun load-content ()
   "Load all content stored in the blog's repo."
