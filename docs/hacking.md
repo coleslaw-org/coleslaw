@@ -39,7 +39,7 @@ generator.  Content Types were added in 0.8 as a step towards making
 limitations. Chiefly, the association between Content Types, their
 template, and their inclusion in an INDEX is presently ad-hoc.
 
-// TODO: Write something about class-names as file-extension/eql-specializers!
+// TODO: Write something about the new Document Protocol!
 ### Current Content Types & Indexes
 
 There are 5 INDEX subclasses at present: TAG-INDEX, MONTH-INDEX,
@@ -106,7 +106,14 @@ freshly built site.
 
 ## Areas for Improvement
 
+### render-foo* functions could be abstracted out
+// TODO
+
+### user-defined routing
+// TODO
+
 ### Better Content Types
+// TODO: Update to discuss Document Protocol.
 
 Creating a new content type should be both straightforward and doable
 as a plugin. All that is really required is a subclass of CONTENT with

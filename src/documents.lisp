@@ -8,7 +8,7 @@
   "An in-memory database to hold all site documents, keyed on page-url.")
 
 (defun add-document (doc)
-  "Add DOC to the in-memory database. If a matching entry is present, error."
+  "Add DOC to the in-memory database. Error if a matching entry is present."
   (let ((url (page-url doc)))
     (if (gethash url *site*)
         (error "There is already an existing document with the url ~a" url)
