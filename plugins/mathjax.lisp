@@ -5,7 +5,7 @@
                           #:content
                           #:index
                           #:tag-p
-                          #:index-posts))
+                          #:index-content))
 
 (in-package :coleslaw-mathjax)
 
@@ -23,6 +23,6 @@
              (or force
                  (etypecase obj
                    (content (math-post-p obj))
-                   (index (some #'math-post-p (index-posts obj)))))))
+                   (index (some #'math-post-p (index-content obj)))))))
     (let ((mathjax-header (format nil *mathjax-header* config location preset)))
       (add-injection (list mathjax-header #'mathjax-p) :head))))

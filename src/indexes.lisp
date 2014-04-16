@@ -2,8 +2,8 @@
 
 (defclass index ()
   ((slug :initform nil :initarg :slug :accessor index-slug)
-   (posts :initform nil :initarg :posts :accessor index-posts)
-   (title :initform nil :initarg :title :accessor index-title)))
+   (title :initform nil :initarg :title :accessor index-title)
+   (content :initform nil :initarg :content :accessor index-content)))
 
 (defmethod render ((object index) &key prev next)
   (funcall (theme-fn 'index) (list :tags (all-tags)
@@ -29,7 +29,7 @@
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
   (make-instance 'tag-index :slug (tag-slug tag)
-                 :posts (remove-if-not (lambda (x) (tag-p tag x)) content)
+                 :content (remove-if-not (lambda (x) (tag-p tag x)) content)
                  :title (format nil "Posts tagged ~a" (tag-name tag))))
 
 (defmethod publish ((doc-type (eql (find-class 'tag-index))))
@@ -52,7 +52,7 @@
 (defun index-by-month (month content)
   "Return an index of all CONTENT matching the given MONTH."
   (make-instance 'month-index :slug month
-                 :posts (remove-if-not (lambda (x) (month-p month x)) content)
+                 :content (remove-if-not (lambda (x) (month-p month x)) content)
                  :title (format nil "Posts from ~a" month)))
 
 (defmethod publish ((doc-type (eql (find-class 'month-index))))
@@ -76,7 +76,7 @@
   "Return the index for the Ith page of CONTENT in reverse chronological order."
   (let ((content (subseq content (* 10 i))))
     (make-instance 'numeric-index :slug (1+ i)
-                   :posts (take-up-to 10 content)
+                   :content (take-up-to 10 content)
                    :title "Recent Posts")))
 
 (defmethod publish ((doc-type (eql (find-class 'numeric-index))))
@@ -98,7 +98,7 @@
 (defmethod discover ((doc-type (eql (find-class 'feed))))
   (let ((content (take-up-to 10 (by-date (find-all 'post)))))
     (dolist (format '(rss atom))
-      (let ((feed (make-instance 'feed :posts content :format format)))
+      (let ((feed (make-instance 'feed :content content :format format)))
         (add-document feed)))))
 
 (defmethod publish ((doc-type (eql (find-class 'feed))))
@@ -115,7 +115,7 @@
     (dolist (tag (feeds *config*))
       (let ((posts (remove-if-not (lambda (x) (tag-p tag x)) content)))
         (dolist (format '(rss atom))
-          (let ((feed (make-instance 'tag-feed :posts (take-up-to 10 posts)
+          (let ((feed (make-instance 'tag-feed :content (take-up-to 10 posts)
                                      :format format
                                      :slug tag)))
             (add-document feed)))))))
