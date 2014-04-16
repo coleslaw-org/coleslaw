@@ -58,8 +58,8 @@
            (content (construct content-type (read-content file))))
       (write-page "tmp.html" (render-page content)))))
 
-(defgeneric render-content (text format)
-  (:documentation "Compile TEXT from the given FORMAT to HTML for display.")
+(defgeneric render-text (text format)
+  (:documentation "Render TEXT of the given FORMAT to HTML for display.")
   (:method (text (format (eql :html)))
     text)
   (:method (text (format (eql :md)))

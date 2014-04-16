@@ -12,7 +12,7 @@
                    (text content-text)) object
       (setf (content-slug object) (slugify title)
             format (make-keyword (string-upcase format))
-            text (render-content text format)
+            text (render-text text format)
             author (or author (author *config*)))))
 
 (defmethod render ((object post) &key prev next)

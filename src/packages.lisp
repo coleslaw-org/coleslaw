@@ -13,7 +13,7 @@
            #:content
            #:post
            #:index
-           #:render-content
+           #:render-text
            #:add-injection
            ;; The Document Protocol
            #:add-document

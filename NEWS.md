@@ -1,6 +1,7 @@
 ## Changes for 0.9.3 (2013-04-16):
 
 * **INCOMPATIBLE CHANGE**: `page-path` and the `blog` config class are no longer exported.
+* **INCOMPATIBLE CHANGE**: `render-content` has been renamed `render-text` for clarity.
 * New Docs: [A Hacker's Guide to Coleslaw](hacking_guide) and [Themes](theming_guide)!
 * A new theme *readable* based on bootswatch readable, courtesy of @rmoritz!
 * Posts may have an author to support multi-user blogs courtesy of @tychoish.

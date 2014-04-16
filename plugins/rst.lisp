@@ -3,7 +3,7 @@
 
 (defpackage :coleslaw-rst
   (:use :cl)
-  (:import-from :coleslaw #:render-content)
+  (:import-from :coleslaw #:render-text)
   (:import-from :docutils #:read-rst #:write-part #:register-settings-spec
                           #:visit-node #:write-document)
   (:import-from :docutils.writer.html #:html-writer #:write-part)
@@ -11,7 +11,7 @@
 
 (in-package :coleslaw-rst)
 
-(defmethod render-content (text (format (eql :rst)))
+(defmethod render-text (text (format (eql :rst)))
   (register-settings-spec '((:generator nil)
                             (:datestamp nil)))
   (with-output-to-string (str)

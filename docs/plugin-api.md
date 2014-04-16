@@ -28,7 +28,7 @@
 
 * **New markup formats**, for example the
   [ReStructuredText plugin](http://github.com/redline6561/coleslaw/blob/master/plugins/rst.lisp),
-  can be created by definining an appropriate `render-content`
+  can be created by definining an appropriate `render-text`
   method. The method takes `text` and `format` arguments and is
   [EQL-specialized](http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html#defmethod)
   on the format. Format should be a keyword matching the file
