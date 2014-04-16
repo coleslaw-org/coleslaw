@@ -102,6 +102,8 @@
   (dolist (feed (find-all 'feed))
     (render-feed feed)))
 
+;;; Tag Feeds
+
 (defclass tag-feed (feed) ())
 
 (defmethod page-url ((object tag-feed))

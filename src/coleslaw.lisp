@@ -67,6 +67,10 @@
       (with-output-to-string (str)
         (3bmd:parse-string-and-print-to-stream text str)))))
 
+(defun make-pubdate ()
+  "Make a RFC1123 pubdate representing the current time."
+  (local-time:format-rfc1123-timestring nil (local-time:now)))
+
 (defun page-path (object)
   "The path to store OBJECT at once rendered."
   (rel-path (staging-dir *config*) (namestring (page-url object))))

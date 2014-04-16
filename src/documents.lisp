@@ -44,7 +44,7 @@
 ;; Instance Methods
 
 (defgeneric page-url (document)
-  (:documentation "The url to the document, without the domain."))
+  (:documentation "The url to the DOCUMENT without the domain."))
 
 (defmethod page-url :around ((document t))
   (let ((result (call-next-method)))
