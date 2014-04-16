@@ -21,7 +21,6 @@
   (format nil "tag/~a" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
-  (purge-all (class-name doc-type))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (all-tags))
       (add-document (index-by-tag tag content)))))
@@ -44,7 +43,6 @@
   (format nil "date/~a" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'month-index))))
-  (purge-all (class-name doc-type))
   (let ((content (by-date (find-all 'post))))
     (dolist (month (all-months))
       (add-document (index-by-month month content)))))
@@ -67,7 +65,6 @@
   (format nil "~d" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'numeric-index))))
-  (purge-all (class-name doc-type))
   (let ((content (by-date (find-all 'post))))
     (dotimes (i (ceiling (length content) 10))
       (add-document (index-by-n i content)))))

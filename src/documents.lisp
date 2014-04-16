@@ -34,10 +34,12 @@
   (:method (doc-type)
     (let* ((class-name (class-name doc-type))
            (file-type (string-downcase (symbol-name class-name))))
-      (purge-all class-name)
       (do-files (file (repo *config*) file-type)
         (let ((obj (construct class-name (read-content file))))
           (add-document obj))))))
+
+(defmethod discover :before (doc-type)
+  (purge-all (class-name doc-type)))
 
 ;; Instance Methods
 
