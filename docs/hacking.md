@@ -175,6 +175,7 @@ check the :class key under `(routing *config*)` if no specialized
 `page-url` was defined. This would have the additional benefit of
 localizing all the site routing in one place. New Content Types would
 probably `pushnew` a plist onto the config key in their `enable` function.
+This has been implemented on the branch `user-defined-routing`.
 
 ### Better Content Types
 
