@@ -74,7 +74,7 @@ implement them by eql-specializing on the class, e.g.
 
 - `page-url`: Generate a unique, relative path for the object on the site
   sans file extension. An :around method adds that later. The `slug` slot
-  on the object is generally used to hold a portion of the unique
+  on the object is conventionally used to hold a portion of the unique
   identifier. i.e. `(format nil "posts/~a" (content-slug object))`.
 - `render`: A method that calls the appropriate template with `theme-fn`,
   passing it any needed arguments and returning rendered HTML.

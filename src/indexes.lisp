@@ -91,12 +91,14 @@
   ((format :initform nil :initarg :format :accessor feed-format)))
 
 (defmethod page-url ((object feed))
-  (format nil "~(~a~).xml" (feed-format object)))
+  (format nil "~a.xml" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'feed))))
-  (let ((content (take-up-to 10 (by-date (find-all 'post)))))
+  (let ((content (by-date (find-all 'post))))
     (dolist (format '(rss atom))
-      (let ((feed (make-instance 'feed :content content :format format)))
+      (let ((feed (make-instance 'feed :format format
+                                 :content (take-up-to 10 content)
+                                 :slug (format nil "~(~a~)" format))))
         (add-document feed)))))
 
 (defmethod publish ((doc-type (eql (find-class 'feed))))
@@ -108,16 +110,16 @@
 (defclass tag-feed (feed) ())
 
 (defmethod page-url ((object tag-feed))
-  (format nil "tag/~a~(~a~).xml" (index-slug object) (feed-format object)))
+  (format nil "tag/~a.xml" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'tag-feed))))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (feeds *config*))
       (let ((tagged (remove-if-not (lambda (x) (tag-p tag x)) content)))
         (dolist (format '(rss atom))
-          (let ((feed (make-instance 'tag-feed :content (take-up-to 10 tagged)
-                                     :format format
-                                     :slug tag)))
+          (let ((feed (make-instance 'tag-feed :format format
+                                     :content (take-up-to 10 tagged)
+                                     :slug (format nil "~a-~(~a~)" tag format))))
             (add-document feed)))))))
 
 (defmethod publish ((doc-type (eql (find-class 'tag-feed))))
