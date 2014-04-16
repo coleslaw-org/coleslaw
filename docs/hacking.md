@@ -92,13 +92,6 @@ grouping content by tags, publishing date, and reverse chronological
 order. Feeds exist to special case RSS and ATOM generation.
 Currently, there is only 1 content type: POST, for blog entries.
 
-I'm planning to add a content type PAGE, for static pages. It should
-be a pretty straightforward subclass of CONTENT with the necessary
-methods: `render`, `page-url` and `publish`. It could have a `url`
-slot with `page-url` as a reader to allow arbitrary layout on the site.
-The big question is how to handle templating and how indexes or other
-content should link to it.
-
 ### Templates and Theming
 
 User configs are allowed to specify a theme, otherwise the default is
@@ -177,6 +170,25 @@ localizing all the site routing in one place. New Content Types would
 probably `pushnew` a plist onto the config key in their `enable` function.
 This has been implemented on the branch `user-defined-routing`.
 
+### New Content Type: Pages!
+
+Many users have requested a content type PAGE, for static pages. It
+should be a pretty straightforward subclass of CONTENT with the
+necessary methods: `render`, `page-url` and `publish`. It could have a
+`url` slot with `page-url` as a reader to allow arbitrary layout on
+the site.  The big question is how to handle templating and how
+indexes or other content should link to it.
+
+### New Content Type: Shouts!
+
+I've also toyed with the idea of a content type called a SHOUT, which
+would be used primarily to reference or embed other content, sort of a
+mix between a retweet and a del.icio.us bookmark. We encounter plenty
+of great things on the web. Most of mine winds up forgotten in browser
+tabs or stored on twitter's servers. It would be cool to see SHOUTs as
+a plugin, probably with a dedicated SHOUT-INDEX, and some sort of
+oEmbed/embed.ly/noembed support.
+
 ### Better Content Types
 
 Creating a new content type is both straightforward and doable as a
@@ -196,16 +208,6 @@ Unfortunately, this does not solve:
    objects at the moment. Whether the INDEX should specify what
    Content Types it includes or the CONTENT which indexes it appears
    on is not yet clear.
-
-### New Content Type: Shouts!
-
-I've also toyed with the idea of a content type called a SHOUT, which
-would be used primarily to reference or embed other content, sort of a
-mix between a retweet and a del.icio.us bookmark. We encounter plenty
-of great things on the web. Most of mine winds up forgotten in browser
-tabs or stored on twitter's servers. It would be cool to see SHOUTs as
-a plugin, probably with a dedicated SHOUT-INDEX, and some sort of
-oEmbed/embed.ly/noembed support.
 
 ### Incremental Compilation
 
