@@ -10,7 +10,7 @@
     <language>en-us</language>
     <pubDate>{$pubdate}</pubDate>
 
-    {foreach $post in $content.posts}
+    {foreach $post in $content.content}
     <item>
       <title>{$post.title}</title>
       <link>{$config.domain}/posts/{$post.slug}.{$config.pageExt}</link>

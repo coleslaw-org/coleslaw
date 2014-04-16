@@ -30,7 +30,7 @@
   "Return an index of all CONTENT matching the given TAG."
   (make-instance 'tag-index :slug (tag-slug tag)
                  :content (remove-if-not (lambda (x) (tag-p tag x)) content)
-                 :title (format nil "Posts tagged ~a" (tag-name tag))))
+                 :title (format nil "Content tagged ~a" (tag-name tag))))
 
 (defmethod publish ((doc-type (eql (find-class 'tag-index))))
   (dolist (index (find-all 'tag-index))
@@ -53,7 +53,7 @@
   "Return an index of all CONTENT matching the given MONTH."
   (make-instance 'month-index :slug month
                  :content (remove-if-not (lambda (x) (month-p month x)) content)
-                 :title (format nil "Posts from ~a" month)))
+                 :title (format nil "Content from ~a" month)))
 
 (defmethod publish ((doc-type (eql (find-class 'month-index))))
   (dolist (index (find-all 'month-index))
@@ -77,7 +77,7 @@
   (let ((content (subseq content (* 10 i))))
     (make-instance 'numeric-index :slug (1+ i)
                    :content (take-up-to 10 content)
-                   :title "Recent Posts")))
+                   :title "Recent Content")))
 
 (defmethod publish ((doc-type (eql (find-class 'numeric-index))))
   (let ((indexes (sort (find-all 'numeric-index) #'< :key #'index-slug)))
@@ -113,9 +113,9 @@
 (defmethod discover ((doc-type (eql (find-class 'tag-feed))))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (feeds *config*))
-      (let ((posts (remove-if-not (lambda (x) (tag-p tag x)) content)))
+      (let ((tagged (remove-if-not (lambda (x) (tag-p tag x)) content)))
         (dolist (format '(rss atom))
-          (let ((feed (make-instance 'tag-feed :content (take-up-to 10 posts)
+          (let ((feed (make-instance 'tag-feed :content (take-up-to 10 tagged)
                                      :format format
                                      :slug tag)))
             (add-document feed)))))))

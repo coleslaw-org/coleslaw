@@ -2,11 +2,11 @@
 
 {template index}
 <h1 class="page-header">{$index.title}</h1>
-{foreach $post in $index.posts}
+{foreach $obj in $index.content}
   <div class="row-fluid">
-    <h1><a href="{$config.domain}/posts/{$post.slug}.{$config.pageExt}">{$post.title}</a></h1>
-    <p class="date-posted">posted on {$post.date}</p>
-    {$post.text |noAutoescape}
+    <h1><a href="{$config.domain}/posts/{$obj.slug}.{$config.pageExt}">{$obj.title}</a></h1>
+    <p class="date-posted">posted on {$obj.date}</p>
+    {$obj.text |noAutoescape}
   </div>
 {/foreach}
 {if $tags}
@@ -21,7 +21,7 @@
 {/if}
 {if $months}
 <div class="row-fluid">
-  <p>View posts from
+  <p>View content from
     {foreach $month in $months}
       <a href="{$config.domain}/date/{$month}.{$config.pageExt}">{$month}</a>{nil}
       {if not isLast($month)},{sp}{/if}

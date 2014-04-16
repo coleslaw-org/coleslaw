@@ -1,7 +1,5 @@
 TODO:
 Coleslaw.next
 ; See if there are any good ideas we can steal from [Frog](https://github.com/greghendershott/frog)
-; Add HACKING.md docs, i.e. formalize workflow+releases. No more landing broken stuff on master!
 ;; needs: shout template/render function. Twitter\Disqus integration with shouts?
-;; Rename index.posts to something else?
 ; Incremental compilation: only "touched" posts+tags+months and by-n. -> 1.0

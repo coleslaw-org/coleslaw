@@ -12,7 +12,7 @@
     <name>{$config.author}</name>
   </author>
 
-  {foreach $post in $content.posts}
+  {foreach $post in $content.content}
   <entry>
     <link type="text/html" rel="alternate" href="{$config.domain}/posts/{$post.slug}.{$config.pageExt}"/>
     <title>{$post.title}</title>
