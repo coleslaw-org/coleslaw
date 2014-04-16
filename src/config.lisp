@@ -6,15 +6,15 @@
    (domain          :initarg :domain         :accessor domain)
    (feeds           :initarg :feeds          :accessor feeds)
    (license         :initarg :license        :accessor license)
+   (page-ext        :initarg :page-ext       :accessor page-ext       :initform "html")
    (plugins         :initarg :plugins        :accessor plugins)
    (repo            :initarg :repo           :accessor repo)
+   (routing         :initarg :routing        :accessor routing)
+   (separator       :initarg :separator      :accessor separator      :initform ";;;;;")
    (sitenav         :initarg :sitenav        :accessor sitenav)
    (staging-dir     :initarg :staging-dir    :accessor staging-dir    :initform "/tmp/coleslaw/")
-   (posts-dir       :initarg :posts-dir      :accessor posts-dir      :initform "posts")
-   (separator       :initarg :separator      :accessor separator      :initform ";;;;;")
-   (page-ext        :initarg :page-ext       :accessor page-ext       :initform "html")
-   (title           :initarg :title          :accessor title)
-   (theme           :initarg :theme          :accessor theme)))
+   (theme           :initarg :theme          :accessor theme)
+   (title           :initarg :title          :accessor title)))
 
 (define-condition unknown-config-section-error (error)
   ((text :initarg :text :reader text)))
@@ -55,14 +55,14 @@ if necessary. DIR is ~ by default."
     (let ((config-form (read in)))
       (if (symbolp (car config-form))
           ;; Single site config: ignore CONFIG-KEY.
-          (setf *config* (apply #'make-instance 'blog config-form))
+          (setf *config* (construct 'blog config-form))
           ;; Multi-site config: load config section for CONFIG-KEY.
           (let* ((config-key-pathname (cl-fad:pathname-as-directory config-key))
                  (section (assoc config-key-pathname config-form
                                  :key #'cl-fad:pathname-as-directory
                                  :test #'equal)))
             (if section
-                (setf *config* (apply #'make-instance 'blog (cdr section))
+                (setf *config* (construct 'blog (cdr section))
                       (repo *config*) config-key)
                 (error 'unknown-config-section-error
                        :text (format nil "In ~A: No such key: '~A'." in config-key)))))

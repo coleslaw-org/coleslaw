@@ -1,7 +1,7 @@
 (defsystem #:coleslaw
   :name "coleslaw"
   :description "Flexible Lisp Blogware"
-  :version "0.9.2"
+  :version "0.9.3"
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
@@ -19,10 +19,10 @@
                (:file "util")
                (:file "config")
                (:file "themes")
+               (:file "documents")
                (:file "content")
                (:file "posts")
-               (:file "indices")
-               (:file "feeds")
+               (:file "indexes")
                (:file "coleslaw"))
   :in-order-to ((test-op (load-op coleslaw-tests)))
   :perform (test-op :after (op c)

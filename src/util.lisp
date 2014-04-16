@@ -1,5 +1,20 @@
 (in-package :coleslaw)
 
+(defun construct (class-name args)
+  "Create an instance of CLASS-NAME with the given ARGS."
+  (apply 'make-instance class-name args))
+
+(defmacro do-subclasses ((var class) &body body)
+  "Iterate over the subclasses of CLASS performing BODY with VAR
+lexically bound to the current subclass' class-name."
+  (alexandria:with-gensyms (klasses all-subclasses)
+    `(labels ((,all-subclasses (class)
+                (let ((subclasses (closer-mop:class-direct-subclasses class)))
+                  (append subclasses (loop for subclass in subclasses
+                                        nconc (,all-subclasses subclass))))))
+       (let ((,klasses (,all-subclasses (find-class ',class))))
+         (loop for ,var in ,klasses do ,@body)))))
+
 (defun fmt (fmt-str args)
   "A convenient FORMAT interface for string building."
   (apply 'format nil fmt-str args))
@@ -69,3 +84,11 @@ an UNWIND-PROTECT, then change back to the current directory."
                          (setf (current-directory) ,path)
                          ,@body)
          (setf (current-directory) ,old)))))
+
+(defun take-up-to (n seq)
+  "Take elements from SEQ until all elements or N have been taken."
+  (subseq seq 0 (min (length seq) n)))
+
+(defun make-pubdate ()
+  "Make a RFC1123 pubdate representing the current time."
+  (local-time:format-rfc1123-timestring nil (local-time:now)))

@@ -10,14 +10,16 @@
   (:export #:main
            #:preview
            #:*config*
-           #:blog
            #:content
            #:post
            #:index
-           #:page-path
+           #:render-content
+           #:add-injection
+           ;; The Document Protocol
+           #:add-document
+           #:find-all
+           #:purge-all
            #:discover
            #:publish
-           #:render
-           #:render-content
-           #:read-content
-           #:add-injection))
+           #:page-url
+           #:render))
