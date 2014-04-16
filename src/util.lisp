@@ -18,13 +18,14 @@ lexically bound to the current subclass' class-name."
 (defmacro do-files ((var path &optional extension) &body body)
   "For each file on PATH, run BODY. If EXTENSION is provided, only run BODY
 on files that match the given extension."
-  (alexandria:with-gensyms (ext)
-    `(dolist (,var (cl-fad:list-directory ,path))
-       ,@(if extension
-             `((let ((,ext (pathname-type ,var)))
-                 (when (and ,ext (string= ,ext ,extension))
-                   ,@body)))
-             `,body))))
+  (alexandria:with-gensyms (extension-p files)
+    `(flet ((,extension-p (file)
+              (string= (pathname-type file) ,extension)))
+       (let ((,files (cl-fad:list-directory ,path)))
+         (dolist (,var ,(if extension
+                            `(remove-if-not #',extension-p ,files)
+                            files))
+           ,@body)))))
 
 (defmacro with-current-directory (path &body body)
   "Change the current OS directory to PATH and execute BODY in
