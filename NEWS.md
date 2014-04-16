@@ -1,3 +1,13 @@
+## Changes for 0.9.3 (2013-04-16):
+
+* **INCOMPATIBLE CHANGE**: `page-path` and the `blog` config class are no longer exported.
+* New Docs: [A Hacker's Guide to Coleslaw](hacking_guide) and [Themes](theming_guide)!
+* A new theme *readable* based on bootswatch readable, courtesy of @rmoritz!
+* Posts may have an author to support multi-user blogs courtesy of @tychoish.
+* Fixes to the ReStructuredText plugin courtesy of @tychoish.
+* UTF-8 fixes for config files and site content courtesy of @cl-ment.
+* Fix timestamps in the sitemap plugin courtesy of @woudshoo.
+
 ## Changes for 0.9.2 (2013-05-11):
 
 * **INCOMPATIBLE CHANGE**: Renamed staging, deploy config options staging-dir, deploy-dir.
@@ -52,3 +62,6 @@
 ## Changes for 0.5 (2012-08-22):
 
 * Initial release.
+
+[hacking_guide]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
+[theming_guide]: https://github.com/redline6561/coleslaw/blob/master/docs/themes.md
