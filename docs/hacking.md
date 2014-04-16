@@ -119,7 +119,13 @@ and return rendered HTML.  **Coleslaw** defines a helper called
 there are RSS, ATOM, and sitemap templates *coleslaw* uses automatically.
 No need for individual themes to reimplement a standard, after all!
 
-// TODO: Update for changes to compile-blog, indexes refactor, etc.
+### Plugins
+
+**Coleslaw** also encourages extending functionality via plugins. The Plugin
+API is well-documented and flexible enough for many use cases. Do check the
+[API docs](https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md)
+when contemplating a new feature and see if a plugin would be appropriate.
+
 ### The Lifecycle of a Page
 
 - `(load-content)`
