@@ -7,6 +7,12 @@
            (disqus :shortname "my-site-name")
            (analytics :tracking-code "foo"))
  :repo "/home/git/tmp/improvedmeans/"
+ :routing ((:post           "posts/~a")
+           (:tag-index      "tag/~a")
+           (:month-index    "date/~a")
+           (:numeric-index  "~d")
+           (:feed           "~a.xml")
+           (:tag-feed       "tag/~a.xml"))
  :sitenav ((:url "http://redlinernotes.com/" :name "Home")
            (:url "http://twitter.com/redline6561" :name "Twitter")
            (:url "http://github.com/redline6561" :name "Code")

@@ -3,6 +3,12 @@
                                       :domain "http://blub.co.za"
                                       :feeds ("lisp")
                                       :plugins ((mathjax))
+                                      :routing ((:post           "posts/~a")
+                                                (:tag-index      "tag/~a")
+                                                (:month-index    "date/~a")
+                                                (:numeric-index  "~d")
+                                                (:feed           "~a.xml")
+                                                (:tag-feed       "tag/~a.xml"))
                                       :sitenav ((:url "http://twitter.com/ralph_moeritz" :name "Twitter")
                                                 (:url "http://github.com/ralph-moeritz" :name "Code"))
                                       :staging-dir "/tmp/coleslaw"
@@ -13,6 +19,12 @@
                                   :domain "http://musings.co.za"
                                   :feeds ("opinion")
                                   :plugins ((mathjax))
+                                  :routing ((:post           "posts/~a")
+                                            (:tag-index      "tag/~a")
+                                            (:month-index    "date/~a")
+                                            (:numeric-index  "~d")
+                                            (:feed           "~a.xml")
+                                            (:tag-feed       "tag/~a.xml"))
                                   :sitenav ((:url "http://twitter.com/ralph_moeritz" :name "Twitter")
                                             (:url "http://github.com/ralph-moeritz" :name "Code"))
                                   :staging-dir "/tmp/coleslaw"
