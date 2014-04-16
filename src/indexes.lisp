@@ -17,9 +17,6 @@
 
 (defclass tag-index (index) ())
 
-(defmethod page-url ((object tag-index))
-  (format nil "tag/~a" (index-slug object)))
-
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (all-tags))
@@ -39,9 +36,6 @@
 
 (defclass month-index (index) ())
 
-(defmethod page-url ((object month-index))
-  (format nil "date/~a" (index-slug object)))
-
 (defmethod discover ((doc-type (eql (find-class 'month-index))))
   (let ((content (by-date (find-all 'post))))
     (dolist (month (all-months))
@@ -60,9 +54,6 @@
 ;;; Reverse Chronological Index
 
 (defclass numeric-index (index) ())
-
-(defmethod page-url ((object numeric-index))
-  (format nil "~d" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'numeric-index))))
   (let ((content (by-date (find-all 'post))))
@@ -90,9 +81,6 @@
 (defclass feed (index)
   ((format :initform nil :initarg :format :accessor feed-format)))
 
-(defmethod page-url ((object feed))
-  (format nil "~a.xml" (index-slug object)))
-
 (defmethod discover ((doc-type (eql (find-class 'feed))))
   (let ((content (by-date (find-all 'post))))
     (dolist (format '(rss atom))
@@ -108,9 +96,6 @@
 ;;; Tag Feeds
 
 (defclass tag-feed (feed) ())
-
-(defmethod page-url ((object tag-feed))
-  (format nil "tag/~a.xml" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'tag-feed))))
   (let ((content (by-date (find-all 'post))))
