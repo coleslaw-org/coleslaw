@@ -53,7 +53,7 @@ All current Content Types and Indexes implement the protocol faithfully.
 It consists of 2 "class" methods, 2 instance methods, and an invariant.
 
 
-* Class Methods:
+**Class Methods**:
 
 Since Common Lisp doesn't have explicit support for class methods, we
 implement them by eql-specializing on the class, e.g.
@@ -68,7 +68,7 @@ implement them by eql-specializing on the class, e.g.
 - `publish`: Iterate over all objects of the class
 
 
-* Instance Methods:
+**Instance Methods**:
 
 - `page-url`: Generate a unique, relative path for the object on the site
   sans file extension. An :around method adds that later. The `slug` slot
@@ -78,7 +78,7 @@ implement them by eql-specializing on the class, e.g.
   passing it any needed arguments and returning rendered HTML.
 
 
-* Invariants:
+**Invariants**:
 
 - Any Content Types (subclasses of CONTENT) are expected to be stored in
   the site's git repo with the lowercased class-name as a file extension,
