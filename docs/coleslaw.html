@@ -73,13 +73,6 @@ else
 <div id="classes">
 <div class="symboldecl">
 <div class="definition">
-<a class="symbolname" name="blog_class" href="#blog_class">blog</a>
-<span class="lambdalist">(standard-object)</span>
-<span class="symboltype">class</span></div>
-<div class="documentation">
-<pre></pre></div></div>
-<div class="symboldecl">
-<div class="definition">
 <a class="symbolname" name="content_class" href="#content_class">content</a>
 <span class="lambdalist">(standard-object)</span>
 <span class="symboltype">class</span></div>
@@ -91,7 +84,12 @@ else
 <span class="lambdalist">(standard-object)</span>
 <span class="symboltype">class</span></div>
 <div class="documentation">
-<pre></pre></div></div>
+<pre></pre></div>
+<div class="slots">
+<div class="label">SLOTS</div>
+<span class="symbolname">content</span>
+<div class="documentation">
+<pre>UNDOCUMENTED</pre></div></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="post_class" href="#post_class">post</a>
@@ -105,6 +103,13 @@ else
 <div id="functions">
 <div class="symboldecl">
 <div class="definition">
+<a class="symbolname" name="add-document_func" href="#add-document_func">add-document</a>
+<span class="lambdalist">doc</span>
+<span class="symboltype">function</span></div>
+<div class="documentation">
+<pre>Add DOC to the in-memory database. Error if a matching entry is present.</pre></div></div>
+<div class="symboldecl">
+<div class="definition">
 <a class="symbolname" name="add-injection_func" href="#add-injection_func">add-injection</a>
 <span class="lambdalist">injection location</span>
 <span class="symboltype">function</span></div>
@@ -116,25 +121,31 @@ any return value other than nil indicates the injection should be added.</pre></
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="discover_func" href="#discover_func">discover</a>
-<span class="lambdalist">content-type</span>
+<span class="lambdalist">doc-type</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>Load all content of the given CONTENT-TYPE from disk.</pre></div></div>
+<pre>Load all documents of the given DOC-TYPE into memory.</pre></div></div>
+<div class="symboldecl">
+<div class="definition">
+<a class="symbolname" name="find-all_func" href="#find-all_func">find-all</a>
+<span class="lambdalist">doc-type</span>
+<span class="symboltype">function</span></div>
+<div class="documentation">
+<pre>Return a list of all instances of a given DOC-TYPE.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="main_func" href="#main_func">main</a>
-<span class="lambdalist">config-key</span>
+<span class="lambdalist">&optional config-key</span>
 <span class="symboltype">function</span></div>
 <div class="documentation">
-<pre>Load the user's config section corresponding to CONFIG-KEY, then
-compile and deploy the blog.</pre></div></div>
+<pre>Load the user's config file, then compile and deploy the site.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
-<a class="symbolname" name="page-path_func" href="#page-path_func">page-path</a>
-<span class="lambdalist">object</span>
+<a class="symbolname" name="page-url_func" href="#page-url_func">page-url</a>
+<span class="lambdalist">document</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>The path to store OBJECT at once rendered.</pre></div></div>
+<pre>The url to the document, without the domain.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="preview_func" href="#preview_func">preview</a>
@@ -146,30 +157,30 @@ compile and deploy the blog.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="publish_func" href="#publish_func">publish</a>
-<span class="lambdalist">content-type</span>
+<span class="lambdalist">doc-type</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>Write pages to disk for all content of the given CONTENT-TYPE.</pre></div></div>
+<pre>Write pages to disk for all documents of the given DOC-TYPE.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
-<a class="symbolname" name="read-content_func" href="#read-content_func">read-content</a>
-<span class="lambdalist">file</span>
+<a class="symbolname" name="purge-all_func" href="#purge-all_func">purge-all</a>
+<span class="lambdalist">doc-type</span>
 <span class="symboltype">function</span></div>
 <div class="documentation">
-<pre>Returns a plist of metadata from FILE with :text holding the content as a string.</pre></div></div>
+<pre>Remove all instances of DOC-TYPE from memory.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
 <a class="symbolname" name="render_func" href="#render_func">render</a>
-<span class="lambdalist">object &key next prev &allow-other-keys</span>
+<span class="lambdalist">document &key next prev &allow-other-keys</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>Render the given OBJECT to HTML.</pre></div></div>
+<pre>Render the given DOCUMENT to HTML.</pre></div></div>
 <div class="symboldecl">
 <div class="definition">
-<a class="symbolname" name="render-content_func" href="#render-content_func">render-content</a>
+<a class="symbolname" name="render-text_func" href="#render-text_func">render-text</a>
 <span class="lambdalist">text format</span>
 <span class="symboltype">standard-generic-function</span></div>
 <div class="documentation">
-<pre>Compile TEXT from the given FORMAT to HTML for display.</pre></div></div></div></div>
+<pre>Render TEXT of the given FORMAT to HTML for display.</pre></div></div></div></div>
 <div class="footer">Generated by: 
 <a href="http://common-lisp.net/project/cl-api">CL-API</a></div></body></html>
