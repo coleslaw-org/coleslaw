@@ -20,26 +20,70 @@ will checkout the repo to a **$TMPDIR** and call `(coleslaw:main $TMPDIR)`.
 
 It is then coleslaw's job to load all of your content, your config and
 templates, and render the content to disk. Deployment is done by
-updating a symlink and the default install assumes your webserver will
-be configured to serve from that symlink. However, there are plugins
-for deploying to Heroku, S3, and Github Pages.
+moving the files to a location specified in the config and updating a
+symlink.  It is assumed a web server is set up to serve from that
+symlink. However, there are plugins for deploying to Heroku, S3, and
+Github Pages.
 
 ### Blogs vs Sites
 
 **Coleslaw** is blogware. When I designed it, I only cared that it
-could replace my server's wordpress install. As a result, the code is
-still structured in terms of POSTs and INDEXes. Roughly speaking, a
-POST is a blog entry and an INDEX is a collection of POSTs or other
-content. An INDEX really only serves to group a set of content objects
-on a page, it isn't content itself.
+could replace my server's wordpress install. As a result, the code
+until very recently was structured in terms of POSTs and
+INDEXes. Roughly speaking, a POST is a blog entry and an INDEX is a
+collection of POSTs or other content. An INDEX really only serves to
+group a set of content objects on a page, it isn't content itself.
 
 This isn't ideal if you're looking for a full-on static site
 generator.  Content Types were added in 0.8 as a step towards making
 *coleslaw* suitable for more use cases but still have some
-limitations. Chiefly, the association between Content Types, their
-template, and their inclusion in an INDEX is presently ad-hoc.
+limitations. Any subclass of CONTENT that implements the *document
+protocol* counts as a content type. However, only POSTs are currently
+included on INDEXes since their isn't yet a formal relationship to
+determine what content types should be included on which indexes.
 
-// TODO: Write something about the new Document Protocol!
+### The Document Protocol
+
+The *document protocol* was born during a giant refactoring in 0.9.3.
+Any object that will be rendered to HTML should adhere to the protocol.
+Subclasses of CONTENT (content types) that implement the protocol will
+be seamlessly picked up by *coleslaw* and included on the rendered site.
+
+All current Content Types and Indexes implement the protocol faithfully.
+It consists of 2 "class" methods, 2 instance methods, and an invariant.
+
+
+* Class Methods:
+
+Since Common Lisp doesn't have explicit support for class methods, we
+implement them by eql-specializing on the class, e.g.
+```lisp
+(defmethod foo ((doc-type (eql (find-class 'bar))))
+  ... )
+```
+
+- `discover`: Create instances for documents of the class and put them in
+  in-memory database with `add-document`. If your class is a subclass of
+  CONTENT, there is a default method for this.
+- `publish`: Iterate over all objects of the class
+
+
+* Instance Methods:
+
+- `page-url`: Generate a unique, relative path for the object on the site
+  sans file extension. An :around method adds that later. The `slug` slot
+  on the object is generally used to hold a portion of the unique
+  identifier. i.e. `(format nil "posts/~a" (content-slug object))`.
+- `render`: A method that calls the appropriate template with `theme-fn`,
+  passing it any needed arguments and returning rendered HTML.
+
+
+* Invariants:
+
+- Any Content Types (subclasses of CONTENT) are expected to be stored in
+  the site's git repo with the lowercased class-name as a file extension,
+  i.e. (".post" for POST files).
+
 ### Current Content Types & Indexes
 
 There are 5 INDEX subclasses at present: TAG-INDEX, MONTH-INDEX,
@@ -50,8 +94,10 @@ Currently, there is only 1 content type: POST, for blog entries.
 
 I'm planning to add a content type PAGE, for static pages. It should
 be a pretty straightforward subclass of CONTENT with the necessary
-methods: `render`, `page-url` and `publish`, but will require a small
-tweak to prevent showing up in any INDEX.
+methods: `render`, `page-url` and `publish`. It could have a `url`
+slot with `page-url` as a reader to allow arbitrary layout on the site.
+The big question is how to handle templating and how indexes or other
+content should link to it.
 
 ### Templates and Theming
 
@@ -69,33 +115,32 @@ template file should contain a namespace like
 Each template creates a lisp function in the theme's package when
 loaded. These functions take a property list (or plist) as an argument
 and return rendered HTML.  **Coleslaw** defines a helper called
-`theme-fn` for easy access to the template functions.
+`theme-fn` for easy access to the template functions. Additionally,
+there are RSS, ATOM, and sitemap templates *coleslaw* uses automatically.
+No need for individual themes to reimplement a standard, after all!
 
 // TODO: Update for changes to compile-blog, indexes refactor, etc.
 ### The Lifecycle of a Page
 
 - `(load-content)`
 
-A page starts, obviously, with a file. When
-*coleslaw* loads your content, it iterates over a list of content
-types (i.e. subclasses of CONTENT).  For each content type, it
-iterates over all files in the repo with a matching extension,
-e.g. ".post" for POSTs. Objects of the appropriate class are created
-from each matching file and inserted into the `*content*` hash-table.
+A page starts, obviously, with a file. When *coleslaw* loads your
+content, it iterates over a list of content types (i.e. subclasses of
+CONTENT).  For each content type, it iterates over all files in the
+repo with a matching extension, e.g. ".post" for POSTs. Objects of the
+appropriate class are created from each matching file and inserted
+into the an in-memory data store. Then the INDEXes are created by
+iterating over the POSTs and inserted into the data store.
 
 - `(compile-blog dir)`
 
-
 Compilation starts by ensuring the staging directory (`/tmp/coleslaw/`
 by default) exists, cd'ing there, and copying over any necessary theme
-assets. Then *coleslaw* iterates over the content types, calling the
-`publish` method on each one. Publish creates any non-INDEX pages for
-the objects of that content type by iterating over the objects in an
-appropriate fashion, rendering them, and passing the result to
-`write-page` (which should probably just be renamed to `write-file`).
-
-After this, `render-indexes` is called, and an 'index.html' symlink
-is created to point to the first reverse chronological index.
+assets. Then *coleslaw* iterates over the content types and index classes,
+calling the `publish` method on each one. Publish iterates over the
+class instances, rendering each one and writing the result out to disk
+with `write-page` (which should probably just be renamed to `write-file`).
+After this, an 'index.html' symlink is created to point to the first index.
 
 - `(deploy dir)`
 
@@ -106,17 +151,29 @@ freshly built site.
 
 ## Areas for Improvement
 
-### render-foo* functions could be abstracted out
-// TODO
+### Render Function Cleanup
 
-### user-defined routing
-// TODO
+There are currently 3 render-foo* functions and 3 implementations of the
+render method. Only the render-foo* functions call `write-page` so there
+should be some room for cleanup here. The render method implementations
+are probably necessary unless we want to start storing their arguments
+on the models. There may be a different way to abstract the data flow.
+
+### User-Defined Routing
+
+There is no reason *coleslaw* should be in charge of the site layout or
+should care. If all objects only used the *slug* slot in their `page-url`
+methods, there could be a :routing argument in the config containing
+a plist of `(:class "~{format string~}")` pairs. A default method could
+check the :class key under `(routing *config*)` if no specialized
+`page-url` was defined. This would have the additional benefit of
+localizing all the site routing in one place. New Content Types would
+probably `pushnew` a plist onto the config key in their `enable` function.
 
 ### Better Content Types
-// TODO: Update to discuss Document Protocol.
 
-Creating a new content type should be both straightforward and doable
-as a plugin. All that is really required is a subclass of CONTENT with
+Creating a new content type is both straightforward and doable as a
+plugin. All that is really required is a subclass of CONTENT with
 any needed slots, a template, a `render` method to call the template
 with any needed options, a `page-url` method for layout, and a
 `publish` method.
@@ -126,10 +183,12 @@ Unfortunately, this does not solve:
 1. The issue of compiling the template at load-time and making sure it
    was installed in the theme package. The plugin would need to do
    this itself or the template would need to be included in 'core'.
+   Thankfully, this should be easy with *cl-closure-template*.
 2. More seriously, there is no formal relationship between content
-   types and indexes. Indexes include *ALL* objects in the `*content*`
-   hash table. This may be undesirable and doesn't permit indexes
-   dedicated to particular content types.
+   types and indexes. Consequentially, INDEXes include only POST
+   objects at the moment. Whether the INDEX should specify what
+   Content Types it includes or the CONTENT which indexes it appears
+   on is not yet clear.
 
 ### New Content Type: Shouts!
 
@@ -140,15 +199,6 @@ of great things on the web. Most of mine winds up forgotten in browser
 tabs or stored on twitter's servers. It would be cool to see SHOUTs as
 a plugin, probably with a dedicated SHOUT-INDEX, and some sort of
 oEmbed/embed.ly/noembed support.
-
-### Layouts and Paths
-
-Defining a page-url for every content-object and index seems a bit
-silly. It also spreads information about the site layout throughout
-the codebase, it might be better to have a slot in the config that
-defines this information with a key to go with each format string.
-Adding a new content-type as a plugin could then provide a default
-by banging on the config or specify the path in its `enable` options.
 
 ### Incremental Compilation
 
