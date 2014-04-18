@@ -9,7 +9,7 @@
                 #:rel-path
                 #:staging-dir
                 #:theme-fn
-                #:write-page)
+                #:write-file)
   (:import-from :local-time
 		#:format-timestring
 		#:now)
@@ -22,7 +22,7 @@
   (declare (ignore staging))
   (let ((urls (append '("" "sitemap.xml") ; empty string is for root url
                       (mapcar #'page-url (hash-table-values coleslaw::*site*)))))
-    (write-page (rel-path (staging-dir *config*) "sitemap.xml")
+    (write-file (rel-path (staging-dir *config*) "sitemap.xml")
                 (funcall (theme-fn 'sitemap "sitemap")
                          (list :config *config*
                                :urls urls

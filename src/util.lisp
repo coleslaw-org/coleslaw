@@ -6,7 +6,7 @@
 
 (defmacro do-subclasses ((var class) &body body)
   "Iterate over the subclasses of CLASS performing BODY with VAR
-lexically bound to the current subclass' class-name."
+lexically bound to the current subclass."
   (alexandria:with-gensyms (klasses all-subclasses)
     `(labels ((,all-subclasses (class)
                 (let ((subclasses (closer-mop:class-direct-subclasses class)))
@@ -28,7 +28,7 @@ on files that match the given extension."
            ,@body)))))
 
 (defmacro with-current-directory (path &body body)
-  "Change the current OS directory to PATH and execute BODY in
+  "Change the current directory to PATH and execute BODY in
 an UNWIND-PROTECT, then change back to the current directory."
   (alexandria:with-gensyms (old)
     `(let ((,old (current-directory)))

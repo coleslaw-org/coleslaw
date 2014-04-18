@@ -135,11 +135,11 @@ iterating over the POSTs and inserted into the data store.
 
 Compilation starts by ensuring the staging directory (`/tmp/coleslaw/`
 by default) exists, cd'ing there, and copying over any necessary theme
-assets. Then *coleslaw* iterates over the content types and index classes,
-calling the `publish` method on each one. Publish iterates over the
-class instances, rendering each one and writing the result out to disk
-with `write-page` (which should probably just be renamed to `write-file`).
-After this, an 'index.html' symlink is created to point to the first index.
+assets. Then *coleslaw* iterates over the content types and index
+classes, calling the `publish` method on each one. Publish iterates
+over the class instances, rendering each one and writing the result
+out to disk with `write-file`. After this, an 'index.html' symlink is
+created to point to the first index.
 
 - `(deploy dir)`
 
@@ -153,7 +153,7 @@ freshly built site.
 ### Render Function Cleanup
 
 There are currently 3 render-foo* functions and 3 implementations of the
-render method. Only the render-foo* functions call `write-page` so there
+render method. Only the render-foo* functions call `write-file` so there
 should be some room for cleanup here. The render method implementations
 are probably necessary unless we want to start storing their arguments
 on the models. There may be a different way to abstract the data flow.

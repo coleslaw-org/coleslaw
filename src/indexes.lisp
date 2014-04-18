@@ -140,8 +140,8 @@
 (defun render-feed (feed)
   "Render the given FEED to both RSS and ATOM."
   (let ((theme-fn (theme-fn (feed-format feed) "feeds")))
-    (write-page (page-path feed) (render-page feed theme-fn))))
+    (write-file (page-path feed) (render-page feed theme-fn))))
 
 (defun render-index (index &rest render-args)
   "Render the given INDEX using RENDER-ARGS if provided."
-  (write-page (page-path index) (apply #'render-page index nil render-args)))
+  (write-file (page-path index) (apply #'render-page index nil render-args)))

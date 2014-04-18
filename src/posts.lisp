@@ -26,5 +26,5 @@
 
 (defmethod publish ((doc-type (eql (find-class 'post))))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))
-     while post do (write-page (page-path post)
+     while post do (write-file (page-path post)
                                (render-page post nil :prev prev :next next))))

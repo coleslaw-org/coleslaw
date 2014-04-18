@@ -56,7 +56,7 @@
       (compile-theme (theme *config*)))
     (let* ((file (rel-path (repo *config*) path))
            (content (construct content-type (read-content file))))
-      (write-page "tmp.html" (render-page content)))))
+      (write-file "tmp.html" (render-page content)))))
 
 (defgeneric render-text (text format)
   (:documentation "Render TEXT of the given FORMAT to HTML for display.")
@@ -85,7 +85,7 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                  :pubdate (make-pubdate)
                  :injections (find-injections content))))
 
-(defun write-page (filepath page)
+(defun write-file (filepath page)
   "Write the given PAGE to FILEPATH."
   (ensure-directories-exist filepath)
   (with-open-file (out filepath
@@ -93,4 +93,4 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                    :if-exists :supersede
                    :if-does-not-exist :create
                    :external-format '(:utf-8))
-    (write-line page out)))
+    (write page :stream out)))
