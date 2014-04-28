@@ -53,7 +53,7 @@ use it as the template passing any RENDER-ARGS."
   (let ((html (if (or theme-fn render-args)
                   (apply #'render-page document theme-fn render-args)
                   (render-page document nil))))
-    (write-file (page-path obj) html)))
+    (write-file (page-path document) html)))
 
 (defun find-all (doc-type)
   "Return a list of all instances of a given DOC-TYPE."
