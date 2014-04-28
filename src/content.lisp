@@ -60,6 +60,8 @@
         (setf (getf meta :tags) (read-tags (getf meta :tags)))
         (append meta (list :text content))))))
 
+;; Helper Functions
+
 (defun tag-p (tag obj)
   "Test if OBJ is tagged with TAG."
   (let ((tag (if (typep tag 'tag) tag (make-tag tag))))
