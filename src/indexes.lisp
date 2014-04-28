@@ -33,7 +33,7 @@
 
 (defmethod publish ((doc-type (eql (find-class 'tag-index))))
   (dolist (index (find-all 'tag-index))
-    (render-index index)))
+    (write-document index)))
 
 ;;; Index by Month
 
@@ -55,7 +55,7 @@
 
 (defmethod publish ((doc-type (eql (find-class 'month-index))))
   (dolist (index (find-all 'month-index))
-    (render-index index)))
+    (write-document index)))
 
 ;;; Reverse Chronological Index
 
@@ -81,8 +81,9 @@
     (dolist (index indexes)
       (let ((prev (1- (index-slug index)))
             (next (1+ (index-slug index))))
-        (render-index index :prev (when (plusp prev) prev)
-                            :next (when (<= next (length indexes)) next))))))
+        (write-document index nil
+                        :prev (when (plusp prev) prev)
+                        :next (when (<= next (length indexes)) next))))))
 
 ;;; Atom and RSS Feeds
 
@@ -100,7 +101,7 @@
 
 (defmethod publish ((doc-type (eql (find-class 'feed))))
   (dolist (feed (find-all 'feed))
-    (render-feed feed)))
+    (write-document feed (theme-fn (feed-format feed) "feeds"))))
 
 ;;; Tag Feeds
 
@@ -121,7 +122,7 @@
 
 (defmethod publish ((doc-type (eql (find-class 'tag-feed))))
   (dolist (feed (find-all 'tag-feed))
-    (render-feed feed)))
+    (write-document feed (theme-fn (feed-format feed) "feeds"))))
 
 ;;; Helper Functions
 
@@ -136,12 +137,3 @@
   (let* ((dupes (mappend #'content-tags (find-all 'post)))
          (tags (remove-duplicates dupes :test #'string= :key #'tag-slug)))
     (sort tags #'string< :key #'tag-name)))
-
-(defun render-feed (feed)
-  "Render the given FEED to both RSS and ATOM."
-  (let ((theme-fn (theme-fn (feed-format feed) "feeds")))
-    (write-file (page-path feed) (render-page feed theme-fn))))
-
-(defun render-index (index &rest render-args)
-  "Render the given INDEX using RENDER-ARGS if provided."
-  (write-file (page-path index) (apply #'render-page index nil render-args)))

@@ -184,14 +184,6 @@ changes to at least the post templates and the `read-content`
 function. There may be other areas where it was assumed tags/dates
 will always be present.
 
-### Render Function Cleanup
-
-There are currently 3 render-foo* functions and 3 implementations of the
-render method. Only the render-foo* functions call `write-file` so there
-should be some room for cleanup here. The render method implementations
-are probably necessary unless we want to start storing their arguments
-on the models. There may be a different way to abstract the data flow.
-
 ### User-Defined Routing
 
 There is no reason *coleslaw* should be in charge of the site layout or
