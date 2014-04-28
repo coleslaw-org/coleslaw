@@ -1,18 +1,17 @@
 (defpackage :coleslaw-sitemap
   (:use :cl)
-  (:import-from :coleslaw
-                #:*config*
-                #:deploy
-                #:find-all
-                #:make-pubdate
-                #:page-url
-                #:rel-path
-                #:staging-dir
-                #:theme-fn
-                #:write-file)
-  (:import-from :local-time
-		#:format-timestring
-		#:now)
+  (:import-from :coleslaw #:*config*
+                          #:deploy
+                          #:find-all
+                          #:make-pubdate
+                          #:page-url
+                          #:rel-path
+                          #:staging-dir
+                          #:theme-fn
+                          #:write-file)
+  (:import-from :local-time #:format-timestring
+                            #:now)
+  (:import-from :alexandria #:hash-table-values)
   (:export #:enable))
 
 (in-package :coleslaw-sitemap)
