@@ -48,7 +48,7 @@ doesn't exist, use the .coleslawrc in the home directory."
         custom-path
         (rel-path (user-homedir-pathname) ".coleslawrc"))))
 
-(defun load-config (&optional (config-key ""))
+(defun load-config (&optional config-key)
   "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY
 if necessary. DIR is ~ by default."
   (with-open-file (in (discover-config-path config-key) :external-format '(:utf-8))

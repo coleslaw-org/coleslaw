@@ -1,6 +1,6 @@
 (in-package :coleslaw)
 
-(defun main (&optional config-key)
+(defun main (&optional (config-key ""))
   "Load the user's config file, then compile and deploy the site."
   (load-config config-key)
   (load-content)
@@ -93,4 +93,4 @@ Additional args to render CONTENT can be passed via RENDER-ARGS."
                    :if-exists :supersede
                    :if-does-not-exist :create
                    :external-format '(:utf-8))
-    (write page :stream out)))
+    (write page :stream out :escape nil)))
