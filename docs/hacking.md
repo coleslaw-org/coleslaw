@@ -52,6 +52,8 @@ be seamlessly picked up by *coleslaw* and included on the rendered site.
 All current Content Types and Indexes implement the protocol faithfully.
 It consists of 2 "class" methods, 2 instance methods, and an invariant.
 
+There are also 4 helper functions provided that should prove useful in
+implementing new content types.
 
 **Class Methods**:
 
@@ -83,6 +85,22 @@ implement them by eql-specializing on the class, e.g.
 - Any Content Types (subclasses of CONTENT) are expected to be stored in
   the site's git repo with the lowercased class-name as a file extension,
   i.e. (".post" for POST files).
+
+**Protocol Helpers**:
+
+- `add-document`: Add the document to *coleslaw*'s in-memory
+  database. It will error if the `page-url` of the document is not
+  unique. Such a hash collision represents content on the site being
+  shadowed/overwritten. This should be used in your `discover` method.
+- `write-document`: Write the document out to disk as HTML. It takes
+  an optional template name and render-args to pass to the template.
+  This should be used in your `publish` method.
+- `find-all`: Return a list of all documents of the requested class.
+  This is often used in the `publish` method to iterate over documents
+  of a given type.
+- `purge-all`: Remove all instances of the requested class from the DB.
+  This is primarily used at the REPL or for debugging but it is also
+  used in a `:before` method on `discover` to keep it idempotent.
 
 ### Current Content Types & Indexes
 

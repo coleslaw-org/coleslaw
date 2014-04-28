@@ -54,3 +54,11 @@
 
 (defgeneric render (document &key &allow-other-keys)
   (:documentation "Render the given DOCUMENT to HTML."))
+
+(defun write-document (document &optional theme-fn &rest render-args)
+  "Write the given DOCUMENT to disk as HTML. If THEME-FN is present,
+use it as the template passing any RENDER-ARGS."
+  (let ((html (if render-args
+                  (apply #'render-page document theme-fn render-args)
+                  (render-page document nil))))
+    (write-file (page-path obj) html)))

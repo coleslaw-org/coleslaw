@@ -22,4 +22,5 @@
            #:discover
            #:publish
            #:page-url
-           #:render))
+           #:render
+           #:write-document))
