@@ -16,16 +16,16 @@ lexically bound to the current subclass."
          (loop for ,var in ,klasses do ,@body)))))
 
 (defmacro do-files ((var path &optional extension) &body body)
-  "For each file on PATH, run BODY. If EXTENSION is provided, only run BODY
-on files that match the given extension."
-  (alexandria:with-gensyms (extension-p files)
+  "For each file under PATH, run BODY. If EXTENSION is provided, only run
+BODY on files that match the given extension."
+  (alexandria:with-gensyms (extension-p)
     `(flet ((,extension-p (file)
               (string= (pathname-type file) ,extension)))
-       (let ((,files (cl-fad:list-directory ,path)))
-         (dolist (,var ,(if extension
-                            `(remove-if-not #',extension-p ,files)
-                            files))
-           ,@body)))))
+       (cl-fad:walk-directory ,path (lambda (,var) ,@body)
+                              :follow-symlinks nil
+                              :test (if ,extension
+                                        #',extension-p
+                                        (constantly t))))))
 
 (defmacro with-current-directory (path &body body)
   "Change the current directory to PATH and execute BODY in

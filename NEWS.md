@@ -1,3 +1,8 @@
+## Changes for 0.9.4 (2013-05-05):
+
+* Coleslaw no longer expects a particular repo layout. Use whatever
+  directory hierarchy you like.
+
 ## Changes for 0.9.3 (2013-04-16):
 
 * **INCOMPATIBLE CHANGE**: `page-path` and the `blog` config class are no longer exported.

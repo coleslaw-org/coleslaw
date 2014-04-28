@@ -168,14 +168,6 @@ freshly built site.
 
 ## Areas for Improvement
 
-### Allow Arbitrary Repo Structure
-
-Currently, *coleslaw* expects all posts to be in the top-level of the
-blog repo. There is no technical reason that coleslaw should care.
-The only change that needs to be made is to the `do-files` macro
-used during content discovery. In particular, it should probably
-use `cl-fad:walk-directory` instead of `cl-fad:list-directory`.
-
 ### Allow Tagless or Dateless Content
 
 Several users have expected to be able to not supply tags or a date
