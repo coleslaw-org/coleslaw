@@ -7,24 +7,7 @@
 (defvar *site* (make-hash-table :test #'equal)
   "An in-memory database to hold all site documents, keyed on page-url.")
 
-(defun add-document (doc)
-  "Add DOC to the in-memory database. Error if a matching entry is present."
-  (let ((url (page-url doc)))
-    (if (gethash url *site*)
-        (error "There is already an existing document with the url ~a" url)
-        (setf (gethash url *site*) doc))))
-
 ;; Class Methods
-
-(defun find-all (doc-type)
-  "Return a list of all instances of a given DOC-TYPE."
-  (loop for val being the hash-values in *site*
-     when (typep val doc-type) collect val))
-
-(defun purge-all (doc-type)
-  "Remove all instances of DOC-TYPE from memory."
-  (dolist (obj (find-all doc-type))
-    (remhash (page-url obj) *site*)))
 
 (defgeneric publish (doc-type)
   (:documentation "Write pages to disk for all documents of the given DOC-TYPE."))
@@ -55,6 +38,15 @@
 (defgeneric render (document &key &allow-other-keys)
   (:documentation "Render the given DOCUMENT to HTML."))
 
+;; Helper Functions
+
+(defun add-document (doc)
+  "Add DOC to the in-memory database. Error if a matching entry is present."
+  (let ((url (page-url doc)))
+    (if (gethash url *site*)
+        (error "There is already an existing document with the url ~a" url)
+        (setf (gethash url *site*) doc))))
+
 (defun write-document (document &optional theme-fn &rest render-args)
   "Write the given DOCUMENT to disk as HTML. If THEME-FN is present,
 use it as the template passing any RENDER-ARGS."
@@ -62,3 +54,13 @@ use it as the template passing any RENDER-ARGS."
                   (apply #'render-page document theme-fn render-args)
                   (render-page document nil))))
     (write-file (page-path obj) html)))
+
+(defun find-all (doc-type)
+  "Return a list of all instances of a given DOC-TYPE."
+  (loop for val being the hash-values in *site*
+     when (typep val doc-type) collect val))
+
+(defun purge-all (doc-type)
+  "Remove all instances of DOC-TYPE from memory."
+  (dolist (obj (find-all doc-type))
+    (remhash (page-url obj) *site*)))
