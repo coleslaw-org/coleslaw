@@ -2,8 +2,6 @@
   (:use :cl)
   (:import-from :coleslaw #:*config*
                           #:deploy
-                          #:find-all
-                          #:make-pubdate
                           #:page-url
                           #:rel-path
                           #:staging-dir
