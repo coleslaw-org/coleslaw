@@ -36,6 +36,11 @@
    (date :initform nil :initarg :date :accessor content-date)
    (text :initform nil :initarg :text :accessor content-text)))
 
+(defmethod initialize-instance :after ((object content) &key)
+  (with-accessors ((tags content-tags)) object
+    (when (stringp tags)
+      (setf tags (mapcar #'make-tag (cl-ppcre:split "," tags))))))
+
 (defun read-content (file)
   "Returns a plist of metadata from FILE with :text holding the content as a string."
   (flet ((slurp-remainder (stream)
@@ -46,9 +51,7 @@
          (parse-field (str)
            (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
          (field-name (line)
-           (make-keyword (string-upcase (subseq line 0 (position #\: line)))))
-         (read-tags (str)
-           (mapcar #'make-tag (cl-ppcre:split "," str))))
+           (make-keyword (string-upcase (subseq line 0 (position #\: line))))))
     (with-open-file (in file :external-format '(:utf-8))
       (unless (string= (read-line in) (separator *config*))
         (error "The provided file lacks the expected header."))
@@ -57,7 +60,6 @@
                      appending (list (field-name line)
                                      (aref (parse-field line) 0))))
             (content (slurp-remainder in)))
-        (setf (getf meta :tags) (read-tags (getf meta :tags)))
         (append meta (list :text content))))))
 
 ;; Helper Functions

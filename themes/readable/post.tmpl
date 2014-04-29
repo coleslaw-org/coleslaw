@@ -3,13 +3,19 @@
 {template post}
 <div class="row-fluid">{\n}
   <h1 class="page-header">{$post.title}</h1>{\n}
-  <p>Tagged as 
-    {foreach $tag in $post.tags}
-      <a href="../tag/{$tag.slug}{$config.pageExt}">{$tag.name}</a>{nil}
-      {if not isLast($tag)},{sp}{/if}
-    {/foreach}
+  <p>
+    {if $post.tags}
+      Tagged as {foreach $tag in $post.tags}
+        <a href="../tag/{$tag.slug}{$config.pageExt}">{$tag.name}</a>{nil}
+          {if not isLast($tag)},{sp}{/if}
+      {/foreach}
+    {/if}
   </p>
-  <p class="date-posted">Written on {$post.date}</p>
+  <p class="date-posted">
+    {if $post.date}
+      Written on {$post.date}
+    {/if}
+  </p>
 
   {$post.text |noAutoescape}
   
