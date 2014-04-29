@@ -7,6 +7,14 @@
   the old behavior.
 * Coleslaw no longer expects a particular repo layout. Use whatever
   directory hierarchy you like.
+* New Content Type Plugin: Static Pages, accepting a title, url, and
+  optionally tags and a date. All files with a `.page` extension are
+  compiled as static pages and reuse the POST template.
+  To enable Static Pages, add `(static-pages)` to the `:plugins`
+  section of your config.
+* Coleslaw now allows content without a date or tags. Note that POSTs
+  without a date will still show up in the reverse chronological
+  indexes at the very end.
 
 ## Changes for 0.9.3 (2013-04-16):
 

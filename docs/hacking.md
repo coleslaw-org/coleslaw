@@ -168,25 +168,6 @@ freshly built site.
 
 ## Areas for Improvement
 
-### Allow Tagless or Dateless Content
-
-Several users have expected to be able to not supply tags or a date
-for their content. This is a reasonable expectation and requires
-changes to at least the post templates and the `read-content`
-function. There may be other areas where it was assumed tags/dates
-will always be present.
-
-### New Content Type: Pages!
-
-Many users have requested a content type PAGE, for static pages. It
-should be a pretty straightforward subclass of CONTENT with the
-necessary methods: `render`, `page-url` and `publish`. It could have a
-`url` slot with `page-url` as a reader to allow arbitrary layout on
-the site.  For now, we can be sloppy and reuse the post template and
-limit static-pages to being written in markdown. If we want to support
-other formats, consider moving the format slot from POST to CONTENT.
-This has been implemented on the branch `static-pages`.
-
 ### New Content Type: Shouts!
 
 I've also toyed with the idea of a content type called a SHOUT, which
