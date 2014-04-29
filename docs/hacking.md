@@ -194,8 +194,10 @@ Many users have requested a content type PAGE, for static pages. It
 should be a pretty straightforward subclass of CONTENT with the
 necessary methods: `render`, `page-url` and `publish`. It could have a
 `url` slot with `page-url` as a reader to allow arbitrary layout on
-the site.  The big question is how to handle templating and how
-indexes or other content should link to it.
+the site.  For now, we can be sloppy and reuse the post template and
+limit static-pages to being written in markdown. If we want to support
+other formats, consider moving the format slot from POST to CONTENT.
+This has been implemented on the branch `static-pages`.
 
 ### New Content Type: Shouts!
 
