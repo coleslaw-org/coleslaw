@@ -1,5 +1,10 @@
 ## Changes for 0.9.4 (2013-05-05):
 
+* **SITE-BREAKING CHANGE**: Coleslaw now supports user-defined routing.
+  Instead of hard-coding the paths various content types are stored at,
+  they must be specified in the configuration file (.coleslawrc). Just
+  copy the `:routing` key from the [example][single_site.rc] to get
+  the old behavior.
 * Coleslaw no longer expects a particular repo layout. Use whatever
   directory hierarchy you like.
 
@@ -69,5 +74,6 @@
 
 * Initial release.
 
-[hacking_guide]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
-[theming_guide]: https://github.com/redline6561/coleslaw/blob/master/docs/themes.md
+[hacking_guide]:  https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
+[theming_guide]:  https://github.com/redline6561/coleslaw/blob/master/docs/themes.md
+[single_site.rc]: https://github.com/redline6561/coleslaw/blob/master/examples/single-site.coleslawrc

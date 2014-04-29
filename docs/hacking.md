@@ -176,18 +176,6 @@ changes to at least the post templates and the `read-content`
 function. There may be other areas where it was assumed tags/dates
 will always be present.
 
-### User-Defined Routing
-
-There is no reason *coleslaw* should be in charge of the site layout or
-should care. If all objects only used the *slug* slot in their `page-url`
-methods, there could be a :routing argument in the config containing
-a plist of `(:class "~{format string~}")` pairs. A default method could
-check the :class key under `(routing *config*)` if no specialized
-`page-url` was defined. This would have the additional benefit of
-localizing all the site routing in one place. New Content Types would
-probably `pushnew` a plist onto the config key in their `enable` function.
-This has been implemented on the branch `user-defined-routing`.
-
 ### New Content Type: Pages!
 
 Many users have requested a content type PAGE, for static pages. It
