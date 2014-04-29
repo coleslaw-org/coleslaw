@@ -6,9 +6,9 @@
   <div class="tags">{\n}
     {if $post.tags}
       Tagged as {foreach $tag in $post.tags}
-                  <a href="../tag/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>{nil}
-                      {if not isLast($tag)},{sp}{/if}
-                {/foreach}
+        <a href="../tag/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>{nil}
+          {if not isLast($tag)},{sp}{/if}
+      {/foreach}
     {/if}
   </div>{\n}
   <div class="date">{\n}
