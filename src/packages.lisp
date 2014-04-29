@@ -15,6 +15,7 @@
            #:index
            #:render-text
            #:add-injection
+           #:theme-fn
            ;; The Document Protocol
            #:add-document
            #:find-all

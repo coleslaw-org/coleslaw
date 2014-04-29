@@ -4,13 +4,17 @@
 <div class="article-meta">{\n}
   <h1 class="title">{$post.title}</h1>{\n}
   <div class="tags">{\n}
-    Tagged as {foreach $tag in $post.tags}
-                <a href="../tag/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>{nil}
-                    {if not isLast($tag)},{sp}{/if}
-              {/foreach}
+    {if $post.tags}
+      Tagged as {foreach $tag in $post.tags}
+        <a href="../tag/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>{nil}
+          {if not isLast($tag)},{sp}{/if}
+      {/foreach}
+    {/if}
   </div>{\n}
   <div class="date">{\n}
-    Written on {$post.date}
+    {if $post.date}
+      Written on {$post.date}
+    {/if}
   </div>{\n}
 </div>{\n}
 <div class="article-content">{\n}
