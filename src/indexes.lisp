@@ -17,9 +17,6 @@
 
 (defclass tag-index (index) ())
 
-(defmethod page-url ((object tag-index))
-  (format nil "tag/~a" (index-slug object)))
-
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (all-tags))
@@ -39,9 +36,6 @@
 
 (defclass month-index (index) ())
 
-(defmethod page-url ((object month-index))
-  (format nil "date/~a" (index-slug object)))
-
 (defmethod discover ((doc-type (eql (find-class 'month-index))))
   (let ((content (by-date (find-all 'post))))
     (dolist (month (all-months))
@@ -60,9 +54,6 @@
 ;;; Reverse Chronological Index
 
 (defclass numeric-index (index) ())
-
-(defmethod page-url ((object numeric-index))
-  (format nil "~d" (index-slug object)))
 
 (defmethod discover ((doc-type (eql (find-class 'numeric-index))))
   (let ((content (by-date (find-all 'post))))
@@ -90,13 +81,12 @@
 (defclass feed (index)
   ((format :initform nil :initarg :format :accessor feed-format)))
 
-(defmethod page-url ((object feed))
-  (format nil "~(~a~).xml" (feed-format object)))
-
 (defmethod discover ((doc-type (eql (find-class 'feed))))
-  (let ((content (take-up-to 10 (by-date (find-all 'post)))))
+  (let ((content (by-date (find-all 'post))))
     (dolist (format '(rss atom))
-      (let ((feed (make-instance 'feed :content content :format format)))
+      (let ((feed (make-instance 'feed :format format
+                                 :content (take-up-to 10 content)
+                                 :slug (format nil "~(~a~)" format))))
         (add-document feed)))))
 
 (defmethod publish ((doc-type (eql (find-class 'feed))))
@@ -107,17 +97,14 @@
 
 (defclass tag-feed (feed) ())
 
-(defmethod page-url ((object tag-feed))
-  (format nil "tag/~a~(~a~).xml" (index-slug object) (feed-format object)))
-
 (defmethod discover ((doc-type (eql (find-class 'tag-feed))))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (feeds *config*))
       (let ((tagged (remove-if-not (lambda (x) (tag-p tag x)) content)))
         (dolist (format '(rss atom))
-          (let ((feed (make-instance 'tag-feed :content (take-up-to 10 tagged)
-                                     :format format
-                                     :slug tag)))
+          (let ((feed (make-instance 'tag-feed :format format
+                                     :content (take-up-to 10 tagged)
+                                     :slug (format nil "~a-~(~a~)" tag format))))
             (add-document feed)))))))
 
 (defmethod publish ((doc-type (eql (find-class 'tag-feed))))
