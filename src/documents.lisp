@@ -30,7 +30,7 @@
   (:documentation "The url to the DOCUMENT without the domain.")
   (:method (document)
     (let* ((class-name (class-name (class-of document)))
-           (route (assoc class-name (routing *config*))))
+           (route (assoc (make-keyword class-name) (routing *config*))))
       (if route
           (format nil (second route) (slot-value document 'slug))
           (error "No routing method found for: ~A" class-name)))))
