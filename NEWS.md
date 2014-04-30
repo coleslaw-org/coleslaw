@@ -1,4 +1,4 @@
-## Changes for 0.9.4 (2013-05-05):
+## Changes for 0.9.4 (2014-05-05):
 
 * **SITE-BREAKING CHANGE**: Coleslaw now supports user-defined routing.
   Instead of hard-coding the paths various content types are stored at,
@@ -16,7 +16,7 @@
   without a date will still show up in the reverse chronological
   indexes at the very end.
 
-## Changes for 0.9.3 (2013-04-16):
+## Changes for 0.9.3 (2014-04-16):
 
 * **INCOMPATIBLE CHANGE**: `page-path` and the `blog` config class are no longer exported.
 * **INCOMPATIBLE CHANGE**: `render-content` has been renamed `render-text` for clarity.
