@@ -7,6 +7,8 @@
                           #:find-all
                           #:render
                           #:publish
+                          #:theme-fn
+                          #:render-text
                           #:write-document))
 
 (in-package :coleslaw-static-pages)
