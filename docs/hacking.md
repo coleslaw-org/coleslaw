@@ -168,6 +168,15 @@ freshly built site.
 
 ## Areas for Improvement
 
+### Simplify Config Handling?
+
+Right now we expect .coleslawrc to be in the user's home directory by
+default. It would be interesting if we expected the .coleslawrc to be
+in the blog repo instead. Each blog would be responsible for its own
+configuration so we could simplify `load-config` drastically. Finally,
+we could check for the config in the home directory as a last option
+to remain backwards compatible.
+
 ### New Content Type: Shouts!
 
 I've also toyed with the idea of a content type called a SHOUT, which
