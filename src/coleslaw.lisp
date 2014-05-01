@@ -47,6 +47,10 @@
         (update-symlink prev (truename curr)))
       (update-symlink curr new-build))))
 
+(defun update-symlink (path target)
+  "Update the symlink at PATH to point to TARGET."
+  (run-program "ln -sfn ~a ~a" target path))
+
 (defun preview (path &optional (content-type 'post))
   "Render the content at PATH under user's configured repo and save it to
 ~/tmp.html. Load the user's config and theme if necessary."
@@ -58,39 +62,12 @@
            (content (construct content-type (read-content file))))
       (write-file "tmp.html" (render-page content)))))
 
-(defgeneric render-text (text format)
-  (:documentation "Render TEXT of the given FORMAT to HTML for display.")
-  (:method (text (format (eql :html)))
-    text)
-  (:method (text (format (eql :md)))
-    (let ((3bmd-code-blocks:*code-blocks* t))
-      (with-output-to-string (str)
-        (3bmd:parse-string-and-print-to-stream text str)))))
-
-(defun make-pubdate ()
-  "Make a RFC1123 pubdate representing the current time."
-  (local-time:format-rfc1123-timestring nil (local-time:now)))
-
-(defun page-path (object)
-  "The path to store OBJECT at once rendered."
-  (rel-path (staging-dir *config*) (namestring (page-url object))))
-
 (defun render-page (content &optional theme-fn &rest render-args)
-  "Render the given CONTENT to disk using THEME-FN if supplied.
+  "Render the given CONTENT to HTML using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
   (funcall (or theme-fn (theme-fn 'base))
            (list :config *config*
                  :content content
                  :raw (apply 'render content render-args)
-                 :pubdate (make-pubdate)
+                 :pubdate (format-rfc1123-timestring nil (local-time:now))
                  :injections (find-injections content))))
-
-(defun write-file (filepath page)
-  "Write the given PAGE to FILEPATH."
-  (ensure-directories-exist filepath)
-  (with-open-file (out filepath
-                   :direction :output
-                   :if-exists :supersede
-                   :if-does-not-exist :create
-                   :external-format '(:utf-8))
-    (write page :stream out :escape nil)))

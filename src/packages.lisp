@@ -7,6 +7,7 @@
                             #:compose)
   (:import-from :cl-fad #:file-exists-p)
   (:import-from :closure-template #:compile-template)
+  (:import-from :local-time #:format-rfc1123-timestring)
   (:export #:main
            #:preview
            #:*config*

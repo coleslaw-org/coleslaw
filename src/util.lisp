@@ -82,10 +82,17 @@ If ARGS is provided, use (fmt path args) as the value of PATH."
 use (fmt program args) as the value of PROGRAM."
   (inferior-shell:run (fmt program args) :show t))
 
-(defun update-symlink (path target)
-  "Update the symlink at PATH to point to TARGET."
-  (run-program "ln -sfn ~a ~a" target path))
-
 (defun take-up-to (n seq)
   "Take elements from SEQ until all elements or N have been taken."
   (subseq seq 0 (min (length seq) n)))
+
+(defun write-file (path text)
+  "Write the given TEXT to PATH. PATH is overwritten if it exists and created
+along with any missing parent directories otherwise."
+  (ensure-directories-exist path)
+  (with-open-file (out path
+                   :direction :output
+                   :if-exists :supersede
+                   :if-does-not-exist :create
+                   :external-format '(:utf-8))
+    (write text :stream out :escape nil)))

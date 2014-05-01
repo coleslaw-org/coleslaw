@@ -76,3 +76,12 @@
 (defun by-date (content)
   "Sort CONTENT in reverse chronological order."
   (sort content #'string> :key #'content-date))
+
+(defgeneric render-text (text format)
+  (:documentation "Render TEXT of the given FORMAT to HTML for display.")
+  (:method (text (format (eql :html)))
+    text)
+  (:method (text (format (eql :md)))
+    (let ((3bmd-code-blocks:*code-blocks* t))
+      (with-output-to-string (str)
+        (3bmd:parse-string-and-print-to-stream text str)))))

@@ -87,5 +87,5 @@
 (defun all-tags ()
   "Retrieve a list of all tags used in content."
   (let* ((dupes (mappend #'content-tags (find-all 'post)))
-         (tags (remove-duplicates dupes :test #'string= :key #'tag-slug)))
+         (tags (remove-duplicates dupes :test #'tag-slug=)))
     (sort tags #'string< :key #'tag-name)))

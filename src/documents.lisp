@@ -5,7 +5,7 @@
 ;; Data Storage
 
 (defvar *site* (make-hash-table :test #'equal)
-  "An in-memory database to hold all site documents, keyed on page-url.")
+  "An in-memory database to hold all site documents, keyed on relative URLs.")
 
 ;; Class Methods
 
@@ -46,20 +46,21 @@
 
 ;; Helper Functions
 
-(defun add-document (doc)
-  "Add DOC to the in-memory database. Error if a matching entry is present."
-  (let ((url (page-url doc)))
+(defun add-document (document)
+  "Add DOCUMENT to the in-memory database. Error if a matching entry is present."
+  (let ((url (page-url document)))
     (if (gethash url *site*)
         (error "There is already an existing document with the url ~a" url)
-        (setf (gethash url *site*) doc))))
+        (setf (gethash url *site*) document))))
 
 (defun write-document (document &optional theme-fn &rest render-args)
   "Write the given DOCUMENT to disk as HTML. If THEME-FN is present,
 use it as the template passing any RENDER-ARGS."
   (let ((html (if (or theme-fn render-args)
                   (apply #'render-page document theme-fn render-args)
-                  (render-page document nil))))
-    (write-file (page-path document) html)))
+                  (render-page document nil)))
+        (url (namestring (page-url document))))
+    (write-file (rel-path (staging-dir *config*) url) html)))
 
 (defun find-all (doc-type)
   "Return a list of all instances of a given DOC-TYPE."
