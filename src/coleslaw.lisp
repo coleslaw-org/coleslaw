@@ -1,8 +1,8 @@
 (in-package :coleslaw)
 
-(defun main (&optional (config-key ""))
+(defun main (&optional (repo-dir ""))
   "Load the user's config file, then compile and deploy the site."
-  (load-config config-key)
+  (load-config repo-dir)
   (load-content)
   (compile-theme (theme *config*))
   (let ((dir (staging-dir *config*)))

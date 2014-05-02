@@ -16,9 +16,6 @@
    (theme           :initarg :theme          :accessor theme)
    (title           :initarg :title          :accessor title)))
 
-(define-condition unknown-config-section-error (error)
-  ((text :initarg :text :reader text)))
-
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
 
@@ -40,30 +37,18 @@ are in the plugins folder in coleslaw's source directory."
       (destructuring-bind (name &rest args) plugin
         (apply 'enable-plugin (plugin-path name) args)))))
 
-(defun discover-config-path (path)
-  "Check the supplied PATH for a .coleslawrc and if one
+(defun discover-config-path (repo-path)
+  "Check the supplied REPO-PATH for a .coleslawrc and if one
 doesn't exist, use the .coleslawrc in the home directory."
-  (let ((custom-path (rel-path path ".coleslawrc")))
-    (if (file-exists-p custom-path)
-        custom-path
+  (let ((repo-config (rel-path repo-path ".coleslawrc")))
+    (if (file-exists-p repo-config)
+        repo-config
         (rel-path (user-homedir-pathname) ".coleslawrc"))))
 
-(defun load-config (&optional config-key)
-  "Load the coleslaw configuration from DIR/.coleslawrc, using CONFIG-KEY
-if necessary. DIR is ~ by default."
-  (with-open-file (in (discover-config-path config-key) :external-format '(:utf-8))
+(defun load-config (&optional repo-dir)
+  "Find and load the coleslaw configuration from .coleslawrc. REPO-DIR will be
+preferred over the home directory if provided."
+  (with-open-file (in (discover-config-path repo-dir) :external-format '(:utf-8))
     (let ((config-form (read in)))
-      (if (symbolp (car config-form))
-          ;; Single site config: ignore CONFIG-KEY.
-          (setf *config* (construct 'blog config-form))
-          ;; Multi-site config: load config section for CONFIG-KEY.
-          (let* ((config-key-pathname (cl-fad:pathname-as-directory config-key))
-                 (section (assoc config-key-pathname config-form
-                                 :key #'cl-fad:pathname-as-directory
-                                 :test #'equal)))
-            (if section
-                (setf *config* (construct 'blog (cdr section))
-                      (repo *config*) config-key)
-                (error 'unknown-config-section-error
-                       :text (format nil "In ~A: No such key: '~A'." in config-key)))))
-      (load-plugins (plugins *config*)))))
+      (setf *config* (construct 'blog config-form))))
+  (load-plugins (plugins *config*)))

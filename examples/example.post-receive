@@ -1,8 +1,6 @@
 ########## CONFIGURATION VALUES ##########
 
-# TMP_GIT_CLONE _must_ match one of the following in coleslawrc:
-#   * The :repo argument (for a single-site setup) _or_
-#   * An alist key (for a multi-site setup)
+# TMP_GIT_CLONE _must_ match the :repo argument in your .coleslawrc!
 TMP_GIT_CLONE=$HOME/tmp/improvedmeans/
 
 # Set LISP to your preferred implementation. The following

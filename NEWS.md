@@ -2,9 +2,14 @@
 
 * **SITE-BREAKING CHANGE**: Coleslaw now supports user-defined routing.
   Instead of hard-coding the paths various content types are stored at,
-  they must be specified in the configuration file (.coleslawrc). Just
-  copy the `:routing` key from the [example][single_site.rc] to get
-  the old behavior.
+  they **must** be specified in the configuration file (.coleslawrc).
+  Just copy the `:routing` key from the [example][single_site.rc] to
+  get the old behavior.
+* **SITE-BREAKING CHANGE**: Coleslaw's multi-site support has changed.
+  Instead of having a single .coleslawrc in the user's home directory
+  that has sections for multiple repos, a .coleslawrc may be included
+  *in* the blog repo itself. If no .coleslawrc is found in the repo,
+  it is loaded from the user's home directory instead.
 * Coleslaw no longer expects a particular repo layout. Use whatever
   directory hierarchy you like.
 * New Content Type Plugin: Static Pages, accepting a title, url, and
