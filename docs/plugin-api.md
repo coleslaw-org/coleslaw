@@ -32,8 +32,8 @@
   method. The method takes `text` and `format` arguments and is
   [EQL-specialized](http://www.gigamonkeys.com/book/object-reorientation-generic-functions.html#defmethod)
   on the format. Format should be a keyword matching the file
-  extension (or pathname-type) of the markup format. (eg. `:rst` for
-  ReStructuredText)
+  extension (or `pathname-type`) of the markup format.
+  (eg. `:rst` for ReStructuredText)
 
 * **New hosting options**, for example the
   [Amazon S3 plugin](http://github.com/redline6561/coleslaw/blob/master/plugins/s3.lisp),
@@ -43,14 +43,15 @@
   getting its deploy location with `(deploy-dir *config*)` a number of
   interesting options become possible.
 
-* **New content types**, for example a bookmark-like content type such
-  as ["shouts"](http://paste.lisp.org/display/134453). This has not
-  yet been attempted as a plugin but should be possible without much
-  difficulty.
+* **New content types**, for example the
+  [static page content type](http://github.com/redline6561/coleslaw/blob/master/plugins/static-pages.lisp),
+  can be created by definining a subclass of CONTENT along with a
+  template, and `render`, `page-url`, and `publish` methods.
+  The PAGE content type cheats a bit by reusing the existing POST template.
 
 * **New service integrations**, for example crossposting to
   twitter/facebook/tumblr/livejournal/etc, should also be possible by
   adding an :after hook to the deploy method as with
-  hosting. Alternately, an :after hook on the
-  [`render`](http://redlinernotes.com/docs/coleslaw.html#render_func)
-  method might be used.
+  hosting but this is dependent on knowing which posts are new
+  which should become possible before 1.0. See the incremental compilation
+  notes in the hacking docs for further details.
