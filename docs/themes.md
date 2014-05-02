@@ -4,13 +4,9 @@ The theming support in coleslaw is very flexible and relatively easy
 to use. However it does require some knowledge of HTML, CSS, and how
 coleslaw processes content.
 
-To understand how coleslaw processes a blog, a look at the
-[overview][ovr] and [hacking][hck] documentation may prove
-useful. This document will focus mainly on the template engine and how
-you can influence the resulting HTML.
-
-**NOTE**: Themes are not able to change the generated file names or the
-generated file structure on disk. They can change the resulting HTML, nothing more.
+To understand how coleslaw works, a look at the [hacking][hck]
+documentation will prove useful. This document focuses mainly on the
+template engine and how you can influence the resulting HTML.
 
 ## High-Level Overview
 
@@ -33,8 +29,10 @@ A theme must have three templates which take *specific arguments*
 
 Coleslaw generates two types of pages: `index` pages and `post` pages.
 Every page other than those in the `posts/` directory is an `index`.
+
 **Every** page uses the `base.tmpl` and fills in the content using
-either the `post` or `index` templates.
+either the `post` or `index` templates. No important logic should be
+in *any* template, they are only used to give provide consistent layout.
 
 *  `base.tmpl` This template generates the outer shell of the HTML.
    It keeps a consistent look and feel for all pages in the blog. The
@@ -44,9 +42,6 @@ either the `post` or `index` templates.
    That is, any page with more than one content object, e.g. the homepage.
 
 *  `post.tmpl` This templates generates content for the individual posts.
-   Coleslaw already converts the content of the individual post to HTML
-   by using markdown (or RST). So this template is **not** used to
-   convert an individual post, merely to give it a standard layout.
 
 Here's a visual example to make things clearer:
 ```
@@ -69,8 +64,8 @@ simplest to either modify the existing default theme, `hyde`, or copy
 it in entirety and then tweak only the CSS of your new theme. A large
 amount of visual difference can be had with a minimum of (or no)
 template hacking. There is plenty of advice on CSS styling on the web.
-I'm no expert but feel free to send patches to hyde's `style.css` or a
-recommended CSS resource for this guide.
+I'm no expert but feel free to send pull requests modifying theme's
+CSS or improving this section, perhaps by recommending a CSS resource.
 
 ## Creating a Theme from Scratch (with code)
 
@@ -130,7 +125,7 @@ However as a short primer:
 
 ### Intermezzo II, Variables provided by Coleslaw
 
-The variable that is available in all templates is:
+The variable that should be available to all templates is:
 - **config**       This contains the `.coleslawrc` content.
 
 #### Base Template Variables
@@ -147,10 +142,10 @@ The variable that is available in all templates is:
                    `.name` and `.slug`.
 - **months**       A list of all months with posts as `yyyy-mm` strings.
 - **index**        This is the meat of the content. This variable has
-                   the following keys
- - `id`, the name of the page that will be rendered
- - `posts`, a list of posts (see below)
- - `title`, a string title to display to the user
+                   the following keys:
+   - `id`,    the name of the page that will be rendered
+   - `posts`, a list of posts (see below)
+   - `title`, a string title to display to the user
 - **prev**         If this index file is part of a chain, the `id`
                    of the previous index html in the chain.
                    If this is the first file, the value will be empty.
@@ -220,7 +215,8 @@ Good luck!
 
 As mentioned earlier, most files have a file name which is a slug of
 some sort. So if you want to create a link to a tag file you should
-do something like this: `<a href="${config.domain}/tags/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>`.
+do something like this:
+`<a href="${config.domain}/tags/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>`.
 
 [clt]: https://developers.google.com/closure/templates/
 [ovr]: https://github.com/redline6561/coleslaw/blob/master/docs/overview.md
