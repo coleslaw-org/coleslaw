@@ -20,6 +20,7 @@
 * Coleslaw now allows content without a date or tags. Note that POSTs
   without a date will still show up in the reverse chronological
   indexes at the very end.
+* Fixed an embarrassing escaping bug in our last quicklisp release.
 
 ## Changes for 0.9.3 (2014-04-16):
 
