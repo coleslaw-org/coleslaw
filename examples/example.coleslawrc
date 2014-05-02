@@ -4,6 +4,7 @@
  :feeds ("lisp")
  :plugins ((mathjax)
            (sitemap)
+           (static-pages)
            (disqus :shortname "my-site-name")
            (analytics :tracking-code "foo"))
  :repo "/home/git/tmp/improvedmeans/"
