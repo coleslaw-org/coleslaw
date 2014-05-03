@@ -49,7 +49,7 @@
              (read-sequence seq stream)
              (remove #\Nul seq)))
          (parse-field (str)
-           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+: (.*)" str)))
+           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+:\\s+(.*)" str)))
          (field-name (line)
            (make-keyword (string-upcase (subseq line 0 (position #\: line))))))
     (with-open-file (in file :external-format '(:utf-8))
