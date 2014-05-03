@@ -240,21 +240,31 @@ avoiding work is better than using more workers. Moreover, being
 able to determine (and expose) what files just changed enables new
 functionality such as plugins that cross-post to tumblr.
 
-Git's post-receieve hook is supposed to get a list of refs on $STDIN.
-A brave soul could update our post-receive script to figure out the
-original hash and pass that along to `coleslaw:main`. We could then
-use it to run `git diff --name-status $HASH HEAD` to find changed
-files and act accordingly.
+Git's post-receive hook is supposed to get a list of refs on $STDIN.
+A brave soul could update our post-receive script to iterate over
+those lines as shown in step 3 of this [blog post][post_receive_blog].
+There would be two primary benefits:
+
+1. We could pass the oldrev (previous revision) of the blog repo
+   to `coleslaw:main`. That could be used in conjunction with
+   `get-updated-files` to get a list of the files modified in the
+   last push. This would enable cross-posting plugins to be developed
+   as well as opening the door for incremental compilation.
+2. More seriously, **Coleslaw** currently deploys for _any_ branch
+   pushed to the bare repo. This change would also ensure that we only
+   invoke `coleslaw:main` when a push is made to the master branch.
 
 This is a cool project and the effects are far reaching. Among other
 things the existing deployment model would not work as it involves
 rebuilding the entire site. In all likelihood we would want to update
-the site 'in-place'. Atomicity of filesystem operations would be a
-reasonable concern. Also, every numbered INDEX would have to be
-regenerated along with any tag or month indexes matching the
-modified files. If incremental compilation is a goal, simply
-disabling the indexes may be appropriate for certain users.
+the site 'in-place'. How to replace the compilation and deployment
+model via a plugin has not yet been explored. Atomicity of filesystem
+operations would be a reasonable concern. Also, every numbered INDEX
+would have to be regenerated along with any tag or month indexes
+matching the modified files. If incremental compilation is a goal,
+simply disabling the indexes may be appropriate for certain users.
 
+[post_receive_blog]: http://codeshal.tumblr.com/post/927943180/git-post-receive-hook-that-submits-code-to-review-board
 [post_receive_hook]: https://github.com/redline6561/coleslaw/blob/master/examples/example.post-receive
 [closure_template]: https://github.com/archimag/cl-closure-template
 [api_docs]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md

@@ -96,3 +96,12 @@ along with any missing parent directories otherwise."
                    :if-does-not-exist :create
                    :external-format '(:utf-8))
     (write text :stream out :escape nil)))
+
+(defun get-updated-files (revision)
+  "Return a plist of (file-status file-name) for files that were changed
+in git since REVISION."
+  (with-current-directory (repo *config*)
+    (flet ((split-on-whitespace (str)
+             (cl-ppcre:split "\\s+" str)))
+      (let ((cmd (format nil "git diff --name-status ~A HEAD" revision)))
+        (mapcar #'split-on-whitespace (inferior-shell:run/lines cmd))))))
