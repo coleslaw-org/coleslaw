@@ -11,6 +11,7 @@
   (:export #:main
            #:preview
            #:*config*
+           #:*updated-files*
            #:content
            #:post
            #:index

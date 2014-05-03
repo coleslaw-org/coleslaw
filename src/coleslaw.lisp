@@ -1,7 +1,13 @@
 (in-package :coleslaw)
 
-(defun main (&optional (repo-dir ""))
-  "Load the user's config file, then compile and deploy the site."
+(defvar *updated-files* nil
+  "A plist of (file-status file-name) for files changed on the last git push.")
+
+(defun main (&optional (repo-dir "") oldrev)
+  "Load the user's config file, then compile and deploy the site. Optionally,
+REPO-DIR is the location of the blog repo and OLDREV is the revision prior to
+the last push."
+  (setf *updated-files* oldrev)
   (load-config repo-dir)
   (load-content)
   (compile-theme (theme *config*))
