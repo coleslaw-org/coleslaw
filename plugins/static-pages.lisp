@@ -3,6 +3,7 @@
   (:export #:enable)
   (:import-from :coleslaw #:*config*
                           #:content
+                          #:content-text
                           #:page-url
                           #:find-all
                           #:render
