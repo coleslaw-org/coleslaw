@@ -20,15 +20,20 @@ fi
 
 git clone $GIT_REPO $TMP_GIT_CLONE || exit 1
 
-if [ $LISP = sbcl ]; then
-    sbcl --eval "(ql:quickload 'coleslaw)" \
-         --eval "(coleslaw:main \"$TMP_GIT_CLONE\")" \
-         --eval "(coleslaw::exit)"
-elif [ $LISP = ccl ]; then
-    echo "(ql:quickload 'coleslaw)(coleslaw:main \"$TMP_GIT_CLONE\")(coleslaw::exit)" | ccl -b
-else
-    exit 1
-fi
+while read oldrev newrev refname; do
+    if [ $refname = "refs/heads/master" ]; then
+        echo -e "\n  Master updated. Running coleslaw...\n"
+        if [ $LISP = sbcl ]; then
+            sbcl --eval "(ql:quickload 'coleslaw)" \
+                 --eval "(coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\")" \
+                 --eval "(coleslaw::exit)"
+        elif [ $LISP = ccl ]; then
+            ccl -e "(ql:quickload 'coleslaw) (coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\") (coleslaw::exit)"
+        else
+            exit 1
+        fi
+    fi
+done
 
 rm -rf $TMP_GIT_CLONE
 exit

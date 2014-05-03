@@ -1,7 +1,9 @@
 (in-package :coleslaw)
 
-(defun main (&optional (repo-dir ""))
-  "Load the user's config file, then compile and deploy the site."
+(defun main (&optional (repo-dir "") oldrev)
+  "Load the user's config file, then compile and deploy the site. Optionally,
+REPO-DIR is the location of the blog repo and OLDREV is the revision prior to
+the last push."
   (load-config repo-dir)
   (load-content)
   (compile-theme (theme *config*))
