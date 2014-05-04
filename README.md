@@ -26,7 +26,11 @@ Coleslaw aims to be flexible blog software suitable for replacing a single-user 
   * Sitemap generation
 
 * There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
-* Example sites: [redlinernotes](http://redlinernotes.com/blog/), [kenan-bolukbasi.log](http://kenanb.com/), and [Nothing Really Matters](http://ironhead.xs4all.nl/).
+* Example sites: 
+  * [redlinernotes](http://redlinernotes.com/blog/)
+  * [kenan-bolukbasi.log](http://kenanb.com/)
+  * [Nothing Really Matters](http://ironhead.xs4all.nl/)
+  * [A year and a smile.](http://blog.sjas.de)
 
 ## Hacking
 
