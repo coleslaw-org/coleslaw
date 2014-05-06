@@ -19,23 +19,24 @@
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
 
-(defun enable-plugin (file &rest args)
-  "Given a path to a plugin, FILE, compile+load it, then call its ENABLE function."
-  (compile-file file)
-  (load file)
-  (let* ((pkgname (format nil "coleslaw-~a" (pathname-name file)))
-         (plugin-pkg (find-package (string-upcase pkgname))))
-    (apply (find-symbol "ENABLE" plugin-pkg) args)))
+(defun enable-plugin (name args)
+  "Given a plugin, NAME, compile+load it and call its ENABLE function with ARGS."
+  (flet ((plugin-path (sym)
+           (app-path "plugins/~(~A~)" sym))
+         (plugin-package (sym)
+           (format nil "~:@(coleslaw-~A~)" sym)))
+    (let ((file (plugin-path name)))
+      (load (compile-file file :verbose nil :print nil) :verbose t))
+    (let ((package (find-package (plugin-package name))))
+      (apply (find-symbol "ENABLE" package) args))))
 
 (defun load-plugins (plugins)
   "Compile and load the listed PLUGINS. It is expected that matching *.lisp files
 are in the plugins folder in coleslaw's source directory."
   (setf *injections* nil)
-  (flet ((plugin-path (sym)
-           (app-path "plugins/~a" (string-downcase (symbol-name sym)))))
-    (dolist (plugin plugins)
-      (destructuring-bind (name &rest args) plugin
-        (apply 'enable-plugin (plugin-path name) args)))))
+  (dolist (plugin plugins)
+    (destructuring-bind (name &rest args) plugin
+      (enable-plugin name args))))
 
 (defun discover-config-path (repo-path)
   "Check the supplied REPO-PATH for a .coleslawrc and if one
