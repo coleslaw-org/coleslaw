@@ -29,7 +29,7 @@ any return value other than nil indicates the injection should be added."
 
 (defun theme-package (name)
   "Find the package matching the theme NAME or signal THEME-DOES-NOT-EXIST."
-  (or (find-package (string-upcase (concatenate 'string "coleslaw.theme." name)))
+  (or (find-package (format nil "~:@(coleslaw.theme.~A~)" name))
       (error 'theme-does-not-exist :theme name)))
 
 (defun theme-fn (name &optional (package (theme *config*)))

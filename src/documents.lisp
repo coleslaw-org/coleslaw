@@ -15,10 +15,9 @@
 (defgeneric discover (doc-type)
   (:documentation "Load all documents of the given DOC-TYPE into memory.")
   (:method (doc-type)
-    (let* ((class-name (class-name doc-type))
-           (file-type (string-downcase (symbol-name class-name))))
+    (let ((file-type (format nil "~(~A~)" (class-name doc-type))))
       (do-files (file (repo *config*) file-type)
-        (let ((obj (construct class-name (read-content file))))
+        (let ((obj (construct (class-name doc-type) (read-content file))))
           (add-document obj))))))
 
 (defmethod discover :before (doc-type)
