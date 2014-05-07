@@ -3,6 +3,7 @@
 
 (defpackage :coleslaw-twitter
   (:use :cl)
+  (:import-from :coleslaw :*config*)
   (:export #:enable))
 
 (in-package :coleslaw-twitter)
@@ -35,7 +36,9 @@
 (defun %format-post (offset post)
   "Garauntee that the tweet content is 140 chars at most."
   (let* ((content-prefix (subseq (render-tweet post) 0 (- 117 offset)))
-         (content (format nil "~A ~A" content-prefix (coleslaw:page-url post)))
+         (content (format nil "~A ~A/~A" content-prefix
+                          (coleslaw::domain *config*)
+                          (coleslaw:page-url post)))
          (content-length (chirp:compute-status-length content)))
     (cond
       ((>= 140 content-length) content)
