@@ -1,9 +1,13 @@
 (in-package :coleslaw)
 
+(defvar *last-revision* nil
+  "The git revision prior to the last push. For use with GET-UPDATED-FILES.")
+
 (defun main (&optional (repo-dir "") oldrev)
   "Load the user's config file, then compile and deploy the site. Optionally,
 REPO-DIR is the location of the blog repo and OLDREV is the revision prior to
 the last push."
+  (setf *last-revision* oldrev)
   (load-config repo-dir)
   (load-content)
   (compile-theme (theme *config*))

@@ -3,20 +3,21 @@
   (:use :cl)
   (:import-from :alexandria #:hash-table-values
                             #:make-keyword
-                            #:mappend
-                            #:compose)
+                            #:mappend)
   (:import-from :cl-fad #:file-exists-p)
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
   (:export #:main
            #:preview
            #:*config*
+           #:*last-revision*
            #:content
            #:post
            #:index
            #:render-text
            #:add-injection
            #:theme-fn
+           #:get-updated-files
            ;; The Document Protocol
            #:add-document
            #:find-all
