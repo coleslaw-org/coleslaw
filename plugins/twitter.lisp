@@ -3,7 +3,9 @@
 
 (defpackage :coleslaw-twitter
   (:use :cl)
-  (:import-from :coleslaw :*config*)
+  (:import-from :coleslaw
+                :*config*
+                :publish)
   (:export #:enable))
 
 (in-package :coleslaw-twitter)
@@ -26,7 +28,7 @@
   (when tweet-format
     (setf *tweet-format* tweet-format)))
 
-(defmethod render :after (post (eql (find-class 'coleslaw:post)))
+(defmethod publish :after (post (eql (find-class 'coleslaw:post)))
   (format-post post))
 
 (defun format-post (post)
