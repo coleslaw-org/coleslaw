@@ -7,8 +7,9 @@
 
 (in-package :coleslaw-twitter)
 
-(defvar *tweet-format* '("~A" (title post) (text content))
-  "Controls what the tweet annoucing the post looks like. It is the made up of a format control string followed with the pertinent variables.")
+(defvar *tweet-format* '("~A by ~A" coleslaw::post-title coleslaw::post-author)
+  "Controls what the tweet annoucing the post looks like. It contains a format
+  control string followed with the accesors to evaluate for post.")
 
 (defun enable (&key api-key api-secret access-token access-secret tweet-format)
   (if (and api-key api-secret access-token access-secret)
@@ -42,4 +43,7 @@
 
 (defun render-tweet (post)
   "Sans the url, which is a must."
-  (apply #'format (append '(nil) *tweet-format*)))
+  (apply #'format `(nil ,(car *tweet-format*)
+                        ,@(loop
+                             :for accesor in (cdr *tweet-format*)
+                             :collect (funcall accesor post)))))
