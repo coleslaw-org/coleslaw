@@ -31,7 +31,8 @@
 ;; Content Types
 
 (defclass content ()
-  ((tags :initform nil :initarg :tags :accessor content-tags)
+  ((file :initform nil :initarg :file :accessor content-file)
+   (tags :initform nil :initarg :tags :accessor content-tags)
    (slug :initform nil :initarg :slug :accessor content-slug)
    (date :initform nil :initarg :date :accessor content-date)
    (text :initform nil :initarg :text :accessor content-text)))
@@ -59,8 +60,9 @@
                      until (string= line (separator *config*))
                      appending (list (field-name line)
                                      (aref (parse-field line) 0))))
+            (filepath (enough-namestring file (repo *config*)))
             (content (slurp-remainder in)))
-        (append meta (list :text content))))))
+        (append meta (list :text content :file filepath))))))
 
 ;; Helper Functions
 
