@@ -79,6 +79,10 @@
   "Sort CONTENT in reverse chronological order."
   (sort content #'string> :key #'content-date))
 
+(defun find-content-by-path (path)
+  "Find the CONTENT corresponding to the file at PATH."
+  (find path (find-all 'content) :key #'content-file :test #'string=))
+
 (defgeneric render-text (text format)
   (:documentation "Render TEXT of the given FORMAT to HTML for display.")
   (:method (text (format (eql :html)))
