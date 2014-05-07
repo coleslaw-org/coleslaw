@@ -10,7 +10,6 @@
   (:export #:main
            #:preview
            #:*config*
-           #:*last-revision*
            #:content
            #:post
            #:index

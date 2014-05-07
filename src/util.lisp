@@ -97,7 +97,7 @@ along with any missing parent directories otherwise."
                    :external-format '(:utf-8))
     (write text :stream out :escape nil)))
 
-(defun get-updated-files (revision)
+(defun get-updated-files (&optional (revision *last-revision*))
   "Return a plist of (file-status file-name) for files that were changed
 in the git repo since REVISION."
   (flet ((split-on-whitespace (str)
