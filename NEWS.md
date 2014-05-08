@@ -1,5 +1,6 @@
 ## Changes for 0.9.5-dev (20xx):
 
+* A Twitter plugin to tweet your new posts. Thanks to @PuercoPop!
 * Coleslaw now exports a `get-updated-files` function which can be
   used to get a list of file-status/file-name pairs that were changed
   in the last git push.
