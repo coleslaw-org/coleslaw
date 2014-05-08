@@ -105,7 +105,4 @@ the spaxe needed for a space and the url."
 
 (defun render-tweet (post)
   "Sans the url, which is a must."
-  (apply #'format `(nil ,(car *tweet-format*)
-                        ,@(loop
-                             :for accesor in (cdr *tweet-format*)
-                             :collect (funcall accesor post)))))
+  (funcall *tweet-format-fn* post))
