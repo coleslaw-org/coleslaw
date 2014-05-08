@@ -15,7 +15,7 @@
 (in-package :coleslaw-static-pages)
 
 (defclass page (content)
-  ((title :initarg :title :reader page-title)
+  ((title :initarg :title :reader title-of)
    (url :initarg :url :reader page-url)))
 
 (defmethod initialize-instance :after ((object page) &key)

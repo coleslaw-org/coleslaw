@@ -3,12 +3,14 @@
 
 (defpackage :coleslaw-twitter
   (:use :cl)
-  (:import-from :coleslaw
-                :*config*
-                :deploy
-                :get-updated-files
-                :page-url
-                :plugin-conf-error)
+  (:import-from :coleslaw #:*config*
+                          #:deploy
+                          #:get-updated-files
+                          #:find-content-by-path
+                          #:title-of
+                          #:author-of
+                          #:page-url
+                          #:plugin-conf-error)
   (:export #:enable))
 
 (in-package :coleslaw-twitter)
@@ -20,8 +22,8 @@
 coleslaw:post and returns the tweet content.")
 
 (defvar *tweet-format-dsl-mapping*
-  '((:title . coleslaw::post-title)
-    (:author . coleslaw::post-author)))
+  '((:title . title-of)
+    (:author . author-of)))
 
 (define-condition malformed-tweet-format (error)
   ((item :initarg :item :reader item))
@@ -87,7 +89,7 @@ coleslaw:post and returns the tweet content.")
 
 (defun tweet-new-post (file)
   "Retrieve content matching FILE from in memory DB and publish it."
-  (let ((post (coleslaw::find-content-by-path file)))
+  (let ((post (find-content-by-path file)))
     (chirp:statuses/update (%format-post 0 post))))
 
 (defun %format-post (offset post)

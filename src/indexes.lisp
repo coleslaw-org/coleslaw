@@ -2,7 +2,7 @@
 
 (defclass index ()
   ((slug :initarg :slug :reader index-slug)
-   (title :initarg :title :reader index-title)
+   (title :initarg :title :reader title-of)
    (content :initarg :content :reader index-content)))
 
 (defmethod render ((object index) &key prev next)

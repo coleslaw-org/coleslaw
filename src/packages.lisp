@@ -10,14 +10,20 @@
   (:export #:main
            #:preview
            #:*config*
+           ;; Core Classes
            #:content
            #:post
            #:index
+           ;; Content Helpers
+           #:title-of
+           #:author-of
+           #:find-content-by-path
+           ;; Plugin API + Theming
+           #:plugin-conf-error
            #:render-text
            #:add-injection
-           #:theme-fn
            #:get-updated-files
-           #:plugin-conf-error
+           #:theme-fn
            ;; The Document Protocol
            #:add-document
            #:find-all
