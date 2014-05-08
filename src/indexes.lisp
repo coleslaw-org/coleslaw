@@ -1,9 +1,9 @@
 (in-package :coleslaw)
 
 (defclass index ()
-  ((slug :initform nil :initarg :slug :accessor index-slug)
-   (title :initform nil :initarg :title :accessor index-title)
-   (content :initform nil :initarg :content :accessor index-content)))
+  ((slug :initarg :slug :reader index-slug)
+   (title :initarg :title :reader index-title)
+   (content :initarg :content :reader index-content)))
 
 (defmethod render ((object index) &key prev next)
   (funcall (theme-fn 'index) (list :tags (all-tags)

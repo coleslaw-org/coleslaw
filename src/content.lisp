@@ -3,8 +3,8 @@
 ;; Tagging
 
 (defclass tag ()
-  ((name :initform nil :initarg :name :accessor tag-name)
-   (slug :initform nil :Initarg :slug :accessor tag-slug)))
+  ((name :initarg :name :reader tag-name)
+   (slug :initarg :slug :reader tag-slug)))
 
 (defun make-tag (str)
   "Takes a string and returns a TAG instance with a name and slug."
