@@ -5,7 +5,10 @@
   (:use :cl)
   (:import-from :coleslaw
                 :*config*
-                :publish)
+                :deploy
+                :get-updated-files
+                :page-url
+                :plugin-conf-error)
   (:export #:enable))
 
 (in-package :coleslaw-twitter)
@@ -28,19 +31,25 @@
   (when tweet-format
     (setf *tweet-format* tweet-format)))
 
-(defmethod publish :after (post (eql (find-class 'coleslaw:post)))
-  (format-post post))
 
-(defun format-post (post)
-  "Take a post and return a string of 140 character length, at most. Urls have 23 len and are a must."
- (chirp:statuses/update (%format-post post)))
+(defmethod deploy :after (staging)
+  (declare (ignore staging))
+  (loop :for (state file) :in (get-updated-files)
+     :when (and (string= "A" state) (string= "post" (pathname-type file)))
+     :do (tweet-new-post file)))
+
+(defun tweet-new-post (file)
+  "Retrieve most recent post from in memory DB and publish it."
+  (let ((post (coleslaw::find-content-by-path file)))
+    (chirp:statuses/update (%format-post 0 post))))
 
 (defun %format-post (offset post)
-  "Guarantee that the tweet content is 140 chars at most."
+  "Guarantee that the tweet content is 140 chars at most. The 117 comes from
+the spaxe needed for a space and the url."
   (let* ((content-prefix (subseq (render-tweet post) 0 (- 117 offset)))
          (content (format nil "~A ~A/~A" content-prefix
                           (coleslaw::domain *config*)
-                          (coleslaw:page-url post)))
+                          (page-url post)))
          (content-length (chirp:compute-status-length content)))
     (cond
       ((>= 140 content-length) content)
