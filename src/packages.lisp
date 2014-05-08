@@ -17,6 +17,7 @@
            #:add-injection
            #:theme-fn
            #:get-updated-files
+           #:plugin-conf-error
            ;; The Document Protocol
            #:add-document
            #:find-all
