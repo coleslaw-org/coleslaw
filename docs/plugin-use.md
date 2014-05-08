@@ -72,3 +72,34 @@
 **Example**: `(import :filepath "/home/redline/redlinernotes-export.timestamp.xml" :output "/home/redlinernotes/blog/")`
 
 [config_file]: http://github.com/redline6561/coleslaw/blob/master/examples/single-site.coleslawrc
+
+## Twitter
+
+**Description**: This plugin tweets every time a new post is added to your repo. See Setup for an example of how to get your access token & secret.
+
+**Example**: `(twitter :api-key "<api-key>" :api-secret "<api-seret" :access-token "<access-token>" :access-secret "<access-secret>")`
+
+**Setup**:
+- Create a new [twitter app](https://apps.twitter.com/). Take note of the api key & secret.
+
+- In the repl do the following:
+```lisp
+;; Load Chirp
+(ql:quickload :chirp)
+
+;; Use the api key & secret to get a URL where a pin code will be handled to you.
+(chirp:initiate-authentication
+ :api-key "D1pMCK17gI10bQ6orBPS0w"
+ :api-secret "BfkvKNRRMoBPkEtDYAAOPW4s2G9U8Z7u3KAf0dBUA")
+;; => "https://api.twitter.com/oauth/authorize?oauth_token=cJIw9MJM5HEtQqZKahkj1cPn3m3kMb0BYEp6qhaRxfk"
+
+;; Exchange the pin code for an access token and and access secret. Take note
+;; of them.
+CL-USER> (chirp:complete-authentication "4173325")
+;; => "18403733-bXtuum6qbab1O23ltUcwIk2w9NS3RusUFiuum4D3w"
+;;    "zDFsFSaLerRz9PEXqhfB0h0FNfUIDgbEe59NIHpRWQbWk"
+
+;; Finally verify the credentials 
+(chirp:account/verify-credentials)
+#<CHIRP-OBJECTS:USER PuercoPop #18405433>
+```

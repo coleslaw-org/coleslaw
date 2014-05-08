@@ -17,6 +17,7 @@
   :serial t
   :components ((:file "packages")
                (:file "util")
+               (:file "conditions")
                (:file "config")
                (:file "themes")
                (:file "documents")
