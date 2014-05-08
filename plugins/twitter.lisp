@@ -36,7 +36,7 @@
  (chirp:statuses/update (%format-post post)))
 
 (defun %format-post (offset post)
-  "Garauntee that the tweet content is 140 chars at most."
+  "Guarantee that the tweet content is 140 chars at most."
   (let* ((content-prefix (subseq (render-tweet post) 0 (- 117 offset)))
          (content (format nil "~A ~A/~A" content-prefix
                           (coleslaw::domain *config*)
