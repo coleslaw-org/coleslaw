@@ -13,9 +13,56 @@
 
 (in-package :coleslaw-twitter)
 
-(defvar *tweet-format* '("~A by ~A" coleslaw::post-title coleslaw::post-author)
-  "Controls what the tweet annoucing the post looks like. It contains a format
-  control string followed with the accesors to evaluate for post.")
+(defvar *tweet-format* '(:title "by" :author)
+  "Controls what the tweet annoucing the post looks like.")
+
+(defvar *tweet-format-fn* nil "Function that expects an instance of
+coleslaw:post and returns the tweet content.")
+
+(defvar *tweet-format-dsl-mapping*
+  '((:title . coleslaw::post-title)
+    (:author . coleslaw::post-author)))
+
+(define-condition malformed-tweet-format (error)
+  ((item :initarg :item :reader item))
+  (:report
+   (lambda (condition stream)
+     (format stream "Malformed tweet format. Can't proccess: ~A"
+             (item condition)))))
+
+(defun compile-tweet-format (tweet-format)
+  (multiple-value-bind
+        (fmt-ctrl-str accesors) (%compile-tweet-format tweet-format nil nil)
+    (let
+        ((fmt-ctrl-str (format nil "~{~A~^ ~}" (reverse fmt-ctrl-str)))
+         (accesors (reverse accesors)))
+      (lambda (post)
+        (apply #'format nil fmt-ctrl-str
+               (loop
+                  :for accesor :in accesors
+                  :collect (funcall accesor post)))))))
+
+(defun %compile-tweet-format (tweet-format fmt-ctrl-str accesors)
+  "Transform tweet-format into a format control string and a list of values."
+  (if (null tweet-format)
+      (values fmt-ctrl-str accesors)
+      (let ((next (car tweet-format)))
+        (cond
+          ((keywordp next)
+           (if (assoc next *tweet-format-dsl-mapping*)
+               (%compile-tweet-format
+                (cdr tweet-format)
+                (cons "~A" fmt-ctrl-str)
+                (cons (cdr (assoc next *tweet-format-dsl-mapping*))
+                      accesors))
+               (error 'malformed-tweet-format :item next)))
+          ((stringp next)
+           (%compile-tweet-format (cdr tweet-format)
+                                  (cons next fmt-ctrl-str)
+                                  accesors))
+          (t (error 'malformed-tweet-format :item next))))))
+
+(setf *tweet-format-fn* (compile-tweet-format *tweet-format*))
 
 (defun enable (&key api-key api-secret access-token access-secret tweet-format)
   (if (and api-key api-secret access-token access-secret)
