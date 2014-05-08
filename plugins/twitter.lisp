@@ -75,7 +75,6 @@ coleslaw:post and returns the tweet content.")
 
   ;; fallback to chirp for credential erros
   (chirp:account/verify-credentials)
-  
   (when tweet-format
     (setf *tweet-format* tweet-format)))
 
@@ -87,7 +86,7 @@ coleslaw:post and returns the tweet content.")
      :do (tweet-new-post file)))
 
 (defun tweet-new-post (file)
-  "Retrieve most recent post from in memory DB and publish it."
+  "Retrieve content matching FILE from in memory DB and publish it."
   (let ((post (coleslaw::find-content-by-path file)))
     (chirp:statuses/update (%format-post 0 post))))
 

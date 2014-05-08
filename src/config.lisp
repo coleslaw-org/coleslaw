@@ -19,6 +19,13 @@
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
 
+(define-condition plugin-conf-error ()
+  ((plugin  :initarg :plugin :reader plugin)
+   (message :initarg :message :reader message))
+  (:report (lambda (condition stream)
+             (format stream "~A: ~A" (plugin condition) (message condition))))
+  (:documentation "Condition to signal when the plugin is misconfigured."))
+
 (defun enable-plugin (name args)
   "Given a plugin, NAME, compile+load it and call its ENABLE function with ARGS."
   (flet ((plugin-path (sym)
