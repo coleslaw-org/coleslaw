@@ -24,9 +24,10 @@
             chirp:*oauth-access-token* access-token
             chirp:*oauth-access-secret* access-secret)
       (error 'plugin-conf-error :plugin "twitter"
-             :message "Credentials missing.")
-      ;; fallback to chirp for credential erros
-      (chirp:account/verify-credentials))
+             :message "Credentials missing."))
+
+  ;; fallback to chirp for credential erros
+  (chirp:account/verify-credentials)
   
   (when tweet-format
     (setf *tweet-format* tweet-format)))
