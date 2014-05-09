@@ -50,8 +50,8 @@
   The PAGE content type cheats a bit by reusing the existing POST template.
 
 * **New service integrations**, for example crossposting to
-  twitter/facebook/tumblr/livejournal/etc, should also be possible by
-  adding an :after hook to the deploy method as with
-  hosting but this is dependent on knowing which posts are new
-  which should become possible before 1.0. See the incremental compilation
-  notes in the hacking docs for further details.
+  twitter/facebook/tumblr/livejournal/etc, is also possible by
+  adding an :after hook to the deploy method. The hook can iterate
+  over the results of the `get-updated-files` to crosspost any new content.
+  The [Twitter plugin](https://github.com/redline6561/coleslaw/blob/master/plugins/twitter.lisp)
+  is a good example of this.

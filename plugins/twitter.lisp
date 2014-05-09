@@ -22,8 +22,8 @@
 coleslaw:post and returns the tweet content.")
 
 (defvar *tweet-format-dsl-mapping*
-  '((:title . title-of)
-    (:author . author-of)))
+  '((:title  title-of)
+    (:author author-of)))
 
 (define-condition malformed-tweet-format (error)
   ((item :initarg :item :reader item))
@@ -33,38 +33,17 @@ coleslaw:post and returns the tweet content.")
              (item condition)))))
 
 (defun compile-tweet-format (tweet-format)
-  (multiple-value-bind
-        (fmt-ctrl-str accesors) (%compile-tweet-format tweet-format nil nil)
-    (let
-        ((fmt-ctrl-str (format nil "~{~A~^ ~}" (reverse fmt-ctrl-str)))
-         (accesors (reverse accesors)))
-      (lambda (post)
-        (apply #'format nil fmt-ctrl-str
-               (loop
-                  :for accesor :in accesors
-                  :collect (funcall accesor post)))))))
-
-(defun %compile-tweet-format (tweet-format fmt-ctrl-str accesors)
-  "Transform tweet-format into a format control string and a list of values."
-  (if (null tweet-format)
-      (values fmt-ctrl-str accesors)
-      (let ((next (car tweet-format)))
-        (cond
-          ((keywordp next)
-           (if (assoc next *tweet-format-dsl-mapping*)
-               (%compile-tweet-format
-                (cdr tweet-format)
-                (cons "~A" fmt-ctrl-str)
-                (cons (cdr (assoc next *tweet-format-dsl-mapping*))
-                      accesors))
-               (error 'malformed-tweet-format :item next)))
-          ((stringp next)
-           (%compile-tweet-format (cdr tweet-format)
-                                  (cons next fmt-ctrl-str)
-                                  accesors))
-          (t (error 'malformed-tweet-format :item next))))))
-
-(setf *tweet-format-fn* (compile-tweet-format *tweet-format*))
+  (flet ((accessor-for (x)
+           (rest (assoc x *tweet-format-dsl-mapping*))))
+    (lambda (post)
+      (apply #'format nil "~{~A~^ ~}"
+             (loop for item in *tweet-format*
+                unless (or (keywordp item) (stringp item))
+                  (error 'malformed-tweet-format :item item)
+                when (keywordp item)
+                  collect (funcall (accessor-for item) post)
+                when (stringp item)
+                  collect item)))))
 
 (defun enable (&key api-key api-secret access-token access-secret tweet-format)
   (if (and api-key api-secret access-token access-secret)
@@ -78,8 +57,8 @@ coleslaw:post and returns the tweet content.")
   ;; fallback to chirp for credential erros
   (chirp:account/verify-credentials)
   (when tweet-format
-    (setf *tweet-format* tweet-format)))
-
+    (setf *tweet-format* tweet-format))
+  (setf *tweet-format-fn* (compile-tweet-format *tweet-format*)))
 
 (defmethod deploy :after (staging)
   (declare (ignore staging))

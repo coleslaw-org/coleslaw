@@ -3,7 +3,8 @@
 * A Twitter plugin to tweet your new posts. Thanks to @PuercoPop!
 * Coleslaw now exports a `get-updated-files` function which can be
   used to get a list of file-status/file-name pairs that were changed
-  in the last git push.
+  in the last git push. There is also an exported `find-content-by-path`
+  function to retrieve content objects from the above file-name.
 
 ## Changes for 0.9.4 (2014-05-05):
 
