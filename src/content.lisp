@@ -31,11 +31,12 @@
 ;; Content Types
 
 (defclass content ()
-  ((file :initform nil :initarg :file :accessor content-file)
-   (tags :initform nil :initarg :tags :accessor content-tags)
-   (slug :initform nil :initarg :slug :accessor content-slug)
-   (date :initform nil :initarg :date :accessor content-date)
-   (text :initform nil :initarg :text :accessor content-text)))
+  ((file :initarg :file :reader content-file)
+   (date :initarg :date :reader content-date)
+   (tags :initarg :tags :accessor content-tags)
+   (slug :initarg :slug :accessor content-slug)
+   (text :initarg :text :accessor content-text))
+  (:default-initargs :tags nil :date nil :slug nil))
 
 (defmethod initialize-instance :after ((object content) &key)
   (with-accessors ((tags content-tags)) object

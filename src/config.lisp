@@ -1,20 +1,24 @@
 (in-package :coleslaw)
 
 (defclass blog ()
-  ((author          :initarg :author         :accessor author)
-   (deploy-dir      :initarg :deploy-dir     :accessor deploy-dir)
-   (domain          :initarg :domain         :accessor domain)
-   (feeds           :initarg :feeds          :accessor feeds)
-   (license         :initarg :license        :accessor license)
-   (page-ext        :initarg :page-ext       :accessor page-ext       :initform "html")
-   (plugins         :initarg :plugins        :accessor plugins)
-   (repo            :initarg :repo           :accessor repo)
-   (routing         :initarg :routing        :accessor routing)
-   (separator       :initarg :separator      :accessor separator      :initform ";;;;;")
-   (sitenav         :initarg :sitenav        :accessor sitenav)
-   (staging-dir     :initarg :staging-dir    :accessor staging-dir    :initform "/tmp/coleslaw/")
-   (theme           :initarg :theme          :accessor theme)
-   (title           :initarg :title          :accessor title)))
+  ((author          :initarg :author         :reader author)
+   (deploy-dir      :initarg :deploy-dir     :reader deploy-dir)
+   (domain          :initarg :domain         :reader domain)
+   (feeds           :initarg :feeds          :reader feeds)
+   (license         :initarg :license        :reader license)
+   (page-ext        :initarg :page-ext       :reader page-ext)
+   (plugins         :initarg :plugins        :reader plugins)
+   (repo            :initarg :repo           :reader repo)
+   (routing         :initarg :routing        :reader routing)
+   (separator       :initarg :separator      :reader separator)
+   (sitenav         :initarg :sitenav        :reader sitenav)
+   (staging-dir     :initarg :staging-dir    :reader staging-dir)
+   (theme           :initarg :theme          :reader theme)
+   (title           :initarg :title          :reader title))
+  (:default-initargs
+   :page-ext "html"
+   :separator ";;;;;"
+   :staging-dir "/tmp/coleslaw"))
 
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")

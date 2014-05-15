@@ -1,9 +1,9 @@
 (in-package :coleslaw)
 
 (defclass post (content)
-  ((title :initform nil :initarg :title :accessor title-of)
-   (author :initform nil :initarg :author :accessor author-of)
-   (format :initform nil :initarg :format :accessor post-format)))
+  ((title :initarg :title :reader title-of)
+   (author :initarg :author :accessor author-of)
+   (format :initarg :format :accessor post-format)))
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-accessors ((title title-of)
