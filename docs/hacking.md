@@ -23,6 +23,18 @@ Conceptually, coleslaw processes a blog as follows:
     staging directory. It does whatever work is needed to make the
     generated HTML files (and any static content) visible to the web.
 
+## A Note on Performance
+
+A recent test on my Core i5 touting Thinkpad generated my 430-post blog
+in 2.7 seconds. This averages out to about 6-7 milliseconds per piece of
+content. However, about 400 of those 430 items were HTML posts from a
+wordpress export, not markdown posts that require parsing with 3bmd.
+I expect that 3bmd would be the main bottleneck on a larger site. It
+would be worthwhile to see how well [cl-markdown][clmd] performs as
+a replacement if this becomes an issue for users though we would lose
+source highlighting from [colorize][clrz] and should also investigate
+[pygments][pyg] as a replacement.
+
 ## Core Concepts
 
 ### Data and Deployment
@@ -253,3 +265,6 @@ simply disabling the indexes may be appropriate for certain users.
 [post_receive_hook]: https://github.com/redline6561/coleslaw/blob/master/examples/example.post-receive
 [closure_template]: https://github.com/archimag/cl-closure-template
 [api_docs]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md
+[clmd]: https://github.com/gwkkwg/cl-markdown
+[clrz]: https://github.com/redline6561/colorize
+[pyg]: http://pygments.org/
