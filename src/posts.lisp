@@ -3,7 +3,8 @@
 (defclass post (content)
   ((title :initarg :title :reader title-of)
    (author :initarg :author :accessor author-of)
-   (format :initarg :format :accessor post-format)))
+   (format :initarg :format :accessor post-format))
+  (:default-initargs :author nil))
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-accessors ((title title-of)
