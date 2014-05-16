@@ -1,13 +1,18 @@
 (in-package :coleslaw)
 
+(defvar *all-months* nil
+  "The list of months in which content was authored.")
+(defvar *all-tags* nil
+  "The list of tags which content has been tagged with.")
+
 (defclass index ()
   ((slug :initarg :slug :reader index-slug)
    (title :initarg :title :reader title-of)
    (content :initarg :content :reader index-content)))
 
 (defmethod render ((object index) &key prev next)
-  (funcall (theme-fn 'index) (list :tags (all-tags)
-                                   :months (all-months)
+  (funcall (theme-fn 'index) (list :tags *all-tags*
+                                   :months *all-months*
                                    :config *config*
                                    :index object
                                    :prev prev
@@ -18,6 +23,7 @@
 (defclass tag-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
+  (setf *all-tags* (all-tags))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (all-tags))
       (add-document (index-by-tag tag content)))))
@@ -37,8 +43,9 @@
 (defclass month-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'month-index))))
+  (setf *all-months* (all-months))
   (let ((content (by-date (find-all 'post))))
-    (dolist (month (all-months))
+    (dolist (month *all-months*)
       (add-document (index-by-month month content)))))
 
 (defun index-by-month (month content)
