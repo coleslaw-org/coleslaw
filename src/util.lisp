@@ -4,16 +4,19 @@
   "Create an instance of CLASS-NAME with the given ARGS."
   (apply 'make-instance class-name args))
 
+;; Thanks to bknr-web for this bit of code.
+(defun all-subclasses (class)
+  "Return a list of all the subclasses of CLASS."
+  (let ((subclasses (closer-mop:class-direct-subclasses class)))
+    (append subclasses (loop for subclass in subclasses
+                          nconc (all-subclasses subclass)))))
+
 (defmacro do-subclasses ((var class) &body body)
   "Iterate over the subclasses of CLASS performing BODY with VAR
 lexically bound to the current subclass."
-  (alexandria:with-gensyms (klasses all-subclasses)
-    `(labels ((,all-subclasses (class)
-                (let ((subclasses (closer-mop:class-direct-subclasses class)))
-                  (append subclasses (loop for subclass in subclasses
-                                        nconc (,all-subclasses subclass))))))
-       (let ((,klasses (,all-subclasses (find-class ',class))))
-         (loop for ,var in ,klasses do ,@body)))))
+  (alexandria:with-gensyms (klasses)
+    `(let ((,klasses (all-subclasses (find-class ',class))))
+       (loop for ,var in ,klasses do ,@body))))
 
 (defmacro do-files ((var path &optional extension) &body body)
   "For each file under PATH, run BODY. If EXTENSION is provided, only run
