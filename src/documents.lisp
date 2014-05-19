@@ -37,7 +37,7 @@
 (defmethod page-url :around ((document t))
   (let ((result (call-next-method)))
     (if (pathname-type result)
-        result
+        (make-pathname :defaults result)
         (make-pathname :type "html" :defaults result))))
 
 (defgeneric render (document &key &allow-other-keys)
