@@ -19,6 +19,7 @@ the last push."
   "Load all content stored in the blog's repo."
   (do-subclasses (ctype content)
     (discover ctype))
+  (update-content-metadata)
   (do-subclasses (itype index)
     (discover itype)))
 

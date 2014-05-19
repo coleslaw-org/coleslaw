@@ -23,7 +23,6 @@
 (defclass tag-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
-  (setf *all-tags* (all-tags))
   (let ((content (by-date (find-all 'post))))
     (dolist (tag (all-tags))
       (add-document (index-by-tag tag content)))))
@@ -43,7 +42,6 @@
 (defclass month-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'month-index))))
-  (setf *all-months* (all-months))
   (let ((content (by-date (find-all 'post))))
     (dolist (month *all-months*)
       (add-document (index-by-month month content)))))
@@ -84,6 +82,12 @@
                         :next (when (<= next (length indexes)) next))))))
 
 ;;; Helper Functions
+
+(defun update-content-metadata ()
+  "Set *ALL-TAGS* and *ALL-MONTHS* to the union of all tags and months
+of content loaded in the DB."
+  (setf *all-tags* (all-tags))
+  (setf *all-months* (all-months)))
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
