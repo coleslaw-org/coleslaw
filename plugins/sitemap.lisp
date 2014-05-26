@@ -4,7 +4,6 @@
                           #:index
                           #:page-url
                           #:find-all
-                          #:discover
                           #:publish
                           #:theme-fn
                           #:add-document
@@ -19,13 +18,13 @@
 
 (defmethod page-url ((object sitemap)) "sitemap.xml")
 
-(defmethod discover ((doc-type (eql (find-class 'sitemap))))
-  (let ((base-urls '("" "sitemap.xml"))
-        (urls (mapcar #'page-url (hash-table-values coleslaw::*site*))))
-    (add-document (make-instance 'sitemap :urls (append base-urls urls)))))
-
+;; We do 'discovery' in the publish method here because we can't ensure the
+;; sitemap discover method is called last. Need all other content to be
+;; discovered/in the DB.
 (defmethod publish ((doc-type (eql (find-class 'sitemap))))
-  (dolist (sitemap (find-all 'sitemap))
+  (let* ((base-urls '("" "sitemap.xml"))
+         (urls (mapcar #'page-url (hash-table-values coleslaw::*site*)))
+         (sitemap (make-instance 'sitemap :urls (append base-urls urls))))
     (write-document sitemap (theme-fn 'sitemap "sitemap"))))
 
 (defun enable ())
