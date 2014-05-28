@@ -35,10 +35,9 @@
           (error "No routing method found for: ~A" class-name)))))
 
 (defmethod page-url :around ((document t))
-  (let ((result (call-next-method)))
-    (if (pathname-type result)
-        (make-pathname :defaults result)
-        (make-pathname :type "html" :defaults result))))
+  (let* ((result (call-next-method))
+         (type (or (pathname-type result) "html")))
+    (make-pathname :type type :defaults result)))
 
 (defgeneric render (document &key &allow-other-keys)
   (:documentation "Render the given DOCUMENT to HTML."))
