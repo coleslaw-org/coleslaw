@@ -11,7 +11,7 @@
 * **SITE-BREAKING CHANGE**: Coleslaw now supports user-defined routing.
   Instead of hard-coding the paths various content types are stored at,
   they **must** be specified in the configuration file (.coleslawrc).
-  Just copy the `:routing` key from the [example][single_site.rc] to
+  Just copy the `:routing` key from the [example][example.rc] to
   get the old behavior.
 * **SITE-BREAKING CHANGE**: Coleslaw's multi-site support has changed.
   Instead of having a single .coleslawrc in the user's home directory
@@ -98,4 +98,4 @@
 
 [hacking_guide]:  https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
 [theming_guide]:  https://github.com/redline6561/coleslaw/blob/master/docs/themes.md
-[single_site.rc]: https://github.com/redline6561/coleslaw/blob/master/examples/single-site.coleslawrc
+[example.rc]: https://github.com/redline6561/coleslaw/blob/master/examples/example.coleslawrc
