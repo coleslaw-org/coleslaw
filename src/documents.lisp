@@ -51,6 +51,10 @@
         (error "There is already an existing document with the url ~a" url)
         (setf (gethash url *site*) document))))
 
+(defun delete-document (document)
+  "Given a DOCUMENT, delete it from the in-memory database."
+  (remhash (page-url document) *site*))
+
 (defun write-document (document &optional theme-fn &rest render-args)
   "Write the given DOCUMENT to disk as HTML. If THEME-FN is present,
 use it as the template passing any RENDER-ARGS."
