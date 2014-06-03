@@ -144,7 +144,7 @@ The variable that should be available to all templates is:
 - **index**        This is the meat of the content. This variable has
                    the following keys:
    - `id`,    the name of the page that will be rendered
-   - `posts`, a list of posts (see below)
+   - `content`, a list of content (see below)
    - `title`, a string title to display to the user
 - **prev**         If this index file is part of a chain, the `id`
                    of the previous index html in the chain.
@@ -189,9 +189,9 @@ A simple `index.tmpl` looks like this:
 ```
 {namespace coleslaw.theme.trivial}
 {template index}
-{foreach $post in $index.posts}
-<h1>{$post.title}</h1>
-  {$post.text |noAutoescape}
+{foreach $obj in $index.content}
+<h1>{$obj.title}</h1>
+  {$obj.text |noAutoescape}
 {/foreach}
 {/template}
 ```
