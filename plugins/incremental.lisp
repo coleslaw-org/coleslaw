@@ -4,7 +4,9 @@
 (defpackage :coleslaw-incremental
   (:use :cl)
   (:import-from :alexandria #:when-let)
-  (:import-from :coleslaw #:content
+  (:import-from :coleslaw #:*config*
+                          #:content
+                          #:index
                           #:discover
                           #:get-updated-files
                           #:find-content-by-path
@@ -13,8 +15,10 @@
                           ;; Private
                           #:all-subclasses
                           #:do-subclasses
+                          #:read-content
                           #:construct
                           #:rel-path
+                          #:repo
                           #:update-content-metadata)
   (:export #:enable))
 
@@ -36,7 +40,8 @@
   (let ((db-file (rel-path (user-homedir-pathname) ".coleslaw.db")))
     (setf coleslaw::*site* (cl-store:restore db-file))
     (loop for (status path) in (get-updated-files)
-       do (update-content status path))
+       for file-path = (rel-path (repo *config*) path)
+       do (update-content status file-path))
     (update-content-metadata)
     (do-subclasses (itype index)
       ;; Discover's before method will delete the possibly outdated indexes.
