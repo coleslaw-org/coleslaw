@@ -30,7 +30,8 @@
 ;; the git repo. The rest of coleslaw's operation is "fast enough".
 ;;
 ;;   Prior to enabling the plugin a user must have a cl-store dump of the
-;;   database at ~/.coleslaw.db. We should provide a script to generate it.
+;;   database at ~/.coleslaw.db. There is a dump_db shell script in
+;;   examples to generate the database dump.
 ;;
 ;; We're gonna be a bit dirty here and monkey patch. The compilation model
 ;; still isn't an "exposed" part of Coleslaw. After some experimentation maybe
@@ -43,8 +44,8 @@
        for file-path = (rel-path (repo *config*) path)
        do (update-content status file-path))
     (update-content-metadata)
+    ;; Discover's :before method will delete any possibly outdated indexes.
     (do-subclasses (itype index)
-      ;; Discover's before method will delete the possibly outdated indexes.
       (discover itype))
     (cl-store:store coleslaw::*site* db-file)))
 
