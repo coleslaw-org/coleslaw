@@ -134,7 +134,7 @@ be seamlessly picked up by *coleslaw* and included on the rendered site.
 All current Content Types and Indexes implement the protocol faithfully.
 It consists of 2 "class" methods, 2 instance methods, and an invariant.
 
-There are also 4 helper functions provided that should prove useful in
+There are also 5 helper functions provided that should prove useful in
 implementing new content types.
 
 
@@ -190,6 +190,10 @@ eql-specializing on the class, e.g.
   database. It will error if the `page-url` of the document is not
   unique. Such a hash collision represents content on the site being
   shadowed/overwritten. This should be used in your `discover` method.
+
+- `delete-document`: Remove a document from *coleslaw*'s in-memory
+  database. This is currently only used by the incremental compilation
+  plugin.
 
 - `write-document`: Write the document out to disk as HTML. It takes
   an optional template name and render-args to pass to the template.
