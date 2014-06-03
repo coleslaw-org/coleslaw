@@ -35,8 +35,8 @@
 ;;      as staging-dir in coleslaw's config prior to enabling incremental builds
 ;;   D) to further simplify *my* life, we assume the date of a piece of content
 ;;      will never be changed retroactively, only its tags
-
-;; NOTE: We're gonna be a bit dirty here and monkey patch. The compilation model
+;;
+;; We're gonna be a bit dirty here and monkey patch. The compilation model
 ;; still isn't an "exposed" part of Coleslaw. After some experimentation maybe
 ;; we'll settle on an interface.
 
@@ -72,11 +72,9 @@
         (when-let (ctype (find extension ctypes :test #'class-name-p))
           (call-next-method status path :ctype ctype))))))
 
-;; TODO: We should check to see if a *new* tag or month exists
-;; and create an index appropriately. If the last content from a
-;; given month or with a given tag is deleted, delete the index.
-;; Unfortunately, the tag/month links won't be updated on all
-;; tag/month indexes since we only regenerate them for new posts.
+;; TODO: If the last content from a given month or with a given tag
+;; is deleted, delete the index. Unfortunately, the tag/month links
+;; won't be updated on all indexes since we only regenerate them for new posts.
 
 (defmethod process-change ((status (eql :deleted)) path &key)
   (let* ((old (find-content-by-path path))
@@ -90,24 +88,24 @@
 (defmethod process-change ((status (eql :modified)) path &key)
   (let ((old (find-content-by-path path))
         (new (construct ctype (read-content path))))
-    (setf (gethash (page-url old) coleslaw::*site*) new)
+    (delete-document old)
     ;; TODO:
-    ;; Iterate over tags in new, setting old to new in each tag index's content.
-    ;; If there are new tags/date, add it to relevant indices.
-    ;; If tags/date are removed, remove from relevant indices.
-    ))
+    ;; Iterate over tags in new, replacing old with new in each tag index's content.
+    ;; If there are new tags/date, add it to relevant indices (or create them).
+    ;; If tags/date are removed, remove from relevant indices (or delete them).
+    (add-document new)
+    (write-document new)))
 
 (defmethod process-change ((status (eql :added)) path &key ctype)
-  (let ((new (construct ctype (read-content path))))
+  (let* ((new (construct ctype (read-content path)))
+         (tags (content-tags new))
+         (month (subseq (content-date new) 0 7)))
+    (maybe-add-month-index new month)
+    (dolist (tag tags)
+      (maybe-add-tag-index new tag))
     (add-document new)
     ;; FIXME: New posts won't have prev/next links populated.
     (write-document new)))
-
-(defun delete-document (document)
-  "Given a DOCUMENT, delete it from the staging directory and in-memory DB."
-  (let ((url (page-url document)))
-    (delete-file (rel-path (staging-dir *config*) (namestring url)))
-    (remhash (page-url document) coleslaw::*site*)))
 
 (defun coleslaw::compile-blog (staging)
   "lulz. Do it live. DO IT ALL LIVE."
@@ -120,6 +118,26 @@
 (defun enable ())
 
 ;;;; Utils
+
+(defun delete-document (document)
+  "Given a DOCUMENT, delete it from the staging directory and in-memory DB."
+  (let ((url (page-url document)))
+    (delete-file (rel-path (staging-dir *config*) (namestring url)))
+    (remhash (page-url document) coleslaw::*site*)))
+
+(defun maybe-add-month-index (content month)
+  "Add a month index for MONTH containing CONTENT if one does not exist."
+(unless (find-month-index month)
+    (let ((month-index (coleslaw::index-by-month month (list content))))
+      (add-document month-index)
+      (write-document month-index))))
+
+(defun maybe-add-tag-index (content tag)
+  "Add a tag index for TAG containing CONTENT if one does not exist."
+  (unless (find-tag-index tag)
+    (let ((tag-index (coleslaw::index-by-tag tag (list content))))
+      (add-document tag-index)
+      (write-document tag-index))))
 
 (defun find-tag-index (tag)
   (find (tag-slug tag) (find-all 'tag-index) :key #'index-slug :test #'equal))
