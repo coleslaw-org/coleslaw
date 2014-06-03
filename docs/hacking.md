@@ -33,7 +33,8 @@ I expect that 3bmd would be the main bottleneck on a larger site. It
 would be worthwhile to see how well [cl-markdown][clmd] performs as
 a replacement if this becomes an issue for users though we would lose
 source highlighting from [colorize][clrz] and should also investigate
-[pygments][pyg] as a replacement.
+[pygments][pyg] as a replacement. Using the new [incremental][incf] plugin
+reduced runtime to 1.36 seconds, almost cutting it in half.
 
 ## Core Concepts
 
@@ -272,3 +273,4 @@ simply disabling the indexes may be appropriate for certain users.
 [clmd]: https://github.com/gwkkwg/cl-markdown
 [clrz]: https://github.com/redline6561/colorize
 [pyg]: http://pygments.org/
+[incf]: https://github.com/redline6561/coleslaw/blob/master/plugins/incremental.lisp
