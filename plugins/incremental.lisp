@@ -4,13 +4,22 @@
 (defpackage :coleslaw-incremental
   (:use :cl)
   (:import-from :alexandria #:when-let)
-  (:import-from :coleslaw #:all-subclasses
-                          #:content
-                          #:construct
+  (:import-from :coleslaw #:content
+                          #:discover
                           #:get-updated-files
                           #:find-content-by-path
+                          #:find-all
+                          #:add-document
                           #:write-document
-                          #:rel-path)
+                          ;; Private
+                          #:all-subclasses
+                          #:construct
+                          #:rel-path
+                          #:index-content
+                          #:content-date
+                          #:content-tags
+                          #:tag-slug
+                          )
   (:export #:enable))
 
 (in-package :coleslaw-incremental)
@@ -22,17 +31,17 @@
 ;;   A) have done a full build of their site
 ;;   B) have a cl-store dump of the database at ~/.coleslaw.db
 ;;      ^ we should provide a script or plugin just for this
-;;   C) move the original deployment to a location of their choice and
-;;      set it as staging-dir in coleslaw's config prior to enabling incremental builds
-;;   D) to further simplify *my* life, we assume the date of a piece of content will
-;;      never be changed retroactively, only its tags
+;;   C) move the original deployment to a location of their choice and set it
+;;      as staging-dir in coleslaw's config prior to enabling incremental builds
+;;   D) to further simplify *my* life, we assume the date of a piece of content
+;;      will never be changed retroactively, only its tags
 
 ;; NOTE: We're gonna be a bit dirty here and monkey patch. The compilation model
 ;; still isn't an "exposed" part of Coleslaw. After some experimentation maybe
 ;; we'll settle on an interface.
 
 (defvar *transients* '(coleslaw::numeric-index coleslaw::feed coleslaw::tag-feed)
-  "A list of document types that should be regenerated on *any* change to the blog.")
+  "A list of document types that should be regenerated on any change to the blog.")
 
 (defun coleslaw::load-content ()
   (let ((db-file (rel-path (user-homedir-pathname) ".coleslaw.db")))
@@ -65,13 +74,17 @@
 
 ;; TODO: We should check to see if a *new* tag or month exists
 ;; and create an index appropriately. If the last content from a
-;; given month or with a given tag is deleted, just drop the index.
-;; (And also remove it from *all-months* / *all-tags*. Should we store those?)
-;; Additionally, the tag/month lists won't be updated on tag/month index pages.
+;; given month or with a given tag is deleted, delete the index.
+;; Unfortunately, the tag/month links won't be updated on all
+;; tag/month indexes since we only regenerate them for new posts.
 
 (defmethod process-change ((status (eql :deleted)) path &key)
-  (let ((old (find-content-by-path path)))
-    ;; TODO: Remove from any tag and month indexes.
+  (let* ((old (find-content-by-path path))
+         (month-index (find-month-index (content-date old))))
+    (delete old (index-content month-index))
+    (dolist (tag (content-tags old))
+      (let ((tag-index (find-tag-index tag)))
+        (delete old (index-content tag-index))))
     (delete-document old)))
 
 (defmethod process-change ((status (eql :modified)) path &key)
@@ -86,7 +99,9 @@
 
 (defmethod process-change ((status (eql :added)) path &key ctype)
   (let ((new (construct ctype (read-content path))))
-    ))
+    (add-document new)
+    ;; FIXME: New posts won't have prev/next links populated.
+    (write-document new)))
 
 (defun delete-document (document)
   "Given a DOCUMENT, delete it from the staging directory and in-memory DB."
@@ -97,11 +112,17 @@
 (defun coleslaw::compile-blog (staging)
   "lulz. Do it live. DO IT ALL LIVE."
   (dolist (doc-type *transients*)
-    (publish (find-class doc-type)))
-  ;; FIXME: This doesn't cover prev/next links for posts, theme-fn for feeds.
-  (mapcar #'write-document *changed-content*))
+    (publish (find-class doc-type))))
 
 ;; No-op. We'll be updating in place instead.
 (defmethod coleslaw:deploy (staging))
 
 (defun enable ())
+
+;;;; Utils
+
+(defun find-tag-index (tag)
+  (find (tag-slug tag) (find-all 'tag-index) :key #'index-slug :test #'equal))
+
+(defun find-month-index (date)
+  (find (subseq date 0 7) (find-all 'month-index) :key #'index-slug :test #'equal))
