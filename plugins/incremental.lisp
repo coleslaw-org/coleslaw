@@ -14,7 +14,8 @@
                           #:all-subclasses
                           #:do-subclasses
                           #:construct
-                          #:rel-path)
+                          #:rel-path
+                          #:update-content-metadata)
   (:export #:enable))
 
 (in-package :coleslaw-incremental)
@@ -36,7 +37,7 @@
     (setf coleslaw::*site* (cl-store:restore db-file))
     (loop for (status path) in (get-updated-files)
        do (update-content status path))
-    (coleslaw::update-content-metadata)
+    (update-content-metadata)
     (do-subclasses (itype index)
       ;; Discover's before method will delete the possibly outdated indexes.
       (discover itype))
