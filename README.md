@@ -7,26 +7,29 @@
 > drinking coffee, reading, writing, eating chips and salsa. I remember a gentleness
 > behind the enormous bushy eyebrows and that we called him Coleslaw. - anon
 
-Coleslaw aims to be flexible blog software suitable for replacing a single-user static site compiler such as Jekyll.
+Coleslaw aims to be flexible blog software suitable for replacing a single-user static site generator such as [Jekyll](http://jekyllrb.com/).
 
 ## Features
 * Git for storage
-* RSS and Atom feeds!
-* Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize).
+* RSS and Atom feeds
+* Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize)
   * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
 
 * A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [**plugins**](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
   * Static Pages
+  * Sitemap generation
+  * Incremental builds
   * Analytics via Google
   * Comments via [Disqus](http://disqus.com/)
   * Hosting via [Github Pages](https://pages.github.com/), [Heroku](http://heroku.com/), or [Amazon S3](http://aws.amazon.com/s3/)
+  * [Tweeting](http://twitter.com/) about new posts
   * Using LaTeX via [Mathjax](http://mathjax.org/)
-  * Using ReStructured Text
+  * Writing posts in ReStructured Text
   * Importing posts from [Wordpress](http://wordpress.org/)
-  * Sitemap generation
 
 * There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
-* Example sites: 
+
+## Example Sites
   * [redlinernotes](http://redlinernotes.com/blog/)
   * [kenan-bolukbasi.log](http://kenanb.com/)
   * [Nothing Really Matters](http://ironhead.xs4all.nl/)

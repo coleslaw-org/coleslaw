@@ -25,11 +25,12 @@
            #:get-updated-files
            #:theme-fn
            ;; The Document Protocol
-           #:add-document
-           #:find-all
-           #:purge-all
            #:discover
            #:publish
            #:page-url
            #:render
+           #:find-all
+           #:purge-all
+           #:add-document
+           #:delete-document
            #:write-document))
