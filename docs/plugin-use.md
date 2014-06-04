@@ -41,6 +41,10 @@
 
 **Example**: `(incremental)`
 
+**Setup**:
+- You must run the `examples/dump_db.sh` script to generate a database dump
+  for your site before enabling the incremental plugin.
+
 ## LaTeX via Mathjax
 
 **Description**: Provides LaTeX support through
