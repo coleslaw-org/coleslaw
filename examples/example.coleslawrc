@@ -21,4 +21,6 @@
            (:url "http://redlinernotes.com/docs/talks/" :name "Talks"))
  :staging-dir "/tmp/coleslaw/"
  :title "Improved Means for Achieving Deteriorated Ends"
- :theme "hyde")
+ :theme "hyde"
+ :lang "en"
+ :charset "us-ascii")

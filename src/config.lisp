@@ -15,7 +15,8 @@
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title)
-   (lang            :initarg :lang           :reader lang))
+   (lang            :initarg :lang           :reader lang)
+   (charset         :initarg :charset        :reader charset))
   (:default-initargs
    :page-ext "html"
    :separator ";;;;;"
