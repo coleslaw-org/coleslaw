@@ -7,7 +7,7 @@
 > drinking coffee, reading, writing, eating chips and salsa. I remember a gentleness
 > behind the enormous bushy eyebrows and that we called him Coleslaw. - anon
 
-Coleslaw aims to be flexible blog software suitable for replacing a single-user static site generator such as [Jekyll](http://jekyllrb.com/).
+Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghendershott/frog), [Jekyll](http://jekyllrb.com/), or [Hakyll](http://jaspervdj.be/hakyll/).
 
 ## Features
 * Git for storage
