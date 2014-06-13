@@ -2,9 +2,11 @@
 
 (defclass blog ()
   ((author          :initarg :author         :reader author)
+   (charset         :initarg :charset        :reader charset)
    (deploy-dir      :initarg :deploy-dir     :reader deploy-dir)
    (domain          :initarg :domain         :reader domain)
    (feeds           :initarg :feeds          :reader feeds)
+   (lang            :initarg :lang           :reader lang)
    (license         :initarg :license        :reader license)
    (page-ext        :initarg :page-ext       :reader page-ext)
    (plugins         :initarg :plugins        :reader plugins)
@@ -14,13 +16,13 @@
    (sitenav         :initarg :sitenav        :reader sitenav)
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
-   (title           :initarg :title          :reader title)
-   (lang            :initarg :lang           :reader lang)
-   (charset         :initarg :charset        :reader charset))
+   (title           :initarg :title          :reader title))
   (:default-initargs
-   :page-ext "html"
-   :separator ";;;;;"
-   :staging-dir "/tmp/coleslaw"))
+   :charset      "UTF-8"
+   :lang         "en"
+   :page-ext     "html"
+   :separator    ";;;;;"
+   :staging-dir  "/tmp/coleslaw"))
 
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
