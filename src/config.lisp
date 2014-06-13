@@ -14,7 +14,8 @@
    (sitenav         :initarg :sitenav        :reader sitenav)
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
-   (title           :initarg :title          :reader title))
+   (title           :initarg :title          :reader title)
+   (lang            :initarg :lang           :reader lang))
   (:default-initargs
    :page-ext "html"
    :separator ";;;;;"
