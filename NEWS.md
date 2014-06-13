@@ -1,8 +1,9 @@
-## Changes for 0.9.5 (2014-06-04):
+## Changes for 0.9.5 (2014-06-13):
 
 * A plugin for Incremental builds, cutting runtime for generating
   medium to large sites roughly in half!
 * A Twitter plugin to tweet about your new posts. Thanks to @PuercoPop!
+* Config options for the HTML lang and charset attributes. Thanks to @ryumei!
 * Coleslaw now exports a `get-updated-files` function which can be
   used to get a list of file-status/file-name pairs that were changed
   in the last git push. There is also an exported `find-content-by-path`
