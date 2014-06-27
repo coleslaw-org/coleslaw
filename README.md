@@ -31,9 +31,10 @@ Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghend
 
 ## Example Sites
   * [redlinernotes](http://redlinernotes.com/blog/)
+  * [chip the glasses](http://sterling.borges.cc/)
   * [kenan-bolukbasi.log](http://kenanb.com/)
   * [Nothing Really Matters](http://ironhead.xs4all.nl/)
-  * [A year and a smile.](http://blog.sjas.de)
+  * [A year and a smile](http://blog.sjas.de)
 
 ## Hacking
 
