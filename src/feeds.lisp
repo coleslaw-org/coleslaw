@@ -5,16 +5,18 @@
 (defclass feed (index)
   ((format :initform nil :initarg :format :accessor feed-format)))
 
-(defmethod discover ((doc-type (eql (find-class 'feed))))
+(defclass standard-feed (feed) ())
+
+(defmethod discover ((doc-type (eql (find-class 'standard-feed))))
   (let ((content (by-date (find-all 'post))))
     (dolist (format '(rss atom))
-      (let ((feed (make-instance 'feed :format format
+      (let ((feed (make-instance 'standard-feed :format format
                                  :content (take-up-to 10 content)
                                  :slug (format nil "~(~a~)" format))))
         (add-document feed)))))
 
-(defmethod publish ((doc-type (eql (find-class 'feed))))
-  (dolist (feed (find-all 'feed))
+(defmethod publish ((doc-type (eql (find-class 'standard-feed))))
+  (dolist (feed (find-all 'standard-feed))
     (write-document feed (theme-fn (feed-format feed) "feeds"))))
 
 ;;; Tag Feeds
