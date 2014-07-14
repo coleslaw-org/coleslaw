@@ -2,12 +2,13 @@
  :deploy-dir "/home/git/blog/"
  :domain "http://blog.redlinernotes.com"
  :feeds ("lisp")
- :plugins ((mathjax)
-           (sitemap)
-           (static-pages)
+ :plugins ((analytics :tracking-code "foo")
            (disqus :shortname "my-site-name")
-           (analytics :tracking-code "foo"))
- :repo "/home/git/tmp/improvedmeans/"
+           ; (git-hook)     ;; *Remove comment to enable git push deploys.
+           ; (incremental)  ;; *Remove comment enable incremental builds.
+           (mathjax)
+           (sitemap)
+           (static-pages))
  :routing ((:post           "posts/~a")
            (:tag-index      "tag/~a")
            (:month-index    "date/~a")
@@ -22,3 +23,5 @@
  :staging-dir "/tmp/coleslaw/"
  :title "Improved Means for Achieving Deteriorated Ends"
  :theme "hyde")
+
+;; * Prerequisites described in plugin docs.

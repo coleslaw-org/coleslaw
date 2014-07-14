@@ -61,7 +61,7 @@ doesn't exist, use the .coleslawrc in the home directory."
         repo-config
         (rel-path (user-homedir-pathname) ".coleslawrc"))))
 
-(defun load-config (&optional repo-dir)
+(defun load-config (&optional (repo-dir ""))
   "Find and load the coleslaw configuration from .coleslawrc. REPO-DIR will be
 preferred over the home directory if provided."
   (with-open-file (in (discover-config-path repo-dir) :external-format '(:utf-8))

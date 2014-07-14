@@ -3,12 +3,12 @@
 (defvar *last-revision* nil
   "The git revision prior to the last push. For use with GET-UPDATED-FILES.")
 
-(defun main (&optional (repo-dir "") oldrev)
-  "Load the user's config file, then compile and deploy the site. Optionally,
-REPO-DIR is the location of the blog repo and OLDREV is the revision prior to
-the last push."
-  (setf *last-revision* oldrev)
+(defun main (repo-dir &optional oldrev)
+  "Load the user's config file, then compile and deploy the blog stored
+in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (load-config repo-dir)
+  (setf (repo *config*) repo-dir
+        *last-revision* oldrev)
   (load-content)
   (compile-theme (theme *config*))
   (let ((dir (staging-dir *config*)))
@@ -40,19 +40,10 @@ the last push."
     (update-symlink "index.html" "1.html")))
 
 (defgeneric deploy (staging)
-  (:documentation "Deploy the STAGING dir, updating the .prev and .curr symlinks.")
+  (:documentation "Deploy the STAGING build to the directory specified in the config.")
   (:method (staging)
-    (let* ((dest (deploy-dir *config*))
-           (new-build (rel-path dest "generated/~a" (get-universal-time)))
-           (prev (rel-path dest ".prev"))
-           (curr (rel-path dest ".curr")))
-      (ensure-directories-exist new-build)
-      (run-program "mv ~a ~a" staging new-build)
-      (when (and (probe-file prev) (truename prev))
-        (run-program "rm -r ~a" (truename prev)))
-      (when (probe-file curr)
-        (update-symlink prev (truename curr)))
-      (update-symlink curr new-build))))
+    (let ((destination (deploy-dir *config*)))
+      (run-program "rsync --delete -avz ~a ~a" staging destination))))
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."

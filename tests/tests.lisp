@@ -10,4 +10,4 @@
 
 (deftest sanity-test
     "A blog should compile and deploy correctly."
-  (is (zerop (coleslaw:main))))
+  (is (zerop (coleslaw:main ""))))

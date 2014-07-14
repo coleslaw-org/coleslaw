@@ -22,12 +22,13 @@
            #:title-of
            #:author-of
            #:find-content-by-path
-           ;; Plugin API + Theming
+           ;; Theming + Plugin API
+           #:theme-fn
            #:plugin-conf-error
            #:render-text
            #:add-injection
            #:get-updated-files
-           #:theme-fn
+           #:deploy
            ;; The Document Protocol
            #:discover
            #:publish
