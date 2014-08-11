@@ -219,6 +219,47 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement
 
+### Scripting Conveniences/Basic Install
+
+Right now, we assume that you want to set up a bare repo and use git push
+for site deploys. However good a system this may be, we don't need to have
+it as a baked in assumption for coleslaw. The current deploy system should
+be moved into a plugin and replaced with something braindead
+(e.g. `mv` staging-dir to deploy-dir).
+
+This leads to the following:
+
+1. Simplify the getting started process for new users.
+   They should just be able to do
+   `(progn
+      (ql:quickload :coleslaw)
+      (coleslaw:main "/path/to/my/blog-repo"))`.
+   We'll still require a git repo for now. This does necessitate updating
+   `get-updated-files` for the case where no revision is passed.
+2. We could also add command-line tools/scripts to run coleslaw, set up
+   the db for incremental builds, scaffold a new post, etc. for new users.
+   Xach's buildapp may be useful here. frog and hakyll are good points of
+   inspiration here.
+
+We may need a fair amount of error-handling improvements to make this
+work well but it would be a huge improvement to user-friendliness and
+help "expand our audience". Did I just say that? Ugh. It will also be
+important to communicate this change to our users loud and clear.
+
+### Plugin Constraints
+
+There is no system for determining what plugins work together or
+enforcing the requirements or constraints of any particular
+plugin. That is to say, the plugins are not actually modular. They are
+closer to controlled monkey-patching.
+
+While adding a [real module system to common lisp][asdf3] is probably
+out of scope, we might be able to add some kind of [contract library][qpq]
+for implementing this functionality. At the very least, a way to check
+some assertions and error out at plugin load time if they fail should be
+doable. I might not be able to [make illegal states unrepresentable][misu],
+but I can sure as hell make them harder to construct than they are now.
+
 ### New Content Type: Shouts!
 
 I've also toyed with the idea of a content type called a SHOUT, which
@@ -249,24 +290,6 @@ Unfortunately, this does not solve:
    Content Types it includes or the CONTENT which indexes it appears
    on is not yet clear.
 
-### Incremental Compilation
-
-Incremental compilation is doable, even straightforward if you ignore
-indexes. It is also preferable to building the site in parallel as
-avoiding work is better than using more workers. Moreover, being
-able to determine (and expose) what files just changed enables new
-functionality such as plugins that cross-post to tumblr.
-
-This is a cool project and the effects are far reaching. Among other
-things the existing deployment model would not work as it involves
-rebuilding the entire site. In all likelihood we would want to update
-the site 'in-place'. How to replace the compilation and deployment
-model via a plugin has not yet been explored. Atomicity of filesystem
-operations would be a reasonable concern. Also, every numbered INDEX
-would have to be regenerated along with any tag or month indexes
-matching the modified files. If incremental compilation is a goal,
-simply disabling the indexes may be appropriate for certain users.
-
 [post_receive_hook]: https://github.com/redline6561/coleslaw/blob/master/examples/example.post-receive
 [closure_template]: https://github.com/archimag/cl-closure-template
 [api_docs]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md
@@ -274,3 +297,6 @@ simply disabling the indexes may be appropriate for certain users.
 [clrz]: https://github.com/redline6561/colorize
 [pyg]: http://pygments.org/
 [incf]: https://github.com/redline6561/coleslaw/blob/master/plugins/incremental.lisp
+[asdf3]: https://github.com/fare/asdf3-2013
+[qpq]: https://github.com/sellout/quid-pro-quo
+[misu]: https://blogs.janestreet.com/effective-ml-revisited/
