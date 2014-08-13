@@ -219,6 +219,23 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement
 
+### Real Error Handling
+
+One reason Coleslaw's code base is so small is probably the
+omission of any serious error handling. Trying to debug
+coleslaw if there's a problem during a build is unpleasant
+at best, especially for anyone not coming from the lisp world.
+
+We need to start handling errors and reporting errors in ways
+that are useful to the user. The two most obvious areas seem to be:
+
+1. Loading of Content. If `read-content` fails to parse a file, we
+   should tell the user what file failed and why.
+2. Custom themes that try to access non-existent properties of content
+   do not currently error. They just wind up returning whitespace.
+   When the theme compiles, we should alert the user to any obvious
+   issues with it.
+
 ### Scripting Conveniences/Basic Install
 
 Right now, we assume that you want to set up a bare repo and use git push
@@ -240,11 +257,6 @@ This leads to the following:
    the db for incremental builds, scaffold a new post, etc. for new users.
    Xach's buildapp may be useful here. frog and hakyll are good points of
    inspiration here.
-
-We may need a fair amount of error-handling improvements to make this
-work well but it would be a huge improvement to user-friendliness and
-help "expand our audience". Did I just say that? Ugh. It will also be
-important to communicate this change to our users loud and clear.
 
 ### Plugin Constraints
 
