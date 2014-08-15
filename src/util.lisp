@@ -30,33 +30,20 @@ BODY on files that match the given extension."
                                         #',extension-p
                                         (constantly t))))))
 
+(defun (setf getcwd) (path)
+  "Change the operating system's current directory to PATH."
+  (chdir path)
+  path)
+
 (defmacro with-current-directory (path &body body)
   "Change the current directory to PATH and execute BODY in
 an UNWIND-PROTECT, then change back to the current directory."
   (alexandria:with-gensyms (old)
-    `(let ((,old (current-directory)))
+    `(let ((,old (getcwd)))
        (unwind-protect (progn
-                         (setf (current-directory) ,path)
+                         (setf (getcwd) ,path)
                          ,@body)
-         (setf (current-directory) ,old)))))
-
-(defun current-directory ()
-  "Return the operating system's current directory."
-  #+sbcl (sb-posix:getcwd)
-  #+ccl (ccl:current-directory)
-  #+ecl (si:getcwd)
-  #+cmucl (unix:unix-current-directory)
-  #+clisp (ext:cd)
-  #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
-
-(defun (setf current-directory) (path)
-  "Change the operating system's current directory to PATH."
-  #+sbcl (sb-posix:chdir path)
-  #+ccl (setf (ccl:current-directory) path)
-  #+ecl (si:chdir path)
-  #+cmucl (unix:unix-chdir (namestring path))
-  #+clisp (ext:cd path)
-  #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
+         (setf (getcwd) ,old)))))
 
 (defun exit ()
   "Exit the lisp system returning a 0 status code."
