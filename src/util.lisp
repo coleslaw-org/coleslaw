@@ -60,7 +60,7 @@ an UNWIND-PROTECT, then change back to the current directory."
 
 (defun exit ()
   "Exit the lisp system returning a 0 status code."
-  #+sbcl (sb-ext:quit)
+  #+sbcl (sb-ext:exit)
   #+ccl (ccl:quit)
   #+ecl (si:quit)
   #+cmucl (ext:quit)
