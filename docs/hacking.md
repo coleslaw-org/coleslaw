@@ -227,7 +227,7 @@ coleslaw if there's a problem during a build is unpleasant
 at best, especially for anyone not coming from the lisp world.
 
 We need to start handling errors and reporting errors in ways
-that are useful to the user. The two most obvious areas seem to be:
+that are useful to the user. Example errors users have encountered:
 
 1. Loading of Content. If `read-content` fails to parse a file, we
    should tell the user what file failed and why.
@@ -235,6 +235,14 @@ that are useful to the user. The two most obvious areas seem to be:
    do not currently error. They just wind up returning whitespace.
    When the theme compiles, we should alert the user to any obvious
    issues with it.
+3. Trying to load content from the bare repo instead of the clone.
+   i.e. Specifying the `:repo` in .coleslawrc as the bare repo.
+   The README should clarify this point and the need for posts to be
+   ".post" files.
+4. `:staging-dir`, `:repo`, `:deploy-dir` should all have trailing
+   slashes. This is a subtle, unenforced issue not mentioned in
+   documentation. This is exactly the sort of thing the next release
+   should strive to fix. (Also, `:repo` can probably be deprecated...)
 
 ### Scripting Conveniences/Basic Install
 
