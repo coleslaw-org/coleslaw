@@ -33,4 +33,5 @@
            #:purge-all
            #:add-document
            #:delete-document
-           #:write-document))
+           #:write-document
+           #:content-text))
