@@ -8,7 +8,9 @@
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd
-                      #:chdir)
+                      #:chdir
+                      #:ensure-directory-pathname
+                      #:directory-exists-p)
   (:export #:main
            #:preview
            #:*config*
