@@ -59,6 +59,7 @@
         (error "The provided file lacks the expected header."))
       (let ((meta (loop for line = (read-line in nil)
                      until (string= line (separator *config*))
+                     when (parse-field line)
                      appending (list (field-name line)
                                      (aref (parse-field line) 0))))
             (filepath (enough-namestring file (repo *config*)))
