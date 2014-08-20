@@ -7,6 +7,10 @@
   (:import-from :cl-fad #:file-exists-p)
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
+  (:import-from :uiop #:getcwd
+                      #:chdir
+                      #:ensure-directory-pathname
+                      #:directory-exists-p)
   (:export #:main
            #:preview
            #:*config*
