@@ -219,6 +219,36 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement
 
+### Unified Routing
+
+Right now, the templates break if you use a custom routing scheme
+in your config. This is flatly ridiculous. The templates should be
+updated to use a url field stored on each object which will store
+the unified domain/path of the object. This can be done transparently
+to users, though must be handled with care and may involve refactoring
+in the document protocol. Test carefully. If we cheat by hardcoding
+the sitemap and/or feeds, that's probably okay for the moment.
+
+### Clean up Slugs vs Paths
+
+Currently, we track uniqueness in the site by using a hashtable
+keyed on `page-url`, i.e. relative paths. The paths are mostly
+constructed from slugs. Sometimes we use the slugs for sorting
+or other purposes. It would be nice if we could build the paths
+at instance creation time and scrap the slugs altogether.
+How feasible is this?
+
+### Finish up Basic Deploy
+
+The deploy method has been simplified and a git-hook plugin added.
+Documentation and testing for the other deploy plugins is next.
+
+### Deprecate :repo config option?
+
+Coleslaw must at this point *always* be called with `coleslaw:main`
+passing the repo directory as an argument. Given this, there is no
+need for users to specify a repo in their config.
+
 ### Real Error Handling
 
 One reason Coleslaw's code base is so small is probably the
@@ -230,7 +260,9 @@ We need to start handling errors and reporting errors in ways
 that are useful to the user. Example errors users have encountered:
 
 1. Loading of Content. If `read-content` fails to parse a file, we
-   should tell the user what file failed and why.
+   should tell the user what file failed and why. We also should
+   probably enforce more constraints about metadata. E.g. Empty
+   metadata is not allowed/meaningful. Trailing space after separator, etc.
 2. Custom themes that try to access non-existent properties of content
    do not currently error. They just wind up returning whitespace.
    When the theme compiles, we should alert the user to any obvious
@@ -239,10 +271,6 @@ that are useful to the user. Example errors users have encountered:
    i.e. Specifying the `:repo` in .coleslawrc as the bare repo.
    The README should clarify this point and the need for posts to be
    ".post" files.
-4. `:staging-dir`, `:repo`, `:deploy-dir` should all have trailing
-   slashes. This is a subtle, unenforced issue not mentioned in
-   documentation. This is exactly the sort of thing the next release
-   should strive to fix. (Also, `:repo` can probably be deprecated...)
 
 ### Scripting Conveniences/Basic Install
 
@@ -263,8 +291,8 @@ This leads to the following:
    `get-updated-files` for the case where no revision is passed.
 2. We could also add command-line tools/scripts to run coleslaw, set up
    the db for incremental builds, scaffold a new post, etc. for new users.
-   Xach's buildapp may be useful here. frog and hakyll are good points of
-   inspiration here.
+   Xach's buildapp or cl-launch would be useful here. frog and hakyll are
+   good points of inspiration as well.
 
 ### Plugin Constraints
 
