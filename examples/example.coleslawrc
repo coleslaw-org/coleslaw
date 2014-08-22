@@ -13,7 +13,7 @@
            (:tag-index      "tag/~a")
            (:month-index    "date/~a")
            (:numeric-index  "~d")
-           (:feed           "~a.xml")
+           (:standard-feed  "~a.xml")
            (:tag-feed       "tag/~a.xml"))
  :sitenav ((:url "http://redlinernotes.com/" :name "Home")
            (:url "http://twitter.com/redline6561" :name "Twitter")

@@ -10,7 +10,7 @@
    (license         :initarg :license        :reader license)
    (page-ext        :initarg :page-ext       :reader page-ext)
    (plugins         :initarg :plugins        :reader plugins)
-   (repo            :initarg :repo           :reader repo)
+   (repo            :initarg :repo           :accessor repo)
    (routing         :initarg :routing        :reader routing)
    (separator       :initarg :separator      :reader separator)
    (sitenav         :initarg :sitenav        :reader sitenav)
