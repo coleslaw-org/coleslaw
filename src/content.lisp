@@ -33,8 +33,9 @@
 (defclass content ()
   ((file :initarg :file :reader content-file)
    (date :initarg :date :reader content-date)
+   (path :initarg :path :accessor path-of)
+   (slug :initarg :slug :accessor slug-of)
    (tags :initarg :tags :accessor content-tags)
-   (slug :initarg :slug :accessor content-slug)
    (text :initarg :text :accessor content-text))
   (:default-initargs :tags nil :date nil :slug nil))
 

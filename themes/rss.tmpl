@@ -13,10 +13,10 @@
     {foreach $post in $content.content}
     <item>
       <title>{$post.title}</title>
-      <link>{$config.domain}/posts/{$post.slug}.{$config.pageExt}</link>
+      <link>{$config.domain}/{$post.path}</link>
       <pubDate>{$post.date}</pubDate>
       <author>{$config.author}</author>
-      <guid isPermaLink="true">{$config.domain}/posts/{$post.slug}.{$config.pageExt}</guid>
+      <guid isPermaLink="true">{$config.domain}/{$post.path}</guid>
       {foreach $tag in $post.tags}
         <category><![CDATA[ {$tag.name |noAutoescape} ]]></category>
       {/foreach}

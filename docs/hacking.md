@@ -224,10 +224,16 @@ PAGE, a content type for static page support, is available as a plugin.
 Right now, the templates break if you use a custom routing scheme
 in your config. This is flatly ridiculous. The templates should be
 updated to use a url field stored on each object which will store
-the unified domain/path of the object. This can be done transparently
-to users, though must be handled with care and may involve refactoring
+the path of the object. This can be done transparently to users,
+though must be handled with care and may involve refactoring
 in the document protocol. Test carefully. If we cheat by hardcoding
 the sitemap and/or feeds, that's probably okay for the moment.
+
+Turns out this is even messier than I thought. Links are built from
+scratch in the templates *all over the place*. Tags in posts,
+taglinks and monthlinks in indexes, and prev/next links in numeric
+indexes. I'm also doing two `find-all` calls in the base `render`
+method for index. So I should profile and/or memoize that if needed.
 
 ### Clean up Slugs vs Paths
 

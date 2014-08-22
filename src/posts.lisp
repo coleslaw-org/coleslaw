@@ -11,10 +11,11 @@
                    (author author-of)
                    (format post-format)
                    (text content-text)) object
-      (setf (content-slug object) (slugify title)
-            format (make-keyword (string-upcase format))
-            text (render-text text format)
-            author (or author (author *config*)))))
+    (setf (slug-of object) (slugify title)
+          (path-of object) (page-url object)
+          format (make-keyword (string-upcase format))
+          text (render-text text format)
+          author (or author (author *config*)))))
 
 (defmethod render ((object post) &key prev next)
   (funcall (theme-fn 'post) (list :config *config*

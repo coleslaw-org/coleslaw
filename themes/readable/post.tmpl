@@ -6,7 +6,7 @@
   <p>
     {if $post.tags}
       Tagged as {foreach $tag in $post.tags}
-        <a href="{$config.domain}/tag/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>{nil}
+        <a href="{$config.domain}/{$tag.path}">{$tag.name}</a>{nil}
           {if not isLast($tag)},{sp}{/if}
       {/foreach}
     {/if}
@@ -20,8 +20,8 @@
   {$post.text |noAutoescape}
   
   <ul class="pager">
-    {if $prev}<li class="previous"><a href="{$config.domain}/posts/{$prev.slug}.{$config.pageExt}">&larr; Previous</a></li>{/if}{\n}
-    {if $next}<li class="next"><a href="{$config.domain}/posts/{$next.slug}.{$config.pageExt}">Next &rarr;</a></li>{/if}{\n}
+    {if $prev}<li class="previous"><a href="{$config.domain}/{$prev.path}">&larr; Previous</a></li>{/if}{\n}
+    {if $next}<li class="next"><a href="{$config.domain}/{$next.path}">Next &rarr;</a></li>{/if}{\n}
   </ul>
 </div>{\n}
 {/template}

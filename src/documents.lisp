@@ -29,14 +29,14 @@
   (:documentation "The url to the DOCUMENT without the domain.")
   (:method (document)
     (let* ((class-name (class-name (class-of document)))
-           (route (assoc (make-keyword class-name) (routing *config*))))
+           (route (get-route class-name)))
       (if route
-          (format nil (second route) (slot-value document 'slug))
+          (format nil route (slug-of document))
           (error "No routing method found for: ~A" class-name)))))
 
 (defmethod page-url :around ((document t))
   (let* ((result (call-next-method))
-         (type (or (pathname-type result) "html")))
+         (type (or (pathname-type result) (page-ext *config*))))
     (make-pathname :type type :defaults result)))
 
 (defgeneric render (document &key &allow-other-keys)
@@ -63,6 +63,10 @@ use it as the template passing any RENDER-ARGS."
                   (render-page document nil)))
         (url (namestring (page-url document))))
     (write-file (rel-path (staging-dir *config*) url) html)))
+
+(defun get-route (doc-type)
+  "Return the route format string for DOC-TYPE."
+  (second (assoc (make-keyword doc-type) (routing *config*))))
 
 (defun find-all (doc-type)
   "Return a list of all instances of a given DOC-TYPE."

@@ -4,7 +4,7 @@
 <h1 class="page-header">{$index.title}</h1>
 {foreach $obj in $index.content}
   <div class="row-fluid">
-    <h1><a href="{$config.domain}/posts/{$obj.slug}.{$config.pageExt}">{$obj.title}</a></h1>
+    <h1><a href="{$config.domain}/{$obj.path}">{$obj.title}</a></h1>
     <p class="date-posted">posted on {$obj.date}</p>
     {$obj.text |noAutoescape}
   </div>
@@ -13,7 +13,7 @@
 <div class="row-fluid">
   <p>This blog covers
     {foreach $tag in $tags}
-      <a href="{$config.domain}/tag/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>{nil}
+      <a href="{$config.domain}/{$tag.path}">{$tag.name}</a>{nil}
       {if not isLast($tag)},{sp}{/if}
     {/foreach}
   </p>
@@ -23,7 +23,7 @@
 <div class="row-fluid">
   <p>View content from
     {foreach $month in $months}
-      <a href="{$config.domain}/date/{$month}.{$config.pageExt}">{$month}</a>{nil}
+      <a href="{$config.domain}/{$month.path}">{$month}</a>{nil}
       {if not isLast($month)},{sp}{/if}
     {/foreach}
   </p>

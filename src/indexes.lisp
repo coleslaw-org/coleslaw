@@ -6,13 +6,17 @@
   "The list of tags which content has been tagged with.")
 
 (defclass index ()
-  ((slug :initarg :slug :reader index-slug)
+  ((path :initarg :path :accessor path-of)
+   (slug :initarg :slug :reader slug-of)
    (title :initarg :title :reader title-of)
    (content :initarg :content :reader index-content)))
 
+(defmethod initialize-instance :after ((object index) &key)
+  (setf (path-of object) (page-url object)))
+
 (defmethod render ((object index) &key prev next)
-  (funcall (theme-fn 'index) (list :tags *all-tags*
-                                   :months *all-months*
+  (funcall (theme-fn 'index) (list :tags (find-all 'tag-index)
+                                   :months (find-all 'month-index)
                                    :config *config*
                                    :index object
                                    :prev prev
@@ -24,7 +28,7 @@
 
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
   (let ((content (by-date (find-all 'post))))
-    (dolist (tag (all-tags))
+    (dolist (tag *all-tags*)
       (add-document (index-by-tag tag content)))))
 
 (defun index-by-tag (tag content)
