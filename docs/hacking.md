@@ -235,14 +235,34 @@ taglinks and monthlinks in indexes, and prev/next links in numeric
 indexes. I'm also doing two `find-all` calls in the base `render`
 method for index. So I should profile and/or memoize that if needed.
 
-### Clean up Slugs vs Paths
-
+We should also not have a **slug** _and_ **path** slot due to this.
 Currently, we track uniqueness in the site by using a hashtable
 keyed on `page-url`, i.e. relative paths. The paths are mostly
 constructed from slugs. Sometimes we use the slugs for sorting
-or other purposes. It would be nice if we could build the paths
-at instance creation time and scrap the slugs altogether.
-How feasible is this?
+or other purposes. We should be able to build the paths at instance
+creation time and scrap the slugs altogether. Note that this will
+require changes to how we sort `NUMERIC-INDEX`.
+
+### Immutable Data
+
+Currently, most of our content classes (and the config class) have
+*accessor* slots in addition to *reader* slots. There should be no
+need for accessors as our data doesn't change after
+initialization. They are computed from the git repo, dumped into
+templates, and that's it. This is really a question of how we
+initialize things. I settled on the current `load-content` scheme,
+flawed as it is, because it is simple and lightweight.
+
+Content files in the git repo have a file extension denoting the
+content type, a header section with metadata and a text body. That
+gets transformed into a `construct` call (and ultimately
+`make-instance`) to the class matching the file extension, and a bunch
+of initargs. We avoid code duplication for lots of unique
+constructors, but we lose out some in error handling, separation of
+interface and implementation, etc.
+
+Keene's Object Oriented Programming in CL has good advice on this
+situation, specifically on page 162, Separation of Initargs and Slot Names.
 
 ### Finish up Basic Deploy
 
