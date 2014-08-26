@@ -7,8 +7,7 @@
   "Load the user's config file, then compile and deploy the blog stored
 in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (load-config repo-dir)
-  (setf (repo *config*) repo-dir
-        *last-revision* oldrev)
+  (setf *last-revision* oldrev)
   (load-content)
   (compile-theme (theme *config*))
   (let ((dir (staging-dir *config*)))

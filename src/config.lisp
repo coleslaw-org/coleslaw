@@ -66,5 +66,6 @@ doesn't exist, use the .coleslawrc in the home directory."
 preferred over the home directory if provided."
   (with-open-file (in (discover-config-path repo-dir) :external-format '(:utf-8))
     (let ((config-form (read in)))
-      (setf *config* (construct 'blog config-form))))
+      (setf *config* (construct 'blog config-form)
+            (repo *config*) repo-dir)))
   (load-plugins (plugins *config*)))
