@@ -219,34 +219,13 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement
 
-### Unified Routing
+### Minor Cleanups/Tasks
 
-Right now, the templates break if you use a custom routing scheme
-in your config. This is flatly ridiculous. The templates should be
-updated to use a url field stored on each object which will store
-the path of the object. This can be done transparently to users,
-though must be handled with care and may involve refactoring
-in the document protocol. Test carefully. If we cheat by hardcoding
-the sitemap and/or feeds, that's probably okay for the moment.
-
-Turns out this is even messier than I thought. Links are built from
-scratch in the templates *all over the place*. Tags in posts,
-taglinks and monthlinks in indexes, and prev/next links in numeric
-indexes. I'm also doing two `find-all` calls in the base `render`
-method for index. So I should profile and/or memoize that if needed.
-
-We should also not have a **slug** _and_ **path** slot due to this.
-Currently, we track uniqueness in the site by using a hashtable
-keyed on `page-url`, i.e. relative paths. The paths are mostly
-constructed from slugs. Sometimes we use the slugs for sorting
-or other purposes. We should be able to build the paths at instance
-creation time and scrap the slugs altogether. Note that this will
-require changes to how we sort `NUMERIC-INDEX`.
-
-### Finish up Basic Deploy
-
-The deploy method has been simplified and a git-hook plugin added.
-Documentation and testing for the other deploy plugins is next.
+* Try to get tag-index urls out of the tags. Post templates use them.
+* Profile/memoize find-all calls in **INDEX** `render` method.
+* Test basic deploy, ensure links from refactor work.
+* Lots of docs updates for next release. At a minimum, we have broken
+  custom themes. Config/plugin changes are definitely necessary too.
 
 ### Deprecate :repo config option?
 
