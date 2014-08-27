@@ -6,7 +6,7 @@
   <div class="tags">{\n}
     {if $post.tags}
       Tagged as {foreach $tag in $post.tags}
-        <a href="{$config.domain}/{$tag.path}">{$tag.name}</a>{nil}
+        <a href="{$config.domain}/{$tag.url}">{$tag.name}</a>{nil}
           {if not isLast($tag)},{sp}{/if}
       {/foreach}
     {/if}
@@ -21,7 +21,7 @@
   {$post.text |noAutoescape}
 </div>{\n}
 <div class="relative-nav">{\n}
-  {if $prev} <a href="{$config.domain}/{$prev.path}">Previous</a><br> {/if}{\n}
-  {if $next} <a href="{$config.domain}/{$next.path}">Next</a><br> {/if}{\n}
+  {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a><br> {/if}{\n}
+  {if $next} <a href="{$config.domain}/{$next.url}">Next</a><br> {/if}{\n}
 </div>{\n}
 {/template}

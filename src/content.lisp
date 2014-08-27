@@ -4,7 +4,12 @@
 
 (defclass tag ()
   ((name :initarg :name :reader tag-name)
-   (slug :initarg :slug :reader tag-slug)))
+   (slug :initarg :slug :reader tag-slug)
+   (url  :initarg :url)))
+
+(defmethod initialize-instance :after ((tag tag) &key)
+  (with-slots (url slug) tag
+    (setf url (compute-url nil slug 'tag-index))))
 
 (defun make-tag (str)
   "Takes a string and returns a TAG instance with a name and slug."
