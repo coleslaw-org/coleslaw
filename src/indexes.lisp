@@ -79,12 +79,8 @@
 
 (defmethod publish ((doc-type (eql (find-class 'numeric-index))))
   (let ((indexes (sort (find-all 'numeric-index) #'< :key #'index-name)))
-    (dolist (index indexes)
-      (let ((prev (1- (index-name index)))
-            (next (1+ (index-name index))))
-        (write-document index nil
-                        :prev (when (plusp prev) prev)
-                        :next (when (<= next (length indexes)) next))))))
+    (loop for (next index prev) on (append '(nil) indexes)
+       while index do (write-document index nil :prev prev :next next))))
 
 ;;; Helper Functions
 
