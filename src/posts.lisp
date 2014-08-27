@@ -1,18 +1,14 @@
 (in-package :coleslaw)
 
 (defclass post (content)
-  ((title :initarg :title :reader title-of)
-   (author :initarg :author :accessor author-of)
-   (format :initarg :format :accessor post-format))
+  ((title  :initarg :title  :reader title-of)
+   (author :initarg :author :reader author-of)
+   (format :initarg :format :reader post-format))
   (:default-initargs :author nil))
 
 (defmethod initialize-instance :after ((object post) &key)
-  (with-accessors ((title title-of)
-                   (author author-of)
-                   (format post-format)
-                   (text content-text)) object
-    (setf (slug-of object) (slugify title)
-          (path-of object) (page-url object)
+  (with-slots (url title author format text) object
+    (setf url (compute-url object (slugify title))
           format (make-keyword (string-upcase format))
           text (render-text text format)
           author (or author (author *config*)))))

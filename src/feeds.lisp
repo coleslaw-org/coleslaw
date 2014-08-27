@@ -3,7 +3,7 @@
 ;;; Atom and RSS Feeds
 
 (defclass feed (index)
-  ((format :initform nil :initarg :format :accessor feed-format)))
+  ((format :initform nil :initarg :format :reader feed-format)))
 
 (defclass standard-feed (feed) ())
 

@@ -26,18 +26,17 @@
 ;; Instance Methods
 
 (defgeneric page-url (document)
-  (:documentation "The url to the DOCUMENT without the domain.")
-  (:method (document)
-    (let* ((class-name (class-name (class-of document)))
-           (route (get-route class-name)))
-      (if route
-          (format nil route (slug-of document))
-          (error "No routing method found for: ~A" class-name)))))
+  (:documentation "The relative URL to the DOCUMENT."))
 
-(defmethod page-url :around ((document t))
-  (let* ((result (call-next-method))
-         (type (or (pathname-type result) (page-ext *config*))))
-    (make-pathname :type type :defaults result)))
+(defun compute-url (document unique-id)
+  "Compute the relative URL for a DOCUMENT based on its UNIQUE-ID."
+  (let* ((class-name (class-name (class-of document)))
+         (route (get-route class-name)))
+    (unless route
+      (error "No routing method found for: ~A" class-name))
+    (let* ((result (format nil route unique-id))
+           (type (or (pathname-type result) (page-ext *config*))))
+      (make-pathname :type type :defaults result))))
 
 (defgeneric render (document &key &allow-other-keys)
   (:documentation "Render the given DOCUMENT to HTML."))

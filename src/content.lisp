@@ -31,16 +31,15 @@
 ;; Content Types
 
 (defclass content ()
-  ((file :initarg :file :reader content-file)
+  ((url  :initarg :url  :reader page-url)
    (date :initarg :date :reader content-date)
-   (path :initarg :path :accessor path-of)
-   (slug :initarg :slug :accessor slug-of)
-   (tags :initarg :tags :accessor content-tags)
-   (text :initarg :text :accessor content-text))
-  (:default-initargs :tags nil :date nil :slug nil))
+   (file :initarg :file :reader content-file)
+   (tags :initarg :tags :reader content-tags)
+   (text :initarg :text :reader content-text))
+  (:default-initargs :tags nil :date nil))
 
 (defmethod initialize-instance :after ((object content) &key)
-  (with-accessors ((tags content-tags)) object
+  (with-slots (tags) object
     (when (stringp tags)
       (setf tags (mapcar #'make-tag (cl-ppcre:split "," tags))))))
 

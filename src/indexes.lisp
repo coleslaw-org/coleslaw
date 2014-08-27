@@ -6,13 +6,13 @@
   "The list of tags which content has been tagged with.")
 
 (defclass index ()
-  ((path :initarg :path :accessor path-of)
-   (slug :initarg :slug :reader slug-of)
-   (title :initarg :title :reader title-of)
+  ((url     :initarg :url     :reader page-url)
+   (title   :initarg :title   :reader title-of)
    (content :initarg :content :reader index-content)))
 
-(defmethod initialize-instance :after ((object index) &key)
-  (setf (path-of object) (page-url object)))
+(defmethod initialize-instance :after ((object index) &key slug)
+  (with-slots (url) object
+    (setf url (compute-url object slug))))
 
 (defmethod render ((object index) &key prev next)
   (funcall (theme-fn 'index) (list :tags (find-all 'tag-index)

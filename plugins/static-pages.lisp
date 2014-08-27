@@ -20,8 +20,9 @@
 
 (defmethod initialize-instance :after ((object page) &key)
   ;; Expect all static-pages to be written in Markdown for now.
-  (with-accessors ((text content-text)) object
-    (setf text (render-text text :md))))
+  (with-slots (url text) object
+    (setf url (make-pathname :defaults url)
+          text (render-text text :md))))
 
 (defmethod render ((object page) &key next prev)
   ;; For the time being, we'll re-use the normal post theme.
