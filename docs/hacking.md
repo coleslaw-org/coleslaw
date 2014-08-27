@@ -223,15 +223,9 @@ PAGE, a content type for static page support, is available as a plugin.
 
 * Try to get tag-index urls out of the tags. Post templates use them.
 * Profile/memoize find-all calls in **INDEX** `render` method.
-* Test basic deploy, ensure links from refactor work.
 * Lots of docs updates for next release. At a minimum, we have broken
   custom themes. Config/plugin changes are definitely necessary too.
-
-### Deprecate :repo config option?
-
-Coleslaw must at this point *always* be called with `coleslaw:main`
-passing the repo directory as an argument. Given this, there is no
-need for users to specify a repo in their config.
+  Note that the `:repo` config option is ignored now/sourced from `main`.
 
 ### Real Error Handling
 
@@ -255,6 +249,9 @@ that are useful to the user. Example errors users have encountered:
    i.e. Specifying the `:repo` in .coleslawrc as the bare repo.
    The README should clarify this point and the need for posts to be
    ".post" files.
+4. Dear Lord it was miserable even debugging a transposed character error
+   in one of the templates. "${foo}" instead of "{$foo}". But fuck supporting
+   multiple templating backends I have enough problems.
 
 ### Scripting Conveniences/Basic Install
 
