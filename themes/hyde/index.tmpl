@@ -17,7 +17,7 @@
 <div id="tagsoup">
   <p>This blog covers
     {foreach $tag in $tags}
-      <a href="{$config.domain}/${tag.url}">{$tag.name}</a>{nil}
+      <a href="{$config.domain}/{$tag.url}">{$tag.name}</a>{nil}
       {if not isLast($tag)},{sp}{/if}
     {/foreach}
 </div>
