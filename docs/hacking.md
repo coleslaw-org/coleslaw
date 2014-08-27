@@ -219,7 +219,7 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement
 
-### Minor Cleanups/Tasks
+### Assorted Cleanups
 
 * Try to get tag-index urls out of the tags. Post templates use them.
 * Profile/memoize find-all calls in **INDEX** `render` method.
@@ -251,26 +251,16 @@ that are useful to the user. Example errors users have encountered:
    ".post" files.
 4. Dear Lord it was miserable even debugging a transposed character error
    in one of the templates. "${foo}" instead of "{$foo}". But fuck supporting
-   multiple templating backends I have enough problems.
+   multiple templating backends I have enough problems. What can we do?
 
-### Scripting Conveniences/Basic Install
+### Scripting Conveniences
 
-Right now, we assume that you want to set up a bare repo and use git push
-for site deploys. However good a system this may be, we don't need to have
-it as a baked in assumption for coleslaw. The current deploy system should
-be moved into a plugin and replaced with something braindead
-(e.g. `mv` staging-dir to deploy-dir).
-
-This leads to the following:
-
-1. Simplify the getting started process for new users.
-   They should just be able to do
+1. The getting started process has been simplified for new users.
+   They are able to just place a config in $HOME or their repo and do
    `(progn
       (ql:quickload :coleslaw)
       (coleslaw:main "/path/to/my/blog-repo"))`.
-   We'll still require a git repo for now. This does necessitate updating
-   `get-updated-files` for the case where no revision is passed.
-2. We could also add command-line tools/scripts to run coleslaw, set up
+2. We may also add command-line tools/scripts to run coleslaw, set up
    the db for incremental builds, scaffold a new post, etc. for new users.
    Xach's buildapp or cl-launch would be useful here. frog and hakyll are
    good points of inspiration as well.
