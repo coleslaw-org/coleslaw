@@ -4,11 +4,12 @@
  :feeds ("lisp")
  :plugins ((analytics :tracking-code "foo")
            (disqus :shortname "my-site-name")
-           ; (git-hook)     ;; *Remove comment to enable git push deploys.
-           ; (incremental)  ;; *Remove comment enable incremental builds.
+           ; (incremental)  ;; *Remove comment to enable incremental builds.
            (mathjax)
            (sitemap)
-           (static-pages))
+           (static-pages)
+           ; (versioned)    ;; *Remove comment to enable symlinked, timestamped deploys.
+          )
  :routing ((:post           "posts/~a")
            (:tag-index      "tag/~a")
            (:month-index    "date/~a")

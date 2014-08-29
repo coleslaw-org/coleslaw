@@ -1,3 +1,24 @@
+## Changes for 0.9.6 (2014-09-07):
+
+* **SITE-BREAKING CHANGE**: Coleslaw now defaults to a "basic" deploy
+  instead of the previous symlinked, timestamped deploy strategy.
+  To retain the previous behavior, add `(versioned)` to your config's
+  `:plugins` list.
+* **SITE-BREAKING CHANGE**: Custom themes will be broken by a change
+  to URL handling. Previously, we were hand-constructed URLs in the
+  templates. All site objects now store their URL in an instance slot.
+  In general, hrefs should be of the form `href="{$config.domain}/{$obj.url}"> ...</a>`.
+  Additionally, `{$month}` should become `{$month.name}`.
+  Correspondingly, changes to `:routing` would previously break links in
+  the templates but now work seamlessly.
+* The config `:repo` option is now deprecated as its value has become
+  a required argument to `coleslaw:main`. The value passed to `main`
+  will override the config value going forward.
+* Improved handling of directories and error-reporting when they
+  don't exist is available thanks to @PuercoPop.
+* The templates are now HTML5 valid thanks to @Ferada.
+* Fixed a bug where RSS/Atom tag feeds were being published multiple times.
+
 ## Changes for 0.9.5 (2014-06-13):
 
 * A plugin for Incremental builds, cutting runtime for generating

@@ -1,4 +1,4 @@
-(defpackage :coleslaw-git-hook
+(defpackage :coleslaw-versioned
   (:use :cl)
   (:import-from :coleslaw #:*config*
                           #:deploy-dir
@@ -6,7 +6,7 @@
                           #:run-program
                           #:update-symlink))
 
-(in-package :coleslaw-git-hook)
+(in-package :coleslaw-versioned)
 
 (defmethod coleslaw:deploy (staging)
   (let* ((dest (deploy-dir *config*))

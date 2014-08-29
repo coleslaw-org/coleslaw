@@ -219,13 +219,24 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement
 
+### TODO for 0.9.6
+
+* Serious updates to README and themes.md. Skim hacking.md but it's probably okay.
+* A real test suite with Stefil that at *least* tests:
+  * `read-content`
+  * `load-config`
+  * Content Discovery
+  * Theme Compilation
+  * Content Publishing
+  * Common Plugins including Injections
+* Merge @PuercoPop's twitter summary cards plugin in some form.
+* Make read-content/load-content more robust. Improving template debugging will be part of 0.9.7.
+* Some minor scripting conveniences with cl-launch? (Scaffold a post/page, Enable incremental, Build, etc).
+
 ### Assorted Cleanups
 
 * Try to get tag-index urls out of the tags. Post templates use them.
 * Profile/memoize find-all calls in **INDEX** `render` method.
-* Lots of docs updates for next release. At a minimum, we have broken
-  custom themes. Config/plugin changes are definitely necessary too.
-  Note that the `:repo` config option is ignored now/sourced from `main`.
 
 ### Real Error Handling
 
@@ -237,7 +248,7 @@ at best, especially for anyone not coming from the lisp world.
 We need to start handling errors and reporting errors in ways
 that are useful to the user. Example errors users have encountered:
 
-1. Loading of Content. If `read-content` fails to parse a file, we
+1. Loading of Content. If `read-content` fails to parse a file, wen
    should tell the user what file failed and why. We also should
    probably enforce more constraints about metadata. E.g. Empty
    metadata is not allowed/meaningful. Trailing space after separator, etc.
@@ -279,6 +290,11 @@ some assertions and error out at plugin load time if they fail should be
 doable. I might not be able to [make illegal states unrepresentable][misu],
 but I can sure as hell make them harder to construct than they are now.
 
+@PuercoPop has suggested looking into how [wookie does plugins][wookie].
+It's much more heavyweight but might be worth looking into. If we go that
+route, the plugin support code will be almost half the coleslaw core.
+Weigh the tradeoffs carefully.
+
 ### New Content Type: Shouts!
 
 I've also toyed with the idea of a content type called a SHOUT, which
@@ -319,3 +335,4 @@ Unfortunately, this does not solve:
 [asdf3]: https://github.com/fare/asdf3-2013
 [qpq]: https://github.com/sellout/quid-pro-quo
 [misu]: https://blogs.janestreet.com/effective-ml-revisited/
+[wookie]: https://github.com/orthecreedence/wookie/blob/master/plugin.lisp#L181
