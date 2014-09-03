@@ -248,7 +248,7 @@ at best, especially for anyone not coming from the lisp world.
 We need to start handling errors and reporting errors in ways
 that are useful to the user. Example errors users have encountered:
 
-1. Loading of Content. If `read-content` fails to parse a file, wen
+1. Loading of Content. If `read-content` fails to parse a file, we
    should tell the user what file failed and why. We also should
    probably enforce more constraints about metadata. E.g. Empty
    metadata is not allowed/meaningful. Trailing space after separator, etc.

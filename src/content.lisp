@@ -48,27 +48,31 @@
     (when (stringp tags)
       (setf tags (mapcar #'make-tag (cl-ppcre:split "," tags))))))
 
+(defun parse-metadata (stream)
+  "Given a STREAM, parse metadata from it or signal an appropriate condition."
+  (flet ((parse-field (str)
+           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+:\\s+(.*)" str)))
+         (field-name (line)
+           (make-keyword (string-upcase (subseq line 0 (position #\: line))))))
+    (unless (string= (read-line stream nil) (separator *config*))
+      (error "The provided file lacks the expected header."))
+    (loop for line = (read-line stream nil)
+       until (string= line (separator *config*))
+       appending (list (field-name line)
+                       (aref (parse-field line) 0)))))
+
 (defun read-content (file)
-  "Returns a plist of metadata from FILE with :text holding the content as a string."
+  "Returns a plist of metadata from FILE with :text holding the content."
   (flet ((slurp-remainder (stream)
            (let ((seq (make-string (- (file-length stream)
                                       (file-position stream)))))
              (read-sequence seq stream)
-             (remove #\Nul seq)))
-         (parse-field (str)
-           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+:\\s+(.*)" str)))
-         (field-name (line)
-           (make-keyword (string-upcase (subseq line 0 (position #\: line))))))
+             (remove #\Nul seq))))
     (with-open-file (in file :external-format '(:utf-8))
-      (unless (string= (read-line in) (separator *config*))
-        (error "The provided file lacks the expected header."))
-      (let ((meta (loop for line = (read-line in nil)
-                     until (string= line (separator *config*))
-                     appending (list (field-name line)
-                                     (aref (parse-field line) 0))))
-            (filepath (enough-namestring file (repo *config*)))
-            (content (slurp-remainder in)))
-        (append meta (list :text content :file filepath))))))
+      (let ((metadata (parse-metadata in))
+            (content (slurp-remainder in))
+            (filepath (enough-namestring file (repo *config*))))
+        (append metadata (list :text content :file filepath))))))
 
 ;; Helper Functions
 
