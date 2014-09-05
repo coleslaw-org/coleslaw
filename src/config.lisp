@@ -18,6 +18,10 @@
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title))
   (:default-initargs
+   :feeds        nil
+   :license      nil
+   :plugins      nil
+   :sitenav      nil
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     "html"

@@ -5,12 +5,15 @@
   To retain the previous behavior, add `(versioned)` to your config's
   `:plugins` list.
 * **SITE-BREAKING CHANGE**: Custom themes will be broken by a change
-  to URL handling. Previously, we were hand-constructed URLs in the
+  to URL handling. Previously, we were hand-constructing URLs in the
   templates. All site objects now store their URL in an instance slot.
   In general, hrefs should be of the form `href="{$config.domain}/{$obj.url}"> ...</a>`.
   Additionally, `{$month}` should become `{$month.name}`.
   Correspondingly, changes to `:routing` would previously break links in
   the templates but now work seamlessly.
+* **Docs**: Improved README. New Config File docs.
+* Loading content is more robust when empty lines or metadata are passed.
+  Thanks to @PuercoPop for the bug report and preliminary fix.
 * The config `:repo` option is now deprecated as its value has become
   a required argument to `coleslaw:main`. The value passed to `main`
   will override the config value going forward.

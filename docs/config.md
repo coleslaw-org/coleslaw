@@ -15,8 +15,6 @@ The only *required* information in the config is:
 * `:title`        => to provide a site title
 * `:theme`        => to select one of the themes in "coleslaw/themes/"
 
-**TODO** Make sure this is actually true. Maybe without `:feeds` the publish method blows up? Test!
-
 It is usually recommend to start from the [example config][ex_config] and pare down from there.
 
 [ex_config]: https://github.com/redline6561/coleslaw/blob/master/examples/example.coleslawrc
