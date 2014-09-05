@@ -32,7 +32,7 @@ Every page other than those in the `posts/` directory is an `index`.
 
 **Every** page uses the `base.tmpl` and fills in the content using
 either the `post` or `index` templates. No important logic should be
-in *any* template, they are only used to give provide consistent layout.
+in *any* template, they are only used to provide a consistent layout.
 
 *  `base.tmpl` This template generates the outer shell of the HTML.
    It keeps a consistent look and feel for all pages in the blog. The
@@ -64,7 +64,7 @@ simplest to either modify the existing default theme, `hyde`, or copy
 it in entirety and then tweak only the CSS of your new theme. A large
 amount of visual difference can be had with a minimum of (or no)
 template hacking. There is plenty of advice on CSS styling on the web.
-I'm no expert but feel free to send pull requests modifying theme's
+I'm no expert but feel free to send pull requests modifying a theme's
 CSS or improving this section, perhaps by recommending a CSS resource.
 
 ## Creating a Theme from Scratch (with code)
@@ -114,10 +114,15 @@ The templating language is documented [elsewhere][clt].
 However as a short primer:
 
 *  Everything is output literally, except template commands.
-*  Template commands are enclosed in `{` and `}`
+*  Template commands are enclosed in `{` and `}`.
 *  Variables, which are provided by coleslaw, can be referenced
    inside a template command. So to use a variable you have to say
    `{$variable}` or `{$variable.key}`.
+   **WARNING**: At present, cl-closure-template does not have great debugging.
+   If you typo this, e.g. `${variable}`, you will receive an *uninformative*
+   and apparently unrelated error. Also, attempted access of non-existent keys
+   fails silently. We are exploring options for making debugging easier in a
+   future release.
 *  If statements are written as `{if ...} ... {else} ... {/if}`.
    Typical examples are: `{if $injections.body} ... {/if}` or
    `{if not isLast($link)} ... {/if}`.
@@ -139,19 +144,16 @@ The variable that should be available to all templates is:
 #### Index Template Variables
 
 - **tags**         A list containing all the tags, each with keys
-                   `.name` and `.slug`.
-- **months**       A list of all months with posts as `yyyy-mm` strings.
+                   `name` and `url`.
+- **months**       A list of all the content months, each with keys
+                   `name` and `url`.
 - **index**        This is the meat of the content. This variable has
                    the following keys:
-   - `id`,    the name of the page that will be rendered
    - `content`, a list of content (see below)
-   - `title`, a string title to display to the user
-- **prev**         If this index file is part of a chain, the `id`
-                   of the previous index html in the chain.
-                   If this is the first file, the value will be empty.
-- **next**         If this index file is part of a chain, the `id`
-                   of the next index html in the chain.
-                   If this is the last file, the value will be empty.
+   - `name`,  a name to use in links or href tags
+   - `title`, a title to use in H1 or header tags
+- **prev**         Nil or the previous index with keys: `url` and `title`.
+- **next**         Nil or the next index with keys: `url` and `title`.
 
 #### Post Template Variable
 
@@ -160,8 +162,8 @@ The variable that should be available to all templates is:
 - **post**         All these variables are post objects. **prev** and
                    **next** are the adjacent posts when put in
                    chronological order. Each post has the following keys:
-   - `tags`, a list of tags (each with keys `name` and `slug`)
-   - `slug`, the slug of the post
+   - `url`, the relative url of the post
+   - `tags`, a list of tags (each with keys `name` and `url`)
    - `date`, the date of posting
    - `text`, the HTML of the post's body
    - `title`, the title of the post
@@ -190,8 +192,8 @@ A simple `index.tmpl` looks like this:
 {namespace coleslaw.theme.trivial}
 {template index}
 {foreach $obj in $index.content}
-<h1>{$obj.title}</h1>
-  {$obj.text |noAutoescape}
+<h1>{$object.title}</h1>
+  {$object.text |noAutoescape}
 {/foreach}
 {/template}
 ```
@@ -209,14 +211,7 @@ And a simple `post.tmpl` is similarly:
 
 All of the files are now populated with content. There are still no links
 between the pages so navigation is cumbersome but adding links is simple.
-Good luck!
-
-## Note on adding links
-
-As mentioned earlier, most files have a file name which is a slug of
-some sort. So if you want to create a link to a tag file you should
-do something like this:
-`<a href="${config.domain}/tags/{$tag.slug}.{$config.pageExt}">{$tag.name}</a>`.
+Just do: `<a href="{$config.domain}/{$object.url}">{$object.name}</a>`.
 
 [clt]: https://developers.google.com/closure/templates/
 [ovr]: https://github.com/redline6561/coleslaw/blob/master/docs/overview.md

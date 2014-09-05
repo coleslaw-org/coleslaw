@@ -11,7 +11,7 @@
   Additionally, `{$month}` should become `{$month.name}`.
   Correspondingly, changes to `:routing` would previously break links in
   the templates but now work seamlessly.
-* **Docs**: Improved README. New Config File docs.
+* **Docs**: Improved README and Theming docs. New Config File docs.
 * Loading content is more robust when empty lines or metadata are passed.
   Thanks to @PuercoPop for the bug report and preliminary fix.
 * The config `:repo` option is now deprecated as its value has become

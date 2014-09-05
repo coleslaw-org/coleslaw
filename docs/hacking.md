@@ -218,7 +218,6 @@ PAGE, a content type for static page support, is available as a plugin.
 ### TODO for 0.9.6
 
 * Finish docs updates to:
-  * themes.md     -> Note debugging issues. Valid slots. Changed URL handling.
   * plugin-use.md -> Incremental plugin, Versioned plugin. Twitter summary cards.
 * A real test suite with Stefil that at *least* tests:
   * `read-content`
