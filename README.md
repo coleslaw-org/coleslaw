@@ -32,7 +32,7 @@ Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghend
 
 ## Example Sites
 
-See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blog roll) for a list of coleslaw-powered blogs.
+See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blogroll) for a list of coleslaw-powered blogs.
 
 ## Hacking
 
