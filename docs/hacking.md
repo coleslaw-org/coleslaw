@@ -221,8 +221,11 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ### TODO for 0.9.6
 
-* Serious updates to README and themes.md. Skim hacking.md but it's probably okay.
-* Make read-content/load-content more robust.
+* Finish docs updates to:
+  * themes.md     -> Note debugging issues. Valid slots. Changed URL handling.
+  * plugin-use.md -> Incremental plugin, Versioned plugin. Twitter summary cards.
+  * hacking.md    -> Any changes to Document Protocol?
+  * config.md     -> Test various empty config slots.
 * A real test suite with Stefil that at *least* tests:
   * `read-content`
   * `load-config`
@@ -235,6 +238,7 @@ PAGE, a content type for static page support, is available as a plugin.
   * Theme Compilation
   * Content Publishing
   * Common Plugins including Injections
+* Add proper errors to read-content/load-content. Not just ignoring bad data. Line info, etc.
 * Improved template debugging? "${" instead of "{$", static checks for valid slots, etc.
   At least a serious investigation into how such things might be provided.
 * Some minor scripting conveniences with cl-launch? (Scaffold a post/page, Enable incremental, Build, etc).
