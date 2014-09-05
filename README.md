@@ -32,9 +32,7 @@ Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghend
 
 ## Example Sites
 
-See the [wiki][blogroll] for a list of coleslaw-powered blogs.
-
-[blogroll]: https://github.com/redline6561/coleslaw/wiki/Blog roll
+See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blog roll) for a list of coleslaw-powered blogs.
 
 ## Hacking
 
@@ -65,7 +63,8 @@ Otherwise, run the commands on your local machine.
    config file in that blog's repo.  Feel free to copy and edit the
    [example config][ex_config] or consult the [config docs][conf_docs]
    to create one from scratch.
-3. * Server Install: Copy and `chmod +x` the
+3. This step depends on whether you're setting up a local or server install.
+   * Server Install: Copy and `chmod +x` the
      [example post-receive hook][post_hook] to your blog's bare repo.
    * Local Install:  Just run the following commands in the
      REPL whenever you're ready to regenerate your blog:
