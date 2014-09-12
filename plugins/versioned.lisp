@@ -20,3 +20,5 @@
     (when (probe-file curr)
       (update-symlink prev (truename curr)))
     (update-symlink curr new-build)))
+
+(defun enable ())
