@@ -1,4 +1,4 @@
-## Changes for 0.9.6 (2014-09-07):
+## Changes for 0.9.6 (2014-09-17):
 
 * **SITE-BREAKING CHANGE**: Coleslaw now defaults to a "basic" deploy
   instead of the previous symlinked, timestamped deploy strategy.
