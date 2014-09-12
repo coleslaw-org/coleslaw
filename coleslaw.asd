@@ -31,11 +31,13 @@
                              (intern "COLESLAW-TESTS" :coleslaw-tests))))
 
 (defsystem #:coleslaw-tests
-  :depends-on (coleslaw fiveam)
+  :depends-on (coleslaw fiveam stefil)
   :pathname "tests/"
   :serial t
   :components ((:file "packages")
-               (:file "tests")))
+               (:file "tests")
+               (:module "plugins"
+                (:file "twitter-summary-card"))))
 
 (defmethod operation-done-p ((op test-op)
                              (c (eql (find-system :coleslaw))))
