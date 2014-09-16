@@ -22,13 +22,11 @@ Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghend
   * Incremental builds
   * Analytics via Google
   * Comments via [Disqus](http://disqus.com/)
-  * Hosting via [Github Pages](https://pages.github.com/), [Heroku](http://heroku.com/), or [Amazon S3](http://aws.amazon.com/s3/)
+  * Hosting via [Github Pages](https://pages.github.com/) or [Amazon S3](http://aws.amazon.com/s3/)
   * [Tweeting](http://twitter.com/) about new posts
   * Using LaTeX via [Mathjax](http://mathjax.org/)
   * Writing posts in ReStructured Text
   * Importing posts from [Wordpress](http://wordpress.org/)
-
-* There is also a [Heroku buildpack](https://github.com/jsmpereira/coleslaw-heroku) maintained by Jose Pereira.
 
 ## Example Sites
 
@@ -70,7 +68,6 @@ Otherwise, run the commands on your local machine.
      REPL whenever you're ready to regenerate your blog:
      ```
      (ql:quickload :coleslaw)
-     ;; Note that the incremental plugin currently requires a "last git revision" argument.
      (coleslaw:main "/path/to/my/blog/")
      ```
 4. Optionally, point the web server of your liking at your config-specified

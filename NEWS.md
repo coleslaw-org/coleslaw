@@ -7,10 +7,9 @@
 * **SITE-BREAKING CHANGE**: Custom themes will be broken by a change
   to URL handling. Previously, we were hand-constructing URLs in the
   templates. All site objects now store their URL in an instance slot.
-  In general, hrefs should be of the form `href="{$config.domain}/{$obj.url}"> ...</a>`.
-  Additionally, `{$month}` should become `{$month.name}`.
-  Correspondingly, changes to `:routing` would previously break links in
-  the templates but now work seamlessly.
+  In general, hrefs should be of the form `<a href="{$config.domain}/{$obj.url}"> ...</a>`.
+* Changes to `:routing` would previously break links in the templates
+  but now work seamlessly due to the updated URL handling.
 * **Docs**: Improved README and Theming docs. New Config File docs.
 * Loading content is more robust when empty lines or metadata are passed.
   Thanks to @PuercoPop for the bug report and preliminary fix.
