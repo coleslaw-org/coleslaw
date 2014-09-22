@@ -48,22 +48,22 @@
     (when (stringp tags)
       (setf tags (mapcar #'make-tag (cl-ppcre:split "," tags))))))
 
+(defun parse-initarg (line)
+  "Given a metadata header, LINE, parse an initarg name/value pair from it."
+  (let ((name (string-upcase (subseq line 0 (position #\: line))))
+        (match (nth-value 1 (scan-to-strings "[a-zA-Z]+:\\s+(.*)" line))))
+    (when match
+      (list (make-keyword name) (aref match 0)))))
+
 (defun parse-metadata (stream)
   "Given a STREAM, parse metadata from it or signal an appropriate condition."
-  (labels ((get-next-line (input)
-             (string-trim '(#\Space #\Newline #\Tab) (read-line input nil)))
-           (parse-value (str)
-             (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+:\\s+(.*)" str)))
-           (parse-initarg-name (line)
-             (make-keyword (string-upcase (subseq line 0 (position #\: line)))))
-           (extract-initarg (line)
-             (list (parse-initarg-name line) (aref (parse-value line) 0))))
+  (flet ((get-next-line (input)
+           (string-trim '(#\Space #\Newline #\Tab) (read-line input nil))))
     (unless (string= (get-next-line stream) (separator *config*))
       (error "The file lacks the expected header: ~a" (separator *config*)))
     (loop for line = (get-next-line stream)
        until (string= line (separator *config*))
-       when (parse-value line)
-       appending (extract-initarg line))))
+       appending (parse-initarg line))))
 
 (defun read-content (file)
   "Returns a plist of metadata from FILE with :text holding the content."
