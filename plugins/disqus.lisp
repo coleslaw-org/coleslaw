@@ -24,5 +24,7 @@
      <a href=\"http://disqus.com\" class=\"dsq-brlink\">comments powered by <span class=\"logo-disqus\">Disqus</span></a>")
 
 (defun enable (&key shortname)
-  (add-injection (list (format nil *disqus-header* shortname)
-                       (lambda (x) (typep x 'post))) :body))
+  (flet ((inject-p (x)
+           (when (typep x 'post)
+             (format nil *disqus-header* shortname))))
+    (add-injection #'inject-p :body)))

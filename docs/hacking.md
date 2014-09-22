@@ -213,7 +213,7 @@ order. Feeds exist to special case RSS and ATOM generation.
 Currently, there is only 1 content type: POST, for blog entries.
 PAGE, a content type for static page support, is available as a plugin.
 
-## Areas for Improvement
+## Areas for Improvement (i.e. The Roadmap)
 
 ### TODO for 0.9.6
 

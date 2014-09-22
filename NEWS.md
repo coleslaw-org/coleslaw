@@ -4,13 +4,16 @@
   instead of the previous symlinked, timestamped deploy strategy.
   To retain the previous behavior, add `(versioned)` to your config's
   `:plugins` list.
-* **SITE-BREAKING CHANGE**: Custom themes will be broken by a change
+* **Incompatible Change**: Custom themes will be broken by a change
   to URL handling. Previously, we were hand-constructing URLs in the
   templates. All site objects now store their URL in an instance slot.
   In general, hrefs should be of the form `<a href="{$config.domain}/{$obj.url}"> ...</a>`.
+* **Incompatible Change**: The interface of the `add-injection` function
+  has changed. If you have written a plugin which uses `add-injection`
+  you should update it to conform to the [new interface][add-inj-new].
+* **Docs**: Improved README and Theming docs. New Config File docs.
 * Changes to `:routing` would previously break links in the templates
   but now work seamlessly due to the updated URL handling.
-* **Docs**: Improved README and Theming docs. New Config File docs.
 * Loading content is more robust when empty lines or metadata are passed.
   Thanks to @PuercoPop for the bug report and preliminary fix.
 * The config `:repo` option is now deprecated as its value has become
@@ -20,6 +23,8 @@
   don't exist is available thanks to @PuercoPop.
 * The templates are now HTML5 valid thanks to @Ferada.
 * Fixed a bug where RSS/Atom tag feeds were being published multiple times.
+
+[add-inj-new]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md#extension-points
 
 ## Changes for 0.9.5 (2014-06-13):
 

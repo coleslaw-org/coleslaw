@@ -21,4 +21,5 @@
 </script>")
 
 (defun enable (&key tracking-code)
-  (add-injection (format nil *analytics-js* tracking-code) :head))
+  (let ((snippet (format nil *analytics-js* tracking-code)))
+    (add-injection (constantly snippet) :head)))

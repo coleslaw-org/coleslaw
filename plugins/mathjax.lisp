@@ -24,6 +24,7 @@
 
 (defun enable (&key force config (preset "TeX-AMS-MML_HTMLorMML")
                  (location "http://cdn.mathjax.org/mathjax/latest/MathJax.js"))
-  (flet ((plugin-p (x) (or force (mathjax-p x))))
-    (let ((mathjax-header (format nil *mathjax-header* config location preset)))
-      (add-injection (list mathjax-header #'plugin-p) :head))))
+  (flet ((inject-p (x)
+           (when (or force (mathjax-p x))
+             (format nil *mathjax-header* config location preset))))
+    (add-injection #'inject-p :head)))
