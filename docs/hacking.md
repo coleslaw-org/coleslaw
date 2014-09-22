@@ -215,21 +215,15 @@ PAGE, a content type for static page support, is available as a plugin.
 
 ## Areas for Improvement (i.e. The Roadmap)
 
-### TODO for 0.9.6
-
-* A real test suite with Stefil that at *least* tests:
-  * `read-content`
-  * `load-config`
-* Merge @PuercoPop's twitter summary cards plugin in some form.
-
 ### TODO for 0.9.7
 
 * Test suite improvements:
+  * `load-content`/`read-content`/parsing
   * Content Discovery
   * Theme Compilation
   * Content Publishing
   * Common Plugins including Injections
-* Add proper errors to read-content/load-content. Not just ignoring bad data. Line info, etc.
+* Add proper errors to read-content/load-content? Not just ignoring bad data. Line info, etc.
 * Improved template debugging? "${" instead of "{$", static checks for valid slots, etc.
   At least a serious investigation into how such things might be provided.
 * Some minor scripting conveniences with cl-launch? (Scaffold a post/page, Enable incremental, Build, etc).
