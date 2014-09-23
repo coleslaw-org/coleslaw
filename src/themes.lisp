@@ -6,7 +6,7 @@
 (defun add-injection (injection location)
   "Adds an INJECTION to a given LOCATION for rendering. The INJECTION should be a
 function that takes a DOCUMENT and returns NIL or a STRING for template insertion."
-  (push result (getf *injections* location)))
+  (push injection (getf *injections* location)))
 
 (defun find-injections (content)
   "Iterate over *INJECTIONS* collecting any that should be added to CONTENT."
