@@ -2,25 +2,25 @@
 
 ;;; Atom and RSS Feeds
 
-(defclass feed () ((format :initarg :format :reader feed-format)))
+(defclass base-feed () ((format :initarg :format :reader feed-format)))
 
-(defclass standard-feed (index feed) ())
+(defclass feed (index base-feed) ())
 
-(defmethod discover ((doc-type (eql (find-class 'standard-feed))))
+(defmethod discover ((doc-type (eql (find-class 'feed))))
   (let ((content (by-date (find-all 'post))))
     (dolist (format '(rss atom))
-      (let ((feed (make-instance 'standard-feed :format format
+      (let ((feed (make-instance 'feed :format format
                                  :content (take-up-to 10 content)
                                  :slug (format nil "~(~a~)" format))))
         (add-document feed)))))
 
-(defmethod publish ((doc-type (eql (find-class 'standard-feed))))
-  (dolist (feed (find-all 'standard-feed))
+(defmethod publish ((doc-type (eql (find-class 'feed))))
+  (dolist (feed (find-all 'feed))
     (write-document feed (theme-fn (feed-format feed) "feeds"))))
 
 ;;; Tag Feeds
 
-(defclass tag-feed (index feed) ())
+(defclass tag-feed (index base-feed) ())
 
 (defmethod discover ((doc-type (eql (find-class 'tag-feed))))
   (let ((content (by-date (find-all 'post))))
