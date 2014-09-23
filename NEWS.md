@@ -7,7 +7,7 @@ Legend:
     A change to Coleslaw's exported interface. Plugins or Themes that have
     not been upstreamed are effected and may require minor effort to fix.
 
-## Changes for 0.9.6 (2014-09-17):
+## Changes for 0.9.6 (2014-09-27):
 
 * **SITE-BREAKING CHANGE**: Coleslaw now defaults to a "basic" deploy
   instead of the previous symlinked, timestamped deploy strategy.
@@ -20,6 +20,8 @@ Legend:
 * **Incompatible Change**: The interface of the `add-injection` function
   has changed. If you have written a plugin which uses `add-injection`
   you should update it to conform to the [new interface][plg-api].
+* **New Plugin**: Support for [twitter summary cards][ts-cards] on blog
+  posts has been added thanks to @PuercoPop.
 * **Docs**: Improved README and Theming docs. New Config File docs.
 * Changes to `:routing` would previously break links in the templates
   but now work seamlessly due to the updated URL handling.
@@ -141,3 +143,4 @@ Legend:
 [example.rc]: https://github.com/redline6561/coleslaw/blob/master/examples/example.coleslawrc
 [plg-use]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md
 [plg-api]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md#extension-points
+[ts-cards]: https://dev.twitter.com/cards/types/summary

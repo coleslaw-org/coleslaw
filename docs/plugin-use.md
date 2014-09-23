@@ -144,6 +144,13 @@ CL-USER> (chirp:complete-authentication "4173325")
 #<CHIRP-OBJECTS:USER PuercoPop #18405433>
 ```
 
+## Twitter Summary Cards
+
+**Description**: Add Summary Card metadata to blog posts
+  to enhance twitter links to that content.
+
+**Example**: `(twitter-summary-card :twitter-handle "@redline6561")
+
 ## Versioned Deploys
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
