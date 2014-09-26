@@ -1,5 +1,0 @@
-TODO:
-Coleslaw.next
-; See if there are any good ideas we can steal from [Frog](https://github.com/greghendershott/frog)
-;; needs: shout template/render function. Twitter\Disqus integration with shouts?
-; Incremental compilation: only "touched" posts+tags+months and by-n. -> 1.0

@@ -38,21 +38,6 @@ reduced runtime to 1.36 seconds, almost cutting it in half.
 
 ## Core Concepts
 
-### Data and Deployment
-
-**Coleslaw** is pretty fundamentally tied to the idea of git as both a
-backing data store and a deployment method (via `git push`). The
-consequence is that you need a bare repo somewhere with a post-recieve
-hook. That post-recieve hook ([example][post_receive_hook])
-will checkout the repo to a **$TMPDIR** and call `(coleslaw:main $TMPDIR)`.
-
-It is then coleslaw's job to load all of your content, your config and
-templates, and render the content to disk. Deployment is done by
-moving the files to a location specified in the config and updating a
-symlink.  It is assumed a web server is set up to serve from that
-symlink. However, there are plugins for deploying to Heroku, S3, and
-Github Pages.
-
 ### Plugins
 
 **Coleslaw** strongly encourages extending functionality via plugins.
@@ -79,7 +64,21 @@ and return rendered HTML.  **Coleslaw** defines a helper called
 there are RSS, ATOM, and sitemap templates *coleslaw* uses automatically.
 No need for individual themes to reimplement a standard, after all!
 
+Unfortunately, it is not very pleasant to debug broken templates.
+Efforts to remedy this are being pursued for the next release.
+Two particular issues to note are transposed Closure commands,
+e.g. "${foo}" instead of "{$foo}", and trying to use nonexistent
+keys or slots which fails silently instead of producing an error.
+
 ### The Lifecycle of a Page
+
+- `(progn
+     (load-config "/my/blog/repo/path")
+     (compile-theme (theme *config*)))`
+
+Coleslaw first needs the config loaded and theme compiled,
+as neither the blog location, the theme to use, and other
+crucial information are not yet known.
 
 - `(load-content)`
 
@@ -102,10 +101,10 @@ reverse-chronological index.
 
 - `(deploy dir)`
 
-Finally, we move the staging directory to a timestamped path under the
-the config's `:deploy-dir`, delete the directory pointed to by the old
-'.prev' symlink, point '.curr' at '.prev', and point '.curr' at our
-freshly built site.
+Finally, we move the staging directory to a path under the config's
+`:deploy-dir`. If the versioned plugin is enabled, it is a timestamped
+path and we delete the directory pointed to by the old '.prev' symlink,
+point '.curr' at '.prev', and point '.curr' at our freshly built site.
 
 ### Blogs vs Sites
 
@@ -116,13 +115,12 @@ INDEXes. Roughly speaking, a POST is a blog entry and an INDEX is a
 collection of POSTs or other content. An INDEX really only serves to
 group a set of content objects on a page, it isn't content itself.
 
-This isn't ideal if you're looking for a full-on static site
-generator.  Thankfully, Content Types were added in 0.8 as a step
-towards making *coleslaw* suitable for more use cases. Any subclass of
-CONTENT that implements the *document protocol* counts as a content
-type. However, only POSTs are currently included in the basic INDEXes
-since there isn't yet a formal relationship to determine which content
-types should be included on which indexes.  Users may easily implement
+Content Types were added in 0.8 as a step towards making *coleslaw*
+suitable for more use cases. Any subclass of CONTENT that implements
+the *document protocol* counts as a content type. However, only POSTs
+are currently included in the bundled INDEXes since there isn't yet a
+formal relationship to determine which content types should be
+included on which indexes. It is straightforward for users to implement
 their own dedicated INDEX for new Content Types.
 
 ### The Document Protocol
@@ -169,15 +167,13 @@ eql-specializing on the class, e.g.
 
 **Instance Methods**:
 
-- `page-url`: Generate a relative path for the object on the site,
-  usually sans file extension. If there is no extension, an :around
-  method adds "html" later. The `slug` slot on the instance is
-  conventionally used to hold a portion of the path that corresponds
-  to a unique Primary Key or Object ID.
+- `page-url`: Retrieve the relative path for the object on the site.
+  The implementation of `page-url` is not fully specified. For most
+  content types, we compute and store the path on the instance at
+  initialization time making `page-url` just a reader method.
 
 - `render`: A method that calls the appropriate template with `theme-fn`,
   passing it any needed arguments and returning rendered HTML.
-
 
 **Invariants**:
 
@@ -217,7 +213,77 @@ order. Feeds exist to special case RSS and ATOM generation.
 Currently, there is only 1 content type: POST, for blog entries.
 PAGE, a content type for static page support, is available as a plugin.
 
-## Areas for Improvement
+## Areas for Improvement (i.e. The Roadmap)
+
+### TODO for 0.9.7
+
+* Test suite improvements:
+  * `load-content`/`read-content`/parsing
+  * Content Discovery
+  * Theme Compilation
+  * Content Publishing
+  * Common Plugins including Injections
+* Add proper errors to read-content/load-content? Not just ignoring bad data. Line info, etc.
+* Improved template debugging? "${" instead of "{$", static checks for valid slots, etc.
+  At least a serious investigation into how such things might be provided.
+* Some minor scripting conveniences with cl-launch? (Scaffold a post/page, Enable incremental, Build, etc).
+
+### Assorted Cleanups
+
+* Try to get tag-index urls out of the tags. Post templates use them.
+* Profile/memoize find-all calls in **INDEX** `render` method.
+
+### Real Error Handling
+
+One reason Coleslaw's code base is so small is probably the
+omission of any serious error handling. Trying to debug
+coleslaw if there's a problem during a build is unpleasant
+at best, especially for anyone not coming from the lisp world.
+
+We need to start handling errors and reporting errors in ways
+that are useful to the user. Example errors users have encountered:
+
+1. Loading of Content. If `read-content` fails to parse a file, we
+   should tell the user what file failed and why. We also should
+   probably enforce more constraints about metadata. E.g. Empty
+   metadata is not allowed/meaningful. Trailing space after separator, etc.
+2. Trying to load content from the bare repo instead of the clone.
+   i.e. Specifying the `:repo` in .coleslawrc as the bare repo.
+   The README should clarify this point and the need for posts to be
+   ".post" files.
+3. Custom themes that try to access non-existent properties of content
+   do not currently error. They just wind up returning whitespace.
+   When the theme compiles, we should alert the user to any obvious
+   issues with it.
+4. Dear Lord it was miserable even debugging a transposed character error
+   in one of the templates. "${foo}" instead of "{$foo}". But fuck supporting
+   multiple templating backends I have enough problems. What can we do?
+
+### Scripting Conveniences
+
+It would be convenient to add command-line tools/scripts to run coleslaw,
+set up the db for incremental builds, scaffold a new post, etc. for new users.
+Xach's buildapp or Fare's cl-launch would be useful here. frog and hakyll are
+reasonable points of inspiration for commands to offer.
+
+### Plugin Constraints
+
+There is no system for determining what plugins work together or
+enforcing the requirements or constraints of any particular
+plugin. That is to say, the plugins are not actually modular. They are
+closer to controlled monkey-patching.
+
+While adding a [real module system to common lisp][asdf3] is probably
+out of scope, we might be able to add some kind of [contract library][qpq]
+for implementing this functionality. At the very least, a way to check
+some assertions and error out at plugin load time if they fail should be
+doable. I might not be able to [make illegal states unrepresentable][misu],
+but I can sure as hell make them harder to construct than they are now.
+
+@PuercoPop has suggested looking into how [wookie does plugins][wookie].
+It's much more heavyweight but might be worth looking into. If we go that
+route, the plugin support code will be almost half the coleslaw core.
+Weigh the tradeoffs carefully.
 
 ### New Content Type: Shouts!
 
@@ -249,28 +315,13 @@ Unfortunately, this does not solve:
    Content Types it includes or the CONTENT which indexes it appears
    on is not yet clear.
 
-### Incremental Compilation
-
-Incremental compilation is doable, even straightforward if you ignore
-indexes. It is also preferable to building the site in parallel as
-avoiding work is better than using more workers. Moreover, being
-able to determine (and expose) what files just changed enables new
-functionality such as plugins that cross-post to tumblr.
-
-This is a cool project and the effects are far reaching. Among other
-things the existing deployment model would not work as it involves
-rebuilding the entire site. In all likelihood we would want to update
-the site 'in-place'. How to replace the compilation and deployment
-model via a plugin has not yet been explored. Atomicity of filesystem
-operations would be a reasonable concern. Also, every numbered INDEX
-would have to be regenerated along with any tag or month indexes
-matching the modified files. If incremental compilation is a goal,
-simply disabling the indexes may be appropriate for certain users.
-
-[post_receive_hook]: https://github.com/redline6561/coleslaw/blob/master/examples/example.post-receive
 [closure_template]: https://github.com/archimag/cl-closure-template
 [api_docs]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md
 [clmd]: https://github.com/gwkkwg/cl-markdown
 [clrz]: https://github.com/redline6561/colorize
 [pyg]: http://pygments.org/
 [incf]: https://github.com/redline6561/coleslaw/blob/master/plugins/incremental.lisp
+[asdf3]: https://github.com/fare/asdf3-2013
+[qpq]: https://github.com/sellout/quid-pro-quo
+[misu]: https://blogs.janestreet.com/effective-ml-revisited/
+[wookie]: https://github.com/orthecreedence/wookie/blob/master/plugin.lisp#L181

@@ -1,7 +1,7 @@
 (defsystem #:coleslaw
   :name "coleslaw"
   :description "Flexible Lisp Blogware"
-  :version "0.9.5"
+  :version "0.9.6"
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
@@ -31,11 +31,10 @@
                              (intern "COLESLAW-TESTS" :coleslaw-tests))))
 
 (defsystem #:coleslaw-tests
-  :depends-on (coleslaw fiveam)
+  :depends-on (coleslaw stefil)
   :pathname "tests/"
   :serial t
-  :components ((:file "packages")
-               (:file "tests")))
+  :components ())
 
 (defmethod operation-done-p ((op test-op)
                              (c (eql (find-system :coleslaw))))

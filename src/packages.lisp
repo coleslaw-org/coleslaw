@@ -5,6 +5,7 @@
                             #:make-keyword
                             #:mappend)
   (:import-from :cl-fad #:file-exists-p)
+  (:import-from :cl-ppcre #:scan-to-strings)
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd
@@ -22,12 +23,13 @@
            #:title-of
            #:author-of
            #:find-content-by-path
-           ;; Plugin API + Theming
+           ;; Theming + Plugin API
+           #:theme-fn
            #:plugin-conf-error
            #:render-text
            #:add-injection
            #:get-updated-files
-           #:theme-fn
+           #:deploy
            ;; The Document Protocol
            #:discover
            #:publish
@@ -37,4 +39,5 @@
            #:purge-all
            #:add-document
            #:delete-document
-           #:write-document))
+           #:write-document
+           #:content-text))

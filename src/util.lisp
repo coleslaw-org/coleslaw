@@ -54,13 +54,9 @@ an UNWIND-PROTECT, then change back to the current directory."
          (setf (getcwd) ,old)))))
 
 (defun exit ()
+  ;; KLUDGE: Just call UIOP for now. Don't want users updating scripts.
   "Exit the lisp system returning a 0 status code."
-  #+sbcl (sb-ext:exit)
-  #+ccl (ccl:quit)
-  #+ecl (si:quit)
-  #+cmucl (ext:quit)
-  #+clisp (ext:quit)
-  #-(or sbcl ccl ecl cmucl clisp) (error "Not implemented yet."))
+  (uiop:quit))
 
 (defun fmt (fmt-str args)
   "A convenient FORMAT interface for string building."

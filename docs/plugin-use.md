@@ -1,8 +1,8 @@
 # General Use
 
-* Add a list with the plugin name and settings to the ```:plugins```
-  section of your [.coleslawrc][config_file]. Plugin settings are
-  described below.
+* To enable a plugin, add its name and settings to your
+  [.coleslawrc][config_file]. Plugin settings are described
+  below. Note that some plugins require additional setup.
 
 * Available plugins are listed below with usage descriptions and
   config examples.
@@ -41,9 +41,9 @@
 
 **Example**: `(incremental)`
 
-**Setup**:
-- You must run the `examples/dump_db.sh` script to generate a database dump
-  for your site before enabling the incremental plugin.
+**Setup**: You must run the `examples/dump_db.sh` script to
+  generate a database dump for your site before enabling the
+  incremental plugin.
 
 ## LaTeX via Mathjax
 
@@ -143,6 +143,23 @@ CL-USER> (chirp:complete-authentication "4173325")
 (chirp:account/verify-credentials)
 #<CHIRP-OBJECTS:USER PuercoPop #18405433>
 ```
+
+## Twitter Summary Cards
+
+**Description**: Add Summary Card metadata to blog posts
+  to enhance twitter links to that content.
+
+**Example**: `(twitter-summary-card :twitter-handle "@redline6561")
+
+## Versioned Deploys
+
+**Description**: Originally, this was Coleslaw's only deploy behavior.
+  Instead of deploying directly to `:deploy-dir`, creates `.curr` and
+  `.prev` symlinks in the *deploy-dir*, which point to timestamped
+  directories of the last two deploys of the site. Deploys prior to the
+  last two are automatically cleaned up.
+
+**Example**: `(versioned)`
 
 ## Wordpress Importer
 

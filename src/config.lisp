@@ -10,7 +10,7 @@
    (license         :initarg :license        :reader license)
    (page-ext        :initarg :page-ext       :reader page-ext)
    (plugins         :initarg :plugins        :reader plugins)
-   (repo            :initarg :repo           :reader repo)
+   (repo            :initarg :repo           :accessor repo)
    (routing         :initarg :routing        :reader routing)
    (separator       :initarg :separator      :reader separator)
    (sitenav         :initarg :sitenav        :reader sitenav)
@@ -18,6 +18,10 @@
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title))
   (:default-initargs
+   :feeds        nil
+   :license      nil
+   :plugins      nil
+   :sitenav      nil
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     "html"
@@ -61,10 +65,11 @@ doesn't exist, use the .coleslawrc in the home directory."
         repo-config
         (rel-path (user-homedir-pathname) ".coleslawrc"))))
 
-(defun load-config (&optional repo-dir)
+(defun load-config (&optional (repo-dir ""))
   "Find and load the coleslaw configuration from .coleslawrc. REPO-DIR will be
 preferred over the home directory if provided."
   (with-open-file (in (discover-config-path repo-dir) :external-format '(:utf-8))
     (let ((config-form (read in)))
-      (setf *config* (construct 'blog config-form))))
+      (setf *config* (construct 'blog config-form)
+            (repo *config*) repo-dir)))
   (load-plugins (plugins *config*)))

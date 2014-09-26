@@ -1,6 +1,5 @@
 ########## CONFIGURATION VALUES ##########
 
-# TMP_GIT_CLONE _must_ match the :repo argument in your .coleslawrc!
 TMP_GIT_CLONE=$HOME/tmp/improvedmeans/
 
 # Set LISP to your preferred implementation. The following
@@ -26,10 +25,11 @@ while read oldrev newrev refname; do
         if [ $LISP = sbcl ]; then
             sbcl --eval "(ql:quickload 'coleslaw)" \
                  --eval "(coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\")" \
-                 --eval "(coleslaw::exit)"
+                 --eval "(uiop:quit)"
         elif [ $LISP = ccl ]; then
-            ccl -e "(ql:quickload 'coleslaw) (coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\") (coleslaw::exit)"
+            ccl -e "(ql:quickload 'coleslaw) (coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\") (uiop:quit)"
         else
+            echo -e "$LISP is not a supported lisp dialect at this time. Exiting.\n"
             exit 1
         fi
     fi

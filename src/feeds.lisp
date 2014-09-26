@@ -2,8 +2,9 @@
 
 ;;; Atom and RSS Feeds
 
-(defclass feed (index)
-  ((format :initform nil :initarg :format :accessor feed-format)))
+(defclass base-feed () ((format :initarg :format :reader feed-format)))
+
+(defclass feed (index base-feed) ())
 
 (defmethod discover ((doc-type (eql (find-class 'feed))))
   (let ((content (by-date (find-all 'post))))
@@ -19,7 +20,7 @@
 
 ;;; Tag Feeds
 
-(defclass tag-feed (feed) ())
+(defclass tag-feed (index base-feed) ())
 
 (defmethod discover ((doc-type (eql (find-class 'tag-feed))))
   (let ((content (by-date (find-all 'post))))

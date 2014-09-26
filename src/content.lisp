@@ -4,7 +4,12 @@
 
 (defclass tag ()
   ((name :initarg :name :reader tag-name)
-   (slug :initarg :slug :reader tag-slug)))
+   (slug :initarg :slug :reader tag-slug)
+   (url  :initarg :url)))
+
+(defmethod initialize-instance :after ((tag tag) &key)
+  (with-slots (url slug) tag
+    (setf url (compute-url nil slug 'tag-index))))
 
 (defun make-tag (str)
   "Takes a string and returns a TAG instance with a name and slug."
@@ -31,39 +36,47 @@
 ;; Content Types
 
 (defclass content ()
-  ((file :initarg :file :reader content-file)
+  ((url  :initarg :url  :reader page-url)
    (date :initarg :date :reader content-date)
-   (tags :initarg :tags :accessor content-tags)
-   (slug :initarg :slug :accessor content-slug)
-   (text :initarg :text :accessor content-text))
-  (:default-initargs :tags nil :date nil :slug nil))
+   (file :initarg :file :reader content-file)
+   (tags :initarg :tags :reader content-tags)
+   (text :initarg :text :reader content-text))
+  (:default-initargs :tags nil :date nil))
 
 (defmethod initialize-instance :after ((object content) &key)
-  (with-accessors ((tags content-tags)) object
+  (with-slots (tags) object
     (when (stringp tags)
       (setf tags (mapcar #'make-tag (cl-ppcre:split "," tags))))))
 
+(defun parse-initarg (line)
+  "Given a metadata header, LINE, parse an initarg name/value pair from it."
+  (let ((name (string-upcase (subseq line 0 (position #\: line))))
+        (match (nth-value 1 (scan-to-strings "[a-zA-Z]+:\\s+(.*)" line))))
+    (when match
+      (list (make-keyword name) (aref match 0)))))
+
+(defun parse-metadata (stream)
+  "Given a STREAM, parse metadata from it or signal an appropriate condition."
+  (flet ((get-next-line (input)
+           (string-trim '(#\Space #\Newline #\Tab) (read-line input nil))))
+    (unless (string= (get-next-line stream) (separator *config*))
+      (error "The file lacks the expected header: ~a" (separator *config*)))
+    (loop for line = (get-next-line stream)
+       until (string= line (separator *config*))
+       appending (parse-initarg line))))
+
 (defun read-content (file)
-  "Returns a plist of metadata from FILE with :text holding the content as a string."
+  "Returns a plist of metadata from FILE with :text holding the content."
   (flet ((slurp-remainder (stream)
            (let ((seq (make-string (- (file-length stream)
                                       (file-position stream)))))
              (read-sequence seq stream)
-             (remove #\Nul seq)))
-         (parse-field (str)
-           (nth-value 1 (cl-ppcre:scan-to-strings "[a-zA-Z]+:\\s+(.*)" str)))
-         (field-name (line)
-           (make-keyword (string-upcase (subseq line 0 (position #\: line))))))
+             (remove #\Nul seq))))
     (with-open-file (in file :external-format '(:utf-8))
-      (unless (string= (read-line in) (separator *config*))
-        (error "The provided file lacks the expected header."))
-      (let ((meta (loop for line = (read-line in nil)
-                     until (string= line (separator *config*))
-                     appending (list (field-name line)
-                                     (aref (parse-field line) 0))))
-            (filepath (enough-namestring file (repo *config*)))
-            (content (slurp-remainder in)))
-        (append meta (list :text content :file filepath))))))
+      (let ((metadata (parse-metadata in))
+            (content (slurp-remainder in))
+            (filepath (enough-namestring file (repo *config*))))
+        (append metadata (list :text content :file filepath))))))
 
 ;; Helper Functions
 

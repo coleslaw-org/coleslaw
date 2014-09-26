@@ -1,8 +1,45 @@
+Legend:
+* Site-Breaking Change:
+    A change that will break most config files or coleslaw installations.
+    It is expected to effect all users but should require only minor
+    user effort to resolve.
+* Incompatible Change:
+    A change to Coleslaw's exported interface. Plugins or Themes that have
+    not been upstreamed are effected and may require minor effort to fix.
+
+## Changes for 0.9.6 (2014-09-27):
+
+* **SITE-BREAKING CHANGE**: Coleslaw now defaults to a "basic" deploy
+  instead of the previous symlinked, timestamped deploy strategy.
+  To retain the previous behavior, add `(versioned)` to your config's
+  `:plugins` list.
+* **Incompatible Change**: Custom themes will be broken by a change
+  to URL handling. Previously, we were hand-constructing URLs in the
+  templates. All site objects now store their URL in an instance slot.
+  In general, hrefs should be of the form `<a href="{$config.domain}/{$obj.url}"> ...</a>`.
+* **Incompatible Change**: The interface of the `add-injection` function
+  has changed. If you have written a plugin which uses `add-injection`
+  you should update it to conform to the [new interface][plg-api].
+* **New Plugin**: Support for [twitter summary cards][ts-cards] on blog
+  posts has been added thanks to @PuercoPop.
+* **Docs**: Improved README and Theming docs. New Config File docs.
+* Changes to `:routing` would previously break links in the templates
+  but now work seamlessly due to the updated URL handling.
+* Loading content is more robust when empty lines or metadata are passed.
+  Thanks to @PuercoPop for the bug report and preliminary fix.
+* The config `:repo` option is now deprecated as its value has become
+  a required argument to `coleslaw:main`. The value passed to `main`
+  will override the config value going forward.
+* Improved handling of directories and error-reporting when they
+  don't exist is available thanks to @PuercoPop.
+* The templates are now HTML5 valid thanks to @Ferada.
+* Fixed a bug where RSS/Atom tag feeds were being published multiple times.
+
 ## Changes for 0.9.5 (2014-06-13):
 
-* A plugin for Incremental builds, cutting runtime for generating
+* **New Plugin**: Incremental builds, cutting runtime for generating
   medium to large sites roughly in half!
-* A Twitter plugin to tweet about your new posts. Thanks to @PuercoPop!
+* **New Plugin**: A Twitter plugin to tweet about your new posts. Thanks to @PuercoPop!
 * Config options for the HTML lang and charset attributes. Thanks to @ryumei!
 * Coleslaw now exports a `get-updated-files` function which can be
   used to get a list of file-status/file-name pairs that were changed
@@ -104,3 +141,6 @@
 [hacking_guide]:  https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
 [theming_guide]:  https://github.com/redline6561/coleslaw/blob/master/docs/themes.md
 [example.rc]: https://github.com/redline6561/coleslaw/blob/master/examples/example.coleslawrc
+[plg-use]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md
+[plg-api]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md#extension-points
+[ts-cards]: https://dev.twitter.com/cards/types/summary

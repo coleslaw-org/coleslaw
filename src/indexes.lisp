@@ -6,13 +6,18 @@
   "The list of tags which content has been tagged with.")
 
 (defclass index ()
-  ((slug :initarg :slug :reader index-slug)
-   (title :initarg :title :reader title-of)
+  ((url     :initarg :url     :reader page-url)
+   (name    :initarg :name    :reader index-name)
+   (title   :initarg :title   :reader title-of)
    (content :initarg :content :reader index-content)))
 
+(defmethod initialize-instance :after ((object index) &key slug)
+  (with-slots (url) object
+    (setf url (compute-url object slug))))
+
 (defmethod render ((object index) &key prev next)
-  (funcall (theme-fn 'index) (list :tags *all-tags*
-                                   :months *all-months*
+  (funcall (theme-fn 'index) (list :tags (find-all 'tag-index)
+                                   :months (find-all 'month-index)
                                    :config *config*
                                    :index object
                                    :prev prev
@@ -24,12 +29,12 @@
 
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
   (let ((content (by-date (find-all 'post))))
-    (dolist (tag (all-tags))
+    (dolist (tag *all-tags*)
       (add-document (index-by-tag tag content)))))
 
 (defun index-by-tag (tag content)
   "Return an index of all CONTENT matching the given TAG."
-  (make-instance 'tag-index :slug (tag-slug tag)
+  (make-instance 'tag-index :slug (tag-slug tag) :name (tag-name tag)
                  :content (remove-if-not (lambda (x) (tag-p tag x)) content)
                  :title (format nil "Content tagged ~a" (tag-name tag))))
 
@@ -48,7 +53,7 @@
 
 (defun index-by-month (month content)
   "Return an index of all CONTENT matching the given MONTH."
-  (make-instance 'month-index :slug month
+  (make-instance 'month-index :slug month :name month
                  :content (remove-if-not (lambda (x) (month-p month x)) content)
                  :title (format nil "Content from ~a" month)))
 
@@ -68,18 +73,14 @@
 (defun index-by-n (i content)
   "Return the index for the Ith page of CONTENT in reverse chronological order."
   (let ((content (subseq content (* 10 i))))
-    (make-instance 'numeric-index :slug (1+ i)
+    (make-instance 'numeric-index :slug (1+ i) :name (1+ i)
                    :content (take-up-to 10 content)
                    :title "Recent Content")))
 
 (defmethod publish ((doc-type (eql (find-class 'numeric-index))))
-  (let ((indexes (sort (find-all 'numeric-index) #'< :key #'index-slug)))
-    (dolist (index indexes)
-      (let ((prev (1- (index-slug index)))
-            (next (1+ (index-slug index))))
-        (write-document index nil
-                        :prev (when (plusp prev) prev)
-                        :next (when (<= next (length indexes)) next))))))
+  (let ((indexes (sort (find-all 'numeric-index) #'< :key #'index-name)))
+    (loop for (next index prev) on (append '(nil) indexes)
+       while index do (write-document index nil :prev prev :next next))))
 
 ;;; Helper Functions
 

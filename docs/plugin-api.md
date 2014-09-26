@@ -15,14 +15,12 @@
 
 # Extension Points
 
-* **New functionality via JS**, for example the Disqus and Mathjax
-  plugins. In this case, the plugin's `enable` function should call
+* **New functionality via JS**, for example the Disqus and Mathjax plugins.
+  In this case, the plugin's `enable` function should call
   [`add-injection`](http://redlinernotes.com/docs/coleslaw.html#add-injection_func)
-  with an injection and a keyword. The injection itself is a list of
-  the string to insert and a lambda or function that can be called on
-  a content instance to determine whether the injection should be
-  included on the page. The keyword specifies whether the injected
-  text goes in the HEAD or BODY element. The
+  with an injection and a keyword. The injection is a function that takes a
+  *Document* and returns a string to insert in the page or nil.
+  The keyword specifies whether the injected text goes in the HEAD or BODY element. The
   [Disqus plugin](http://github.com/redline6561/coleslaw/blob/master/plugins/disqus.lisp)
   is a good example of this.
 
