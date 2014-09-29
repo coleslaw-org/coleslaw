@@ -9,6 +9,12 @@
     {$obj.text |noAutoescape}
   </div>
 {/foreach}
+<div id="relative-nav">
+  <div class="row-fluid">
+    {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a> {/if}
+    {if $next} <a href="{$config.domain}/{$next.url}">Next</a> {/if}
+  </div>
+</div>
 {if $tags}
 <div class="row-fluid">
   <p>This blog covers
