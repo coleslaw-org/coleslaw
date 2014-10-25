@@ -1,5 +1,6 @@
 *~
 *.fasl
+*dx64fsl
 ignore/
 generated/
 .curr
