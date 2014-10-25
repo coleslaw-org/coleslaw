@@ -88,7 +88,7 @@ along with any missing parent directories otherwise."
                    :direction :output
                    :if-exists :supersede
                    :if-does-not-exist :create
-                   :external-format '(:utf-8))
+                   :external-format :utf-8)
     (write text :stream out :escape nil)))
 
 (defun get-updated-files (&optional (revision *last-revision*))
