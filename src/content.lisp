@@ -72,7 +72,7 @@
                                       (file-position stream)))))
              (read-sequence seq stream)
              (remove #\Nul seq))))
-    (with-open-file (in file :external-format '(:utf-8))
+    (with-open-file (in file :external-format :utf-8)
       (let ((metadata (parse-metadata in))
             (content (slurp-remainder in))
             (filepath (enough-namestring file (repo *config*))))
