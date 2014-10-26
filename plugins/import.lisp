@@ -58,7 +58,8 @@
     (ensure-directories-exist (or output (repo *config*)))
     (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
            (posts (dom:get-elements-by-tag-name xml "item")))
-      (loop for post across posts do (import-post post output since))
+      (loop for post across posts do (if since (import-post post output since)
+                                         (import-post post output)))
       (delete-file filepath))))
 
 (defun enable (&key filepath output)
