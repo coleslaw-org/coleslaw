@@ -1,6 +1,6 @@
 *~
 *.fasl
-*dx64fsl
+*.dx??fsl
 ignore/
 generated/
 .curr
