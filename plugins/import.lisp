@@ -28,10 +28,10 @@
     (format nil "~a-~2,'0d-~2,'0d ~a" year (position month +short-month-names+
                                                      :test #'string=) date time)))
 
-(defun import-post (post output &optional (since nil since-supplied-p))
+(defun import-post (post output &optional since)
   (when (and (string= "publish" (node-val "wp:status" post)) ; is it public?
              (string= "post" (node-val "wp:post_type" post)) ; is it a post?
-             (or (not since-supplied-p) (string>= (get-timestamp post) since)))
+             (or (null since) (string>= (get-timestamp post) since)))
     (let ((slug (slugify (node-val "title" post))))
       (when (string= "" slug)
         (error "No valid slug-title for post ~a." (get-timestamp post)))
@@ -58,8 +58,7 @@
     (ensure-directories-exist (or output (repo *config*)))
     (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
            (posts (dom:get-elements-by-tag-name xml "item")))
-      (loop for post across posts do (if since (import-post post output since)
-                                         (import-post post output)))
+      (loop for post across posts do (import-post post output since))
       (delete-file filepath))))
 
 (defun enable (&key filepath output)
