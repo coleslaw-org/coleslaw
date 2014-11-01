@@ -43,7 +43,8 @@
   (with-open-file (out (merge-pathnames path (or output (repo *config*)))
                    :direction :output
                    :if-exists :supersede
-                   :if-does-not-exist :create)
+                   :if-does-not-exist :create
+                   :external-format :utf-8)
     ;; TODO: What other data/metadata should we write out?
     (format out ";;;;;~%")
     (format out "title: ~A~%" title)
