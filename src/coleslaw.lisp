@@ -24,7 +24,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
-  (ensure-directories-exist staging)
+  (ensure-directories-exist (ensure-directory-pathname staging))
   (with-current-directory staging
     (dolist (dir (list (app-path "themes/~a/css" (theme *config*))
                        (app-path "themes/~a/img" (theme *config*))
