@@ -41,7 +41,7 @@
   (let ((db-file (rel-path (user-homedir-pathname) ".coleslaw.db")))
     (setf coleslaw::*site* (cl-store:restore db-file))
     (loop for (status path) in (get-updated-files)
-       for file-path = (rel-path (repo *config*) path)
+       for file-path = (rel-path (repo-dir *config*) path)
        do (update-content status file-path))
     (update-content-metadata)
     ;; Discover's :before method will delete any possibly outdated indexes.

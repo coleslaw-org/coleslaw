@@ -10,7 +10,7 @@
    (license         :initarg :license        :reader license)
    (page-ext        :initarg :page-ext       :reader page-ext)
    (plugins         :initarg :plugins        :reader plugins)
-   (repo            :initarg :repo           :accessor repo)
+   (repo            :initarg :repo           :accessor repo-dir)
    (routing         :initarg :routing        :reader routing)
    (separator       :initarg :separator      :reader separator)
    (sitenav         :initarg :sitenav        :reader sitenav)
@@ -27,6 +27,14 @@
    :page-ext     "html"
    :separator    ";;;;;"
    :staging-dir  "/tmp/coleslaw"))
+
+(defun dir-slot-reader (config name)
+  "Take CONFIG and NAME, and return a directory pathname for the matching SLOT."
+  (ensure-directory-pathname (slot-value config name)))
+
+(defmethod deploy-dir  ((config blog)) (dir-slot-reader config 'deploy-dir))
+(defmethod repo-dir    ((config blog)) (dir-slot-reader config 'repo))
+(defmethod staging-dir ((config blog)) (dir-slot-reader config 'staging-dir))
 
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
@@ -71,5 +79,5 @@ preferred over the home directory if provided."
   (with-open-file (in (discover-config-path repo-dir) :external-format :utf-8)
     (let ((config-form (read in)))
       (setf *config* (construct 'blog config-form)
-            (repo *config*) repo-dir)))
+            (repo-dir *config*) repo-dir)))
   (load-plugins (plugins *config*)))

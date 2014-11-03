@@ -75,7 +75,7 @@
     (with-open-file (in file :external-format :utf-8)
       (let ((metadata (parse-metadata in))
             (content (slurp-remainder in))
-            (filepath (enough-namestring file (repo *config*))))
+            (filepath (enough-namestring file (repo-dir *config*))))
         (append metadata (list :text content :file filepath))))))
 
 ;; Helper Functions

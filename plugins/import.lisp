@@ -40,7 +40,7 @@
                    (format nil "~a.post" slug) output))))
 
 (defun export-post (title tags date content path output)
-  (with-open-file (out (merge-pathnames path (or output (repo *config*)))
+  (with-open-file (out (merge-pathnames path (or output (repo-dir *config*)))
                    :direction :output
                    :if-exists :supersede
                    :if-does-not-exist :create
@@ -56,7 +56,7 @@
 
 (defun import-posts (filepath output &optional since)
   (when (probe-file filepath)
-    (ensure-directories-exist (or output (repo *config*)))
+    (ensure-directories-exist (or output (repo-dir *config*)))
     (let* ((xml (cxml:parse-file filepath (cxml-dom:make-dom-builder)))
            (posts (dom:get-elements-by-tag-name xml "item")))
       (loop for post across posts do (import-post post output since))

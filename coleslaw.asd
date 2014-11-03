@@ -1,7 +1,7 @@
 (defsystem #:coleslaw
   :name "coleslaw"
   :description "Flexible Lisp Blogware"
-  :version "0.9.6"
+  :version "0.9.7-dev"
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"

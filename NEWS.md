@@ -7,6 +7,12 @@ Legend:
     A change to Coleslaw's exported interface. Plugins or Themes that have
     not been upstreamed are effected and may require minor effort to fix.
 
+## Changes for 0.9.7 (20xx):
+
+* Coleslaw now handles **deploy-dir**, **repo**, and **staging-dir**
+  config options more gracefully. Previously, various errors could be
+  encountered if directory options lacked a trailing slash.
+
 ## Changes for 0.9.6 (2014-09-27):
 
 * **SITE-BREAKING CHANGE**: Coleslaw now defaults to a "basic" deploy

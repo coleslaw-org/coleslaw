@@ -9,9 +9,7 @@
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd
-                      #:chdir
-                      #:ensure-directory-pathname
-                      #:directory-exists-p)
+                      #:ensure-directory-pathname)
   (:export #:main
            #:preview
            #:*config*

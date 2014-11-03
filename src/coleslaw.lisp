@@ -24,12 +24,12 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 
 (defun compile-blog (staging)
   "Compile the blog to a STAGING directory as specified in .coleslawrc."
-  (ensure-directories-exist (ensure-directory-pathname staging))
+  (ensure-directories-exist staging)
   (with-current-directory staging
     (dolist (dir (list (app-path "themes/~a/css" (theme *config*))
                        (app-path "themes/~a/img" (theme *config*))
                        (app-path "themes/~a/js" (theme *config*))
-                       (merge-pathnames "static" (repo *config*))))
+                       (merge-pathnames "static" (repo-dir *config*))))
       (when (probe-file dir)
         (run-program "rsync --delete -raz ~a ." dir)))
     (do-subclasses (ctype content)
@@ -54,7 +54,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
     (unless *config*
       (load-config (namestring current-working-directory))
       (compile-theme (theme *config*)))
-    (let* ((file (rel-path (repo *config*) path))
+    (let* ((file (rel-path (repo-dir *config*) path))
            (content (construct content-type (read-content file))))
       (write-file "tmp.html" (render-page content)))))
 

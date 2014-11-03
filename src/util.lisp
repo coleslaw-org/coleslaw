@@ -38,8 +38,8 @@ BODY on files that match the given extension."
 (defun (setf getcwd) (path)
   "Change the operating system's current directory to PATH."
   (setf path (ensure-directory-pathname path))
-  (unless (and (directory-exists-p path)
-               (chdir path))
+  (unless (and (uiop:directory-exists-p path)
+               (uiop:chdir path))
     (error 'directory-does-not-exist :dir path))
   path)
 
