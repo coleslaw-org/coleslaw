@@ -31,16 +31,16 @@ BODY on files that match the given extension."
                                         (constantly t))))))
 
 (define-condition directory-does-not-exist (error)
-  ((directory :initarg dir :reader dir))
+  ((directory :initarg :dir :reader dir))
   (:report (lambda (c stream)
              (format stream "The directory '~A' does not exist" (dir c)))))
 
 (defun (setf getcwd) (path)
   "Change the operating system's current directory to PATH."
   (setf path (ensure-directory-pathname path))
-  (or (and (directory-exists-p path)
-           (chdir path))
-      (error 'directory-does-not-exist :dir path))
+  (unless (and (directory-exists-p path)
+               (chdir path))
+    (error 'directory-does-not-exist :dir path))
   path)
 
 (defmacro with-current-directory (path &body body)
