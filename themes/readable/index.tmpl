@@ -10,10 +10,10 @@
   </div>
 {/foreach}
 <div id="relative-nav">
-  <div class="row-fluid">
-    {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a> {/if}
-    {if $next} <a href="{$config.domain}/{$next.url}">Next</a> {/if}
-  </div>
+  <ul class="pager">
+    {if $prev} <li class="previous"><a href="{$config.domain}/{$prev.url}">Previous</a></li> {/if}
+    {if $next} <li class="next"><a href="{$config.domain}/{$next.url}">Next</a></li> {/if}
+  </ul>
 </div>
 {if $tags}
 <div class="row-fluid">
