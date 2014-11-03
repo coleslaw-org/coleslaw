@@ -27,7 +27,9 @@ while read oldrev newrev refname; do
                  --eval "(coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\")" \
                  --eval "(uiop:quit)"
         elif [ $LISP = ccl ]; then
-            ccl -e "(ql:quickload 'coleslaw) (coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\") (uiop:quit)"
+            ccl -e "(ql:quickload 'coleslaw)" \
+                -e "(coleslaw:main \"$TMP_GIT_CLONE\" \"$oldrev\")" \
+                -e "(uiop:quit)"
         else
             echo -e "$LISP is not a supported lisp dialect at this time. Exiting.\n"
             exit 1
