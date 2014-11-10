@@ -3,8 +3,6 @@
   (:export #:enable)
   (:import-from :coleslaw #:*config*
                           #:content
-                          #:content-text
-                          #:page-url
                           #:find-all
                           #:render
                           #:publish
@@ -15,13 +13,12 @@
 (in-package :coleslaw-static-pages)
 
 (defclass page (content)
-  ((title :initarg :title :reader title-of)
-   (url :initarg :url :reader page-url)))
+  ((title :initarg :title :reader coleslaw::title-of)))
 
 (defmethod initialize-instance :after ((object page) &key)
   ;; Expect all static-pages to be written in Markdown for now.
-  (with-slots (url coleslaw::text) object
-    (setf url (make-pathname :defaults url)
+  (with-slots (coleslaw::url coleslaw::text) object
+    (setf coleslaw::url (make-pathname :defaults coleslaw::url)
           coleslaw::text (render-text coleslaw::text :md))))
 
 (defmethod render ((object page) &key next prev)
