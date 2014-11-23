@@ -12,6 +12,8 @@ Legend:
 * Coleslaw now handles **deploy-dir**, **repo**, and **staging-dir**
   config options more gracefully. Previously, various errors could be
   encountered if directory options lacked a trailing slash.
+* **New Plugin**: Support for [embedded gfycats][http://gfycat.com/] has been added.
+
 
 ## Changes for 0.9.6 (2014-09-27):
 

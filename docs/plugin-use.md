@@ -21,6 +21,12 @@
 
 **Example**: `(disqus :shortname "disqus-provided-unique-id")`
 
+## HTML5 Gifs via Gfycat
+
+**Description**: Provides support for embedding [gfycat](http://gfycat.com/) gifs.
+
+**Example**: `(gfycat)`
+
 ## Hosting via Github Pages
 
 **Description**: Allows hosting with CNAMEs via
