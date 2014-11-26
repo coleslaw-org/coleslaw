@@ -9,17 +9,18 @@ Legend:
 
 ## Changes for 0.9.7 (2014-11-25):
 
-* **New Plugin**: Support for [embedded gfycats][http://gfycat.com/]
+* **New Plugin**: Support for [embedded gfycats](http://gfycat.com/)
   has been added. See the [plugin use][plg-use] docs for further details.
 * **Enhancement**: UTF-8 support has been made more portable and
   added to the Wordpress import plugin. (Thanks @cmstrickland!)
+* **Enhancement**: Filenames are now included in errors from the
+  content loader. (via @PuercoPop)
 * **Enhancement**: Coleslaw now handles **deploy-dir**, **repo**,
   and **staging-dir** config options more gracefully. Previously,
   various errors could be encountered if directory options lacked
   a trailing slash.
 * Several portability fixes were made to CCL's encoding handling
   and usage in the post-receive script.
-* Filenames are now included in errors from the content loader. (via @PuercoPop)
 * An initarg bug was fixed in the directory-does-not-exist condition.
 * Some namespacing bugs in the Static Pages plugin have been fixed.
 
