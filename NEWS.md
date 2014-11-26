@@ -10,7 +10,7 @@ Legend:
 ## Changes for 0.9.7 (2014-11-25):
 
 * **New Plugin**: Support for [embedded gfycats][http://gfycat.com/]
-  has been added. See the plugin use docs for further details.
+  has been added. See the [plugin use][plg-use] docs for further details.
 * **Enhancement**: UTF-8 support has been made more portable and
   added to the Wordpress import plugin. (Thanks @cmstrickland!)
 * **Enhancement**: Coleslaw now handles **deploy-dir**, **repo**,
