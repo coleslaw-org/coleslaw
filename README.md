@@ -23,6 +23,7 @@ Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghend
   * Analytics via Google
   * Comments via [Disqus](http://disqus.com/)
   * Hosting via [Github Pages](https://pages.github.com/) or [Amazon S3](http://aws.amazon.com/s3/)
+  * Embedding [gfycats](http://gfycat.com/)
   * [Tweeting](http://twitter.com/) about new posts
   * Using LaTeX via [Mathjax](http://mathjax.org/)
   * Writing posts in ReStructured Text
