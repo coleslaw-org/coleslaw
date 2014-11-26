@@ -24,6 +24,9 @@
 ## HTML5 Gifs via Gfycat
 
 **Description**: Provides support for embedding [gfycat](http://gfycat.com/) gifs.
+  Any content tagged 'gfycat' containing an IMG element of the form
+  `<img class="gfyitem" data-id="your-gfy-slug" />` will embed the
+  corresponding gfy.
 
 **Example**: `(gfycat)`
 
