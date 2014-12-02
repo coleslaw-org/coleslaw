@@ -53,7 +53,11 @@
          (plugin-package (sym)
            (format nil "~:@(coleslaw-~A~)" sym)))
     (let ((file (plugin-path name)))
-      (load (compile-file file :verbose nil :print nil) :verbose t))
+      (multiple-value-bind (output-file error)
+          (ignore-errors (compile-file file :verbose nil :print nil))
+        (when error
+          (warn "Error while compiling plugin ~A: ~A.~%" name error))
+        (load (or output-file file) :verbose t)))
     (let ((package (find-package (plugin-package name))))
       (apply (find-symbol "ENABLE" package) args))))
 
