@@ -20,18 +20,25 @@
   "Test if the slugs for tag A and B are equal."
   (string= (tag-slug a) (tag-slug b)))
 
-;; Slugs
+; Slugs
 
-(defun slug-char-p (char)
+(defun slug-char-p (char &key (allowed-chars (list #\- #\Space #\~)))
   "Determine if CHAR is a valid slug (i.e. URL) character."
-  (or (char<= #\0 char #\9)
-      (char<= #\a char #\z)
-      (char<= #\A char #\Z)
-      (member char '(#\_ #\-))))
+  ; use the first char of the general unicode category as kind of
+  ; hyper general category
+  (let ((cat (char (cl-unicode:general-category char) 0))
+		(allowed-cats (list #\L #\N)))
+	(cond
+	  ((member cat allowed-cats)   't)
+	  ((member char allowed-chars) 't)
+	  (t 'nil))))
+
+(defun unicode-space-p (char)
+  (equal (char (cl-unicode:general-category char) 0) #\Z))
 
 (defun slugify (string)
   "Return a version of STRING suitable for use as a URL."
-  (remove-if-not #'slug-char-p (substitute #\- #\Space string)))
+  (remove-if-not #'slug-char-p (substitute-if #\- #'unicode-space-p string)))
 
 ;; Content Types
 
