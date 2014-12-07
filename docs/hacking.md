@@ -266,6 +266,28 @@ set up the db for incremental builds, scaffold a new post, etc. for new users.
 Xach's buildapp or Fare's cl-launch would be useful here. frog and hakyll are
 reasonable points of inspiration for commands to offer.
 
+#### Commands
+
+(this is just a initial list of commands and what they'd do for the implementor. Feel free to contribute!)
+
+Imagine a executable `coleslaw`, the commands would be invoked like this: `coleslaw <commandname> <args>`
+
+* `build` generates the site. Takes:
+	* `--dir`: If not supplied `.` is used
+* `clean` removes the files from `output-dir` and `staging-dir`. Takes:
+	* `--dir`: If not supplied `.` is used
+* `rebuild` is a shortcut for `clean` and then `build`. Takes:
+	* `--dir`: If not supplied `.` is used
+* `post` creates a new empty `.post` file. Takes:
+	* `--dir`: If not supplied `.` is used
+	* `--title`: title (also used for generating file name)
+	* `--date`: same as the header-key. If not given, current time is used
+	* `--format`: same as the header-key
+	* …
+* `site` is the same as `post` but for static site (should we add this?)
+* `deploy`/`upload` does upload the files from `output-dir` to your (configured) webserver using rsync (?). Takes:
+	* `--dir`: If not supplied `.` is used
+
 ### Plugin Constraints
 
 There is no system for determining what plugins work together or
