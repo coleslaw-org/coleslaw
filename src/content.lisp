@@ -26,7 +26,7 @@
   "Determine if CHAR is a valid slug (i.e. URL) character."
   ; use the first char of the general unicode category as kind of
   ; hyper general category
-  (let ((cat (aref (cl-unicode:general-category char) 0))
+  (let ((cat (char (cl-unicode:general-category char) 0))
         (allowed-cats (list #\L #\N))) ; allowed Unicode categories in URLs
         (cond
           ((member cat allowed-cats)   t)
@@ -35,7 +35,7 @@
 
 (defun unicode-space-p (char)
   "Determine if CHAR is a kind of whitespace by unicode category means."
-  (char= (aref (cl-unicode:general-category char) 0) #\Z))
+  (char= (char (cl-unicode:general-category char) 0) #\Z))
 
 (defun slugify (string)
   "Return a version of STRING suitable for use as a URL."
