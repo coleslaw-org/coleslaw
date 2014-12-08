@@ -263,8 +263,32 @@ that are useful to the user. Example errors users have encountered:
 
 It would be convenient to add command-line tools/scripts to run coleslaw,
 set up the db for incremental builds, scaffold a new post, etc. for new users.
-Xach's buildapp or Fare's cl-launch would be useful here. frog and hakyll are
+Fukamachi's Shelly, Xach's buildapp or Fare's cl-launch would be useful here. frog and hakyll are
 reasonable points of inspiration for commands to offer.
+
+#### Commands
+
+This is a initial set of commands which will be used to implement the first coleslaw cli, feel free to contribute!
+Imagine a executable `coleslaw`, the commands would be invoked like this: `coleslaw <commandname> <args>`
+
+* `build` generates the site. Takes:
+	* `--repo-dir`: first defaults to `~/.coleslawrc`'s `repo-dir` then to `./.coleslawrc`'s `repo-dir` and otherwise fails
+* `clean` removes the files from `output-dir` and `staging-dir`. Takes:
+	* `--repo-dir`: See above
+* `rebuild` is a shortcut for `clean` and then `build`. Takes:
+	* `--repo-dir`: See above
+* `post` creates a new empty `.post` file. Takes:
+	* `--repo-dir`: See above
+	* `--title`: title (also used for generating file name)
+	* `--date`: same as the header-key. If not given, current time is used.
+	* `--format`: same as the header-key (optional, defaults to `md`)
+	* …
+* `serve` starts a hunchentoot serving the blog locally
+* maybe `page` which is `post` for static sites.
+
+Ideas for later:
+
+* handle deployment with commands but because we've got many methods there would have to be an intelligent way of handling that.
 
 ### Plugin Constraints
 
