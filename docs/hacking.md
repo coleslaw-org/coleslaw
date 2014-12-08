@@ -287,6 +287,8 @@ Imagine a executable `coleslaw`, the commands would be invoked like this: `coles
 * `site` is the same as `post` but for static site (should we add this?)
 * `deploy`/`upload` does upload the files from `output-dir` to your (configured) webserver using rsync (?). Takes:
 	* `--dir`: If not supplied `.` is used
+* `git-deploy` adds the post-receive hook to a git repo specified with `--dir`
+* `serve` starts a hunchentoot serving the blog locally
 
 ### Plugin Constraints
 
