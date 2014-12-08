@@ -272,7 +272,7 @@ This is a initial set of commands which will be used to implement the first cole
 Imagine a executable `coleslaw`, the commands would be invoked like this: `coleslaw <commandname> <args>`
 
 * `build` generates the site. Takes:
-	* `--repo-dir`: first defaults to `~/.coleslawrc`'s `repo-dir` then to `./.coleslawrc`'s `repo-dir` and otherwise fails
+	* `--repo-dir`: first defaults to `~/.coleslawrc`'s `repo-dir` then to `.` and otherwise fails
 * `clean` removes the files from `output-dir` and `staging-dir`. Takes:
 	* `--repo-dir`: See above
 * `rebuild` is a shortcut for `clean` and then `build`. Takes:
@@ -288,7 +288,9 @@ Imagine a executable `coleslaw`, the commands would be invoked like this: `coles
 
 Ideas for later:
 
-* handle deployment with commands but because we've got many methods there would have to be an intelligent way of handling that.
+* Deployment. It would be nice to have but user needs vary greatly
+  and there are multiple deployment methods to support (heroku, s3,
+  gh-pages, git, etc). This will require some careful thought.
 
 ### Plugin Constraints
 

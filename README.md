@@ -8,7 +8,8 @@
 > behind the enormous bushy eyebrows and that we called him Coleslaw. - anon
 
 Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghendershott/frog), [Jekyll](http://jekyllrb.com/), or [Hakyll](http://jaspervdj.be/hakyll/).
-Have questions? Come talk to us on **IRC in #coleslaw on Freenode**!
+
+Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
 
 ## Features
 
