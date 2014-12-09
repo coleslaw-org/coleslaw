@@ -68,12 +68,14 @@ use it as the template passing any RENDER-ARGS."
         (url (namestring (page-url document))))
     (write-file (rel-path (staging-dir *config*) url) html)))
 
-(defun find-all (doc-type)
+(defun find-all (doc-type &optional (matching (lambda (x) (typep x doc-type))))
   "Return a list of all instances of a given DOC-TYPE."
   (loop for val being the hash-values in *site*
-     when (typep val doc-type) collect val))
+     when (funcall matching val) collect val))
 
 (defun purge-all (doc-type)
   "Remove all instances of DOC-TYPE from memory."
-  (dolist (obj (find-all doc-type))
+  (dolist (obj (find-all doc-type
+                         (lambda (d) (equal (symbol-name (class-name (class-of d)))
+                                            (symbol-name doc-type)))))
     (remhash (page-url obj) *site*)))
