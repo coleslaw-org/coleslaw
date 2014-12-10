@@ -24,8 +24,8 @@
 
 (defun slug-char-p (char &key (allowed-chars (list #\- #\~)))
   "Determine if CHAR is a valid slug (i.e. URL) character."
-  ; use the first char of the general unicode category as kind of
-  ; hyper general category
+  ;; use the first char of the general unicode category as kind of
+  ;; hyper general category
   (let ((cat (char (cl-unicode:general-category char) 0))
         (allowed-cats (list #\L #\N))) ; allowed Unicode categories in URLs
         (cond
@@ -39,11 +39,11 @@
 
 (defun slugify (string)
   "Return a version of STRING suitable for use as a URL."
-  (let ((slugified (remove-if-not #'slug-char-p 
+  (let ((slugified (remove-if-not #'slug-char-p
                                   (substitute-if #\- #'unicode-space-p string))))
 	(if (zerop (length slugified))
-            (error "Post title '~a' does not contain characters suitable for a slug!" string 
-            slugified)))
+        (error "Post title '~a' does not contain characters suitable for a slug!" string )
+        slugified)))
 
 ;; Content Types
 
