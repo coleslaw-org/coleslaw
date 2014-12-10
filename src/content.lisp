@@ -40,10 +40,10 @@
 (defun slugify (string)
   "Return a version of STRING suitable for use as a URL."
   (let ((slugified (remove-if-not #'slug-char-p 
-								  (substitute-if #\- #'unicode-space-p string))))
-	(if (= 0 (length slugified))
-			(error "Post title '~a' does not contain characters suitable for a slug!" string)
-			slugified)))
+                                  (substitute-if #\- #'unicode-space-p string))))
+	(if (zerop (length slugified))
+            (error "Post title '~a' does not contain characters suitable for a slug!" string 
+            slugified)))
 
 ;; Content Types
 
