@@ -6,7 +6,7 @@
 (defun main (repo-dir &optional oldrev)
   "Load the user's config file, then compile and deploy the blog stored
 in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
-  (load-config repo-dir)
+  (load-config (discover-config-path repo-dir) repo-dir)
   (setf *last-revision* oldrev)
   (load-content)
   (compile-theme (theme *config*))
