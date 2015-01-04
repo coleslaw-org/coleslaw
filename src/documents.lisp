@@ -75,7 +75,8 @@ use it as the template passing any RENDER-ARGS."
 
 (defun purge-all (doc-type)
   "Remove all instances of DOC-TYPE from memory."
-  (dolist (obj (find-all doc-type
-                         (lambda (d) (equal (symbol-name (class-name (class-of d)))
-                                            (symbol-name doc-type)))))
-    (remhash (page-url obj) *site*)))
+  (flet ((matches-class-name-p (x)
+           (class-name-p (symbol-name doc-type)
+                         (class-of x))))
+    (dolist (obj (find-all doc-type #'matches-class-name-p))
+      (remhash (page-url obj) *site*))))
