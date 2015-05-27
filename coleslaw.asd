@@ -32,6 +32,9 @@
                              (intern "COLESLAW-TESTS" :coleslaw-tests))))
 
 (defsystem #:coleslaw-tests
+  :description "A test suite for coleslaw."
+  :license "BSD"
+  :author "Brit Butler <redline6561@gmail.com>"
   :depends-on (coleslaw stefil)
   :pathname "tests/"
   :serial t
