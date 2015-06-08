@@ -10,11 +10,6 @@
 
 (in-package :coleslaw-s3)
 
-(defparameter *credentials* nil
-  "The credentials to authenticate with Amazon Web Services.
-Stored in a file with the access key on the first line
-and the secret key on the second.")
-
 (defparameter *content-type-map* '(("html" . "text/html")
                                    ("css" . "text/css")
                                    ("png" . "image/png")
@@ -53,5 +48,7 @@ and the secret key on the second.")
     (zs3:delete-objects (stale-keys) *bucket*)))
 
 (defun enable (&key auth-file bucket)
-  (setf *credentials* (zs3:file-credentials auth-file)
+  "AUTH-FILE: Path to file with the access key on the first line and the secret 
+   key on the second."
+  (setf zs3:*credentials* (zs3:file-credentials auth-file)
         *bucket* bucket))
