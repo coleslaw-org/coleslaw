@@ -69,19 +69,10 @@ are in the plugins folder in coleslaw's source directory."
     (destructuring-bind (name &rest args) plugin
       (enable-plugin name args))))
 
-(defun discover-config-path (repo-path)
-  "Check the supplied REPO-PATH for a .coleslawrc and if one
-doesn't exist, use the .coleslawrc in the home directory."
-  (let ((repo-config (rel-path repo-path ".coleslawrc")))
-    (if (file-exists-p repo-config)
-        repo-config
-        (rel-path (user-homedir-pathname) ".coleslawrc"))))
-
-(defun load-config (&optional (repo-dir ""))
-  "Find and load the coleslaw configuration from .coleslawrc. REPO-DIR will be
-preferred over the home directory if provided."
-  (with-open-file (in (discover-config-path repo-dir) :external-format :utf-8)
+(defun load-config (config-file)
+  "Load CONFIG-FILE, the coleslaw configuration file."
+  (with-open-file (in config-file :external-format :utf-8)
     (let ((config-form (read in)))
       (setf *config* (construct 'blog config-form)
-            (repo-dir *config*) repo-dir)))
+            (repo-dir *config*) (directory-namestring config-file))))
   (load-plugins (plugins *config*)))
