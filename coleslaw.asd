@@ -1,7 +1,7 @@
 (defsystem #:coleslaw
   :name "coleslaw"
   :description "Flexible Lisp Blogware"
-  :version "0.9.7"
+  :version (:read-file-form "version.lisp-expr")
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
@@ -25,12 +25,12 @@
                (:file "posts")
                (:file "indexes")
                (:file "feeds")
-               (:file "coleslaw")
-               (:file "cli"))
+               (:file "coleslaw"))
   :in-order-to ((test-op (load-op coleslaw-tests)))
   :perform (test-op :after (op c)
                     (funcall (intern "RUN!" :coleslaw-tests)
                              (intern "COLESLAW-TESTS" :coleslaw-tests))))
+
 
 (defsystem #:coleslaw-tests
   :description "A test suite for coleslaw."

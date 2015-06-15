@@ -1,10 +1,11 @@
 (defpackage #:coleslaw-cli
-  (:use :cl)
+  (:use #:cl)
   (:documentation "CLI processing tools.")
   (:export
-   #:process-parameters))
+   #:process-parameters
+   #:main))
 
-(in-package :coleslaw-cli)
+(in-package #:coleslaw-cli)
 
 (defun process-parameters (argv)
   "Return an alist where the key is the option name and the value the
@@ -21,3 +22,31 @@
                                   (second argv)
                                   alist))))))
     (%iter argv nil)))
+
+(defparameter *usage*
+  "Usage: coleslaw <command> [--config <path-to-config>]
+
+OPTIONS
+
+    --config
+      The coleslaw configuration file to use.
+
+
+COMMANDS
+
+  build
+    build the site
+
+  clean
+    remove all the generated files.
+
+  rebuild
+    The equivalent of calling clean and build.
+
+  serve
+    Start a web server
+")
+
+(defun main (argv)
+  "The CLI entry point."
+  (format t "~A~%" *usage*))
