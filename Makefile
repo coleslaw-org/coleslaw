@@ -8,8 +8,9 @@ CL	   = sbcl
 # default to 4096 MB of RAM size in the image
 DYNSIZE    = 4096
 
-LISP_SRC   = $(wildcard src/*lisp) \
-             coleslaw-cli.asd      \
+LISP_SRC   = $(wildcard src/*lisp)     \
+             $(wildcard src/cli/*lisp) \
+             coleslaw-cli.asd          \
              coleslaw.asd
 
 BUILDDIR   = build
@@ -21,7 +22,7 @@ BUILDAPP   = $(BUILDDIR)/bin/buildapp.sbcl
 CL_OPTS    = --no-sysinit --no-userinit
 
 BUILDAPP_OPTS = --require sb-posix      \
-	--require sb-bsd-sockets        \
+	--require sb-bsd-sockets            \
 	--require sb-rotate-byte
 
 COLESLAW        = $(BUILDDIR)/bin/$(APP_NAME)
