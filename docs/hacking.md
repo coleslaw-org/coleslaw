@@ -341,6 +341,57 @@ Unfortunately, this does not solve:
    Content Types it includes or the CONTENT which indexes it appears
    on is not yet clear.
 
+### Contributing
+
+The preferred workflow is more or less:
+
+    - fork and clone
+    - make a branch
+    - commit your changes
+    - push your branch to your github fork
+    - open a Pull Request
+
+#### Fork and clone
+
+You may clone the main github repository or your fork, whichever you cloned
+will be known as origin in your git repository. You have to add the other git
+repository to your remotes, so if you cloned from your fork execute:
+
+
+```bash
+git remote add upstream git@github.com:redline6561/coleslaw.git
+```
+
+If you cloned from the main github repository execute:
+
+```bash
+git remote add fork git@github.com:<YourUsername>/coleslaw.git
+```
+
+For the rest of the steps we will assume you cloned from your fork and that the main github repository has the remote name of upstream.
+
+#### Make a branch
+
+```bash
+git checkout -b <branch_name>
+```
+
+It is important to work always on branch so one can track changes in upstream by simply executing ```git pull upstream master:master``` from the master branch. If one can't come up with a suitable branch name just name it patch-n.
+2
+#### Commit your changes
+
+Make the changes you want to coleslaw, add the files with that changes (```git add <path/to/file>```) and commit them (```git commit```). Your commit message should strive to sum up what has changes and why.
+
+#### Push your branch to your github fork
+
+```bash
+git push origin branch
+```
+
+#### Open a Pull Request
+
+After pushing the branch to your fork, on github you should see a button to open a pull request. In the PR message give the rationale for your changes.
+
 [closure_template]: https://github.com/archimag/cl-closure-template
 [api_docs]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md
 [clmd]: https://github.com/gwkkwg/cl-markdown
