@@ -17,11 +17,13 @@
                #:hunchentoot)
   :components
   ((:module "cli"
-    :components ((:file "build")
+    :components ((:module "utils"
+                  :components ((:file "directory-server")))
+                 (:file "build")
                  (:file "clean")
                  (:file "rebuild" :depends-on ("clean" "build"))
                  (:file "serve")
                  (:file "entry" :depends-on ("build"
-                                               "clean"
-                                               "rebuild"
-                                               "serve"))))))
+                                             "clean"
+                                             "rebuild"
+                                             "serve"))))))
