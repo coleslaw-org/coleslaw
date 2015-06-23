@@ -5,30 +5,33 @@
                 #:discover-config-path
                 #:load-config
                 #:staging-dir)
+  (:import-from #:coleslaw-cli/utils/directory-server
+                #:directory-server)
   (:documentation "Serve the rendered blog.")
   (:export
    #:serve))
 (in-package #:coleslaw-cli/serve)
 
-(defun serve (&key config blog-dir host port)
+
+(defun serve (&key config blog-dir host (port 8080))
   (let* ((current-dir (uiop/os:getcwd))
          (repo-dir (or blog-dir
                        current-dir))
          (config-file (or config
                           (discover-config-path current-dir))))
     (load-config config-file repo-dir)
-    #+nil(compile-blog (staging-dir *config*)) ; Should the blog be compiled?
 
     (hunchentoot:start
      (make-instance 'hunchentoot:easy-acceptor
-                    :port 4242 ))
-    (push (hunchentoot:create-folder-dispatcher-and-handler "/"
-                                                            (staging-dir *config*))
+                    :address host
+                    :port port ))
+    (push (directory-server "/"
+                            (staging-dir *config*))
           hunchentoot:*dispatch-table*)
     ;; To prevent the app to return immediately. Should investigate further.
     ;; See:
     ;; http://stackoverflow.com/questions/25797353/hunchentoot-based-app-in-a-lisp-image-from-buildapp-immediately-returns
-    #+sbcl(sb-impl::toplevel-repl nil)))
+    (sb-impl::toplevel-repl nil)))
 
 (setf (documentation #'serve 'function)
       (documentation *package* t))
