@@ -9,7 +9,7 @@
   (let
       ((old-rev (inferior-shell:run/s
                  "git log --oneline -1 | awk -e '{print $1}'"))
-       (blog-dir (blog-dir (uiop/os:getcwd))))
+       (blog-dir (uiop/os:getcwd)))
     (coleslaw:main blog-dir old-rev config)))
 
 (setf (documentation #'build 'function)
