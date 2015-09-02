@@ -26,23 +26,19 @@
                (:file "indexes")
                (:file "feeds")
                (:file "coleslaw"))
-  :in-order-to ((test-op (load-op coleslaw-tests)))
-  :perform (test-op :after (op c)
-                    (funcall (intern "RUN!" :coleslaw-tests)
-                             (intern "COLESLAW-TESTS" :coleslaw-tests))))
+  :in-order-to ((test-op (test-op coleslaw-test))))
 
-(defsystem #:coleslaw-tests
+(defsystem #:coleslaw-test
   :description "A test suite for coleslaw."
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
-  :depends-on (coleslaw stefil)
-  :pathname "tests/"
-  :serial t
-  :components ())
-
-(defmethod operation-done-p ((op test-op)
-                             (c (eql (find-system :coleslaw))))
-  (values nil))
+  :depends-on (:coleslaw :prove)
+  :defsystem-depends-on (:prove-asdf)
+  :components ((:module "tests"
+                :components
+                        ((:test-file "tests"))))
+  :perform (test-op :after (op c)
+                    (funcall (intern #.(string :run) :prove) c)))
 
 (defpackage #:coleslaw-conf (:export #:*basedir*))
 (defparameter coleslaw-conf:*basedir*

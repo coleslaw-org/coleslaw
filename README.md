@@ -1,5 +1,8 @@
 # coleslaw
 
+[![Build Status](https://travis-ci.org/kingcons/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
+[![Quicklisp](http://quickdocs.org/badge/<project name>.svg)](http://quickdocs.org/<project name>/)
+
 <img src="https://raw.github.com/redline6561/coleslaw/master/themes/hyde/css/logo_medium.jpg" alt="coleslaw logo" align="right"/>
 
 > [Czeslaw Milosz](http://blog.redlinernotes.com/tag/milosz.html) was the writer-in-residence at UNC c. 1992.
