@@ -18,4 +18,5 @@ cache:
     - $HOME/.config/common-lisp
 
 script:
-  - ros -s prove -e '(or (prove:run :coleslaw-test) (uiop:quit -1))'
+  - ros -s prove -e "(ql:quickload '(coleslaw coleslaw-test))"
+                 -e '(or (prove:run :coleslaw-test) (uiop:quit -1))'

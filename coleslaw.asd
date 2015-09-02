@@ -38,7 +38,7 @@
                 :components
                         ((:test-file "tests"))))
   :perform (test-op :after (op c)
-                    (funcall (intern #.(string :run) :prove) c)))
+                    (uiop:symbol-call :prove 'run c)))
 
 (defpackage #:coleslaw-conf (:export #:*basedir*))
 (defparameter coleslaw-conf:*basedir*
