@@ -5,3 +5,4 @@ ignore/
 generated/
 .curr
 .prev
+build/

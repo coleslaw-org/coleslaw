@@ -1,5 +1,8 @@
 # coleslaw
 
+[![Build Status](https://travis-ci.org/kingcons/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
+[![Quicklisp](http://quickdocs.org/badge/coleslaw.svg)](http://quickdocs.org/coleslaw/)
+
 <img src="https://raw.github.com/redline6561/coleslaw/master/themes/hyde/css/logo_medium.jpg" alt="coleslaw logo" align="right"/>
 
 > [Czeslaw Milosz](http://blog.redlinernotes.com/tag/milosz.html) was the writer-in-residence at UNC c. 1992.
@@ -23,7 +26,7 @@ Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
   * Sitemap generation
   * Incremental builds
   * Analytics via Google
-  * Comments via [Disqus](http://disqus.com/)
+  * Comments via [Disqus](http://disqus.com/) or [isso](http://posativ.org/isso)
   * Hosting via [Github Pages](https://pages.github.com/) or [Amazon S3](http://aws.amazon.com/s3/)
   * Embedding [gfycats](http://gfycat.com/)
   * [Tweeting](http://twitter.com/) about new posts
