@@ -7,18 +7,36 @@
 (defvar *site* (make-hash-table :test #'equal)
   "An in-memory database to hold all site documents, keyed on relative URLs.")
 
+(defvar *file-extension-content-class* (make-hash-table :test #'equalp)
+  "Maps a file extension to a content-class/document-type.")
+
+(defun register-content-class (file-extension document-type)
+  "Informs that files with the FILE-EXTENSION should belong to the DOCUMENT-TYPE."
+  (setf (gethash file-extension *file-extension-content-class*) document-type))
+
 ;; Class Methods
 
 (defgeneric publish (doc-type)
   (:documentation "Write pages to disk for all documents of the given DOC-TYPE."))
 
 (defgeneric discover (doc-type)
-  (:documentation "Load all documents of the given DOC-TYPE into memory.")
-  (:method (doc-type)
-    (let ((file-type (format nil "~(~A~)" (class-name doc-type))))
-      (do-files (file (repo-dir *config*) file-type)
-        (let ((obj (construct (class-name doc-type) (read-content file))))
-          (add-document obj))))))
+  (:documentation "Load all documents of the given DOC-TYPE into memory."))
+
+(defun doc-type-file-types (doc-type)
+  "Return a list containing all the valid file-types for doc-type"
+  (let (results)
+    (loop
+      :for file-type :being :the :hash-keys :of *file-extension-content-class*
+        :using  (hash-value document-type)
+      :when (eq doc-type document-type)
+        :do (push file-type results))
+    results))
+
+(defmethod discover (doc-type)
+  (dolist (file-type (doc-type-file-types doc-type))
+    (do-files (file (repo-dir *config*) file-type)
+      (let ((obj (construct (class-name doc-type) (read-content file))))
+        (add-document obj)))))
 
 (defmethod discover :before (doc-type)
   (purge-all (class-name doc-type)))

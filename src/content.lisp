@@ -60,6 +60,9 @@
     (when (stringp tags)
       (setf tags (mapcar #'make-tag (cl-ppcre:split "," tags))))))
 
+(register-content-class "md" (find-class 'content))
+(register-content-class "post" (find-class 'content))
+
 (defun parse-initarg (line)
   "Given a metadata header, LINE, parse an initarg name/value pair from it."
   (let ((name (string-upcase (subseq line 0 (position #\: line))))

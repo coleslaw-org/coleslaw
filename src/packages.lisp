@@ -38,4 +38,5 @@
            #:add-document
            #:delete-document
            #:write-document
-           #:content-text))
+           #:content-text
+           #:register-content-class))
