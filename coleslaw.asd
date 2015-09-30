@@ -22,7 +22,6 @@
                (:file "themes")
                (:file "documents")
                (:file "content")
-               (:file "posts")
                (:file "indexes")
                (:file "feeds")
                (:file "coleslaw"))
