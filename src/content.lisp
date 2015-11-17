@@ -49,9 +49,9 @@
 
 (defclass content ()
   ((url  :initarg :url  :reader page-url)
-   (date :initarg :date :reader content-date)
+   (date :initarg :date :reader date-of)
    (file :initarg :file :reader content-file)
-   (tags :initarg :tags :reader content-tags)
+   (tags :initarg :tags :reader tags-of)
    (text :initarg :text :reader content-text))
   (:default-initargs :tags nil :date nil))
 
@@ -95,15 +95,15 @@
 (defun tag-p (tag obj)
   "Test if OBJ is tagged with TAG."
   (let ((tag (if (typep tag 'tag) tag (make-tag tag))))
-    (member tag (content-tags obj) :test #'tag-slug=)))
+    (member tag (tags-of obj) :test #'tag-slug=)))
 
 (defun month-p (month obj)
   "Test if OBJ was written in MONTH."
-  (search month (content-date obj)))
+  (search month (date-of obj)))
 
 (defun by-date (content)
   "Sort CONTENT in reverse chronological order."
-  (sort content #'string> :key #'content-date))
+  (sort content #'string> :key #'date-of))
 
 (defun find-content-by-path (path)
   "Find the CONTENT corresponding to the file at PATH."

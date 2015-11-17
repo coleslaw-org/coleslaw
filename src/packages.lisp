@@ -21,6 +21,9 @@
            #:title-of
            #:author-of
            #:find-content-by-path
+           #:date-of
+           #:tags-of
+           #:slugify
            ;; Theming + Plugin API
            #:theme-fn
            #:plugin-conf-error
