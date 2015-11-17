@@ -40,7 +40,9 @@ is provided, it overrides the route used."
          (route (get-route class-name)))
     (unless route
       (error "No routing method found for: ~A" class-name))
-    (let* ((result (format nil route unique-id))
+    (let* ((result (if (typep route 'function)
+                       (funcall route document)
+                       (format nil route unique-id)))
            (type (or (pathname-type result) (page-ext *config*))))
       (make-pathname :type type :defaults result))))
 

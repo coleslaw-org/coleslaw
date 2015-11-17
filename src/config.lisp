@@ -30,6 +30,13 @@
    :staging-dir  "/tmp/coleslaw"
    :blog-index   "index.html"))
 
+(defmethod initialize-instance :after ((config blog) &key)
+  (with-slots (routing) config
+    (setf routing
+          (map 'list
+               #'(lambda (el) (list (first el) (eval (second el))))
+               routing))))
+
 (defun dir-slot-reader (config name)
   "Take CONFIG and NAME, and return a directory pathname for the matching SLOT."
   (ensure-directory-pathname (slot-value config name)))
