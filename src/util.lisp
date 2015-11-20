@@ -95,6 +95,12 @@ along with any missing parent directories otherwise."
                    :external-format :utf-8)
     (write text :stream out :escape nil)))
 
+(defun get-first-numeric-index ()
+  "Return the relative path of the first numeric index file"
+  (page-url (find-if (lambda (x)
+                       (eql (index-name x) 1))
+                     (find-all 'numeric-index))))
+
 (defun get-updated-files (&optional (revision *last-revision*))
   "Return a plist of (file-status file-name) for files that were changed
 in the git repo since REVISION."
