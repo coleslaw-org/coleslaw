@@ -30,9 +30,16 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
   "Find the symbol NAME inside PACKAGE which defaults to the theme package."
   (find-symbol (princ-to-string name) (theme-package package)))
 
+(defun find-theme (theme)
+  "Find the theme prefering themes in the local repo."
+  (let ((local-theme (repo-path "themes/~a/" theme)))
+    (if (probe-file local-theme)
+        local-theme
+        (app-path "themes/~a/" theme))))
+
 (defun compile-theme (theme)
   "Locate and compile the templates for the given THEME."
-  (do-files (file (app-path "themes/~a/" theme) "tmpl")
+  (do-files (file (find-theme theme) "tmpl")
     (compile-template :common-lisp-backend file))
   (do-files (file (app-path "themes/") "tmpl")
     (compile-template :common-lisp-backend file)))

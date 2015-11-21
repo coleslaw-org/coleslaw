@@ -71,6 +71,10 @@ If ARGS is provided, use (fmt path args) as the value of PATH."
   "Return a relative path beneath coleslaw."
   (apply 'rel-path coleslaw-conf:*basedir* path args))
 
+(defun repo-path (path &rest args)
+  "Return a relative path beneath the repo being processed."
+  (apply 'rel-path (repo-dir *config*) path args))
+
 (defun run-program (program &rest args)
   "Take a PROGRAM and execute the corresponding shell command. If ARGS is provided,
 use (fmt program args) as the value of PROGRAM."
