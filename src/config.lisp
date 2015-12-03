@@ -49,7 +49,9 @@
 (defun enable-plugin (name args)
   "Given a plugin, NAME, compile+load it and call its ENABLE function with ARGS."
   (flet ((plugin-path (sym)
-           (app-path "plugins/~(~A~)" sym))
+           (if (probe-file (repo-path "plugins/~(~A~).lisp" sym))
+               (repo-path "plugins/~(~A~)" sym)
+               (app-path "plugins/~(~A~)" sym)))
          (plugin-package (sym)
            (format nil "~:@(coleslaw-~A~)" sym)))
     (let ((file (plugin-path name)))
