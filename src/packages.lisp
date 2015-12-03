@@ -13,6 +13,14 @@
   (:export #:main
            #:preview
            #:*config*
+           ;; Config Accessors
+           #:author
+           #:deploy-dir
+           #:domain
+           #:page-ext
+           #:repo-dir
+           #:staging-dir
+           #:title
            ;; Core Classes
            #:content
            #:post
