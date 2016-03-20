@@ -13,13 +13,16 @@
 (in-package :coleslaw-static-pages)
 
 (defclass page (content)
-  ((title :initarg :title :reader coleslaw::title-of)))
+  ((title :initarg :title :reader coleslaw::title-of)
+   (format :initarg :format :reader coleslaw::page-format))
+  ;; default format is markdown (for backward compatibility)
+  (:default-initargs :format "md"))
 
 (defmethod initialize-instance :after ((object page) &key)
-  ;; Expect all static-pages to be written in Markdown for now.
-  (with-slots (coleslaw::url coleslaw::text) object
+  (with-slots (coleslaw::url coleslaw::text format) object
     (setf coleslaw::url (make-pathname :defaults coleslaw::url)
-          coleslaw::text (render-text coleslaw::text :md))))
+          format (alexandria:make-keyword (string-upcase format))
+          coleslaw::text (render-text coleslaw::text format))))
 
 (defmethod render ((object page) &key next prev)
   ;; For the time being, we'll re-use the normal post theme.
