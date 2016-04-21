@@ -16,7 +16,7 @@
   ((title :initarg :title :reader coleslaw::title-of)
    (format :initarg :format :reader coleslaw::page-format))
   ;; default format is markdown (for backward compatibility)
-  (:default-initargs :format "md"))
+  (:default-initargs :format :md))
 
 (defmethod initialize-instance :after ((object page) &key)
   (with-slots (coleslaw::url coleslaw::text format) object
