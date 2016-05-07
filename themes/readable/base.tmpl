@@ -26,7 +26,13 @@
                 <a class="brand" href="{$config.domain}">{$config.title}</a>
                 <ul class="nav">
                   {foreach $link in $config.sitenav}
-                    <li><a href="{$link.url}">{$link.name}</a></li>
+                  <li>
+                    {if $link.relative}
+                      <a href="{$config.domain}/{$link.url}">{$link.name}</a>
+                    {else}
+                      <a href="{$link.url}">{$link.name}</a>
+                    {/if}
+                  </li>
                   {/foreach}
                 </ul>
               </div>

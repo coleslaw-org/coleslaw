@@ -20,7 +20,11 @@
     <div class="navigation">
       <a href="{$config.domain}">{$config.title}</a> |
       {foreach $link in $config.sitenav}
-        <a href="{$link.url}">{$link.name}</a>
+        {if $link.relative}
+          <a href="{$config.domain}/{$link.url}">{$link.name}</a>
+        {else}
+          <a href="{$link.url}">{$link.name}</a>
+        {/if}
         {if not isLast($link)} {sp}|{sp} {/if}
       {/foreach}
     </div>
