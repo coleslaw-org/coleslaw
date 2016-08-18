@@ -47,3 +47,54 @@ span.paren5 { background-color : inherit; -webkit-transition: background-color 0
 span.paren5:hover { color : inherit; background-color : #CAFFCA; }
 span.paren6 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
 span.paren6:hover { color : inherit; background-color : #FFBAFF; }
+
+@media (max-width: 680px) {
+
+    #content {
+        padding-top: 0em
+    }
+
+    .title {
+        margin-left: 0.1em;
+    }
+
+    .article-meta {
+        margin-bottom: 1em;
+    }
+
+    .article-meta, .article-content {
+        float: left;
+        margin-left: 0em;
+        margin-right: 0em;
+        width: 90%;
+        padding-left: 5%;
+    }
+
+    .article, .article-content {
+        margin-left: 0em;
+        text-align: justify;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    #coleslaw-logo {
+        float: none;
+    }
+
+    #coleslaw-logo img {
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+        width: auto;
+    }
+
+    .fineprint a img {
+        width: auto;
+        clear: both;
+    }
+}
