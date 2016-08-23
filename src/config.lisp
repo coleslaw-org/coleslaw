@@ -16,7 +16,7 @@
    (sitenav         :initarg :sitenav        :reader sitenav)
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
-   (theme-engine    :initarg :theme-engine   :accessor template-engine)
+   (template-engine :initarg :template-engine :accessor template-engine)
    (title           :initarg :title          :reader title))
   (:default-initargs
    :feeds        nil
@@ -28,7 +28,7 @@
    :page-ext     "html"
    :separator    ";;;;;"
    :staging-dir  "/tmp/coleslaw"
-   :theme-engine 'cl-closure))
+   :template-engine 'cl-closure))
 
 (defmethod initialize-instance :after ((config blog) &rest rest)
   (declare (ignore rest))
