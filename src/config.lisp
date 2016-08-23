@@ -31,6 +31,7 @@
    :template-engine 'cl-closure))
 
 (defmethod initialize-instance :after ((config blog) &rest rest)
+  "Make sure that TEMPLATE-ENGINE is interned in the coleslaw package"
   (declare (ignore rest))
   (setf (template-engine config) (intern (string (template-engine config)) :coleslaw)))
 

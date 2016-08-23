@@ -32,7 +32,9 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
 (defun theme-fn (name &optional
                         (package (theme *config*))
                         (templating-engine *templating-engine*))
-  "Find the symbol NAME inside PACKAGE which defaults to the theme package."
+  "This function returns a function that will accept an arbitrary number of
+arguments and will return a html string. If the given templating-engine is not
+support this will signal a SIMPLE-ERROR"
   (case templating-engine
     (cl-closure (let ((func (find-symbol (princ-to-string name)
                                          (theme-package package))))
@@ -54,15 +56,23 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
         (app-path "themes/~a/" theme))))
 
 (defun compile-theme (theme)
-  "Locate and compile the templates for the given THEME."
-  ;; Do stuff for atom and rss first
-  (do-files (file (app-path "themes/") "tmpl")
+  "Locate and compile the templates for the given THEME and compile them. In the
+case of cl-closure this will define extra functions and in the case of Djula this
+will set *DJULA-POST-TEMPLATE* and *DJULA-INDEX-TEMPATE*. This will always define
+the cl-closure functions for atom, sitemap and rss."
+  ;; Define functions for atom, sitemap and rss.
+  (do-files (file (app-path "themes/")
+                  "tmpl")
     (compile-template :common-lisp-backend file))
   ;; Now find the correct templates
   (let ((theme-base (find-theme theme)))
-    (format t "~A, ~A, ~A ~A~%" *templating-engine* (equal *templating-engine* (intern "DJULA"))
-            (eql *templating-engine* (intern "DJULA"))
-            (equal *templating-engine* (list 'DJULA)))
+    (format t
+            "~A, ~A, ~A ~A~%"
+            *templating-engine*
+            (equal *templating-engine* (intern "DJULA"))
+            (eql *templating-engine*
+                 (intern "DJULA"))
+            (equal *templating-engine* 'DJULA))
     (case *templating-engine*
       (cl-closure (do-files (file theme-base "tmpl")
                     (compile-template :common-lisp-backend file)))
@@ -72,5 +82,4 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
                                                         (make-pathname :directory "/"
                                                                        :name page
                                                                        :type "html"))))))
-      (otherwise (error "Unkown templating engine found at compiling"))
-      )))
+      (otherwise (error "Unkown templating engine found at compiling")))))
