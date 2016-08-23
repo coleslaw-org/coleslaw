@@ -8,7 +8,8 @@
                           #:publish
                           #:theme-fn
                           #:render-text
-                          #:write-document))
+                          #:write-document)
+  (:import-from :djula #:render-template*))
 
 (in-package :coleslaw-static-pages)
 
@@ -24,11 +25,12 @@
           format (alexandria:make-keyword (string-upcase format))
           coleslaw::text (render-text coleslaw::text format))))
 
-(defmethod render ((object page) &key next prev)
+(defmethod render ((object page) &rest rest &key next prev)
   ;; For the time being, we'll re-use the normal post theme.
   (declare (ignore next prev))
-  (funcall (theme-fn 'post) (list :config *config*
-                                  :post object)))
+  (apply (theme-fn 'post) :config *config*
+                          :post object
+                          rest))
 
 (defmethod publish ((doc-type (eql (find-class 'page))))
   (dolist (page (find-all 'page))

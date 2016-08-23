@@ -15,13 +15,14 @@
   (with-slots (url) object
     (setf url (compute-url object slug))))
 
-(defmethod render ((object index) &key prev next)
-  (funcall (theme-fn 'index) (list :tags (find-all 'tag-index)
-                                   :months (find-all 'month-index)
-                                   :config *config*
-                                   :index object
-                                   :prev prev
-                                   :next next)))
+(defmethod render ((object index) &rest rest)
+  (apply (theme-fn 'index)
+         :tags (find-all 'tag-index)
+         :months (find-all 'month-index)
+         :config *config*
+         :index object
+         (append (find-all 'month-index)
+                 rest)))
 
 ;;; Index by Tag
 

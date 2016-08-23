@@ -10,6 +10,8 @@
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd
                       #:ensure-directory-pathname)
+  (:import-from :djula #:render-template*
+                       #:compile-template*)
   (:export #:main
            #:preview
            #:*config*

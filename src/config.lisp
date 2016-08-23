@@ -16,6 +16,7 @@
    (sitenav         :initarg :sitenav        :reader sitenav)
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
+   (theme-engine    :initarg :theme-engine   :accessor template-engine)
    (title           :initarg :title          :reader title))
   (:default-initargs
    :feeds        nil
@@ -26,7 +27,12 @@
    :lang         "en"
    :page-ext     "html"
    :separator    ";;;;;"
-   :staging-dir  "/tmp/coleslaw"))
+   :staging-dir  "/tmp/coleslaw"
+   :theme-engine 'cl-closure))
+
+(defmethod initialize-instance :after ((config blog) &rest rest)
+  (declare (ignore rest))
+  (setf (template-engine config) (intern (string (template-engine config)) :coleslaw)))
 
 (defun dir-slot-reader (config name)
   "Take CONFIG and NAME, and return a directory pathname for the matching SLOT."

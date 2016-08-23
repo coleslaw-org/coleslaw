@@ -3,16 +3,27 @@
 (defvar *last-revision* nil
   "The git revision prior to the last push. For use with GET-UPDATED-FILES.")
 
+(defvar *templating-engine* nil
+  "The templating engine to use. This will be set during the main routine.
+Possible options at this time are djula and cl-closure.")
+
+(defvar *djula-post-template* nil
+  "The template to use for rendering a post using a djula template.")
+
+(defvar *djula-index-template* nil
+  "The template to use for rendering the index using a djula template.")
+
 (defun main (repo-dir &optional oldrev)
   "Load the user's config file, then compile and deploy the blog stored
 in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (load-config repo-dir)
-  (setf *last-revision* oldrev)
-  (load-content)
-  (compile-theme (theme *config*))
-  (let ((dir (staging-dir *config*)))
-    (compile-blog dir)
-    (deploy dir)))
+  (let ((*templating-engine* (template-engine *config*)))
+    (setf *last-revision* oldrev)
+    (load-content)
+    (compile-theme (theme *config*))
+    (let ((dir (staging-dir *config*)))
+      (compile-blog dir)
+      (deploy dir))))
 
 (defun load-content ()
   "Load all content stored in the blog's repo."
@@ -63,9 +74,16 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to HTML using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
-  (funcall (or theme-fn (theme-fn 'base))
-           (list :config *config*
-                 :content content
-                 :raw (apply 'render content render-args)
-                 :pubdate (format-rfc1123-timestring nil (local-time:now))
-                 :injections (find-injections content))))
+  (let ((index-args (list :config *config*
+                          :content content
+                          :pubdate (format-rfc1123-timestring nil
+                                                              (local-time:now))
+                          :injections (find-injections content))))
+    (case *templating-engine*
+      (cl-closure
+       (apply (or theme-fn
+                  (theme-fn 'base))
+              (append (list :raw (apply 'render content render-args))
+                      index-args)))
+      (djula (apply 'render content (append index-args render-args)))
+      (otherwise (error "Unkown templating engine found")))))
