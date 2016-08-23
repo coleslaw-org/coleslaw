@@ -1,0 +1,34 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <h1 class="title">{{ $index.title }}</h1>
+    {% for obj in index.content %}
+        <div class="article-meta">
+            <a class="article-title" href="{{ config.domain }}/{{ obj.url }}">{{ obj.title }}</a>
+            <div class="date"> posted on {{  obj.date  }}</div>
+            <div class="article">{{  obj.text | safe }}</div>
+        </div>
+    {% endfor %}
+    <div id="relative-nav">
+        {% if prev %} <a href="{{ config.domain }}/{{ prev.url }}">Previous</a> {% endif %}
+        {% if next %} <a href="{{ config.domain }}/{{ next.url }}">Next</a> {% endif %}
+    </div>
+    {% if tags %}
+        <div id="tagsoup">
+            <p>This blog covers
+                {% for tag in tags %}
+                    <a href="{{ config.domain }}/{{ tag.url }}">{{ tag.name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+        </div>
+    {% endif %}
+    {% if months %}
+        <div id="monthsoup">
+            <p>View content from
+                {% for month in months %}
+                    <a href="{{ config.domain }}/{{ month.url }}">{{ month.name }}</a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

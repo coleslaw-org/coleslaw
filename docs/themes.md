@@ -84,7 +84,7 @@ index.html template in the theme folder. The variables passed to this template
 are the same as with closure. So post.html gets the post and base variables and
 index.html gets the index and base variables.
 
-For more information see the hyde_djula theme on how djula works.
+For more information see the hyde-djula theme on how djula works.
 
 ## Creating a Theme from Scratch using Closure (with code)
 

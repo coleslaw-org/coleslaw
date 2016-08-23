@@ -1,0 +1,31 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="article-meta">
+  <h1 class="title">{{ post.title }}</h1>
+  <div class="tags">
+    {% if post.tags %}
+      Tagged as {% for tag in post.tags %}
+        <a href="{{ config.domain }}/{{ tag.url }}">{{ tag.name }}</a>
+          {% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div class="date">
+      {% if post.date %}
+          Written on {{ post.date }}
+      {% endif %}
+  </div>
+</div>
+<div class="article-content">
+  {{ post.text | safe }}
+</div>
+<div class="relative-nav">{{ \n }}
+    {% if prev %}
+        <a href="{{ config.domain }}/{{ prev.url }}">Previous</a><br>
+    {% endif %}
+    {% if next %}
+        <a href="{{ config.domain }}/{{ next.url }}">Next</a><br>
+    {% endif %}
+</div>
+{% endblock %}
