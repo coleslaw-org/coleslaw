@@ -10,10 +10,13 @@ template engine and how you can influence the resulting HTML.
 
 ## High-Level Overview
 
-Themes are written using [Closure Templates][clt]. Those templates are
-then compiled into functions that Lisp calls with the blog data to get
-HTML. Since the Lisp code to use theme functions is already written,
-your theme must follow a few rules.
+Themes are written using [Closure Templates][clt] or using
+[Djula][djula].
+
+## Closure templates
+Closure templates are then compiled into functions that Lisp calls with
+the blog data to get HTML. Since the Lisp code to use theme functions is
+already written, your theme must follow a few rules.
 
 Every theme **must** be in a folder under "themes/" named after the
 theme. The theme's templates must start with a namespace declaration
@@ -67,7 +70,23 @@ template hacking. There is plenty of advice on CSS styling on the web.
 I'm no expert but feel free to send pull requests modifying a theme's
 CSS or improving this section, perhaps by recommending a CSS resource.
 
-## Creating a Theme from Scratch (with code)
+## Djula templates
+
+Djula templates are somewhat more traditional than closure templates.
+They are inspired by Django templates. For more info see the Djula
+[documentation][djula_doc]. Instead of having a base template that
+gets called with data from the child template, Djula uses an extend
+mechanism. A template extends from an other template and defines blocks
+that the extended templates uses.
+
+Because you extend templates in djula you only have to define a post.html and
+index.html template in the theme folder. The variables passed to this template
+are the same as with closure. So post.html gets the post and base variables and
+index.html gets the index and base variables.
+
+For more information see the hyde_djula theme on how djula works.
+
+## Creating a Theme from Scratch using Closure (with code)
 
 ### Step 1. Create the directory.
 
@@ -214,5 +233,7 @@ between the pages so navigation is cumbersome but adding links is simple.
 Just do: `<a href="{$config.domain}/{$object.url}">{$object.name}</a>`.
 
 [clt]: https://developers.google.com/closure/templates/
+[djula]: https://github.com/mmontone/djula
+[djula_doc]: https://mmontone.github.io/djula/doc/build/html/index.html
 [ovr]: https://github.com/redline6561/coleslaw/blob/master/docs/overview.md
 [hck]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
