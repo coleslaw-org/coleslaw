@@ -16,7 +16,15 @@
       {/foreach}
     {/if}
   </head>
-  <body>
+  <body>{\n}
+  {if $config}
+  CONFIG
+  {else}
+  NO CONFIG{\n}
+  {/if}
+  config: {$config}{\n}
+  domain: {$config.domain}{\n}
+  author: {$config.author}{\n}
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="offset2 span8">
@@ -37,7 +45,9 @@
                 </ul>
               </div>
             </div>
-          </div>  
+          </div>  {\n}
+          {$link}
+          {\n}
 
           <div class="row-fluid">
             {$raw |noAutoescape}
