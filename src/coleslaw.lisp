@@ -20,7 +20,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (let ((*templating-engine* (template-engine *config*)))
     (setf *last-revision* oldrev)
     (load-content)
-    (compile-theme (theme *config*))
+    (compile-theme (template-engine *config*) (theme *config*))
     (let ((dir (staging-dir *config*)))
       (compile-blog dir)
       (deploy dir))))
@@ -66,24 +66,15 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (let ((current-working-directory (cl-fad:pathname-directory-pathname path)))
     (unless *config*
       (load-config (namestring current-working-directory))
-      (compile-theme (theme *config*)))
+      (compile-theme (template-engine *config*) (theme *config*)))
     (let* ((file (rel-path (repo-dir *config*) path))
            (content (construct content-type (read-content file))))
-      (write-file "tmp.html" (render-page content)))))
+      (write-file "tmp.html" (render-page (template-engine *config*) content)))))
 
-(defun render-page (content &optional theme-fn &rest render-args)
-  "Render the given CONTENT to HTML using THEME-FN if supplied.
-Additional args to render CONTENT can be passed via RENDER-ARGS."
-  (let ((index-args (list :config *config*
-                          :content content
-                          :pubdate (format-rfc1123-timestring nil
-                                                              (local-time:now))
-                          :injections (find-injections content))))
-    (case *templating-engine*
-      (cl-closure
-       (apply (or theme-fn
-                  (theme-fn 'base))
-              (append (list :raw (apply 'render content render-args))
-                      index-args)))
-      (djula (apply 'render content (append index-args render-args)))
-      (otherwise (error "Unkown templating engine found")))))
+(defgeneric render-page (template-engine content &optional theme-fn &rest render-args)
+  (:documentation "Render a page using the given theme. TEMPLATE-ENGINE should be
+an instance of a template-engine object specified in one of the plugins. This
+object is stored in the config object. CONTENT should be the object to render as
+main part of the page, THEME-FN should be the function to render the page with
+and RENDER-ARGS should be additional arguments that should be passed to the
+render function(s)."))

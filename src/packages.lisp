@@ -23,6 +23,7 @@
            #:repo-dir
            #:staging-dir
            #:title
+           #:template-engine
            ;; Core Classes
            #:content
            #:post
@@ -32,7 +33,9 @@
            #:author-of
            #:find-content-by-path
            ;; Theming + Plugin API
-           #:theme-fn
+           #:get-theme-fn
+           #:compile-theme
+           #:render-page
            #:plugin-conf-error
            #:render-text
            #:add-injection

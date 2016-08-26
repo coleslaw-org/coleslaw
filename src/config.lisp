@@ -1,7 +1,8 @@
 (in-package :coleslaw)
 
 (defclass blog ()
-  ((author          :initarg :author         :reader author)
+  ((master          :initarg :master         :reader master)
+   (author          :initarg :author         :reader author)
    (charset         :initarg :charset        :reader charset)
    (deploy-dir      :initarg :deploy-dir     :reader deploy-dir)
    (domain          :initarg :domain         :reader domain)
@@ -19,6 +20,7 @@
    (template-engine :initarg :template-engine :accessor template-engine)
    (title           :initarg :title          :reader title))
   (:default-initargs
+   :master       nil
    :feeds        nil
    :license      nil
    :plugins      nil
@@ -31,9 +33,19 @@
    :template-engine 'cl-closure))
 
 (defmethod initialize-instance :after ((config blog) &rest rest)
-  "Make sure that TEMPLATE-ENGINE is interned in the coleslaw package"
+  "Initialize config object by creating the correct template-engine class and
+setting it to template-engine"
   (declare (ignore rest))
-  (setf (template-engine config) (intern (string (template-engine config)) :coleslaw)))
+  (when (master config) (setf *config* config))
+  (load-plugins (cons `(,(format nil
+                                   "~:@(~A~)"
+                                   (string (template-engine config))))
+                        (plugins config)))
+  (let ((theme-class (intern (string-upcase (template-engine config))
+                             (format nil
+                                     "~:@(coleslaw-~A~)"
+                                     (string (template-engine config))))))
+    (setf (template-engine config) (make-instance theme-class))))
 
 (defun dir-slot-reader (config name)
   "Take CONFIG and NAME, and return a directory pathname for the matching SLOT."
@@ -91,6 +103,4 @@ doesn't exist, use the .coleslawrc in the home directory."
 preferred over the home directory if provided."
   (with-open-file (in (discover-config-path repo-dir) :external-format :utf-8)
     (let ((config-form (read in)))
-      (setf *config* (construct 'blog config-form)
-            (repo-dir *config*) repo-dir)))
-  (load-plugins (plugins *config*)))
+      (construct 'blog (append `(:master t :repo ,repo-dir) config-form)))))

@@ -3,6 +3,8 @@
 (defparameter *injections* '()
   "A list that stores pairs of (string . predicate) to inject in the page.")
 
+(defclass template-engine () ())
+
 (defun add-injection (injection location)
   "Adds an INJECTION to a given LOCATION for rendering. The INJECTION should be a
 function that takes a DOCUMENT and returns NIL or a STRING for template insertion."
@@ -29,24 +31,11 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
 (defun get-djula-theme (name)
   (symbol-value (intern (string-upcase (format nil "*djula-~A-template*" (string name))))))
 
-(defun theme-fn (name &optional
-                        (package (theme *config*))
-                        (templating-engine *templating-engine*))
-  "This function returns a function that will accept an arbitrary number of
-arguments and will return a html string. If the given templating-engine is not
-support this will signal a SIMPLE-ERROR"
-  (case templating-engine
-    (cl-closure (let ((func (find-symbol (princ-to-string name)
-                                         (theme-package package))))
-                  (lambda (&rest rest)
-                    (funcall func rest))))
-    (djula (lambda (&rest rest)
-             (with-output-to-string (stream)
-               (apply #'render-template*
-                      (get-djula-theme name)
-                      stream
-                      rest))))
-    (otherwise (error "Unkown templating engine found"))))
+(defgeneric get-theme-fn (template name &optional package)
+  (:documentation "Get the function used to render the template for NAME.
+The engine used to do this must be specified in TEMPLATE and should be a class
+instance of an engine. PACKAGE can be used to specify where to search for
+methods to render a template."))
 
 (defun find-theme (theme)
   "Find the theme prefering themes in the local repo."
@@ -55,31 +44,8 @@ support this will signal a SIMPLE-ERROR"
         local-theme
         (app-path "themes/~a/" theme))))
 
-(defun compile-theme (theme)
-  "Locate and compile the templates for the given THEME and compile them. In the
-case of cl-closure this will define extra functions and in the case of Djula this
-will set *DJULA-POST-TEMPLATE* and *DJULA-INDEX-TEMPATE*. This will always define
-the cl-closure functions for atom, sitemap and rss."
-  ;; Define functions for atom, sitemap and rss.
-  (do-files (file (app-path "themes/")
-                  "tmpl")
-    (compile-template :common-lisp-backend file))
-  ;; Now find the correct templates
-  (let ((theme-base (find-theme theme)))
-    (format t
-            "~A, ~A, ~A ~A~%"
-            *templating-engine*
-            (equal *templating-engine* (intern "DJULA"))
-            (eql *templating-engine*
-                 (intern "DJULA"))
-            (equal *templating-engine* 'DJULA))
-    (case *templating-engine*
-      (cl-closure (do-files (file theme-base "tmpl")
-                    (compile-template :common-lisp-backend file)))
-      (djula (dolist (page '("post" "index"))
-               (set (intern (string-upcase (format nil "*djula-~A-template*" page)))
-                    (compile-template* (merge-pathnames theme-base
-                                                        (make-pathname :directory "/"
-                                                                       :name page
-                                                                       :type "html"))))))
-      (otherwise (error "Unkown templating engine found at compiling")))))
+(defgeneric compile-theme (template-engine theme)
+  (:documentation "Locate and compile the templates for the given THEME and
+  compile them. The compiling is done appropriately for each template engine
+  that is specified in TEMPLATE-ENGINE in the form of a template engine class
+  instance."))

@@ -16,7 +16,7 @@
     (setf url (compute-url object slug))))
 
 (defmethod render ((object index) &rest rest)
-  (apply (theme-fn 'index)
+  (apply (get-theme-fn (template-engine *config*) 'index)
          :tags (find-all 'tag-index)
          :months (find-all 'month-index)
          :config *config*

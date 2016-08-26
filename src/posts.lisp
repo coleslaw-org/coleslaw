@@ -14,7 +14,7 @@
           author (or author (author *config*)))))
 
 (defmethod render ((object post) &rest rest)
-  (apply (theme-fn 'post)
+  (apply (get-theme-fn (template-engine *config*) 'post)
          :config *config*
          :post object
          rest))
