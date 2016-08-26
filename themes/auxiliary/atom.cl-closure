@@ -1,0 +1,30 @@
+{namespace coleslaw.theme.feeds}
+
+{template atom}
+<?xml version="1.0"?>{\n}
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>{$config.title}</title>
+  <link href="{$config.domain}"/>
+  <link type="application/atom+xml" rel="self" href="{$config.domain}/atom.xml"/>
+  <updated>{$pubdate}</updated>
+  <author>
+    <name>{$config.author}</name>
+  </author>
+
+  {foreach $post in $content.content}
+  <entry>
+    <link type="text/html" rel="alternate" href="{$config.domain}/{$post.url}"/>
+    <title>{$post.title}</title>
+    <published>{$post.date}</published>
+    <updated>{$post.date}</updated>
+    <author>
+      <name>{$config.author}</name>
+      <uri>{$config.domain}</uri>
+    </author>
+    <content type="html">{$post.text |escapeHtml}</content>
+  </entry>
+  {/foreach}
+
+</feed>
+{/template}

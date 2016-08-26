@@ -5,8 +5,9 @@
                           #:page-url
                           #:find-all
                           #:publish
-                          #:theme-fn
+                          #:get-theme-fn
                           #:add-document
+                          #:template-engine
                           #:write-document)
   (:import-from :alexandria #:hash-table-values)
   (:export #:enable))
@@ -25,6 +26,6 @@
   (let* ((base-urls '("" "sitemap.xml"))
          (urls (mapcar #'page-url (hash-table-values coleslaw::*site*)))
          (sitemap (make-instance 'sitemap :urls (append base-urls urls))))
-    (write-document sitemap (theme-fn 'sitemap "sitemap"))))
+    (write-document sitemap (get-theme-fn (template-engine *config*) 'sitemap "sitemap"))))
 
 (defun enable ())

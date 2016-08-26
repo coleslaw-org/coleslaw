@@ -6,9 +6,10 @@
                           #:find-all
                           #:render
                           #:publish
-                          #:theme-fn
+                          #:get-theme-fn
                           #:render-text
-                          #:write-document)
+                          #:write-document
+                          #:template-engine)
   (:import-from :djula #:render-template*))
 
 (in-package :coleslaw-static-pages)
@@ -28,7 +29,7 @@
 (defmethod render ((object page) &rest rest &key next prev)
   ;; For the time being, we'll re-use the normal post theme.
   (declare (ignore next prev))
-  (apply (theme-fn 'post) :config *config*
+  (apply (get-theme-fn (template-engine *config*) 'post) :config *config*
                           :post object
                           rest))
 
