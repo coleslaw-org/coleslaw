@@ -14,6 +14,13 @@
 
 **Example**: `(analytics :tracking-code "google-provided-unique-id")`
 
+## CL-WHO
+
+**Description**: Allows the user to write posts cl-who markup. Just create a
+post with `format: cl-who` and the plugin will do the rest.
+
+**Example**: (cl-who)
+
 ## Comments via Disqus
 
 **Description**: Provides comment support through
