@@ -1,3 +1,5 @@
+(in-package #:asdf-user)
+
 (defsystem #:coleslaw
   :name "coleslaw"
   :description "Flexible Lisp Blogware"
@@ -5,7 +7,8 @@
   :license "BSD"
   :author "Brit Butler <redline6561@gmail.com>"
   :pathname "src/"
-  :depends-on (:closure-template
+  :depends-on (:coleslaw-conf
+               :closure-template
                :3bmd
                :3bmd-ext-code-blocks
                :alexandria
@@ -28,18 +31,6 @@
                (:file "coleslaw"))
   :in-order-to ((test-op (test-op coleslaw-test))))
 
-(defsystem #:coleslaw-test
-  :description "A test suite for coleslaw."
-  :license "BSD"
-  :author "Brit Butler <redline6561@gmail.com>"
-  :depends-on (:coleslaw :prove)
-  :defsystem-depends-on (:prove-asdf)
-  :components ((:module "tests"
-                :components
-                        ((:test-file "tests"))))
-  :perform (test-op :after (op c)
-                    (uiop:symbol-call :prove 'run c)))
-
-(defpackage #:coleslaw-conf (:export #:*basedir*))
-(defparameter coleslaw-conf:*basedir*
-  (make-pathname :name nil :type nil :defaults *load-truename*))
+(defmethod perform :before ((op load-op)
+                            (system (eql (find-system :coleslaw))))
+  (uiop:symbol-call "COLESLAW-CONF" 'set-basedir #.*load-truename*))
