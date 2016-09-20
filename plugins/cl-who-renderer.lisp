@@ -1,5 +1,5 @@
 (eval-when (:compile-toplevel :load-toplevel)
-  (asdf:load-system 'cl-who))
+  (ql:quickload '(cl-who)))
 
 (defpackage :coleslaw-cl-who-renderer
   (:use #:cl #:cl-who)
