@@ -3,9 +3,10 @@
 
 (in-package :coleslaw-tests)
 
-(plan nil)
+(plan 1)
 
-(deftest 1-is-a-number
-  (is-type 1 'fixnum))
+(diag "COLESLAW-CONF:*BASEDIR* points to Coleslaw's top level directory")
+(is (car (last (pathname-directory coleslaw-conf:*basedir*)))
+    "coleslaw" :test #'string=)
 
 (finalize)
