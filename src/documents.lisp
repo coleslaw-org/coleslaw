@@ -77,3 +77,7 @@ use it as the template passing any RENDER-ARGS."
   "Remove all instances of DOC-TYPE from memory."
   (dolist (obj (find-all doc-type))
     (remhash (page-url obj) *site*)))
+
+(defun gather-content (doc-types)
+  "Apply FIND-ALL to multiple doc-types so multiple CTYPES can be indexed."
+  (apply #'append (mapcar #'find-all doc-types)))

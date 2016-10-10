@@ -39,6 +39,12 @@
 (defparameter *config* nil
   "A variable to store the blog configuration and plugin settings.")
 
+(defun ensure-plugin (plugin)
+  "Ensures a specific plugin exists in the PLUGINS slot of *CONFIG*"
+  (pushnew plugin
+           (slot-value *config* 'plugins)
+           :key #'car))
+
 (define-condition plugin-conf-error ()
   ((plugin  :initarg :plugin :reader plugin)
    (message :initarg :message :reader message))
@@ -81,9 +87,10 @@ doesn't exist, use the .coleslawrc in the home directory."
 
 (defun load-config (&optional (repo-dir ""))
   "Find and load the coleslaw configuration from .coleslawrc. REPO-DIR will be
-preferred over the home directory if provided."
+preferred over the home directory if provided. Ensure posts plugin is loaded for backwards compatibility."
   (with-open-file (in (discover-config-path repo-dir) :external-format :utf-8)
     (let ((config-form (read in)))
       (setf *config* (construct 'blog config-form)
             (repo-dir *config*) repo-dir)))
+  (ensure-plugin '(posts)) ;;  Ensure posts plugin.
   (load-plugins (plugins *config*)))

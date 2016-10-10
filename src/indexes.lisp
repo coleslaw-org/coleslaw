@@ -28,7 +28,7 @@
 (defclass tag-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'tag-index))))
-  (let ((content (by-date (find-all 'post))))
+  (let ((content (by-date (gather-content (indexable-ctypes)))))
     (dolist (tag *all-tags*)
       (add-document (index-by-tag tag content)))))
 
@@ -47,7 +47,7 @@
 (defclass month-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'month-index))))
-  (let ((content (by-date (find-all 'post))))
+  (let ((content (by-date (gather-content (indexable-ctypes)))))
     (dolist (month *all-months*)
       (add-document (index-by-month month content)))))
 
@@ -66,7 +66,7 @@
 (defclass numeric-index (index) ())
 
 (defmethod discover ((doc-type (eql (find-class 'numeric-index))))
-  (let ((content (by-date (find-all 'post))))
+  (let ((content (by-date (gather-content (indexable-ctypes)))))
     (dotimes (i (ceiling (length content) 10))
       (add-document (index-by-n i content)))))
 
@@ -93,11 +93,11 @@ of content loaded in the DB."
 (defun all-months ()
   "Retrieve a list of all months with published content."
   (let ((months (mapcar (lambda (x) (subseq (content-date x) 0 7))
-                        (find-all 'post))))
+                        (gather-content (indexable-ctypes)))))
     (sort (remove-duplicates months :test #'string=) #'string>)))
 
 (defun all-tags ()
   "Retrieve a list of all tags used in content."
-  (let* ((dupes (mappend #'content-tags (find-all 'post)))
+  (let* ((dupes (mappend #'content-tags (gather-content (indexable-ctypes))))
          (tags (remove-duplicates dupes :test #'tag-slug=)))
     (sort tags #'string< :key #'tag-name)))

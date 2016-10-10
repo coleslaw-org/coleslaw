@@ -1,6 +1,25 @@
-(in-package :coleslaw)
+(defpackage :coleslaw-posts
+  (:use :cl :coleslaw)
+  (:import-from :coleslaw
+                #:compute-url
+                #:make-keyword
+                #:by-date
+                #:url
+                #:format
+                #:text
+                #:author
+                #:content
+                #:slugify
+                #:domain
+                #:tag-name
+                #:page-url
+                #:content-tags
+                #:content-text)
+  (:export #:enable))
 
-(defclass post (content)
+(in-package :coleslaw-posts)
+
+(defcontent post t
   ((title  :initarg :title  :reader title-of)
    (author :initarg :author :reader author-of)
    (format :initarg :format :reader post-format))
@@ -22,3 +41,5 @@
 (defmethod publish ((doc-type (eql (find-class 'post))))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))
      while post do (write-document post nil :prev prev :next next)))
+
+(defun enable ())

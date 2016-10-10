@@ -25,12 +25,26 @@
            #:content
            #:post
            #:index
+           ;; Ctype Registry
+           #:*ctype-registry*
+           #:ensure-ctype-record
+           #:get-ctype-attributes
+           #:ctype-indexable-p
+           #:set-ctype-indexable
+           #:indexable-ctypes
+           #:register-ctype-superclass
+           #:register-superclass-to-ctypes
+           #:ensure-ctype
+           #:ensure-ctypes
+           #:defcontent
+           #:defmodifier
            ;; Content Helpers
            #:title-of
            #:author-of
            #:find-content-by-path
            ;; Theming + Plugin API
            #:theme-fn
+           #:ensure-plugin
            #:plugin-conf-error
            #:render-text
            #:add-injection

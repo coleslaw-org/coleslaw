@@ -46,6 +46,34 @@ post with `format: cl-who` and the plugin will do the rest.
 
 **Example**: `(gh-pages :cname t)`
 
+## SEO and Social Metadata
+
+**Description**: Adds description and keywords metadata for SEO purposes.
+  Adds both Open Graph and Twitter Cards metadata for sharing posts as well.
+  `:twitter` keyword argument sets "site" property of Twitter.
+  Twitter Card specific metadata will be omitted if this property is not set.
+  `:card` keyword argument sets the type of Twitter card created.
+  Possible types are `:summary` and `:image`. Defaults to `:summary`.
+  
+  Five *optional* tags for post file header are added.
+
+  `keywords:` comma, seperated, seo, keywords.
+  They will be generated from tags if empty.
+
+  `description:` Description to be used in SEO and
+  Open Graph description tags. If empty, Open Graph description will be generated
+  from content while SEO description metadata will be omitted.
+
+  `image:` either an absolute (`http://www.example.com/image.png`)
+  or a root-relative (`/static/image.png`) image URL.
+
+  `card:` Overrides Twitter Card type defined in plugin activation.
+  Possible values are either `image` or `summary`.
+
+  `creator:` Twitter username of the content creator.
+
+**Example**: `(metadata :twitter "twitter_account" :card :summary)`
+
 ## Incremental Builds
 
 **Description**: Primarily a performance enhancement. Caches the
