@@ -51,8 +51,11 @@ User configs are allowed to specify a theme. A theme consists of a
 directory under "themes/" containing css, images, and at least
 3 templates: Base, Index, and Post.
 
-**Coleslaw** uses [cl-closure-template][closure_template]
-exclusively for templating. **cl-closure-template** is a well
+To allow the use of different templates for **Coleslaw** themes, **Coleslaw**
+provides a [Template engine API][template_api_docs].
+
+**Coleslaw** uses the [cl-closure-template][closure_template]
+template engine by default. **cl-closure-template** is a well
 documented CL implementation of Google's Closure Templates. Each
 template file should contain a namespace like
 `coleslaw.theme.theme-name`.
@@ -394,6 +397,7 @@ After pushing the branch to your fork, on github you should see a button to open
 
 [closure_template]: https://github.com/archimag/cl-closure-template
 [api_docs]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md
+[template_api_docs]: https://github.com/kingcons/coleslaw/blob/master/docs/template-engine-api.md
 [clmd]: https://github.com/gwkkwg/cl-markdown
 [clrz]: https://github.com/redline6561/colorize
 [pyg]: http://pygments.org/

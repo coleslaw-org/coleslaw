@@ -30,7 +30,9 @@
            #:author-of
            #:find-content-by-path
            ;; Theming + Plugin API
-           #:theme-fn
+           #:get-theme-fn
+           #:compile-theme
+           #:template-engine
            #:plugin-conf-error
            #:render-text
            #:add-injection

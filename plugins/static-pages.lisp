@@ -6,7 +6,8 @@
                           #:find-all
                           #:render
                           #:publish
-                          #:theme-fn
+                          #:get-theme-fn
+                          #:template-engine
                           #:render-text
                           #:write-document))
 
@@ -27,8 +28,9 @@
 (defmethod render ((object page) &key next prev)
   ;; For the time being, we'll re-use the normal post theme.
   (declare (ignore next prev))
-  (funcall (theme-fn 'post) (list :config *config*
-                                  :post object)))
+  (funcall (get-theme-fn 'post (template-engine *config*))
+           (list :config *config*
+                 :post object)))
 
 (defmethod publish ((doc-type (eql (find-class 'page))))
   (dolist (page (find-all 'page))

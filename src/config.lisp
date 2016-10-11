@@ -1,22 +1,23 @@
 (in-package :coleslaw)
 
 (defclass blog ()
-  ((author          :initarg :author         :reader author)
-   (charset         :initarg :charset        :reader charset)
-   (deploy-dir      :initarg :deploy-dir     :reader deploy-dir)
-   (domain          :initarg :domain         :reader domain)
-   (feeds           :initarg :feeds          :reader feeds)
-   (lang            :initarg :lang           :reader lang)
-   (license         :initarg :license        :reader license)
-   (page-ext        :initarg :page-ext       :reader page-ext)
-   (plugins         :initarg :plugins        :reader plugins)
-   (repo            :initarg :repo           :accessor repo-dir)
-   (routing         :initarg :routing        :reader routing)
-   (separator       :initarg :separator      :reader separator)
-   (sitenav         :initarg :sitenav        :reader sitenav)
-   (staging-dir     :initarg :staging-dir    :reader staging-dir)
-   (theme           :initarg :theme          :reader theme)
-   (title           :initarg :title          :reader title))
+  ((author          :initarg :author          :reader author)
+   (charset         :initarg :charset         :reader charset)
+   (deploy-dir      :initarg :deploy-dir      :reader deploy-dir)
+   (domain          :initarg :domain          :reader domain)
+   (feeds           :initarg :feeds           :reader feeds)
+   (lang            :initarg :lang            :reader lang)
+   (license         :initarg :license         :reader license)
+   (page-ext        :initarg :page-ext        :reader page-ext)
+   (plugins         :initarg :plugins         :reader plugins)
+   (repo            :initarg :repo            :accessor repo-dir)
+   (routing         :initarg :routing         :reader routing)
+   (separator       :initarg :separator       :reader separator)
+   (sitenav         :initarg :sitenav         :reader sitenav)
+   (staging-dir     :initarg :staging-dir     :reader staging-dir)
+   (theme           :initarg :theme           :reader theme)
+   (template-engine :initarg :template-engine :accessor template-engine)
+   (title           :initarg :title           :reader title))
   (:default-initargs
    :feeds        nil
    :license      nil
@@ -26,7 +27,8 @@
    :lang         "en"
    :page-ext     "html"
    :separator    ";;;;;"
-   :staging-dir  "/tmp/coleslaw"))
+   :staging-dir  "/tmp/coleslaw"
+   :template-engine :cl-closure))
 
 (defun dir-slot-reader (config name)
   "Take CONFIG and NAME, and return a directory pathname for the matching SLOT."

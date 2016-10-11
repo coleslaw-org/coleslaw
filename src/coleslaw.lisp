@@ -9,7 +9,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (load-config repo-dir)
   (setf *last-revision* oldrev)
   (load-content)
-  (compile-theme (theme *config*))
+  (compile-theme (theme *config*) (template-engine *config*))
   (let ((dir (staging-dir *config*)))
     (compile-blog dir)
     (deploy dir)))
@@ -55,7 +55,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (let ((current-working-directory (cl-fad:pathname-directory-pathname path)))
     (unless *config*
       (load-config (namestring current-working-directory))
-      (compile-theme (theme *config*)))
+      (compile-theme (theme *config*) (template-engine *config*)))
     (let* ((file (rel-path (repo-dir *config*) path))
            (content (construct content-type (read-content file))))
       (write-file "tmp.html" (render-page content)))))
@@ -63,7 +63,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 (defun render-page (content &optional theme-fn &rest render-args)
   "Render the given CONTENT to HTML using THEME-FN if supplied.
 Additional args to render CONTENT can be passed via RENDER-ARGS."
-  (funcall (or theme-fn (theme-fn 'base))
+  (funcall (or theme-fn (get-theme-fn 'base (template-engine *config*)))
            (list :config *config*
                  :content content
                  :raw (apply 'render content render-args)

@@ -14,10 +14,11 @@
           author (or author (author *config*)))))
 
 (defmethod render ((object post) &key prev next)
-  (funcall (theme-fn 'post) (list :config *config*
-                                  :post object
-                                  :prev prev
-                                  :next next)))
+  (funcall (get-theme-fn 'post (template-engine *config*))
+           (list :config *config*
+                 :post object
+                 :prev prev
+                 :next next)))
 
 (defmethod publish ((doc-type (eql (find-class 'post))))
   (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))

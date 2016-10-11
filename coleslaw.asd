@@ -23,6 +23,7 @@
                (:file "util")
                (:file "config")
                (:file "themes")
+               (:file "closure-template-engine")
                (:file "documents")
                (:file "content")
                (:file "posts")
