@@ -14,8 +14,7 @@
                 #:html-writer
                 #:parts
                 #:body-pre-docinfo
-                #:body
-                 )
+                #:body)
   (:export #:enable))
 
 (in-package :coleslaw-rst)
@@ -24,7 +23,7 @@
 (defmethod visit-node :after ((writer html-writer) (document document))
   "This method removes unnecessary HTML elements, such as html, head, body
 and make docutils output only html fragment with document itself."
-  
+
   (setf (slot-value writer 'parts) '(body-pre-docinfo
                                      body)))
 
