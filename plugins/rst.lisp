@@ -6,7 +6,7 @@
   (:import-from :coleslaw #:render-text)
   (:import-from :docutils #:read-rst #:write-part #:register-settings-spec
                           #:visit-node #:write-document)
-  (:import-from :docutils.writer.html #:html-writer #:write-part)
+  (:import-from :docutils.writer.html #:html-writer)
   (:export #:enable))
 
 (in-package :coleslaw-rst)
