@@ -17,7 +17,6 @@
   (with-output-to-string (str)
     (let ((writer (make-instance 'html-writer))
           (document (read-rst text)))
-      (visit-node writer document)
       (write-document writer document str))))
 
 (defun enable ())
