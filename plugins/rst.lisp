@@ -31,9 +31,8 @@ and make docutils output only html fragment with document itself."
 (defmethod render-text (text (format (eql :rst)))
   (register-settings-spec '((:generator nil)
                             (:datestamp nil)))
-  (with-output-to-string (str)
-    (let ((writer (make-instance 'html-writer))
-          (document (read-rst text)))
-      (write-document writer document str))))
+  (let ((writer (make-instance 'html-writer))
+        (document (read-rst text)))
+    (write-document writer document 'string)))
 
 (defun enable ())
