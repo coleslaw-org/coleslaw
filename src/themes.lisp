@@ -28,6 +28,25 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
         local-theme
         (app-path "themes/~a/" theme))))
 
+(defun theme-package-name (theme-name)
+  (format nil "~:@(coleslaw.theme.~A~)" theme-name))
+
+(defun make-theme-package (theme-name)
+  (make-package (theme-package-name theme-name)))
+
+(defun ensure-theme-package (theme-name)
+  (handler-case (theme-package theme-name)
+    (theme-does-not-exist (c) (make-theme-package (theme c)))))
+
+(defun theme-package (theme-name)
+  "Find the package matching the theme NAME or signal THEME-DOES-NOT-EXIST."
+  (or (find-package (theme-package-name theme-name))
+      (error 'theme-does-not-exist :theme theme-name)))
+
+(defun theme-fn (name &optional (package (theme *config*)))
+  "Find the symbol NAME inside PACKAGE which defaults to the theme package."
+  (find-symbol (princ-to-string name) (theme-package package)))
+
 (defgeneric get-theme-fn (name template-engine &optional package)
   (:documentation "Return the theme function to be used by RENDER-PAGE."))
 

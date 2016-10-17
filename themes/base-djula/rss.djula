@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ config.title }}</title>
+    <link>{{ config.domain }}</link>
+    <atom:link href="{{ config.domain }}/rss.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <pubDate>{{ pubdate }}</pubDate>
+
+    {% for post in content.content %}
+      <item>
+        <title>{{ post.title }}</title>
+        <link>{{ config.domain }}/{{ post.url }}</link>
+        <pubDate>{{ post.date }}</pubDate>
+        <author>{{ config.author }}</author>
+        <guid isPermaLink="true">{{ config.domain }}/{{ post.url }}</guid>
+        {% for tag in post.tags %}
+          <category><![CDATA[ {{ tag.name |safe }} ]]></category>
+        {% endfor %}
+        <description><![CDATA[ {{ post.text |safe }} ]]></description>
+      </item>
+    {% endfor %}
+
+  </channel>
+</rss>
