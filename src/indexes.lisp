@@ -92,8 +92,10 @@ of content loaded in the DB."
 
 (defun all-months ()
   "Retrieve a list of all months with published content."
-  (let ((months (mapcar (lambda (x) (subseq (content-date x) 0 7))
-                        (find-all 'post))))
+  (let ((months (loop :for post :in (find-all 'post)
+                      :for content-date := (content-date post)
+                      :when content-date
+                        :collect content-date)))
     (sort (remove-duplicates months :test #'string=) #'string>)))
 
 (defun all-tags ()
