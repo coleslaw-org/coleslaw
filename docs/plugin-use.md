@@ -202,3 +202,14 @@ CL-USER> (chirp:complete-authentication "4173325")
                       :output "/home/redlinernotes/blog/")`
 
 [config_file]: http://github.com/redline6561/coleslaw/blob/master/examples/example.coleslawrc
+
+
+## Markdown Embeding youtube Youtube
+
+**Description**: Embed youtube videos in markdown using the shorthand syntax
+`!yt[<video-id>(|options*)*]`.  Options can be *width*, *height* or any of the
+[player parameters](https://developers.google.com/youtube/player_parameters).
+
+For example `!yt[oeul8fTG9dM|width=480,allowfullscreen]`.
+
+**Example**: `(3bmd-youtube)`
