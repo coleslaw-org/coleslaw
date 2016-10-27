@@ -28,6 +28,13 @@ post with `format: cl-who` and the plugin will do the rest.
 
 **Example**: `(disqus :shortname "disqus-provided-unique-id")`
 
+## Comments via isso
+
+**Description**: Provides comment support through
+  [isso](https://posativ.org/isso/).
+
+**Example**: `(isso :isso-url "your-isso-url")`
+
 ## HTML5 Gifs via Gfycat
 
 **Description**: Provides support for embedding [gfycat](http://gfycat.com/) gifs.
