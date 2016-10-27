@@ -16,5 +16,5 @@
 (defun enable (&key isso-url)
   (flet ((inject-p (x)
            (when (typep x 'post)
-             (format nil *isso-header* isso-url))))
+             (format nil *isso-header* isso-url isso-url))))
     (add-injection #'inject-p :body)))
