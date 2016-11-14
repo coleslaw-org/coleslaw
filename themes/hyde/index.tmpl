@@ -10,8 +10,8 @@
   </div>
 {/foreach}
 <div id="relative-nav">
-  {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a> {/if}
-  {if $next} <a href="{$config.domain}/{$next.url}">Next</a> {/if}
+  {if $prev} <a id="prev-link" href="{$config.domain}/{$prev.url}">Previous</a> {/if}
+  {if $next} <a id="next-link" href="{$config.domain}/{$next.url}">Next</a> {/if}
 </div>
 {if $tags}
 <div id="tagsoup">
