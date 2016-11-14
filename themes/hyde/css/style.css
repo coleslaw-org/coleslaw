@@ -49,7 +49,7 @@ span.paren6 { background-color : inherit; -webkit-transition: background-color 0
 span.paren6:hover { color : inherit; background-color : #FFBAFF; }
 
 @media (max-width: 680px) {
-
+	
     #content {
         padding-top: 0em
     }
@@ -63,11 +63,10 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
     }
 
     .article-meta, .article-content {
-        float: left;
         margin-left: 0em;
         margin-right: 0em;
         width: 90%;
-        padding-left: 5%;
+        padding-left: 4%;
     }
 
     .article, .article-content {
@@ -81,6 +80,18 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
         margin-right: auto;
         width: 100%;
     }
+    
+    .relative-nav {
+		position: relative;
+	}
+	
+	.relative-nav > a#prev-link {
+		float: left;
+	}
+	
+	.relative-nav > a#next-link {
+		float: right;
+	}
 
     #coleslaw-logo {
         float: none;
