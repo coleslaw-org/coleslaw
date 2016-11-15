@@ -70,7 +70,7 @@
 (defun parse-metadata (stream)
   "Given a STREAM, parse metadata from it or signal an appropriate condition."
   (flet ((get-next-line (input)
-           (string-trim '(#\Space #\Newline #\Tab) (read-line input nil))))
+           (string-trim '(#\Space #\Return #\Newline #\Tab) (read-line input nil))))
     (unless (string= (get-next-line stream) (separator *config*))
       (error "The file, ~a, lacks the expected header: ~a" (file-namestring stream) (separator *config*)))
     (loop for line = (get-next-line stream)
