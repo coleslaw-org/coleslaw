@@ -19,6 +19,6 @@
 (with-open-file (in (asdf:system-relative-pathname :coleslaw-test "tests/files/127.txt"))
   (diag "PARSE-METADATA should handle files with CR-LF line endings.")
   (is (coleslaw::parse-metadata in) '(:TITLE "We should handle CR-LF" :TAGS "fixtures" :DATE "2014-12-16" :FORMAT
- "md") :test 'equalp))
+ "md" :EXCERPT "An excerpt") :test 'equalp))
 
 (finalize)

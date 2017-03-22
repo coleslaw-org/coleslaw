@@ -3,4 +3,5 @@ title: We should handle CR-LF
 tags: fixtures
 date: 2014-12-16
 format: md
+excerpt: An excerpt
 ;;;;;
