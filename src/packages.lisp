@@ -5,7 +5,7 @@
                             #:make-keyword
                             #:mappend)
   (:import-from :cl-fad #:file-exists-p)
-  (:import-from :cl-ppcre #:scan-to-strings)
+  (:import-from :cl-ppcre #:scan-to-strings #:split)
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd

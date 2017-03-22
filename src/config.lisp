@@ -5,6 +5,7 @@
    (charset         :initarg :charset        :reader charset)
    (deploy-dir      :initarg :deploy-dir     :reader deploy-dir)
    (domain          :initarg :domain         :reader domain)
+   (excerpt-sep     :initarg :excerpt-sep    :reader excerpt-sep)
    (feeds           :initarg :feeds          :reader feeds)
    (lang            :initarg :lang           :reader lang)
    (license         :initarg :license        :reader license)
@@ -22,6 +23,7 @@
    :license      nil
    :plugins      nil
    :sitenav      nil
+   :excerpt-sep  "<!--more-->"
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     "html"
