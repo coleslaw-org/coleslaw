@@ -24,6 +24,7 @@ It is usually recommend to start from the [example config][ex_config] and pare d
 There are also many *optional* config parameters such as:
 * `:charset`       => to set HTML attributes for international characters, default: "UTF-8"
 * `:feeds`         => to generate RSS and Atom feeds for certain tagged content
+* `:excerpt-sep`   => to set the separator for excerpt in content, default: `<!--more-->`
 * `:lang`          => to set HTML attributes indicating the site language, default: "en"
 * `:license`       => to override the displayed content license, the default is CC-BY-SA
 * `:page-ext`      => to set the suffix of generated files, default: "html"
