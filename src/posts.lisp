@@ -3,14 +3,19 @@
 (defclass post (content)
   ((title  :initarg :title  :reader title-of)
    (author :initarg :author :reader author-of)
+   (excerpt :initarg :excerpt :reader excerpt-of)
    (format :initarg :format :reader post-format))
-  (:default-initargs :author nil))
+  (:default-initargs :author nil :excerpt nil))
 
 (defmethod initialize-instance :after ((object post) &key)
-  (with-slots (url title author format text) object
+  (with-slots (url title author excerpt format text) object
     (setf url (compute-url object (slugify title))
           format (make-keyword (string-upcase format))
           text (render-text text format)
+	  excerpt (or excerpt
+		      (first (split (excerpt-sep *config*)
+				    (render-text text format)
+				    :limit 2)))
           author (or author (author *config*)))))
 
 (defmethod render ((object post) &key prev next)
