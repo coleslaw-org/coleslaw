@@ -167,6 +167,7 @@ The variable that should be available to all templates is:
    - `date`, the date of posting
    - `text`, the HTML of the post's body
    - `title`, the title of the post
+   - `excerpt`, the excerpt of the post, same as `text` by default
 
 ### Step 4. Include the content
 
@@ -193,7 +194,7 @@ A simple `index.tmpl` looks like this:
 {template index}
 {foreach $obj in $index.content}
 <h1>{$object.title}</h1>
-  {$object.text |noAutoescape}
+  {$object.excerpt |noAutoescape}
 {/foreach}
 {/template}
 ```
