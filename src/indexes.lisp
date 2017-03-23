@@ -95,7 +95,8 @@ of content loaded in the DB."
   (let ((months (loop :for post :in (find-all 'post)
                       :for content-date := (content-date post)
                       :when content-date
-                        :collect content-date)))
+                      :collect (subseq content-date 0
+                                       (min 7 (length content-date))))))
     (sort (remove-duplicates months :test #'string=) #'string>)))
 
 (defun all-tags ()
