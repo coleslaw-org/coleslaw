@@ -12,10 +12,10 @@
     (setf url (compute-url object (slugify title))
           format (make-keyword (string-upcase format))
           text (render-text text format)
-	  excerpt (or excerpt
-		      (first (split (excerpt-sep *config*)
-				    (render-text text format)
-				    :limit 2)))
+          excerpt (or excerpt
+                      (first (split (excerpt-sep *config*)
+                                    (render-text text format)
+                                    :limit 2)))
           author (or author (author *config*)))))
 
 (defmethod render ((object post) &key prev next)
