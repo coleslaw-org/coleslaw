@@ -46,12 +46,12 @@
                    :if-does-not-exist :create
                    :external-format :utf-8)
     ;; TODO: What other data/metadata should we write out?
-    (format out ";;;;;~%")
+    (format out "~A~%" (separator *config*))
     (format out "title: ~A~%" title)
     (format out "tags: ~A~%" (format nil "~{~A~^, ~}" tags))
     (format out "date: ~A~%" date)
     (format out "format: html~%") ; post format: html, md, rst, etc
-    (format out ";;;;;~%")
+    (format out "~A~%" (separator *config*))
     (format out "~A~%" (regex-replace-all (string #\Newline) content "<br>"))))
 
 (defun import-posts (filepath output &optional since)
