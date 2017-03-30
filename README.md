@@ -33,6 +33,7 @@ Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
   * Using LaTeX via [Mathjax](http://mathjax.org/)
   * Writing posts in ReStructured Text
   * Importing posts from [Wordpress](http://wordpress.org/)
+  * Code Highlighting via [Pygments](http://pygments.org/) instead of [colorize](http://www.cliki.net/colorize)
 
 ## Example Sites
 
