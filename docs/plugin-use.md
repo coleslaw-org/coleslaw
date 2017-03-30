@@ -213,3 +213,12 @@ CL-USER> (chirp:complete-authentication "4173325")
 For example `!yt[oeul8fTG9dM|width=480,allowfullscreen]`.
 
 **Example**: `(3bmd-youtube)`
+
+## Code Highlighting via Pygments
+
+**Description**: Provides code highlighting with [Pygments](http://pygments.org/)
+  instead of [colorize](http://www.cliki.net/colorize). Pygments supports over
+  300 languages and text formats. Look at
+  [3bmd](https://github.com/3b/3bmd/blob/master/README.md) for more info.
+
+**Example**: `(pygments)`
