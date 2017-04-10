@@ -23,7 +23,7 @@
          (some #'mathjax-p (index-content index)))))
 
 (defun enable (&key force config (preset "TeX-AMS-MML_HTMLorMML")
-                 (location "http://cdn.mathjax.org/mathjax/latest/MathJax.js"))
+                 (location "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"))
   (flet ((inject-p (x)
            (when (or force (mathjax-p x))
              (format nil *mathjax-header* config location preset))))
