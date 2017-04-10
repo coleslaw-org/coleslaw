@@ -85,7 +85,7 @@ post with `format: cl-who` and the plugin will do the rest.
   posts.  Default value is `nil`.
 
 - `:location` specifies the location of the `MathJax.js` file.  The
-  default value is `"http://cdn.mathjax.org/mathjax/latest/MathJax.js"`.
+  default value is `"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"`.
   This is useful if you have a local copy of MathJax and want to use that
   version.
 
