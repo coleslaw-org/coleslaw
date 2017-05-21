@@ -18,8 +18,13 @@
   ;; default format is markdown (for backward compatibility)
   (:default-initargs :format :md))
 
-(defmethod initialize-instance :after ((object page) &key)
-  (with-slots (coleslaw::url coleslaw::text format) object
+(defmethod initialize-instance :after ((object page) &key url title)
+  (cond
+    ((null url)
+     (error 'coleslaw::required-field-missing :message  (format nil "URL field is missing from static page ~A" (coleslaw::content-file object))))
+    ((null title)
+     (error 'coleslaw::required-field-missing :message (format nil "Title field is missing from static page ~A" (coleslaw::content-file object)))))
+  (with-slots (coleslaw::url coleslaw::text format title) object
     (setf coleslaw::url (make-pathname :defaults coleslaw::url)
           format (alexandria:make-keyword (string-upcase format))
           coleslaw::text (render-text coleslaw::text format))))
