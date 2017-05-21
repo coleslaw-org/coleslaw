@@ -2,6 +2,7 @@
   (:use :cl)
   (:export #:enable)
   (:import-from :coleslaw #:*config*
+                          #:assert-field
                           #:content
                           #:find-all
                           #:render
@@ -19,7 +20,9 @@
   (:default-initargs :format :md))
 
 (defmethod initialize-instance :after ((object page) &key)
-  (with-slots (coleslaw::url coleslaw::text format) object
+  (assert-field 'title object)
+  (assert-field 'coleslaw::url object)
+  (with-slots (coleslaw::url coleslaw::text format title) object
     (setf coleslaw::url (make-pathname :defaults coleslaw::url)
           format (alexandria:make-keyword (string-upcase format))
           coleslaw::text (render-text coleslaw::text format))))

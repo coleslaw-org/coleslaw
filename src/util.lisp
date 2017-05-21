@@ -1,5 +1,25 @@
 (in-package :coleslaw)
 
+
+(define-condition coleslaw-condition ()
+  ())
+
+(define-condition field-missing (error coleslaw-condition)
+  ((field-name :initarg :field-name :reader missing-field-field-name)
+   (file :initarg :file :reader missing-field-file
+         :documentation "The path of the file where the field is missing."))
+  (:report
+   (lambda (c s)
+     (format s "~A: The required field ~A is missing."
+             (missing-field-file c)
+             (missing-field-field-name c)))))
+
+(defmacro assert-field (field-name content)
+  `(when (not (slot-boundp ,content ,field-name))
+     (error 'field-missing
+            :field-name ,field-name
+            :file (content-file ,content))))
+
 (defun construct (class-name args)
   "Create an instance of CLASS-NAME with the given ARGS."
   (apply 'make-instance class-name args))

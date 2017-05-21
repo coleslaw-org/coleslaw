@@ -46,4 +46,7 @@
            #:add-document
            #:delete-document
            #:write-document
-           #:content-text))
+           #:content-text
+
+	   ;; Error reporting
+           #:assert-field))
