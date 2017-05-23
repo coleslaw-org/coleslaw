@@ -46,4 +46,9 @@
            #:add-document
            #:delete-document
            #:write-document
-           #:content-text))
+           #:content-text
+
+	   ;; Conditions
+	   coleslaw-condition
+	   required-field-missing
+	   ))

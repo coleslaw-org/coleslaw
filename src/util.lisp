@@ -1,5 +1,15 @@
 (in-package :coleslaw)
 
+
+(define-condition coleslaw-condition () ())
+(define-condition required-field-missing (error coleslaw-condition)
+  ((message :accessor required-field-missing-message :initarg :message))
+  (:report
+   (lambda (c s)
+     (format s (required-field-missing-message
+	      c)))))
+
+
 (defun construct (class-name args)
   "Create an instance of CLASS-NAME with the given ARGS."
   (apply 'make-instance class-name args))
