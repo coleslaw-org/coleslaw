@@ -21,7 +21,6 @@
   :serial t
   :components ((:file "packages")
                (:file "util")
-	       (:file "errors")
                (:file "config")
                (:file "themes")
                (:file "documents")

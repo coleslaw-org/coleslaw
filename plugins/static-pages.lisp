@@ -13,21 +13,21 @@
 (in-package :coleslaw-static-pages)
 
 (defclass page (content)
-  ((title :initarg :title :reader coleslaw::title-of)
+  ((title :initarg :title :reader coleslaw::title-of
+	  :initform
+	  (error 'coleslaw::required-field-missing :message (format nil "Required field title is missing from static-page")))
    (format :initarg :format :reader coleslaw::page-format))
   ;; default format is markdown (for backward compatibility)
   (:default-initargs :format :md))
 
-(defmethod initialize-instance :after ((object page) &key url title)
-  (cond
-    ((null url)
-     (error 'coleslaw::required-field-missing :message  (format nil "URL field is missing from static page ~A" (coleslaw::content-file object))))
-    ((null title)
-     (error 'coleslaw::required-field-missing :message (format nil "Title field is missing from static page ~A" (coleslaw::content-file object)))))
+(defmethod initialize-instance :after ((object page) &key)
   (with-slots (coleslaw::url coleslaw::text format title) object
-    (setf coleslaw::url (make-pathname :defaults coleslaw::url)
-          format (alexandria:make-keyword (string-upcase format))
-          coleslaw::text (render-text coleslaw::text format))))
+    (if (not (boundp coleslaw::url))
+	(error 'coleslaw::required-field-missing
+	       :message  (format nil "Required field URL is missing"))
+	(setf coleslaw::url (make-pathname :defaults coleslaw::url)
+	      format (alexandria:make-keyword (string-upcase format))
+	      coleslaw::text (render-text coleslaw::text format)))))
 
 (defmethod render ((object page) &key next prev)
   ;; For the time being, we'll re-use the normal post theme.
