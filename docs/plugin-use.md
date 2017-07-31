@@ -14,6 +14,13 @@
 
 **Example**: `(analytics :tracking-code "google-provided-unique-id")`
 
+## Analytics via Piwik
+
+**Description**: Provides traffic analysis through
+  [Piwik](https://www.piwik.org).
+
+**Example**: `(piwik :piwik-url "piwik.example.com")`
+
 ## CL-WHO
 
 **Description**: Allows the user to write posts cl-who markup. Just create a
