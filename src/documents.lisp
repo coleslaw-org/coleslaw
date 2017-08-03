@@ -63,8 +63,8 @@ is provided, it overrides the route used."
   "Write the given DOCUMENT to disk as HTML. If THEME-FN is present,
 use it as the template passing any RENDER-ARGS."
   (let ((html (if (or theme-fn render-args)
-                  (apply #'render-page document theme-fn render-args)
-                  (render-page document nil)))
+                  (apply #'render-page (template-engine *config*) document theme-fn render-args)
+                  (render-page (template-engine *config*) document nil)))
         (url (namestring (page-url document))))
     (write-file (rel-path (staging-dir *config*) url) html)))
 

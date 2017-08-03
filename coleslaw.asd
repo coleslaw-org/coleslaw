@@ -17,7 +17,8 @@
                :cl-fad
                :cl-ppcre
                :closer-mop
-               :cl-unicode)
+               :cl-unicode
+               :djula)
   :serial t
   :components ((:file "packages")
                (:file "util")

@@ -3,6 +3,8 @@
 (defparameter *injections* '()
   "A list that stores pairs of (string . predicate) to inject in the page.")
 
+(defclass template-engine () ())
+
 (defun add-injection (injection location)
   "Adds an INJECTION to a given LOCATION for rendering. The INJECTION should be a
 function that takes a DOCUMENT and returns NIL or a STRING for template insertion."
@@ -26,9 +28,14 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
   (or (find-package (format nil "~:@(coleslaw.theme.~A~)" name))
       (error 'theme-does-not-exist :theme name)))
 
-(defun theme-fn (name &optional (package (theme *config*)))
-  "Find the symbol NAME inside PACKAGE which defaults to the theme package."
-  (find-symbol (princ-to-string name) (theme-package package)))
+(defun get-djula-theme (name)
+  (symbol-value (intern (string-upcase (format nil "*djula-~A-template*" (string name))))))
+
+(defgeneric get-theme-fn (template name &optional package)
+  (:documentation "Get the function used to render the template for NAME.
+The engine used to do this must be specified in TEMPLATE and should be a class
+instance of an engine. PACKAGE can be used to specify where to search for
+methods to render a template."))
 
 (defun find-theme (theme)
   "Find the theme prefering themes in the local repo."
@@ -37,9 +44,8 @@ function that takes a DOCUMENT and returns NIL or a STRING for template insertio
         local-theme
         (app-path "themes/~a/" theme))))
 
-(defun compile-theme (theme)
-  "Locate and compile the templates for the given THEME."
-  (do-files (file (find-theme theme) "tmpl")
-    (compile-template :common-lisp-backend file))
-  (do-files (file (app-path "themes/") "tmpl")
-    (compile-template :common-lisp-backend file)))
+(defgeneric compile-theme (template-engine theme)
+  (:documentation "Locate and compile the templates for the given THEME and
+  compile them. The compiling is done appropriately for each template engine
+  that is specified in TEMPLATE-ENGINE in the form of a template engine class
+  instance."))

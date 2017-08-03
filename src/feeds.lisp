@@ -16,7 +16,10 @@
 
 (defmethod publish ((doc-type (eql (find-class 'feed))))
   (dolist (feed (find-all 'feed))
-    (write-document feed (theme-fn (feed-format feed) "feeds"))))
+    (write-document feed
+                    (get-theme-fn (template-engine *config*)
+                              (feed-format feed)
+                              "feeds"))))
 
 ;;; Tag Feeds
 
@@ -34,4 +37,4 @@
 
 (defmethod publish ((doc-type (eql (find-class 'tag-feed))))
   (dolist (feed (find-all 'tag-feed))
-    (write-document feed (theme-fn (feed-format feed) "feeds"))))
+    (write-document feed (get-theme-fn (template-engine *config*) (feed-format feed) "feeds"))))

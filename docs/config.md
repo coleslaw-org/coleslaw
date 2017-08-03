@@ -22,14 +22,15 @@ It is usually recommend to start from the [example config][ex_config] and pare d
 ## Extras
 
 There are also many *optional* config parameters such as:
-* `:charset`       => to set HTML attributes for international characters, default: "UTF-8"
-* `:feeds`         => to generate RSS and Atom feeds for certain tagged content
-* `:lang`          => to set HTML attributes indicating the site language, default: "en"
-* `:license`       => to override the displayed content license, the default is CC-BY-SA
-* `:page-ext`      => to set the suffix of generated files, default: "html"
-* `:plugins`       => to configure and enable coleslaw's [various plugins][plugin-use]
-* `:separator`     => to set the separator for content metadata, default: ";;;;;"
-* `:sitenav`       => to provide relevant links and ease navigation
-* `:staging-dir`   => for Coleslaw to do intermediate work, default: "/tmp/coleslaw"
+* `:charset`         => to set HTML attributes for international characters, default: "UTF-8"
+* `:feeds`           => to generate RSS and Atom feeds for certain tagged content
+* `:lang`            => to set HTML attributes indicating the site language, default: "en"
+* `:license`         => to override the displayed content license, the default is CC-BY-SA
+* `:page-ext`        => to set the suffix of generated files, default: "html"
+* `:plugins`         => to configure and enable coleslaw's [various plugins][plugin-use]
+* `:separator`       => to set the separator for content metadata, default: ";;;;;"
+* `:sitenav`         => to provide relevant links and ease navigation
+* `:staging-dir`     => for Coleslaw to do intermediate work, default: "/tmp/coleslaw"
+* `:template-engine` => to set the template engine coleslaw should use, default: cl-closure
 
 [plugin-use]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md

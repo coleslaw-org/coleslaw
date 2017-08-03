@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="{{ config.lang }}">
+  <head>
+    <title>{{ config.title }}</title>
+    <meta http-equiv="content-type" content="text/html; charset={{ config.charset }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
+    <link href= "{{ config.domain }}/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="alternate" href="{{ config.domain }}/rss.xml" type="application/rss+xml" />
+    {% if injections.head %}
+        {% for injection in injections.head %}
+            {{ injection | safe }}
+        {% endfor %}
+    {% endif %}
+  </head>
+  <body>
+    <div class="navigation">
+      <a href="{{ config.domain }}">{{ config.title }}</a> |
+      {% for link in config.sitenav %}
+        {% if link.relative %}
+          <a href="{{ config.domain }}/{{ link.url }}">{{ link.name }}</a>
+        {% else %}
+          <a href="{{ link.url }}">{{ link.name }}</a>
+        {% endif %}
+        {% if not forloop.last %} | {% endif %}
+      {% endfor %}
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    {% if injections.body %}
+        {% for injection in injections.body %}
+            {{ injection | safe }}
+        {% endfor %}
+    {% endif %}
+    <div class="fineprint">
+      <hr>
+      Unless otherwise credited all material
+      {% if config.license %}
+        {{ config.license }}
+      {% else %}
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+          <img alt="Creative Commons License" style="border-width:0" src="{{ config.domain }}/css/cc-by-sa.png" />
+        </a>
+      {% endif %}
+      by {{ config.author }}
+      <a id="coleslaw-logo" href="https://github.com/redline6561/coleslaw">
+        <img src="{{ config.domain }}/css/logo_small.jpg" alt="Coleslaw logo" />
+      </a>
+    </div>
+  </body>
+</html>

@@ -10,6 +10,8 @@
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd
                       #:ensure-directory-pathname)
+  (:import-from :djula #:render-template*
+                       #:compile-template*)
   (:export #:main
            #:preview
            #:*config*
@@ -21,6 +23,7 @@
            #:repo-dir
            #:staging-dir
            #:title
+           #:template-engine
            ;; Core Classes
            #:content
            #:post
@@ -30,7 +33,9 @@
            #:author-of
            #:find-content-by-path
            ;; Theming + Plugin API
-           #:theme-fn
+           #:get-theme-fn
+           #:compile-theme
+           #:render-page
            #:plugin-conf-error
            #:render-text
            #:add-injection
