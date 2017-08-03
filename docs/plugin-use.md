@@ -19,7 +19,7 @@
 **Description**: Provides traffic analysis through
   [Piwik](https://www.piwik.org).
 
-**Example**: `(piwik :piwik-url "piwik.example.com")`
+**Example**: `(piwik :piwik-url "piwik.example.com" :piwik-site "example-site")`
 
 ## CL-WHO
 
