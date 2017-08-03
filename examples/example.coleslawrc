@@ -1,6 +1,7 @@
 (:author "Brit Butler"
  :deploy-dir "/home/git/blog/"
  :domain "http://blog.redlinernotes.com"
+ :excerpt-sep "<!--more-->"
  :feeds ("lisp")
  :plugins ((analytics :tracking-code "foo")
            (disqus :shortname "my-site-name")

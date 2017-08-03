@@ -6,7 +6,7 @@
   <div class="row-fluid">
     <h1><a href="{$config.domain}/{$obj.url}">{$obj.title}</a></h1>
     <p class="date-posted">posted on {$obj.date}</p>
-    {$obj.text |noAutoescape}
+    {$obj.excerpt |noAutoescape}
   </div>
 {/foreach}
 <div id="relative-nav">

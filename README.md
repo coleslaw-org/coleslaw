@@ -102,6 +102,7 @@ title: foo
 tags: bar, baz
 date: yyyy-mm-dd hh:mm:ss
 format: html (for raw html) or md (for markdown)
+excerpt: Can also be extracted from content (see :excerpt-sep config param)
 ;;;;;
 your post
 ```
