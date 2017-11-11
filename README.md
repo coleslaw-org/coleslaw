@@ -17,23 +17,17 @@ Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
 ## Features
 
 * Git for storage
-* RSS and Atom feeds
-* Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize)
-  * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
-
+* RSS/Atom feeds
 * A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [**plugins**](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
-  * Static Pages
-  * Sitemap generation
-  * Incremental builds
-  * Analytics via Google or [Piwik](http://www.piwik.org)
-  * Comments via [Disqus](http://disqus.com/) or [isso](http://posativ.org/isso)
-  * Hosting via [Github Pages](https://pages.github.com/) or [Amazon S3](http://aws.amazon.com/s3/)
-  * Embedding [gfycats](http://gfycat.com/)
-  * [Tweeting](http://twitter.com/) about new posts
-  * Using LaTeX via [Mathjax](http://mathjax.org/)
-  * Writing posts in ReStructured Text
-  * Importing posts from [Wordpress](http://wordpress.org/)
-  * Code Highlighting via [Pygments](http://pygments.org/) instead of [colorize](http://www.cliki.net/colorize)
+
+| plugins                                                | plugins                                      | plugins                                               |
+|--------------------------------------------------------|----------------------------------------------|-------------------------------------------------------|
+| Sitemap generation                                     | Incremental builds                           | Analytics via Google or [Piwik](http://www.piwik.org) |
+| Comments via [Disqus](http://disqus.com/)              | Comments via [isso](http://posativ.org/isso) | Hosting via  [Amazon S3](http://aws.amazon.com/s3/)   |
+| Hosting via [Github Pages](https://pages.github.com/)  | Embedding [gfycats](http://gfycat.com/)      | [Tweeting](http://twitter.com/) about new posts       |
+| [Mathjax](http://mathjax.org/)                         | Posts in ReStructured Text                   | [Wordpress](http://wordpress.org/) import             |
+| [Pygments](http://pygments.org/)                       | [colorize](http://www.cliki.net/colorize)    |                                                       |
+
 
 ## Example Sites
 
