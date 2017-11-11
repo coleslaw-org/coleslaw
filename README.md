@@ -33,15 +33,6 @@ Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
 
 See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blogroll) for a list of coleslaw-powered blogs.
 
-## Hacking
-
-A core goal of *coleslaw* is to be both pleasant to read and easy to
-hack on and extend. If you want to understand the internals and bend
-*coleslaw* to do new and interesting things, I strongly encourage you
-to read the [Hacker's Guide to Coleslaw][hackers]. You'll find some
-current **TODO** items towards the bottom.
-
-[hackers]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
 
 ## Installation
 
@@ -114,3 +105,13 @@ Two themes are provided: hyde, the default, and readable (based on
 
 A guide to creating themes for coleslaw lives
 [here](https://github.com/redline6561/coleslaw/blob/master/docs/themes.md).
+
+## Hacking
+
+A core goal of *coleslaw* is to be both pleasant to read and easy to
+hack on and extend. If you want to understand the internals and bend
+*coleslaw* to do new and interesting things, I strongly encourage you
+to read the [Hacker's Guide to Coleslaw][hackers]. You'll find some
+current **TODO** items towards the bottom.
+
+[hackers]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
