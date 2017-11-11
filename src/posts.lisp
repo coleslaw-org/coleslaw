@@ -9,9 +9,9 @@
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-slots (url title author excerpt format text) object
+    (setf format (make-keyword (string-upcase format)))
     (let ((post-content (render-text text format)))
       (setf url (compute-url object (slugify title))
-            format (make-keyword (string-upcase format))
             excerpt (or excerpt
                         (first (split (excerpt-sep *config*)
                                       post-content
