@@ -16,6 +16,8 @@ Have questions?
 - IRC in **#coleslaw** on Freenode!
 - Subscribe to the mailing list [**coleslaw@common-lisp.net**](https://mailman.common-lisp.net/listinfo/coleslaw).
 
+See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blogroll) for a list of coleslaw-powered blogs.
+
 ## Features
 
 * Git for storage
@@ -29,11 +31,6 @@ Have questions?
 | Hosting via [Github Pages](https://pages.github.com/)  | Embedding [gfycats](http://gfycat.com/)      | [Tweeting](http://twitter.com/) about new posts       |
 | [Mathjax](http://mathjax.org/)                         | Posts in ReStructured Text                   | [Wordpress](http://wordpress.org/) import             |
 | [Pygments](http://pygments.org/)                       | [colorize](http://www.cliki.net/colorize)    |                                                       |
-
-
-## Example Sites
-
-See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blogroll) for a list of coleslaw-powered blogs.
 
 
 ## Installation
