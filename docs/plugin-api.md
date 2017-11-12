@@ -1,6 +1,6 @@
 # General Use
 
-1. A lisp file should be created in coleslaw's ```plugins``` directory.
+1. A lisp file should be created in coleslaw's ```plugins``` directory or the local `plugins` directory of the blog.
 2. Any necessary lisp libraries not loaded by coleslaw should be included like so:
 
     ```(eval-when (:compile-toplevel :load-toplevel) (ql:quickload '(foo bar)))```
