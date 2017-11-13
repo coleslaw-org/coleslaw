@@ -49,7 +49,8 @@
   (:documentation "Condition to signal when the plugin is misconfigured."))
 
 (defun enable-plugin (name args)
-  "Given a plugin, NAME, compile+load it and call its ENABLE function with ARGS."
+  "Given a plugin, NAME, search it from the local plugins/ directory and (if it fails) the coleslaw's plugins/ directory,
+ compile+load it and call its ENABLE function with ARGS."
   (flet ((plugin-path (sym)
            (if (probe-file (repo-path "plugins/~(~A~).lisp" sym))
                (repo-path "plugins/~(~A~)" sym)
