@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
     <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
-    <link href= "{$config.domain}/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="alternate" href="{$config.domain}/rss.xml" type="application/rss+xml" />
+    <link href= "/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="alternate" href="/rss.xml" type="application/rss+xml" />
     {if $injections.head}
       {foreach $injection in $injections.head}
         {$injection |noAutoescape}
@@ -19,14 +19,17 @@
   </head>
   <body>
     <div class="navigation">
-      <a href="{$config.domain}">{$config.title}</a> |
+      <span class="sitenav">
+        <a href="/">{$config.title}</a>
+      </span>
       {foreach $link in $config.sitenav}
+      <span class="sitenav">
         {if $link.relative}
-          <a href="{$config.domain}/{$link.url}">{$link.name}</a>
+        <a href="/{$link.url}">{$link.name}</a>
         {else}
-          <a href="{$link.url}">{$link.name}</a>
+        <a href="{$link.url}">{$link.name}</a>
         {/if}
-        {if not isLast($link)} {sp}|{sp} {/if}
+      </span>
       {/foreach}
     </div>
     <div id="content">
@@ -44,12 +47,12 @@
         {$config.license}
       {else}
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
-          <img alt="Creative Commons License" style="border-width:0" src="{$config.domain}/css/cc-by-sa.png" />
+          <img alt="Creative Commons License" style="border-width:0" src="/css/cc-by-sa.png" />
         </a>
       {/if}
       by {$config.author}
       <a id="coleslaw-logo" href="https://github.com/redline6561/coleslaw">
-        <img src="{$config.domain}/css/logo_small.jpg" alt="Coleslaw logo" />
+        <img src="/css/logo_small.jpg" alt="Coleslaw logo" />
       </a>
     </div>
   </body>
