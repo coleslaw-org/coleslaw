@@ -46,7 +46,9 @@
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
   (:method (staging)
-    (run-program "rsync --delete -avz ~a ~a" staging (merge-pathnames (deploy-dir *config*)))))
+    "By default, do nothing"
+    (declare)))
+
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
