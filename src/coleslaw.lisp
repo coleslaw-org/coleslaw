@@ -49,7 +49,6 @@
     "By default, do nothing"
     (declare)))
 
-
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
   (run-program "ln -sfn ~a ~a" target path))

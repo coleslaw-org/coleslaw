@@ -21,7 +21,7 @@
   (:default-initargs
    :feeds        nil
    :license      nil
-   :plugins      nil
+   :plugins      '((rsync "--delete"))
    :sitenav      nil
    :excerpt-sep  "<!--more-->"
    :charset      "UTF-8"
