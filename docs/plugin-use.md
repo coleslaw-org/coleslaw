@@ -102,6 +102,16 @@ post with `format: cl-who` and the plugin will do the rest.
 - `:config` is used as supplementary inline configuration to the
   `MathJax.Hub.Config ({ ... });`. It is unused by default.
 
+**Usage in Posts**: By default MathJax will not be injected into the generated post file,
+	it is only injected if your post has a `math` tag in the metadata at the top of the file
+	like so
+
+	;;;;;
+	title: Persistent Homology
+	tags: math
+	format: md
+	;;;;;
+
 ## ReStructuredText
 
 **Description**: Some people really like
