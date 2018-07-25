@@ -1,0 +1,191 @@
+/* Mobile Navigation for Coleslaw 's Hyde Theme inspired by Navigataur by 
+ * Mike King (@micjamking) https://github.com/micjamking/navigataur
+ * I know it 's only CSS, but I like it.
+ */
+
+#toggle, .toggle { display: none; }
+
+/* Nicolas Gallagher micro clearfix */
+.clearfix:before, .clearfix:after { display: table; content: ""; }
+.clearfix:after { clear: both; }
+
+.header {
+	position: relative;
+	height: 100%;
+	padding: 0 5px;
+	background: #FFFFFF;
+}
+
+.nav { 
+	display: inline-block; 
+}
+
+.menu, .menu > a { 
+	height: 100%; 
+}
+
+.menu > a {
+	padding: 0 5px;
+	text-decoration: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+
+.toggle { 
+	z-index: 2; 
+}
+
+.site-title {
+	display: inline;
+}
+
+@media only screen and (min-width: 769px) {
+	.menu, .site-title { /* Titles longer than 384px are going to  be wrapped, sigh. */
+		max-width: 50%;
+	}
+	.menu {
+		display: inline;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+
+	.nav {
+	    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	    display: flex;
+	    margin-left: 92%;
+	    margin-top: -42px;
+	    position: fixed;
+	}
+	
+	.site-title {
+	    display: inline-block;
+	    margin-right: 17vh;
+	    margin-top: 10px;
+	    position: relative;
+	}
+	
+	.menu {
+		background: #F2F2F2;
+		border-top: 1px solid #992900;
+		margin-top: 42px;
+		position: inherit;
+		opacity: 0; 
+		min-width: 60%; 
+		right: 0;
+		-webkit-transform: translateX(100%); /* This one is mandatory */
+		-moz-transform: translateX(100%);
+		-ms-transform: translateX(100%);
+		-o-transform: translateX(100%);
+		transform: translateX(100%); /* This one too */
+		-webkit-transition: -webkit-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s; /* Edge Case */
+		-moz-transition:    -moz-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s;
+		-o-transition:      -o-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s;
+        transition: -webkit-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s; /* Mandatory */
+		transition: transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s; /* Yes */
+	}
+	
+	.menu, .menu > a {
+		height: auto;
+	}
+	
+	.menu > a {
+		padding: 8px 8px;
+		display: block; 
+		width: 100%; 
+		text-decoration: none; 
+		-webkit-box-sizing: border-box; 
+		-moz-box-sizing: border-box; 
+		box-sizing: border-box;
+		-webkit-transition: all 0.25s linear;
+		-moz-transition: all 0.25s linear;
+		-o-transition: all 0.25s linear;
+		transition: all 0.25s linear;
+	}
+	
+	.menu > a:hover, .menu > a:focus { 
+		box-shadow: inset 4px 0px #992900;
+		padding: 8px 8px 8px 12px;
+	}
+	
+	.toggle { 
+		display: block; 
+		position: relative; 
+		cursor: pointer; 
+		-webkit-touch-callout: none; 
+		-webkit-user-select: none; 
+		user-select: none; 
+	}
+	
+	.toggle:after {
+		content: attr(data-open);
+		display: block;
+		font-size: 1.625em;
+		color: #ccc;
+		-webkit-transition: all 0.5s linear;
+		-moz-transition: all 0.5s linear;
+		-o-transition: all 0.5s linear;
+		transition: all 0.5s linear;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box; 
+	}
+	
+	.toggle:hover:after {
+		color: #992900;
+	}
+	
+	#toggle:checked + div .toggle:after {
+		content: attr(data-close);
+		color: #000;
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+	
+	#toggle:checked + div .toggle:hover:after {
+		color: #992900;
+	}
+	
+	#toggle:checked + div .menu {
+		display: block; 
+		opacity: 1;
+		-webkit-transform: translateX(0%);
+		-moz-transform: translateX(0%);
+		-ms-transform: translateX(0%);
+		-o-transform: translateX(0%); 
+		transform: translateX(0%);
+		-webkit-transition: -webkit-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s;
+		-moz-transition:    -moz-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s;
+		-o-transition:      -o-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s;
+        transition: -webkit-transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s;
+		transition: transform 0.6s ease-in-out 0.3s, opacity 0.6s linear 0.3s; 
+	}
+	
+	.large-only { /* Get rid of the pipes in smalland. */
+		display: none !important;
+	}
+}
+
+@media only screen and (max-width: 479px) {
+
+	.nav {
+		margin-left: 88%;
+	}
+	
+	.nav, .toggle:after {
+		float:right; 
+	}
+	
+	.toggle:after { 
+		text-align: center; width: 100%; 
+	}
+	
+	.site-title {
+		margin-right: 20vh;
+	}
+}
+

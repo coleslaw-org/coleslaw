@@ -6,10 +6,11 @@
   <head>
     <title>{$config.title}</title>
     <meta http-equiv="content-type" content="text/html; charset={$config.charset}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
     <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
     <link href= "{$config.domain}/css/style.css" rel="stylesheet" type="text/css" />
+    <link href= "{$config.domain}/css/mobile-nav.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" href="{$config.domain}/rss.xml" type="application/rss+xml" />
     {if $injections.head}
       {foreach $injection in $injections.head}
@@ -18,16 +19,25 @@
     {/if}
   </head>
   <body>
-    <div class="navigation">
-      <a href="{$config.domain}">{$config.title}</a> |
-      {foreach $link in $config.sitenav}
-        {if $link.relative}
-          <a href="{$config.domain}/{$link.url}">{$link.name}</a>
-        {else}
-          <a href="{$link.url}">{$link.name}</a>
-        {/if}
-        {if not isLast($link)} {sp}|{sp} {/if}
-      {/foreach}
+    <div class="navigation header clearfix">
+    <div class="site-title">
+      <a href="{$config.domain}">{$config.title}</a>
+      <span class="large-only"> |</span>
+    </div>
+      <input type="checkbox" id="toggle" />
+	  <div class="nav">
+	  <label for="toggle" class="toggle" data-open="&#9776;" data-close="&#9776;" onclick></label>
+		<div class="menu">
+		  {foreach $link in $config.sitenav}
+			{if $link.relative}
+	          <a href="{$config.domain}/{$link.url}">{$link.name}</a>
+	        {else}
+	          <a href="{$link.url}">{$link.name}</a>
+	        {/if}
+	        {if not isLast($link)} {sp}<span class="large-only"> | </span>{sp} {/if}
+		  {/foreach}
+		</div>
+	  </div>
     </div>
     <div id="content">
       {$raw |noAutoescape}
