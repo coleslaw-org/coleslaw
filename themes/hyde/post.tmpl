@@ -11,11 +11,6 @@
       {/foreach}
     {/if}
   </div>{\n}
-  <div class="date">{\n}
-    {if $post.date}
-      Written on {$post.date}
-    {/if}
-  </div>{\n}
 </div>{\n}
 <div class="article-content">{\n}
   {$post.text |noAutoescape}
@@ -24,4 +19,9 @@
   {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a><br> {/if}{\n}
   {if $next} <a href="{$config.domain}/{$next.url}">Next</a><br> {/if}{\n}
 </div>{\n}
+<div class="date">{\n}
+    {if $post.date}
+      Written on {$post.date}
+    {/if}
+  </div>{\n}
 {/template}
