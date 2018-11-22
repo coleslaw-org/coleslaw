@@ -2,8 +2,17 @@
 
 LISP=sbcl
 
-## Disclaimer:
-## I have not tested that all lisps take the "--load" flag.
-## This code might spontaneously combust your whole everything.
-
-$LISP --load "dump-db.lisp"
+### DON'T EDIT BELOW THIS LINE UNLESS YOU KNOW WHAT YOU ARE DOING. ###
+DUMP="dump-db.lisp"
+if [ "$LISP"="cmucl" ] || [ "$LISP"="lispworks" ] || [ "$LISP"="gcl" ] || [ "$LISP"="abcl" ];
+then $LISP -load $DUMP
+else
+    if [ "$LISP"="clisp" ];
+    then $LISP -i $DUMP
+    else
+	if [ "$LISP"="allegro" ];
+	then $LISP -l $DUMP
+	else $LISP --load $DUMP #SBCL CCL ECL
+	fi
+    fi
+fi
