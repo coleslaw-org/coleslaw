@@ -1,6 +1,7 @@
 (defpackage :coleslaw
   (:documentation "Homepage: <a href=\"http://github.com/redline6561/coleslaw\">Github</a>")
   (:use :cl)
+  (:nicknames :cs)
   (:import-from :alexandria #:hash-table-values
                             #:make-keyword
                             #:mappend)
