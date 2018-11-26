@@ -15,8 +15,8 @@ a.anchor { color: black }
 .navigation { font-size: 1.2em; border-bottom: 1px solid }
 body { background-color: white; font-family: Vollkorn; font-size: 14pt }
 pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
-      background-color: white; padding: .75em .5em; font-family: (unquote mono-font) }
-tt { font-size: .9em; font-family: (unquote mono-font) }
+      background-color: white; padding: .75em .5em; font-family: mono-font }
+tt { font-size: .9em; font-family: mono-font}
 
 /* Stolen from lisppaste for the colorize output of 3bmd */
 .paste { background-color: #F4F4F4; color: black; }
@@ -49,9 +49,8 @@ span.paren6 { background-color : inherit; -webkit-transition: background-color 0
 span.paren6:hover { color : inherit; background-color : #FFBAFF; }
 
 @media (max-width: 680px) {
-
     #content {
-        padding-top: 0em
+        padding-top: 0
     }
 
     .title {
@@ -71,7 +70,7 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
     }
 
     .article, .article-content {
-        margin-left: 0em;
+        margin-left: 0;
         text-align: justify;
     }
 
