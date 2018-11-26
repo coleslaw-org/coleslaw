@@ -12,6 +12,7 @@
   (:import-from :uiop #:getcwd
                       #:ensure-directory-pathname)
   (:export #:main
+	   #:truex
            #:preview
            #:*config*
            ;; Config Accessors

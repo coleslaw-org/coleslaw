@@ -1,3 +1,4 @@
+/* Usually it is best to put new edits at the bottom of the file. This way they will overwrite!*/
 #content { background: #fff; padding-top: 1em }
 #header { float: right; margin-left: 1em; margin-bottom: 1em }
 #coleslaw-logo { float: right; }
@@ -96,4 +97,9 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
         width: auto;
         clear: both;
     }
+}
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
 }
