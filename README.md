@@ -1,3 +1,4 @@
+Note: not to base project. Personal edits for http://truex.eu.
 # coleslaw
 
 [![Build Status](https://travis-ci.org/kingcons/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
