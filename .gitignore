@@ -1,3 +1,5 @@
+*.html
+*#*#
 *~
 *.fasl
 *.dx32fsl
