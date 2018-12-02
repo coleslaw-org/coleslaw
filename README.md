@@ -1,4 +1,4 @@
-[If you are here for coleslaw-mode, click here.][mode]
+[If you are here for coleslaw-mode, click here.](https://github.com/equwal/coleslaw-mode)
 ==============
 Note: not to base project. Personal edits for http://truex.eu.
 # coleslaw
@@ -123,4 +123,3 @@ Two themes are provided: hyde, the default, and readable (based on
 
 A guide to creating themes for coleslaw lives
 [here](https://github.com/redline6561/coleslaw/blob/master/docs/themes.md).
-[mode]: https://github.com/equwal/coleslaw-mode
