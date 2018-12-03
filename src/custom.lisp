@@ -4,5 +4,5 @@
 	(backup-folder "~/site-backups/"))
     (let ((site-folder-remote site-folder-local))
       (main site-folder-local)
-      (asdf::run-program (format nil "rsync -r ~Astatic ~Astatic" site-folder-local site-folder-remote))
+      (asdf::run-program (format nil "rsync -r ~Astatic jose\@truex.eu:~Astatic" site-folder-local site-folder-remote))
       (asdf::run-program (format nil "tar -cjf ~Aarchive-~S.tar.bz2 ~A" backup-folder (get-universal-time) site-folder-local)))))
