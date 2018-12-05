@@ -27,5 +27,5 @@
                                   :next next)))
 
 (defmethod publish ((doc-type (eql (find-class 'post))))
-  (loop for (next post prev) on (append '(nil) (by-date (find-all 'post)))
+  (loop for (next post prev) on (append '(nil) (by-date (find-all 'post T)))
      while post do (write-document post nil :prev prev :next next)))

@@ -52,8 +52,9 @@
    (date :initarg :date :reader content-date)
    (file :initarg :file :reader content-file)
    (tags :initarg :tags :reader content-tags)
+   (version :initarg :version :reader content-version)   
    (text :initarg :text :reader content-text))
-  (:default-initargs :tags nil :date nil))
+  (:default-initargs :tags nil :date nil :version 'final))
 
 (defmethod initialize-instance :after ((object content) &key)
   (with-slots (tags) object
@@ -91,6 +92,10 @@
         (append metadata (list :text content :file filepath))))))
 
 ;; Helper Functions
+
+(defun draft-p (obj)
+    "Test if the version of OBJ is set to DRAFT"
+    (eq (content-version obj) 'draft))
 
 (defun tag-p (tag obj)
   "Test if OBJ is tagged with TAG."
