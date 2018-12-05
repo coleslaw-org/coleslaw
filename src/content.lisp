@@ -54,7 +54,7 @@
    (tags :initarg :tags :reader content-tags)
    (version :initarg :version :reader content-version)   
    (text :initarg :text :reader content-text))
-  (:default-initargs :tags nil :date nil :version 'final))
+  (:default-initargs :tags nil :date nil :version "final"))
 
 (defmethod initialize-instance :after ((object content) &key)
   (with-slots (tags) object
@@ -94,8 +94,8 @@
 ;; Helper Functions
 
 (defun draft-p (obj)
-    "Test if the version of OBJ is set to DRAFT"
-    (eq (content-version obj) 'draft))
+  "Test if the version of OBJ is set to DRAFT"
+  (when (typep obj 'content) (search (content-version obj) "draft")))
 
 (defun tag-p (tag obj)
   "Test if OBJ is tagged with TAG."
