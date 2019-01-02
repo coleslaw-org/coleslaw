@@ -32,7 +32,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
                          (merge-pathnames "js" theme-dir)
                          (repo-path "static")))
         (when (probe-file dir)
-          (run-program "rsync --delete -raz ~a ." dir))))
+          (run-program "rsync --rsh=\"/usr/bin/sshpass -f /home/jose/.backup-pass ssh -o StrictHostKeyChecking=no\" --delete -raz ~a ." dir))))
     (do-subclasses (ctype content)
       (publish ctype))
     (do-subclasses (itype index)
@@ -43,8 +43,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
   (:method (staging)
-    (run-program "rsync --delete -avz ~a ~a" staging (deploy-dir *config*))))
-
+    (run-program "rsync --rsh=\"/usr/bin/sshpass -f /home/jose/.backup-pass ssh -o StrictHostKeyChecking=no\" --delete -avz ~a ~a" staging (deploy-dir *config*))))
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
   (run-program "ln -sfn ~a ~a" target path))
