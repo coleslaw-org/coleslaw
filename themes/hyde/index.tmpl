@@ -5,8 +5,7 @@
 {foreach $obj in $index.content}
   <div class="article-meta">
     <a class="article-title" href="{$config.domain}/{$obj.url}">{$obj.title}</a>
-    <div class="date"> {if $obj.date} posted on {/if} {$obj.date}</div>
-    <div class="article">{$obj.excerpt |noAutoescape}</div>
+    <div class="date"> {if $obj.date}{$obj.date}{/if}</div>
   </div>
 {/foreach}
 <div id="relative-nav">
@@ -15,20 +14,12 @@
 </div>
 {if $tags}
 <div id="tagsoup">
-  <p>This blog covers
+  <p>View by type: 
     {foreach $tag in $tags}
       <a href="{$config.domain}/{$tag.url}">{$tag.name}</a>{nil}
       {if not isLast($tag)},{sp}{/if}
     {/foreach}
 </div>
 {/if}
-{if $months}
-<div id="monthsoup">
-  <p>View content from
-    {foreach $month in $months}
-      <a href="{$config.domain}/{$month.url}">{$month.name}</a>{nil}
-      {if not isLast($month)},{sp}{/if}
-    {/foreach}
-</div>
-{/if}
+
 {/template}

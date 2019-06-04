@@ -1,22 +1,20 @@
 /* Usually it is best to put new edits at the bottom of the file. This way they will overwrite!*/
-#content { background: #fff; padding-top: 1em }
+#content { background: #98fb98; padding-top: 1em }
 #header { float: right; margin-left: 1em; margin-bottom: 1em }
 #coleslaw-logo { float: right; }
-a { text-decoration: none; /*color: #992900*/ }
-a.anchor { color: black }
 .date { font-style: italic }
 .title { margin-left: 1em }
-.article-meta { margin-left: 2.2em; margin-bottom: 2.2em }
+.article-meta { margin-left: 2.2em; margin-bottom: 0.5em }
 .archive-title { font-size: 1em } .article-title { font-size: 2em }
 .article-content { margin-left: 2.2em }
 .fineprint { text-align: center; font-size: .9em; margin-top: .5em }
 .tag-low { font-size: .8em; font-weight: 200 }
 .tag-medium { font-size: 1.2em; font-weight: 600 }
 .tag-high { font-size: 1.8em; font-weight: 800 }
-.navigation { font-size: 1.2em; border-bottom: 1px solid }
-body { background-color: white; font-family: Vollkorn; font-size: 14pt }
+body { background-color: #0000ff; font-family: Vollkorn; font-size: 14pt }
+
 pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
-      background-color: white; padding: .75em .5em; font-family: mono-font }
+      background-color: inherit; padding: .75em .5em; font-family: mono-font }
 tt { font-size: .9em; font-family: mono-font}
 
 /* Stolen from lisppaste for the colorize output of 3bmd */
@@ -102,4 +100,28 @@ img {
     max-width: 100%;
     height: auto;
     vertical-align: middle;
+}
+a { text-decoration: none; /*color: #992900*/ }
+a.anchor { color: black }
+.navigation {
+    font-size: 1.2em;
+    width: 4em;
+    margin: 2em;
+    clear: left;
+    float: left;
+}
+.navlink {
+    border-width: 0.25em;
+    border-style: outset;
+    width: 4em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    color: black;
+    text-align: center;
+}
+.fineprint {
+    background: #98fb98;
+}
+#hacker {
+    margin-bottom: 0.5em;
 }

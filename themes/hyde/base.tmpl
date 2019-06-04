@@ -29,11 +29,10 @@
     <div class="navigation">
       {foreach $link in $config.sitenav}
         {if $link.relative}
-          <a href="{$config.domain}/{$link.url}">{$link.name}</a>
+          <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}</a></div>
         {else}
-          <a href="{$link.url}">{$link.name}</a>
+          <div class="navlink"><a href="{$link.url}">{$link.name}</a></div>
         {/if}
-        {if not isLast($link)} {sp}|{sp} {/if}
       {/foreach}
     </div>
     <div id="content">
@@ -45,11 +44,10 @@
       {/foreach}
     {/if}
     <div class="fineprint">
-      <hr>
       {if $config.license}
         {$config.license}
       {/if}
-      {$config.author} <br />myself@spensertruex.com<br /><img src='http://truex.eu/static/lambda_bottom.png' alt='hacker emblem' /></a>
+      {$config.author} <br /><a href="/call.html">Contact</a><br /><img src='http://truex.eu/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
     </div>
   </body>
 </html>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>README.html</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+
+</head>
+
+<body>
+
+<h1>[If you are here for coleslaw-mode, click here.][</h1>
+
+<p>Note: not to base project. Personal edits for http://truex.eu.</p>
+
+<h1>coleslaw</h1>
+
+<p><a href="https://travis-ci.org/kingcons/coleslaw"><img src="https://travis-ci.org/kingcons/coleslaw.svg?branch=master" alt="Build Status" /></a>
+<a href="http://quickdocs.org/coleslaw/"><img src="http://quickdocs.org/badge/coleslaw.svg" alt="Quicklisp" /></a></p>
+
+<p><img src="https://raw.github.com/redline6561/coleslaw/master/themes/hyde/css/logo_medium.jpg" alt="coleslaw logo" align="right"/></p>
+
+<blockquote>
+<p><a href="http://blog.redlinernotes.com/tag/milosz.html">Czeslaw Milosz</a> was the writer-in-residence at UNC c. 1992.
+I used to see him all the time at the Hardback Cafe, always sitting at a two-top
+drinking coffee, reading, writing, eating chips and salsa. I remember a gentleness
+behind the enormous bushy eyebrows and that we called him Coleslaw. - anon</p>
+</blockquote>
+
+<p>Coleslaw is Flexible Lisp Blogware similar to <a href="https://github.com/greghendershott/frog">Frog</a>, <a href="http://jekyllrb.com/">Jekyll</a>, or <a href="http://jaspervdj.be/hakyll/">Hakyll</a>.</p>
+
+<p>Have questions? Come talk to us on IRC in <strong>#coleslaw</strong> on Freenode!</p>
+
+<h2>Features</h2>
+
+<ul>
+<li><p>Git for storage</p></li>
+<li><p>RSS and Atom feeds</p></li>
+<li><p>Markdown Support with Code Highlighting provided by <a href="http://www.cliki.net/colorize">colorize</a></p></li>
+<li><p>Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.</p></li>
+<li><p>A <a href="http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md">Plugin API</a> and <a href="http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md"><strong>plugins</strong></a> for...</p></li>
+<li><p>Static Pages</p></li>
+<li><p>Sitemap generation</p></li>
+<li><p>Incremental builds</p></li>
+<li><p>Analytics via Google or <a href="http://www.piwik.org">Piwik</a></p></li>
+<li><p>Comments via <a href="http://disqus.com/">Disqus</a> or <a href="http://posativ.org/isso">isso</a></p></li>
+<li><p>Hosting via <a href="https://pages.github.com/">Github Pages</a> or <a href="http://aws.amazon.com/s3/">Amazon S3</a></p></li>
+<li><p>Embedding <a href="http://gfycat.com/">gfycats</a></p></li>
+<li><p><a href="http://twitter.com/">Tweeting</a> about new posts</p></li>
+<li><p>Using LaTeX via <a href="http://mathjax.org/">Mathjax</a></p></li>
+<li><p>Writing posts in ReStructured Text</p></li>
+<li><p>Importing posts from <a href="http://wordpress.org/">Wordpress</a></p></li>
+<li><p>Code Highlighting via <a href="http://pygments.org/">Pygments</a> instead of <a href="http://www.cliki.net/colorize">colorize</a></p></li>
+</ul>
+
+<h2>Example Sites</h2>
+
+<p>See the <a href="https://github.com/redline6561/coleslaw/wiki/Blogroll">wiki</a> for a list of coleslaw-powered blogs.</p>
+
+<h2>Hacking</h2>
+
+<p>A core goal of <em>coleslaw</em> is to be both pleasant to read and easy to
+hack on and extend. If you want to understand the internals and bend
+<em>coleslaw</em> to do new and interesting things, I strongly encourage you
+to read the <a href="https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md">Hacker's Guide to Coleslaw</a>. You'll find some
+current <strong>TODO</strong> items towards the bottom.</p>
+
+<h2>Installation</h2>
+
+<p>Coleslaw should run on any conforming Common Lisp implementation but
+testing is primarily done on <a href="http://www.sbcl.org/">SBCL</a> and
+<a href="http://ccl.clozure.com/">CCL</a>.</p>
+
+<p>Coleslaw can either be run <strong>manually</strong> on a local machine or
+triggered <strong>automatically</strong> on git push to a server. If you want a
+server install, run these commands on your server <em>after</em> setting up a
+<a href="http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server">git bare repo</a>.
+Otherwise, run the commands on your local machine.</p>
+
+<ol>
+<li>Install a Common Lisp implementation (we recommend SBCL) and
+ <a href="http://quicklisp.org/">Quicklisp</a>.</li>
+<li>Place a config file for coleslaw in your <code>$HOME</code> directory. If you
+ want to run multiple blogs with coleslaw, you can keep each blog's
+ config file in that blog's repo. Feel free to copy and edit the
+ <a href="https://github.com/redline6561/coleslaw/blob/master/examples/example.coleslawrc">example config</a> or consult the <a href="https://github.com/redline6561/coleslaw/blob/master/docs/config.md">config docs</a>
+ to create one from scratch.</li>
+<li>This step depends on whether you're setting up a local or server install.</li>
+<li>Server Install: Copy and <code>chmod +x</code> the
+ <a href="https://github.com/redline6561/coleslaw/blob/master/examples/example.post-receive">example post-receive hook</a> to your blog's bare repo.</li>
+<li>Local Install: Just run the following commands in the
+ REPL whenever you're ready to regenerate your blog:
+ <code>
+ (ql:quickload :coleslaw)
+ (coleslaw:main &quot;/path/to/my/blog/&quot;)
+</code></li>
+<li>Optionally, point the web server of your liking at your config-specified
+ <code>:deploy-dir</code>. Or &quot;deploy-dir/.curr&quot; if the <code>versioned</code> plugin is enabled.</li>
+</ol>
+
+<p>Now just write posts, git commit and build by hand or by push.</p>
+
+<h2>The Content Format</h2>
+
+<p>Coleslaw expects content to have a file extension matching the class
+of the content. (I.e. <code>.post</code> for blog posts, <code>.page</code> for static
+pages, etc.)</p>
+
+<p>There should also be a metadata header on all files
+starting and ending with the config-specified <code>:separator</code>, &quot;;;;;;&quot; by
+default. Example:</p>
+
+<p><code>
+;;;;;
+title: foo
+tags: bar, baz
+date: yyyy-mm-dd hh:mm:ss
+format: html (for raw html) or md (for markdown)
+excerpt: Can also be extracted from content (see :excerpt-sep config param)
+;;;;;
+your post
+</code></p>
+
+<p>Posts require the <code>title:</code> and <code>format:</code> fields.
+Pages require the <code>title:</code> and <code>url:</code> fields.</p>
+
+<p>To omit a field, simply do not have the line present, empty lines and
+fields (e.g. &quot;tags:&quot; followed by whitespace) will be ignored.</p>
+
+<h2>Theming</h2>
+
+<p>Two themes are provided: hyde, the default, and readable (based on
+<a href="http://bootswatch.com/readable/">bootswatch readable</a>).</p>
+
+<p>A guide to creating themes for coleslaw lives
+<a href="https://github.com/redline6561/coleslaw/blob/master/docs/themes.md">here</a>.</p>
+
+</body>
+</html>
