@@ -26,12 +26,13 @@
     {/if}
   </head>
   <body>
+    <div class="innerbg">
     <div class="navigation">
       {foreach $link in $config.sitenav}
         {if $link.relative}
-          <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}</a></div>
+      <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}</a></div>
         {else}
-          <div class="navlink"><a href="{$link.url}">{$link.name}</a></div>
+      <div class="navlink"><a href="{$link.url}">{$link.name}</a></div>
         {/if}
       {/foreach}
     </div>
@@ -43,11 +44,15 @@
         {$injection |noAutoescape}
       {/foreach}
     {/if}
+</div>
+    <div class="innerbg">
     <div class="fineprint">
       {if $config.license}
         {$config.license}
       {/if}
-      {$config.author} <br /><a href="/call.html">Contact</a><br /><img src='http://truex.eu/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
+      {$config.author} <br /><a href="/call.html">Contact</a><br /><img src='https://spensertruex.com/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
+    </div>
+</div>
     </div>
   </body>
 </html>

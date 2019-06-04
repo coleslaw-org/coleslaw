@@ -13,15 +13,16 @@
 </div>{\n}
 <div class="date">{\n}
     {if $post.date}
-      Written on {$post.date}
+      Written {$post.date}
     {/if}
   </div>{\n}
-  <div class="tags">{\n}
+  {\n}
+<div class="tags">{\n}
     {if $post.tags}
-      Tagged as {foreach $tag in $post.tags}
+      in: {foreach $tag in $post.tags}
         <a href="{$config.domain}/{$tag.url}">{$tag.name}</a>{nil}
           {if not isLast($tag)},{sp}{/if}
       {/foreach}
     {/if}
-  </div>{\n}
+  </div>
 {/template}

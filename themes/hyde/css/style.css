@@ -1,5 +1,5 @@
 /* Usually it is best to put new edits at the bottom of the file. This way they will overwrite!*/
-#content { background: #98fb98; padding-top: 1em }
+#content { padding-top: 0.5em }
 #header { float: right; margin-left: 1em; margin-bottom: 1em }
 #coleslaw-logo { float: right; }
 .date { font-style: italic }
@@ -7,7 +7,12 @@
 .article-meta { margin-left: 2.2em; margin-bottom: 0.5em }
 .archive-title { font-size: 1em } .article-title { font-size: 2em }
 .article-content { margin-left: 2.2em }
-.fineprint { text-align: center; font-size: .9em; margin-top: .5em }
+.fineprint { text-align: center;
+             font-size: .9em;
+             margin-top: .5em;
+             float: bottom;
+             clear: left;
+           }
 .tag-low { font-size: .8em; font-weight: 200 }
 .tag-medium { font-size: 1.2em; font-weight: 600 }
 .tag-high { font-size: 1.8em; font-weight: 800 }
@@ -107,7 +112,9 @@ a.anchor { color: black }
     font-size: 1.2em;
     width: 4em;
     margin: 2em;
+    /*    float: top left; */
     clear: left;
+    clear: bottom;
     float: left;
 }
 .navlink {
@@ -118,10 +125,17 @@ a.anchor { color: black }
     margin-bottom: 0.25em;
     color: black;
     text-align: center;
+    clear: left;
+    clear: bottom;
 }
-.fineprint {
+/* .fineprint {
     background: #98fb98;
-}
+} */
 #hacker {
     margin-bottom: 0.5em;
 }
+.innerbg {
+    background: #98fb98;
+}
+
+/* Continued in other CSS files that come after */

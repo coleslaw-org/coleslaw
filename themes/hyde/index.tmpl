@@ -1,7 +1,24 @@
 {namespace coleslaw.theme.hyde}
-
 {template index}
+<link href="/css/index.css" rel="stylesheet" type="text/css" />
 <h1 class="title">Spenser Truex</h1>
+<div class="index-nav">
+      {foreach $link in $config.sitenav}
+        {if $link.relative}
+      <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}
+          {if $link.image}
+          {/if}
+        </a>
+      </div>
+        {else}
+      <div class="navlink"><a href="{$link.url}">{$link.name}
+          {if $link.image}
+          {/if}
+        </a>
+      </div>
+        {/if}
+      {/foreach}
+</div>
 {foreach $obj in $index.content}
   <div class="article-meta">
     <a class="article-title" href="{$config.domain}/{$obj.url}">{$obj.title}</a>
