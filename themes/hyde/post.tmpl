@@ -8,8 +8,9 @@
   {$post.text |noAutoescape}
 </div>{\n}
 <div class="relative-nav">{\n}
-  {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a><br> {/if}{\n}
-  {if $next} <a href="{$config.domain}/{$next.url}">Next</a><br> {/if}{\n}
+  {if $prev} <a href="{$config.domain}/{$prev.url}">Previous</a>{/if}
+  {if $prev and $next} {sp}|{sp}{/if}
+  {if $next} <a href="{$config.domain}/{$next.url}">Next</a><br> {/if}
 </div>{\n}
 <div class="date">{\n}
     {if $post.date}

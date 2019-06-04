@@ -12,11 +12,14 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="/static/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    
+    <meta name="description" content="Spenser Truex's website. Programmer, Linguist, Computer Scientist, and student of life.">
+    <meta name="keywords" content="Spenser Max Truex equwal lisp common lisp freelance">
+    <meta name="author" content="Spenser Truex">
     <meta http-equiv="content-type" content="text/html; charset="{$config.charset}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="//fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
-    <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />
+<link href="/css/font.css" rel="stylesheet" type="text/css" />
+<!--    <link href="//fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />-->
     <link rel="alternate" href="/rss.xml" type="application/rss+xml" />
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     {if $injections.head}
@@ -27,15 +30,21 @@
   </head>
   <body>
     <div class="innerbg">
-    <div class="navigation">
+<div class="navigation">
       {foreach $link in $config.sitenav}
         {if $link.relative}
-      <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}</a></div>
+      <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}
+      {if $link.image}
+      <img src="{$link.image}" />{/if}</a>
+      </div>
         {else}
-      <div class="navlink"><a href="{$link.url}">{$link.name}</a></div>
+      <div class="navlink"><a href="{$link.url}">{$link.name}
+        {if $link.image}
+        <img src="{$link.image}" />{/if}</a>
+      </div>
         {/if}
       {/foreach}
-    </div>
+</div>
     <div id="content">
       {$raw |noAutoescape}
     </div>
@@ -50,7 +59,7 @@
       {if $config.license}
         {$config.license}
       {/if}
-      {$config.author} <br /><a href="/call.html">Contact</a><br /><img src='https://spensertruex.com/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
+      {$config.author} <br /><a href="/call.html">Contact</a><br /><img src='/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
     </div>
 </div>
     </div>

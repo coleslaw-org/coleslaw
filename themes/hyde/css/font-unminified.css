@@ -1,0 +1,72 @@
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		local('Open Sans Regular'),
+		local('OpenSans-Regular'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0b.woff2 */
+		url('Open_Sans_400.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0d.woff */
+		url('Open_Sans_400.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0f.eot */
+		url('Open_Sans_400.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=mem8YaGs126MiZpBA-UFVZ0c&skey=62c1cbfccc78b4b2&v=v16#OpenSans */
+		url('Open_Sans_400.svg#OpenSans') format('svg'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf */
+		url('Open_Sans_400.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 400;
+	src:
+		local('Open Sans Italic'),
+		local('OpenSans-Italic'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem6YaGs126MiZpBA-UFUK0Zdc0.woff2 */
+		url('Open_Sans_400i.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem6YaGs126MiZpBA-UFUK0Zdcs.woff */
+		url('Open_Sans_400i.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem6YaGs126MiZpBA-UFUK0Zdck.eot */
+		url('Open_Sans_400i.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=mem6YaGs126MiZpBA-UFUK0Zdco&skey=743457fe2cc29280&v=v16#OpenSans */
+		url('Open_Sans_400i.svg#OpenSans') format('svg'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem6YaGs126MiZpBA-UFUK0Zdcg.ttf */
+		url('Open_Sans_400i.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		local('Open Sans Bold'),
+		local('OpenSans-Bold'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN7rgOUuhp.woff2 */
+		url('Open_Sans_700.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN7rgOUuhv.woff */
+		url('Open_Sans_700.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN7rgOUuht.eot */
+		url('Open_Sans_700.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=mem5YaGs126MiZpBA-UN7rgOUuhu&skey=cd9e1a36bb25a3c3&v=v16#OpenSans */
+		url('Open_Sans_700.svg#OpenSans') format('svg'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN7rgOUuhs.ttf */
+		url('Open_Sans_700.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 700;
+	src:
+		local('Open Sans Bold Italic'),
+		local('OpenSans-BoldItalic'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/memnYaGs126MiZpBA-UFUKWiUNhrIqM.woff2 */
+		url('Open_Sans_700i.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/memnYaGs126MiZpBA-UFUKWiUNhrIqU.woff */
+		url('Open_Sans_700i.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/memnYaGs126MiZpBA-UFUKWiUNhrIqc.eot */
+		url('Open_Sans_700i.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=memnYaGs126MiZpBA-UFUKWiUNhrIqQ&skey=7e5bb13249e84143&v=v16#OpenSans */
+		url('Open_Sans_700i.svg#OpenSans') format('svg'),
+		/* from https://fonts.gstatic.com/s/opensans/v16/memnYaGs126MiZpBA-UFUKWiUNhrIqY.ttf */
+		url('Open_Sans_700i.ttf') format('truetype');
+}

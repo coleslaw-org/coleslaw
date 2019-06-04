@@ -1,0 +1,158 @@
+/* Usually it is best to put new edits at the bottom of the file. This way they will overwrite!*/
+#content { padding-top: 0.5em }
+#header { float: right; margin-left: 1em; margin-bottom: 1em }
+#coleslaw-logo { float: right; }
+#tagsoup {clear: both;}
+.date { font-style: italic;  clear: both;} /* except index */
+.article-meta { margin-left: 2.2em; margin-bottom: 0.5em }
+.archive-title { font-size: 1em } .article-title { font-size: 2em }
+.fineprint { text-align: center;
+             font-size: .9em;
+             margin-top: .5em;
+             float: bottom;
+             clear: left;
+           }
+.tag-low { font-size: .8em; font-weight: 200 }
+.tag-medium { font-size: 1.2em; font-weight: 600 }
+.tag-high { font-size: 1.8em; font-weight: 800 }
+body { background-color: #0000ff; font-family: Vollkorn; font-size: 14pt }
+
+pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
+      background-color: inherit; padding: .75em .5em; font-family: mono-font }
+tt { font-size: .9em; font-family: mono-font}
+
+/* Stolen from lisppaste for the colorize output of 3bmd */
+.paste { background-color: #F4F4F4; color: black; }
+.paste:hover { background-color: #F4F4F4; color: black; }
+.symbol { color : #770055; background-color : transparent; border: 0px; margin: 0px;}
+.special { color : #FF5000; background-color : inherit; }
+.keyword { color : #770000; background-color : inherit; }
+.comment { color : #007777; background-color : inherit; }
+.string { color : #777777; background-color : inherit; }
+.atom { color : #314F4F; background-color : inherit; }
+.macro { color : #FF5000; background-color : inherit; }
+.variable { color : #36648B; background-color : inherit; }
+.function { color : #8B4789; background-color : inherit; }
+.attribute { color : #FF5000; background-color : inherit; }
+.character { color : #0055AA; background-color : inherit; }
+.syntaxerror { color : #FF0000; background-color : inherit; }
+.diff-deleted { color : #5F2121; background-color : inherit; }
+.diff-added { color : #215F21; background-color : inherit; }
+span.paren1 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren1:hover { color : inherit; background-color : #BAFFFF; }
+span.paren2 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren2:hover { color : inherit; background-color : #FFCACA; }
+span.paren3 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren3:hover { color : inherit; background-color : #FFFFBA; }
+span.paren4 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren4:hover { color : inherit; background-color : #CACAFF; }
+span.paren5 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren5:hover { color : inherit; background-color : #CAFFCA; }
+span.paren6 { background-color : inherit; -webkit-transition: background-color 0.2s linear; }
+span.paren6:hover { color : inherit; background-color : #FFBAFF; }
+
+@media {
+    #content {
+        padding-top: 0
+    }
+
+    .title {
+        margin-left: 0.1em;
+        clear: right;
+    }
+
+    .article-meta {
+        margin-bottom: 1em;
+        clear: right;
+    }
+
+    .article-meta, .article-content, .article-meta-meta{
+        /*        margin-left: 10em; */
+        margin-right: 0em;
+        padding-left: 5%;
+    }
+
+    .article, .article-content {
+        margin-left: 0;
+        text-align: justify;
+    }
+    img  {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+	width: 70%;
+        
+    }
+
+    #coleslaw-logo {
+        float: none;
+    }
+
+    #coleslaw-logo img {
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+        width: auto;
+    }
+
+    .fineprint a img {
+        width: auto;
+        clear: both;
+    }
+}
+img {
+    max-width: 70%;
+    height: auto;
+    vertical-align: middle;
+}
+a { text-decoration: none; /*color: #992900*/ }
+a.anchor { color: black }
+.navigation {
+    font-size: 1.2em;
+    width: 4em;
+    margin: 2em;
+    /*    float: top left; */
+    clear: left;
+    float: left;
+}
+.navlink {
+    border-width: 0.25em;
+    border-style: outset;
+    width: 4em;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    color: black;
+    text-align: center;
+    clear: left;
+    clear: bottom;
+}
+.navlink img {
+    margin: 0.25em;
+    display: none; /* except in index */
+}
+/* .fineprint {
+    background: #98fb98;
+} */
+#hacker {
+    max-width: 3em;
+    height: auto;
+    padding-bottom: 0.5em;
+}
+.innerbg {
+    background: #98fb98;
+}
+
+/* Continued in other CSS files that come after */
+ul, ol {
+    float: none;
+    clear: right;
+    display: table;
+}
+.article-content {
+    max-width: 32em;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.title {
+    width: 100%
+}

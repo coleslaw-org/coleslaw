@@ -1,7 +1,1 @@
-/* Overwrites style.css for index.html */
-.navigation {
-    display: none;
-}
-.index-nav {
-    
-}
+.navigation img{margin:0.25em;display:inline}.date{clear:none}
