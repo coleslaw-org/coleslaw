@@ -32,6 +32,5 @@ of this is setf/setq: (setf a b c d) -> (setf a b) (setf c d)"
     (main *site-folder-local*)
     (rootstatics* "static" "static"
                   "/static/google71c0326c2809a4a5.html" "google71c0326c2809a4a5.html"
-                  "/static/sitemap.xml" "sitemap.xml"
-                  "/static/.htaccess" ".htaccess")
+                  "/static/sitemap.xml" "sitemap.xml")
     (asdf::run-program (format nil "tar -cjf ~Aarchive-~S.tar.bz2 ~A" backup-folder (get-universal-time) *site-folder-local*))))
