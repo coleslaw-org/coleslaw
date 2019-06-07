@@ -183,18 +183,27 @@ CL-USER> (chirp:complete-authentication "4173325")
 
 ## Versioning Deploys
 
-Either [automatic git interaction](#git-versioning),
-[double versioning](#double-versioning), or [hard versioning](#hard-versioning).
+Either [automatic git interaction](#git-versioned),
+[double versioned](#double-versioned), or [hard versioned](#hard-versioned).
 
-### Git Versioning
+### Git Versioned
 
 **Description**: Automatically stages, commits, and/or pushes the server's
-sources. Assumes that a git repository exists in the server's directory. Pushing
-is optional.
+sources. Assumes that a git repository exists in the server's staging
+directory. Pushing is optional. For maximum version control, put the staging
+directory below the source files, like this arrangement:
 
-**Example**: `(git-versioning 'stage 'commit 'push)` or `(git-versioning 'stage 'commit)`
+sitedir:
+.coleslawrc
+git
+.gitignore
 
-### Double Versioning
+site-directory/stagedir:
+
+
+**Example**: `(git-versioned stage commit upload)` or `(git-versioned stage commit)`
+
+### Double Versioned
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and
@@ -204,12 +213,13 @@ is optional.
 
 **Example**: `(versioned)`
 
-### Hard Versioning
+### Hard Versioned
 
 **Description**: Makes a full backup of the server directory into a backup
-folder every time the server is pushed. Could be expensive.
+folder every time the server is pushed. Space-expensive, so makes bzip2
+archives, labeled with the clock's universal time.
 
-**Example**: `(hard-versioning "~/backups")`
+**Example**: `(hard-versioned "~/backups")`
 
 ## Wordpress Importer
 
