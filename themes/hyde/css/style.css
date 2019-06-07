@@ -10,7 +10,11 @@
 #tagsoup a {padding: 0.5em}
 .tags {padding-left: 0.75em; padding-bottom: 0.75em;}
 .date { font-style: italic;  clear: both; color: black; padding-left: 0.75em} /* except index */
-.article-meta { margin-left: 0; margin-top: 0.75em;}
+.article-meta {
+    margin-left: 0;
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+}
 .archive-title { font-size: 1em }
 html {
     background: #0000ff;
@@ -24,7 +28,7 @@ html {
 body {
     font-family: Vollkorn;
     padding-top: 5em;
-    font-size: 1em;
+    font-size: 1.2em;
 }
 .relative-nav {padding: 0.75em;}
 pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
@@ -271,7 +275,7 @@ h, h1, h2, h3, h4, h5, h6 {
     max-width: 35em;
 }
 .jump {
-    padding-top: 90px; margin-top: -90px;
+    padding-top: 200px; margin-top: -200px;
 }
 .fineprint {
     text-align: center;
@@ -312,7 +316,21 @@ h, h1, h2, h3, h4, h5, h6 {
     vertical-align: middle;
     color: black;
     font-size: 1.2em;
+    border-bottom-style: dotted;
+    border-width: 2px;
+    border-color: #0000ff;
 }
 .right {
     text-align: right;
+}
+.logo {
+    max-width: 128px;
+}
+.banner {
+    max-width: 256px;
+}
+.center-logo {
+    margin-left: auto;
+    margin-right: auto;
+    width: 256px;
 }

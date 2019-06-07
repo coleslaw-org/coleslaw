@@ -1,5 +1,25 @@
 (in-package :coleslaw)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defun group (source n)
+    "From Paul Graham's 'On Lisp' utilities."
+    (labels ((rec (source acc)
+               (let ((rest (nthcdr n source)))
+                 (if (consp rest)
+                     (rec rest (cons
+                                (subseq source 0 n)
+                                acc))
+                     (nreverse
+                      (cons source acc))))))
+      (if source (rec source nil) nil))))
+
+(defmacro defcollect (name collector argn)
+  "Collect a bunch of args into multiple invocations of a funcion. One example
+of this is setf/setq: (setf a b c d) -> (setf a b) (setf c d)"
+  (alexandria:with-gensyms (x args)
+    `(defmacro ,name (&rest ,args)
+       `(progn ,@(loop for ,x in (group ,args ,argn)
+                       collect (cons ',collector ,x))))))
 
 (define-condition coleslaw-condition ()
   ())
@@ -122,3 +142,9 @@ in the git repo since REVISION."
            (cl-ppcre:split "\\s+" str)))
     (let ((cmd (format nil "git diff --name-status ~A HEAD" revision)))
       (mapcar #'split-on-whitespace (inferior-shell:run/lines cmd)))))
+
+(defun run-lines (dir &rest programs)
+  "Runs some programs, in a directory."
+  (mapc (lambda (line)
+          (run-program "cd ~A && ~A" dir line))
+        programs))

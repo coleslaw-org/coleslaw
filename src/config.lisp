@@ -1,10 +1,4 @@
 (in-package :coleslaw)
-(defun title-case (string)
-  (if (< 0 (length string))
-      (concatenate 'string
-                   (string-upcase (string (aref string 0)))
-                   (subseq string 1))
-      string))
 (defclass blog ()
   ((author          :initarg :author         :reader author)
    (charset         :initarg :charset        :reader charset)
@@ -24,14 +18,15 @@
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title)
-   (index-ext       :initarg :index-ext      :reader index-ext))
+   (index-ext       :initarg :index-ext      :reader index-ext)
+   (conf-sitemap         :initarg :conf-sitemap        :reader conf-sitemap))
   (:default-initargs
    :feeds        nil
    :license      nil
    :plugins      nil
    :sitenav      nil
    :excerpt-sep  "<!--more-->"
-   :name-fn      'title-case
+   :name-fn      'identity
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     #1="html"

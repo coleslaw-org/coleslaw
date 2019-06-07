@@ -1,6 +1,6 @@
 [If you are here for coleslaw-mode, click here.](https://github.com/equwal/coleslaw-mode)
 ==============
-Note: not to base project. Personal edits for http://truex.eu.
+Note: not the base project. Personal edits for http://truex.eu.
 # coleslaw
 
 [![Build Status](https://travis-ci.org/kingcons/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
