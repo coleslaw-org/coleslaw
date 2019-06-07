@@ -193,17 +193,18 @@ sources. Assumes that a git repository exists in the server's staging
 directory. Pushing is optional. For maximum version control, put the staging
 directory below the source files, like this arrangement:
 
+```sh
 sitedir:
 .coleslawrc
 git
 .gitignore
 ...
 
-site-directory/stagedir:
+sitedir/stagedir:
 ...
-
+```
 Git can be too slow though, so making sure to only update the *source* files
-(and not the html) can save a lot of time. Add this to your .gitignore:
+(and not the deployed html) can save a lot of time. Add this to your .gitignore:
 
 stagedir/**
 
