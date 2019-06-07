@@ -12,8 +12,8 @@
 .date { font-style: italic;  clear: both; color: black; padding-left: 0.75em} /* except index */
 .article-meta {
     margin-left: 0;
-    margin-top: 0.75em;
-    margin-bottom: 0.75em;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
 }
 .archive-title { font-size: 1em }
 html {
@@ -272,7 +272,7 @@ h, h1, h2, h3, h4, h5, h6 {
 .article-box .article-image, .article-box .article-title, .article-box .article{
     display: inline-block;
     padding-right: 1em;
-    max-width: 35em;
+    width: 70%;
 }
 .jump {
     padding-top: 200px; margin-top: -200px;
@@ -316,9 +316,7 @@ h, h1, h2, h3, h4, h5, h6 {
     vertical-align: middle;
     color: black;
     font-size: 1.2em;
-    border-bottom-style: dotted;
-    border-width: 2px;
-    border-color: #0000ff;
+    text-decoration: underline dotted #0000ff;
 }
 .right {
     text-align: right;

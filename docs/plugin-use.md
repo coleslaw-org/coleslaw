@@ -197,9 +197,15 @@ sitedir:
 .coleslawrc
 git
 .gitignore
+...
 
 site-directory/stagedir:
+...
 
+Git can be too slow though, so making sure to only update the *source* files
+(and not the html) can save a lot of time. Add this to your .gitignore:
+
+stagedir/**
 
 **Example**: `(git-versioned stage commit upload)` or `(git-versioned stage commit)`
 
@@ -219,7 +225,7 @@ site-directory/stagedir:
 folder every time the server is pushed. Space-expensive, so makes bzip2
 archives, labeled with the clock's universal time.
 
-**Example**: `(hard-versioned "~/backups")`
+**Example**: `(hard-versioned "/home/user/backups")`
 
 ## Wordpress Importer
 

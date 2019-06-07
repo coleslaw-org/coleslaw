@@ -5,6 +5,8 @@
                 #:run-lines)
   (:import-from :uiop #:ensure-directory-pathname))
 (in-package :coleslaw-git-versioned)
+
+(defun git-versioned ())
 (defun enable (&rest commands)
   (setf (symbol-function 'git-versioned)
         (lambda ()
@@ -14,6 +16,7 @@
                       collect (symbol-function (intern (symbol-name fsym)
                                                        :coleslaw-git-versioned)))))))
 
+(defun command (args) (declare (ignore args)))
 (defmethod coleslaw:deploy (staging)
   (setf (symbol-function 'command)
         (lambda (args)

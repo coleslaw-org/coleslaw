@@ -6,6 +6,8 @@
   (:import-from :uiop #:ensure-directory-pathname)
   (:export #:hard-versioned))
 (in-package :coleslaw-hard-versioned)
+
+(defun hard-versioned (staging) (declare (ignore staging)))
 (defun enable (backup-dir)
   (setf (symbol-function 'hard-versioned)
         (lambda (staging)
