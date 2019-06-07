@@ -9,8 +9,8 @@
 #tagsoup {clear: both; padding-left: 0.75em; padding-bottom: 0.75em}
 .tags {padding-left: 0.75em; padding-bottom: 0.75em;}
 .date { font-style: italic;  clear: both; color: black; padding-left: 0.75em} /* except index */
-.article-meta { margin-left: 0; margin-bottom: 0.5em }
-.archive-title { font-size: 1em } .article-title { font-size: 2em }
+.article-meta { margin-left: 0; }
+.archive-title { font-size: 1em }
 html {
     background: #0000ff;
     margin: 0.75em;
@@ -23,7 +23,7 @@ html {
 body {
     font-family: Vollkorn;
     padding-top: 5em;
-    font-size: 14pt;
+    font-size: 1em;
 }
 .relative-nav {padding-left: 0.75em; padding-bottom: 0.75em}
 pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
@@ -69,7 +69,6 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
     }
 
     .article-meta {
-        margin-bottom: 1em;
         clear: right;
     }
 
@@ -85,6 +84,7 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
     }
     .article {
         color: black;
+        font-size: 0.8em;
     }
     .article-content {
         margin-left: auto;
@@ -269,6 +269,11 @@ h, h1, h2, h3, h4, h5, h6 {
 .article-box {
     margin-left: 8em;
 }
+.article-box .article-image, .article-box .article-title, .article-box .article{
+    display: inline-block;
+    padding-right: 1em;
+    max-width: 25em;
+}
 .jump {
     padding-top: 90px; margin-top: -90px;
 }
@@ -290,3 +295,15 @@ h, h1, h2, h3, h4, h5, h6 {
     padding-left: 0.5em;
     display: inline-block;
 }
+.article-image img {
+    display: inline;
+    max-width: 12em;
+    height: auto;
+}
+.article-title {
+    font-size: 2em;
+    height: 2em;
+    display: block;
+    margin-top: 1em;
+}
+

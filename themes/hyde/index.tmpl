@@ -8,10 +8,15 @@
 <a href="{$config.domain}/{$obj.url}">
     <div class="article-box">
       {if $obj.image}
-          <img src="{$obj.image}">
+      <div class="article-image">
+          <img src="{$obj.image}" alt="logo">
+      </div>
       {/if}
-      <div class="article-title" href="{$config.domain}/{$obj.url}">{$obj.title}</div>
-      <div class="article">{$obj.excerpt |noAutoescape}</div>
+      <div class="article-title" href="{$config.domain}/{$obj.url}">{$obj.title}
+      <br>
+      <div class="article">{$obj.excerpt |noAutoescape}
+      </div>
+      </div>
     </div>
     </a>
 </div>
