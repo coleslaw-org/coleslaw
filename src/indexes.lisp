@@ -9,7 +9,8 @@
   ((url     :initarg :url     :reader page-url)
    (name    :initarg :name    :reader index-name)
    (title   :initarg :title   :reader title-of)
-   (content :initarg :content :reader index-content)))
+   (content :initarg :content :reader index-content)
+   (image   :initarg :image   :reader image)))
 
 (defmethod initialize-instance :after ((object index) &key slug)
   (with-slots (url) object

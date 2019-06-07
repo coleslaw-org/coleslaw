@@ -4,11 +4,12 @@
   ((title  :initarg :title  :reader title-of)
    (author :initarg :author :reader author-of)
    (excerpt :initarg :excerpt :reader excerpt-of)
-   (format :initarg :format :reader post-format))
-  (:default-initargs :author nil :excerpt nil))
+   (format :initarg :format :reader post-format)
+   (image :initarg :image :reader image-of))
+  (:default-initargs :author nil :excerpt nil :title nil :image nil))
 
 (defmethod initialize-instance :after ((object post) &key)
-  (with-slots (url title author excerpt format text) object
+  (with-slots (url title author excerpt format text image) object
     (let (post-content)
       (setf url (compute-url object (slugify title))
             format (make-keyword (string-upcase format))
@@ -18,7 +19,27 @@
                                       post-content
                                       :limit 2)))
             text post-content
+            image (or image
+                      (let ((img (second (split "src"
+                                                (second (split "img"
+                                                               post-content
+                                                               :limit 2))
+                                                :limit 2))))
+                        (when img
+                          (unquote-first img))))
             author (or author (author *config*))))))
+
+(defun unquote-first (string)
+  ;; Wow, what a kludge
+  (flet ((unquote-style (style)
+           (let ((junky (subseq string
+                                (1+ (search style string)))))
+             (when junky
+               (let ((junky-end (search style junky)))
+                 (when junky-end
+                   (subseq junky 0 junky-end)))))))
+    (or (unquote-style "\'")
+        (unquote-style "\""))))
 
 (defmethod render ((object post) &key prev next)
   (funcall (theme-fn 'post) (list :config *config*

@@ -1,1 +1,34 @@
-.navigation img{margin:0.25em;display:inline}.date{clear:none}
+body {
+    padding-top: 0;
+}
+.navigation {
+    font-size: 1.2em;
+    width: 4em;
+    height: auto;
+    margin: 2em;
+    margin-right: 4em;
+    /*    float: top left; */
+    clear: left;
+    float: left;
+    position: relative;
+    background-color: #98fb98;
+    border-width: 0;
+}
+.navlink {
+    border-width: 0.25em;
+    border-style: outset;
+    width: 4em;
+    height: auto;
+    margin-left: 0.75em;
+    margin-right: 0.75em;
+    margin-bottom: 0.25em;
+    margin-top: 0.25em;
+    color: black;
+    text-align: center;
+    clear: left;
+}
+.navlink img {
+    margin: 0;
+    display: inline;
+}
+.date{clear:none}

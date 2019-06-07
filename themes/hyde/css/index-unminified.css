@@ -1,8 +1,0 @@
-/* Overwrites style.css for index.html */
-.navigation img {
-    margin: 0.25em;
-    display: inline;
-}
-.date {
-    clear: none;
-}

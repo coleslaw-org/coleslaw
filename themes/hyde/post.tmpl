@@ -1,10 +1,8 @@
 {namespace coleslaw.theme.hyde}
 
 {template post}
-<div class="article-meta">{\n}
-  <h1 class="title">{$post.title}</h1>{\n}
-</div>{\n}
 <div class="article-content">{\n}
+    <h1 class="title">{$post.title}</h1>{\n}
   {$post.text |noAutoescape}
 </div>{\n}
 <div class="relative-nav">{\n}

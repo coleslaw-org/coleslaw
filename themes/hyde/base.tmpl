@@ -17,34 +17,37 @@
     <meta name="author" content="Spenser Truex">
     <meta http-equiv="content-type" content="text/html; charset="{$config.charset}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="/css/font.css" rel="stylesheet" type="text/css" />
-<!--    <link href="//fonts.googleapis.com/css?family=Vollkorn:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" />
-    <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" />-->
     <link rel="alternate" href="/rss.xml" type="application/rss+xml" />
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
     {if $injections.head}
       {foreach $injection in $injections.head}
         {$injection |noAutoescape}
       {/foreach}
     {/if}
   </head>
-  <body>
-    <div class="innerbg">
+<body>
 <div class="navigation">
       {foreach $link in $config.sitenav}
         {if $link.relative}
-      <div class="navlink"><a href="{$config.domain}/{$link.url}">{$link.name}
+      <div class="navlink"><a href="{$config.domain}/{$link.url}">
       {if $link.image}
-      <img src="{$link.image}" />{/if}</a>
+      <img src="{$link.image}" />
+      <div class="name">{$link.name}</div>
+      {else}
+      {$link.name}{/if}</a>
       </div>
         {else}
-      <div class="navlink"><a href="{$link.url}">{$link.name}
+      <div class="navlink"><a href="{$link.url}">
         {if $link.image}
-        <img src="{$link.image}" />{/if}</a>
+        <img src="{$link.image}" />
+        <div class="name">{$link.name}</div>
+        {else}
+        {$link.name}{/if}</a>
       </div>
         {/if}
       {/foreach}
 </div>
+    <div class="innerbg">
     <div id="content">
       {$raw |noAutoescape}
     </div>
@@ -59,7 +62,13 @@
       {if $config.license}
         {$config.license}
       {/if}
-      {$config.author} <br /><a href="/call.html">Contact</a><br /><img src='/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
+      <p>{$config.author}</p> <a href="/call">Contact</a><br /><a href="/glider"><img src='/static/lambda_bottom.png' id="hacker" alt='hacker emblem' /></a>
+      <br>
+      <div class="footerlink"><<strong>equwal</strong>> on freenode</div>
+      <strong>|</strong>
+      <div class="footerlink"><a href="https://stackoverflow.com/users/5513492/spenser-truex">Stack Overflow</a></div>
+      <strong>|</strong>
+      <div class="footerlink"><a href="https://www.qrz.com/db/KM6DUO">KM6DUO</a></div>
     </div>
 </div>
     </div>
