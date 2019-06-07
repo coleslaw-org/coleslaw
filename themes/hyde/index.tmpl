@@ -30,7 +30,6 @@
   <p>View by type: 
     {foreach $tag in $tags}
       <a href="{$config.domain}/{$tag.url}">{$tag.name}</a>{nil}
-      {if not isLast($tag)},{sp}{/if}
     {/foreach}
 </div>
 {/if}

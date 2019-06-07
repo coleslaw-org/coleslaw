@@ -6,7 +6,8 @@
 }
 /*#content { padding-top: 0.5em }*/
 #header { float: right; margin-left: 1em; margin-bottom: 1em }
-#tagsoup {clear: both; padding-left: 0.75em; padding-bottom: 0.75em}
+#tagsoup {clear: both; padding: 0.75em}
+#tagsoup a {padding: 0.5em}
 .tags {padding-left: 0.75em; padding-bottom: 0.75em;}
 .date { font-style: italic;  clear: both; color: black; padding-left: 0.75em} /* except index */
 .article-meta { margin-left: 0; }
@@ -267,7 +268,7 @@ h, h1, h2, h3, h4, h5, h6 {
 .article-box .article-image, .article-box .article-title, .article-box .article{
     display: inline-block;
     padding-right: 1em;
-    max-width: 25em;
+    max-width: 35em;
 }
 .jump {
     padding-top: 90px; margin-top: -90px;
