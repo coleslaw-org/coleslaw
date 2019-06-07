@@ -10,7 +10,7 @@
 #tagsoup a {padding: 0.5em}
 .tags {padding-left: 0.75em; padding-bottom: 0.75em;}
 .date { font-style: italic;  clear: both; color: black; padding-left: 0.75em} /* except index */
-.article-meta { margin-left: 0; }
+.article-meta { margin-left: 0; margin-top: 0.75em;}
 .archive-title { font-size: 1em }
 html {
     background: #0000ff;
