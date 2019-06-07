@@ -185,7 +185,7 @@ CL-USER> (chirp:complete-authentication "4173325")
 
 Either [automatic git interaction](#gitv), [double versioning](#dv), or [hard versions](#hv).
 
-## <a :name "gitv">Git Versioning</a>
+### <a :name "gitv"></a>Git Versioning
 
 **Description**: Automatically stages, commits, and/or pushes the server's
 sources. Assumes that a git repository exists in the server's directory. Pushing
@@ -193,7 +193,7 @@ is optional.
 
 **Example**: `(git-versioning 'stage 'commit 'push)` or `(git-versioning 'stage 'commit)`
 
-## <a :name "dv">Double Versioning</a>
+### <a :name "dv"></a>Double Versioning
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and
@@ -203,7 +203,7 @@ is optional.
 
 **Example**: `(versioned)`
 
-## <a :name "hv">Hard Versioning</a>
+### <a :name "hv"></a>Hard Versioning
 
 **Description**: Makes a full backup of the server directory into a backup
 folder every time the server is pushed. Could be expensive.
