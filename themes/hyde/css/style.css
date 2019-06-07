@@ -166,7 +166,7 @@ a.anchor { color: black }
 #hacker {
     max-width: 3em;
     height: auto;
-    padding-bottom: 0.5em;
+    padding: 1em;
 }
 .innerbg {
     background: #98fb98;
