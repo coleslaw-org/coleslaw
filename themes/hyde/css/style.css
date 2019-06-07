@@ -25,7 +25,7 @@ body {
     padding-top: 5em;
     font-size: 1em;
 }
-.relative-nav {padding-left: 0.75em; padding-bottom: 0.75em}
+.relative-nav {padding: 0.75em;}
 pre { overflow: auto; margin-left: 1em; padding: 0.5em; border-left: 1px dashed;
       background-color: inherit; padding: .75em .5em; font-family: mono-font }
 tt { font-size: .9em; font-family: mono-font}
@@ -82,10 +82,6 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
         margin-left: 0;
         text-align: justify;
     }
-    .article {
-        color: black;
-        font-size: 0.8em;
-    }
     .article-content {
         margin-left: auto;
         margin-right: auto;
@@ -95,7 +91,6 @@ span.paren6:hover { color : inherit; background-color : #FFBAFF; }
         margin-left: auto;
         margin-right: auto;
 	max-width: 70%;
-        
     }
 
     #coleslaw-logo {
@@ -128,7 +123,7 @@ a.anchor { color: black }
 .navigation {
     font-size: 1.2em;
     width: 100%;
-    height: auto;;
+    height: auto;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     /*    float: top left; */
@@ -301,9 +296,22 @@ h, h1, h2, h3, h4, h5, h6 {
     height: auto;
 }
 .article-title {
-    font-size: 2em;
     height: 2em;
     display: block;
     margin-top: 1em;
 }
-
+.article-title h1 {
+    font-size: 2em;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: left;
+    vertical-align: middle;
+}
+.article {
+    vertical-align: middle;
+    color: black;
+    font-size: 1.2em;
+}
+.right {
+    text-align: right;
+}
