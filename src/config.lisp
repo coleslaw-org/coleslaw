@@ -37,7 +37,8 @@
    :page-ext     #1="html"
    :separator    ";;;;;"
    :staging-dir  "/tmp/coleslaw"
-   :index-ext    #1#)))
+   :index-ext    #1#))
+
 (defun page-ext (config)
   "Get page extension, and allow for an extensionless system."
   (let ((ext (page-ext-intolerant config)))
@@ -103,3 +104,4 @@ preferred over the home directory if provided."
       (setf *config* (construct 'blog config-form)
             (repo-dir *config*) repo-dir)))
   (load-plugins (plugins *config*)))
+
