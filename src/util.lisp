@@ -166,9 +166,11 @@ in the git repo since REVISION."
                (apply #'format nil fmt-args args)))
 
 (defun path-remove (path)
+  "Delete things."
   (run-program "rm -r ~a" path))
 
 (defun path-move (from to)
+  "Move things, or copy with rsync."
   (if (rsync-installed-p)
       (run-rsync "--delete -lavz ~a ~a"
                  from
@@ -179,6 +181,6 @@ in the git repo since REVISION."
   (run-program "ln -sfn ~a ~a" target path))
 
 (defun rsync-ensure-directories-exist (path)
-  "Ensure directories exist, but be nice to rsync!"
+  "Ensure directories exist, but not if using rsync."
   (when (not (rsync-installed-p))
     (ensure-directories-exist path)))

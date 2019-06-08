@@ -7,9 +7,9 @@
 (defcollect rootstatics* rootstatic* 2)
 (defun truex ()
   (main *site-folder-local*)
-  #|(rootstatics* "static" "static"
+  (rootstatics* "static" "static"
                 "/static/google71c0326c2809a4a5.html" "google71c0326c2809a4a5.html"
-                "/static/sitemap-2019-06-06.xml" "sitemap.xml")|#)
+                "/static/sitemap-2019-06-06.xml" "sitemap.xml"))
 #|(in-package :coleslaw-cl-who)
 (defun pack (el list?)
 (if (and (listp list?) (listp (car list?)))
