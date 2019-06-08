@@ -19,10 +19,13 @@
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title)
    (index-ext       :initarg :index-ext      :reader index-ext)
-   (conf-sitemap    :initarg :conf-sitemap        :reader conf-sitemap)
+   (conf-sitemap    :initarg :conf-sitemap   :reader conf-sitemap)
    (rsync-passfile  :initarg :rsync-passfile :reader rsync-passfile)
-   (which-sshpass  :initarg :which-sshpass :reader which-sshpass))
+   (which-sshpass   :initarg :which-sshpass  :reader which-sshpass)
+   (rootstatics     :initarg :rootstatics    :reader rootstatics))
+  
   (:default-initargs
+   :rootstatic   nil
    :feeds        nil
    :license      nil
    :conf-sitemap nil
