@@ -203,8 +203,10 @@ git
 sitedir/stagedir:
 ...
 ```
-Git can be too slow though, so making sure to only update the *source* files
-(and not the deployed html) can save a lot of time. Add this to your .gitignore:
+
+and initialize git above it so that the sources are backed up, and not the
+generated site.  Git can be too slow for that,so making sure to only update
+those *source* files can save a lot of time. Add this to your .gitignore:
 
 stagedir/**
 
@@ -222,8 +224,8 @@ stagedir/**
 
 ### Hard Versioned
 
-**Description**: Makes a full backup of the server directory into a backup
-folder every time the server is pushed. Space-expensive, so makes bzip2
+**Description**: Makes a full backup of the server staging directory into a
+backup folder every time the server is pushed. Space-expensive, so makes bzip2
 archives, labeled with the clock's universal time.
 
 **Example**: `(hard-versioned "/home/user/backups")`

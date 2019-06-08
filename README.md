@@ -27,6 +27,8 @@ Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
 * A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [**plugins**](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
   * Static Pages
   * Sitemap generation
+  * Control of URL generation
+  * Backup with symlinks, hardlinks, and/or git.
   * Incremental builds
   * Analytics via Google or [Piwik](http://www.piwik.org)
   * Comments via [Disqus](http://disqus.com/) or [isso](http://posativ.org/isso)
