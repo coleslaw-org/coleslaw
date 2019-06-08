@@ -19,12 +19,16 @@
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title)
    (index-ext       :initarg :index-ext      :reader index-ext)
-   (conf-sitemap         :initarg :conf-sitemap        :reader conf-sitemap))
+   (conf-sitemap    :initarg :conf-sitemap   :reader conf-sitemap)
+   (rsync-passfile  :initarg :rsync-passfile :reader rsync-passfile)
+   (which-sshpass  :initarg :which-sshpass :reader which-sshpass))
   (:default-initargs
    :feeds        nil
    :license      nil
    :plugins      nil
    :sitenav      nil
+   :rsync-passfile nil
+   :which-sshpass nil
    :excerpt-sep  "<!--more-->"
    :name-fn      'identity
    :charset      "UTF-8"

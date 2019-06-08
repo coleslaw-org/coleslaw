@@ -3,8 +3,7 @@
   (:import-from :coleslaw
                 #:*config*
                 #:run-program)
-  (:import-from :uiop #:ensure-directory-pathname)
-  (:export #:hard-versioned))
+  (:import-from :uiop #:ensure-directory-pathname))
 (in-package :coleslaw-hard-versioned)
 
 (defun hard-versioned (staging) (declare (ignore staging)))
@@ -15,6 +14,6 @@
                        (ensure-directory-pathname backup-dir)
                        (get-universal-time)
                        staging))))
-(defmethod coleslaw:deploy (staging)
+(defmethod coleslaw:deploy :before (staging)
   (hard-versioned staging))
 
