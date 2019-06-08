@@ -104,9 +104,11 @@ This will create three template functions that coleslaw can find, named
 
 ### Step 3. Use it in your config.
 
-At this point, you can change the `:theme` in your `.coleslawrc` to
-`trivial` and then generate your blog with `(coleslaw:main)`. However,
-all the HTML files will be empty because our templates are empty!
+At this point, you can change the `:theme` in your `.coleslawrc` to `trivial`
+and then generate your blog with `(coleslaw:main)`. However, all the HTML files
+will be empty because our templates are empty! Themes can now support images in
+the navigation toolbar using: `:sitenav ((:url "/index.html" :image
+"/img/home.png"))`, for example. The variable for that image is `$link.image`.
 
 ### Intermezzo I, The Templating Language
 

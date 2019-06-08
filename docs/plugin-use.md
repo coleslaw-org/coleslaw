@@ -183,20 +183,6 @@ CL-USER> (chirp:complete-authentication "4173325")
 
 ## Versioning Deploys
 
-<<<<<<< HEAD
-Either [automatic git interaction](#git-versioning),
-[double versioning](#double-versioning), or [hard versioning](#hard-versioning).
-
-### Git Versioning
-
-**Description**: Automatically stages, commits, and/or pushes the server's
-sources. Assumes that a git repository exists in the server's directory. Pushing
-is optional.
-
-**Example**: `(git-versioning 'stage 'commit 'push)` or `(git-versioning 'stage 'commit)`
-
-### Double Versioning
-=======
 Either [automatic git interaction](#git-versioned),
 [double versioned](#double-versioned), or [hard versioned](#hard-versioned).
 
@@ -225,7 +211,6 @@ stagedir/**
 **Example**: `(git-versioned stage commit upload)` or `(git-versioned stage commit)`
 
 ### Double Versioned
->>>>>>> equwal/master
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and
@@ -235,14 +220,6 @@ stagedir/**
 
 **Example**: `(versioned)`
 
-<<<<<<< HEAD
-### Hard Versioning
-
-**Description**: Makes a full backup of the server directory into a backup
-folder every time the server is pushed. Could be expensive.
-
-**Example**: `(hard-versioning "~/backups")`
-=======
 ### Hard Versioned
 
 **Description**: Makes a full backup of the server directory into a backup
@@ -250,7 +227,6 @@ folder every time the server is pushed. Space-expensive, so makes bzip2
 archives, labeled with the clock's universal time.
 
 **Example**: `(hard-versioned "/home/user/backups")`
->>>>>>> equwal/master
 
 ## Wordpress Importer
 
