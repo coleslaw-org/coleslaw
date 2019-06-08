@@ -28,7 +28,8 @@
                (:file "posts")
                (:file "indexes")
                (:file "feeds")
-               (:file "coleslaw"))
+               (:file "coleslaw")
+	       (:file "custom"))
   :in-order-to ((test-op (test-op coleslaw-test))))
 
 (defmethod perform :before ((op load-op)

@@ -27,12 +27,25 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (ensure-directories-exist staging)
   (with-current-directory staging
     (let ((theme-dir (find-theme (theme *config*))))
+<<<<<<< HEAD
       (dolist (dir (list (merge-pathnames "css" theme-dir)
                          (merge-pathnames "img" theme-dir)
                          (merge-pathnames "js" theme-dir)
                          (repo-path "static")))
         (when (probe-file dir)
           (run-program "rsync --rsh=\"/usr/bin/sshpass -f /home/jose/.backup-pass ssh -o StrictHostKeyChecking=no\" --delete -raz ~a ." dir))))
+=======
+      (dolist (pair (pairlis (list (merge-pathnames "css" theme-dir)
+                                   (merge-pathnames "img" theme-dir)
+                                   (merge-pathnames "js" theme-dir)
+                                   (repo-path "static"))
+                             '("css" "img" "js" "static")))
+        (when (probe-file (car pair))
+          (path-move (ensure-directory-pathname (car pair))
+                     (ensure-directory-pathname
+                      (merge-pathnames staging
+                                       (cdr pair)))))))
+>>>>>>> equwal/master
     (do-subclasses (ctype content)
       (publish ctype))
     (do-subclasses (itype index)
@@ -43,10 +56,14 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
   (:method (staging)
+<<<<<<< HEAD
     (run-program "rsync --rsh=\"/usr/bin/sshpass -f /home/jose/.backup-pass ssh -o StrictHostKeyChecking=no\" --delete -avz ~a ~a" staging (deploy-dir *config*))))
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
   (run-program "ln -sfn ~a ~a" target path))
+=======
+    (path-move staging (deploy-dir *config*))))
+>>>>>>> equwal/master
 
 (defun preview (path &optional (content-type 'post))
   "Render the content at PATH under user's configured repo and save it to
