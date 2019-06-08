@@ -17,7 +17,7 @@
                                                        :coleslaw-git-versioned)))))))
 
 (defun command (args) (declare (ignore args)))
-(defmethod coleslaw:deploy (staging)
+(defmethod coleslaw:deploy :before (staging)
   (setf (symbol-function 'command)
         (lambda (args)
           "Automatically git commit and push the blog to remote."
