@@ -21,11 +21,9 @@
    (index-ext       :initarg :index-ext      :reader index-ext)
    (conf-sitemap    :initarg :conf-sitemap   :reader conf-sitemap)
    (rsync-passfile  :initarg :rsync-passfile :reader rsync-passfile)
-   (which-sshpass   :initarg :which-sshpass  :reader which-sshpass)
-   (rootstatics     :initarg :rootstatics    :reader rootstatics))
+   (which-sshpass   :initarg :which-sshpass  :reader which-sshpass))
   
   (:default-initargs
-   :rootstatic   nil
    :feeds        nil
    :license      nil
    :conf-sitemap nil
