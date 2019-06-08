@@ -49,7 +49,7 @@ of this is setf/setq: (setf a b c d) -> (setf a b) (setf c d)"
   "Return a list of all the subclasses of CLASS."
   (let ((subclasses (closer-mop:class-direct-subclasses class)))
     (append subclasses (loop for subclass in subclasses
-                          nconc (all-subclasses subclass)))))
+                             nconc (all-subclasses subclass)))))
 
 (defmacro do-subclasses ((var class) &body body)
   "Iterate over the subclasses of CLASS performing BODY with VAR
@@ -129,10 +129,10 @@ use (fmt program args) as the value of PROGRAM."
 along with any missing parent directories otherwise."
   (ensure-directories-exist path)
   (with-open-file (out path
-                   :direction :output
-                   :if-exists :supersede
-                   :if-does-not-exist :create
-                   :external-format :utf-8)
+                       :direction :output
+                       :if-exists :supersede
+                       :if-does-not-exist :create
+                       :external-format :utf-8)
     (write text :stream out :escape nil)))
 
 (defun get-updated-files (&optional (revision *last-revision*))
@@ -143,24 +143,17 @@ in the git repo since REVISION."
     (let ((cmd (format nil "git diff --name-status ~A HEAD" revision)))
       (mapcar #'split-on-whitespace (inferior-shell:run/lines cmd)))))
 
-<<<<<<< HEAD
-=======
-
 (defun rsync-installed-p (&optional (test-args "--version"))
   (block escape
     (handler-case (run-program "rsync ~A" test-args)
       (t () (return-from escape nil)))
     t))
 
->>>>>>> equwal/master
 (defun run-lines (dir &rest programs)
   "Runs some programs, in a directory."
   (mapc (lambda (line)
           (run-program "cd ~A && ~A" dir line))
         programs))
-<<<<<<< HEAD
-=======
-
 
 (defun run-rsync (fmt-args &rest args)
   (run-program "rsync ~a ~a"
@@ -169,10 +162,6 @@ in the git repo since REVISION."
                    "--rsh=\"/usr/bin/sshpass -f /home/jose/.backup-pass ssh -o StrictHostKeyChecking=no\""
                    "")
                (apply #'format nil fmt-args args)))
-
-(defun path-remove (path)
-  "Delete things."
-  (run-program "rm -r ~a" path))
 
 (defun path-move (from to)
   "Move things, or copy with rsync."
@@ -189,4 +178,4 @@ in the git repo since REVISION."
   "Ensure directories exist, but not if using rsync."
   (when (not (rsync-installed-p))
     (ensure-directories-exist path)))
->>>>>>> equwal/master
+

@@ -1,19 +1,4 @@
 (in-package :coleslaw)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-(defun title-case (string)
-  (if (< 0 (length string))
-      (concatenate 'string
-                   (string-upcase (string (aref string 0)))
-                   (subseq string 1))
-      string))
-=======
->>>>>>> equwal/truex.eu
-=======
->>>>>>> truex.eu~5
-=======
->>>>>>> equwal/master
 (defclass blog ()
   ((author          :initarg :author         :reader author)
    (charset         :initarg :charset        :reader charset)
@@ -33,51 +18,26 @@
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-   (index-ext       :initarg :index-ext      :reader index-ext))
-=======
    (index-ext       :initarg :index-ext      :reader index-ext)
-   (conf-sitemap         :initarg :conf-sitemap        :reader conf-sitemap))
->>>>>>> equwal/truex.eu
-=======
-   (index-ext       :initarg :index-ext      :reader index-ext)
-   (conf-sitemap         :initarg :conf-sitemap        :reader conf-sitemap))
->>>>>>> truex.eu~5
-=======
-   (index-ext       :initarg :index-ext      :reader index-ext)
-   (conf-sitemap    :initarg :conf-sitemap   :reader conf-sitemap)
+   (conf-sitemap    :initarg :conf-sitemap        :reader conf-sitemap)
    (rsync-passfile  :initarg :rsync-passfile :reader rsync-passfile)
    (which-sshpass  :initarg :which-sshpass :reader which-sshpass))
->>>>>>> equwal/master
   (:default-initargs
    :feeds        nil
    :license      nil
+   :conf-sitemap nil
    :plugins      nil
    :sitenav      nil
    :rsync-passfile nil
    :which-sshpass nil
    :excerpt-sep  "<!--more-->"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-   :name-fn      'title-case
-=======
    :name-fn      'identity
->>>>>>> equwal/truex.eu
-=======
-   :name-fn      'identity
->>>>>>> truex.eu~5
-=======
-   :name-fn      'identity
->>>>>>> equwal/master
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     #1="html"
    :separator    ";;;;;"
    :staging-dir  "/tmp/coleslaw"
-   :index-ext    #1#))
+   :index-ext    #1#)))
 (defun page-ext (config)
   "Get page extension, and allow for an extensionless system."
   (let ((ext (page-ext-intolerant config)))
