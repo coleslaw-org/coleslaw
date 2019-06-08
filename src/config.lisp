@@ -1,5 +1,6 @@
 (in-package :coleslaw)
 <<<<<<< HEAD
+<<<<<<< HEAD
 (defun title-case (string)
   (if (< 0 (length string))
       (concatenate 'string
@@ -8,6 +9,8 @@
       string))
 =======
 >>>>>>> equwal/truex.eu
+=======
+>>>>>>> truex.eu~5
 (defclass blog ()
   ((author          :initarg :author         :reader author)
    (charset         :initarg :charset        :reader charset)
@@ -28,11 +31,16 @@
    (theme           :initarg :theme          :reader theme)
    (title           :initarg :title          :reader title)
 <<<<<<< HEAD
+<<<<<<< HEAD
    (index-ext       :initarg :index-ext      :reader index-ext))
 =======
    (index-ext       :initarg :index-ext      :reader index-ext)
    (conf-sitemap         :initarg :conf-sitemap        :reader conf-sitemap))
 >>>>>>> equwal/truex.eu
+=======
+   (index-ext       :initarg :index-ext      :reader index-ext)
+   (conf-sitemap         :initarg :conf-sitemap        :reader conf-sitemap))
+>>>>>>> truex.eu~5
   (:default-initargs
    :feeds        nil
    :license      nil
@@ -40,10 +48,14 @@
    :sitenav      nil
    :excerpt-sep  "<!--more-->"
 <<<<<<< HEAD
+<<<<<<< HEAD
    :name-fn      'title-case
 =======
    :name-fn      'identity
 >>>>>>> equwal/truex.eu
+=======
+   :name-fn      'identity
+>>>>>>> truex.eu~5
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     #1="html"

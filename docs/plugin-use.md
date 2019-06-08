@@ -179,9 +179,22 @@ CL-USER> (chirp:complete-authentication "4173325")
 **Description**: Add Summary Card metadata to blog posts
   to enhance twitter links to that content.
 
-**Example**: `(twitter-summary-card :twitter-handle "@redline6561")
+**Example**: `(twitter-summary-card :twitter-handle "@redline6561**)
 
-## Versioned Deploys
+## Versioning Deploys
+
+Either [automatic git interaction](#git-versioning),
+[double versioning](#double-versioning), or [hard versioning](#hard-versioning).
+
+### Git Versioning
+
+**Description**: Automatically stages, commits, and/or pushes the server's
+sources. Assumes that a git repository exists in the server's directory. Pushing
+is optional.
+
+**Example**: `(git-versioning 'stage 'commit 'push)` or `(git-versioning 'stage 'commit)`
+
+### Double Versioning
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and
@@ -190,6 +203,13 @@ CL-USER> (chirp:complete-authentication "4173325")
   last two are automatically cleaned up.
 
 **Example**: `(versioned)`
+
+### Hard Versioning
+
+**Description**: Makes a full backup of the server directory into a backup
+folder every time the server is pushed. Could be expensive.
+
+**Example**: `(hard-versioning "~/backups")`
 
 ## Wordpress Importer
 
