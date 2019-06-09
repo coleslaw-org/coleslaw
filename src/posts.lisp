@@ -5,13 +5,14 @@
    (author :initarg :author :reader author-of)
    (excerpt :initarg :excerpt :reader excerpt-of)
    (format :initarg :format :reader post-format)
-   (image :initarg :image :reader image-of))
-  (:default-initargs :author nil :excerpt nil :title nil :image nil))
+   (image :initarg :image :reader image-of)
+   (url :initarg :url :reader url))
+  (:default-initargs :author nil :excerpt nil :title nil :image nil :url nil))
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-slots (url title author excerpt format text image) object
     (let (post-content)
-      (setf url (compute-url object (slugify title))
+      (setf url (if url url (compute-url object (slugify title)))
             format (make-keyword (string-upcase format))
             post-content (render-text text format)
             excerpt (or excerpt

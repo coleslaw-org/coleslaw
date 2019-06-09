@@ -13,7 +13,9 @@
 .article-meta {
     margin-left: 0;
     padding-top: 0.75em;
+    margin-top: 0.75em;
     padding-bottom: 0.75em;
+    margin-bottom: 0.75em;
 }
 .archive-title { font-size: 1em }
 html {
@@ -299,11 +301,12 @@ h, h1, h2, h3, h4, h5, h6 {
     display: inline;
     max-width: 12em;
     height: auto;
+    margin-top: 1.25em;
 }
 .article-title {
     height: 2em;
     display: block;
-    margin-top: 1em;
+    margin-top: 0.1em;
 }
 .article-title h1 {
     font-size: 2em;

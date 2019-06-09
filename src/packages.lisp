@@ -1,17 +1,19 @@
 (defpackage :coleslaw
   (:documentation "Homepage: <a href=\"http://github.com/redline6561/coleslaw\">Github</a>")
   (:use :cl)
+  (:nicknames :cs)
   (:import-from :alexandria #:hash-table-values
-                            #:make-keyword
-                            #:mappend)
+                #:make-keyword
+                #:mappend)
   (:import-from :cl-fad #:file-exists-p)
   (:import-from :cl-ppcre #:scan-to-strings #:split)
   (:import-from :closure-template #:compile-template)
   (:import-from :local-time #:format-rfc1123-timestring)
   (:import-from :uiop #:getcwd
-                      #:ensure-directory-pathname)
+                #:ensure-directory-pathname)
   (:export #:main
            #:preview
+           #:truex
            #:*config*
            ;; Config Accessors
            #:author

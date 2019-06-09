@@ -230,6 +230,14 @@ archives, labeled with the clock's universal time.
 
 **Example**: `(hard-versioned "/home/user/backups")`
 
+### Hard Versioned
+
+**Description**: Makes a full backup of the server directory into a backup
+folder every time the server is pushed. Space-expensive, so makes bzip2
+archives, labeled with the clock's universal time.
+
+**Example**: `(hard-versioned "/home/user/backups")`
+
 ## Wordpress Importer
 
 **NOTE**: This plugin really should be rewritten to act as a

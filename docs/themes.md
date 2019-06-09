@@ -108,7 +108,9 @@ At this point, you can change the `:theme` in your `.coleslawrc` to `trivial`
 and then generate your blog with `(coleslaw:main)`. However, all the HTML files
 will be empty because our templates are empty! Themes can now support images in
 the navigation toolbar using: `:sitenav ((:url "/index.html" :image
-"/img/home.png"))`, for example. The variable for that image is `$link.image`.
+"/img/home.png"))`, for example. The variable for that image is defined by a
+`{foreach $link in $config.sitenav}`, where the variables `$link.image` and
+`$link.relative` can be used.
 
 ### Intermezzo I, The Templating Language
 
@@ -170,6 +172,7 @@ The variable that should be available to all templates is:
    - `text`, the HTML of the post's body
    - `title`, the title of the post
    - `excerpt`, the excerpt of the post, same as `text` by default
+   - `image`, an optional url to an image.
 
 ### Step 4. Include the content
 
@@ -201,6 +204,8 @@ A simple `index.tmpl` looks like this:
 {/template}
 ```
 
+
+
 And a simple `post.tmpl` is similarly:
 ```
 {namespace coleslaw.theme.trivial}
@@ -219,3 +224,5 @@ Just do: `<a href="{$config.domain}/{$object.url}">{$object.name}</a>`.
 [clt]: https://developers.google.com/closure/templates/
 [ovr]: https://github.com/redline6561/coleslaw/blob/master/docs/overview.md
 [hck]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
+
+
