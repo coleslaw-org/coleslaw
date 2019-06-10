@@ -27,27 +27,27 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
   (ensure-directories-exist staging)
   (with-current-directory staging
     (let ((theme-dir (find-theme (theme *config*))))
-      (dolist (dir (list (merge-pathnames "css" theme-dir)
-                         (merge-pathnames "img" theme-dir)
-                         (merge-pathnames "js" theme-dir)
-                         (repo-path "static")))
-        (when (probe-file dir)
-          (run-program "rsync --delete -raz ~a ." dir))))
+      (dolist (pair (pairlis (list (merge-pathnames "css" theme-dir)
+                                   (merge-pathnames "img" theme-dir)
+                                   (merge-pathnames "js" theme-dir)
+                                   (repo-path "static"))
+                             '("css" "img" "js" "static")))
+        (when (probe-file (car pair))
+          (path-move (ensure-directory-pathname (car pair))
+                     (ensure-directory-pathname
+                      (merge-pathnames staging
+                                       (cdr pair)))))))
     (do-subclasses (ctype content)
       (publish ctype))
     (do-subclasses (itype index)
       (publish itype))
-    (update-symlink (format nil "index.~A" (page-ext *config*))
-                    (format nil "1.~A" (page-ext *config*)))))
+    (update-symlink (format nil "index.~A" (index-ext *config*))
+                    (format nil "1~A" (page-ext *config*)))))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
   (:method (staging)
-    (run-program "rsync --delete -avz ~a ~a" staging (deploy-dir *config*))))
-
-(defun update-symlink (path target)
-  "Update the symlink at PATH to point to TARGET."
-  (run-program "ln -sfn ~a ~a" target path))
+    (path-move staging (deploy-dir *config*))))
 
 (defun preview (path &optional (content-type 'post))
   "Render the content at PATH under user's configured repo and save it to

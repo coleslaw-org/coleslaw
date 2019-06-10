@@ -1,5 +1,4 @@
 (in-package :coleslaw)
-
 (defclass blog ()
   ((author          :initarg :author         :reader author)
    (charset         :initarg :charset        :reader charset)
@@ -7,9 +6,10 @@
    (domain          :initarg :domain         :reader domain)
    (excerpt-sep     :initarg :excerpt-sep    :reader excerpt-sep)
    (feeds           :initarg :feeds          :reader feeds)
+   (name-fn         :initarg :name-fn        :reader name-fn)
    (lang            :initarg :lang           :reader lang)
    (license         :initarg :license        :reader license)
-   (page-ext        :initarg :page-ext       :reader page-ext)
+   (page-ext        :initarg :page-ext       :reader page-ext-intolerant)
    (plugins         :initarg :plugins        :reader plugins)
    (repo            :initarg :repo           :accessor repo-dir)
    (routing         :initarg :routing        :reader routing)
@@ -17,19 +17,35 @@
    (sitenav         :initarg :sitenav        :reader sitenav)
    (staging-dir     :initarg :staging-dir    :reader staging-dir)
    (theme           :initarg :theme          :reader theme)
-   (title           :initarg :title          :reader title))
+   (title           :initarg :title          :reader title)
+   (index-ext       :initarg :index-ext      :reader index-ext)
+   (conf-sitemap    :initarg :conf-sitemap   :reader conf-sitemap)
+   (rsync-passfile  :initarg :rsync-passfile :reader rsync-passfile)
+   (which-sshpass   :initarg :which-sshpass  :reader which-sshpass))
+  
   (:default-initargs
    :feeds        nil
    :license      nil
+   :conf-sitemap nil
    :plugins      nil
    :sitenav      nil
+   :rsync-passfile nil
+   :which-sshpass nil
    :excerpt-sep  "<!--more-->"
+   :name-fn      'identity
    :charset      "UTF-8"
    :lang         "en"
-   :page-ext     "html"
+   :page-ext     #1="html"
    :separator    ";;;;;"
-   :staging-dir  "/tmp/coleslaw"))
+   :staging-dir  "/tmp/coleslaw"
+   :index-ext    #1#))
 
+(defun page-ext (config)
+  "Get page extension, and allow for an extensionless system."
+  (let ((ext (page-ext-intolerant config)))
+    (if (string= ext "")
+        ""
+        (concatenate 'string "." ext))))
 (defun dir-slot-reader (config name)
   "Take CONFIG and NAME, and return a directory pathname for the matching SLOT."
   (ensure-directory-pathname (slot-value config name)))
@@ -89,3 +105,4 @@ preferred over the home directory if provided."
       (setf *config* (construct 'blog config-form)
             (repo-dir *config*) repo-dir)))
   (load-plugins (plugins *config*)))
+
