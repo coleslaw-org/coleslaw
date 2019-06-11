@@ -225,7 +225,6 @@ stagedir/**
 **Example**: `(git-versioned stage commit upload)` or `(git-versioned stage commit)`
 
 ### Double Versioned
->>>>>>> equwal/master
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and
@@ -242,7 +241,7 @@ stagedir/**
 folder every time the server is pushed. Could be expensive.
 
 **Example**: `(hard-versioning "~/backups")`
-=======
+
 ### Hard Versioned
 
 **Description**: Makes a full backup of the server directory into a backup
@@ -250,7 +249,6 @@ folder every time the server is pushed. Space-expensive, so makes bzip2
 archives, labeled with the clock's universal time.
 
 **Example**: `(hard-versioned "/home/user/backups")`
->>>>>>> equwal/master
 
 ## Wordpress Importer
 

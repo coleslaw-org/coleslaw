@@ -32,5 +32,6 @@ There are also many *optional* config parameters such as:
 * `:separator`     => to set the separator for content metadata, default: ";;;;;"
 * `:sitenav`       => to provide relevant links and ease navigation
 * `:staging-dir`   => for Coleslaw to do intermediate work, default: "/tmp/coleslaw"
-
+* `:rsync-options` => for additional options to send rsync via command line for
+  upload. Default "--delete -avz".
 [plugin-use]: https://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md

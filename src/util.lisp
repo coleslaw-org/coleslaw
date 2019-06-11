@@ -135,27 +135,25 @@ in the git repo since REVISION."
           (run-program "cd ~A && ~A" dir line))
         programs))
 
-(defun run-rsync (fmt-args &rest args)
-  (run-program "rsync ~a ~a"
-               (if (and (rsync-passfile *config*)
-                        (which-sshpass *config*))
-                   "--rsh=\"/usr/bin/sshpass -f /home/jose/.backup-pass ssh -o StrictHostKeyChecking=no\""
-                   "")
-               (apply #'format nil fmt-args args)))
+(defun ensure-remote-directories-exist (rsync-path)
+  "Not implemented."
+  rsync-path)
+(defun run-rsync (from to)
+  "Execute an rsync command, keeping with rsync options config."
+  (run-program "rsync ~a ~a ~a"
+               (rsync-options *config*)
+               (ensure-directories-exist from)
+               (ensure-remote-directories-exist to)))
 
 (defun path-move (from to)
   "Move things, or copy with rsync."
   (if (rsync-installed-p)
-      (run-rsync "--delete -lavz ~a ~a"
-                 from
-                 to)
-      (run-program "mv ~a ~a" from to)))
+      (run-rsync from to)
+      (run-program "mv ~a ~a"
+                   (ensure-directories-exist from)
+                   (ensure-directories-exist to))))
 
 (defun update-symlink (path target)
   (run-program "ln -sfn ~a ~a" target path))
 
-(defun rsync-ensure-directories-exist (path)
-  "Ensure directories exist, but not if using rsync."
-  (when (not (rsync-installed-p))
-    (ensure-directories-exist path)))
 

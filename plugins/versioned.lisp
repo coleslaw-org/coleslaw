@@ -28,7 +28,6 @@
   (let ((dest (rel-path (deploy-dir *config*)
                         *symlink-dir*
                         (get-universal-time))))
-    (rsync-ensure-directories-exist dest)
     (path-move staging dest)))
 
 (defmethod coleslaw:deploy :before (staging)

@@ -20,8 +20,7 @@
    (title           :initarg :title          :reader title)
    (index-ext       :initarg :index-ext      :reader index-ext)
    (conf-sitemap    :initarg :conf-sitemap   :reader conf-sitemap)
-   (rsync-passfile  :initarg :rsync-passfile :reader rsync-passfile)
-   (which-sshpass   :initarg :which-sshpass  :reader which-sshpass))
+   (rsync-options  :initarg :rsync-options :reader rsync-options))
   
   (:default-initargs
    :feeds        nil
@@ -29,8 +28,7 @@
    :conf-sitemap nil
    :plugins      nil
    :sitenav      nil
-   :rsync-passfile nil
-   :which-sshpass nil
+   :rsync-options "--delete -avz"
    :excerpt-sep  "<!--more-->"
    :name-fn      'identity
    :charset      "UTF-8"
