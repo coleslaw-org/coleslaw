@@ -12,7 +12,9 @@
 
 Coleslaw is Flexible Lisp Blogware similar to [Frog](https://github.com/greghendershott/frog), [Jekyll](http://jekyllrb.com/), or [Hakyll](http://jaspervdj.be/hakyll/).
 
-Have questions? Come talk to us on IRC in **#coleslaw** on Freenode!
+Have questions? 
+- IRC in **#coleslaw** on Freenode!
+- Subscribe to the mailing list [**coleslaw@common-lisp.net**](https://mailman.common-lisp.net/listinfo/coleslaw).
 
 ## Features
 
