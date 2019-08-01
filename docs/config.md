@@ -2,8 +2,8 @@
 
 ## Where
 
-Coleslaw needs a `.coleslawrc` file to operate properly. That file is usually located at
-$HOME/.coleslawrc but may also be placed in the blog repo itself.
+Coleslaw needs a configuration file to operate properly. It can has any name and
+is usally placed in the blog repo itself.
 
 ## What
 

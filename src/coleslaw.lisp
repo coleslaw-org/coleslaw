@@ -3,10 +3,11 @@
 (defvar *last-revision* nil
   "The git revision prior to the last push. For use with GET-UPDATED-FILES.")
 
-(defun main (repo-dir &optional oldrev)
+(defun main (&optional (config-file #p"~/.coleslawrc") oldrev)
   "Load the user's config file, then compile and deploy the blog stored
-in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
-  (load-config repo-dir)
+   where the CONF-FILE is stored. Optionally, OLDREV is the revision prior to 
+   the last push."
+  (load-config config-file)
   (setf *last-revision* oldrev)
   (load-content)
   (compile-theme (theme *config*))
