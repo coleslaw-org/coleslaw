@@ -102,6 +102,17 @@ post with `format: cl-who` and the plugin will do the rest.
 - `:config` is used as supplementary inline configuration to the
   `MathJax.Hub.Config ({ ... });`. It is unused by default.
 
+## Markless
+
+**Description**: [Markless](https://shirakumo.github.io/markless) is a
+  new document markup standard. To use it in your posts, create the
+  posts with `format: mess`. The output is generated using
+  [cl-markless-plump](https://shirakumo.github.io/cl-markless/cl-markless-plump/),
+  meaning any syntax extensions that work with it should also be
+  available in Coleslaw.
+
+**Example**: `(mess)`
+
 ## ReStructuredText
 
 **Description**: Some people really like
