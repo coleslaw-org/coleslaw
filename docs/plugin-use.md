@@ -106,7 +106,7 @@ post with `format: cl-who` and the plugin will do the rest.
 
 **Description**: [Markless](https://shirakumo.github.io/markless) is a
   new document markup standard. To use it in your posts, create the
-  posts with `format: mess`. The output is generated using
+  posts with `format: markless`. The output is generated using
   [cl-markless-plump](https://shirakumo.github.io/cl-markless/cl-markless-plump/),
   meaning any syntax extensions that work with it should also be
   available in Coleslaw.
