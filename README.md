@@ -16,7 +16,7 @@ Have questions?
 - IRC in **#coleslaw** on Freenode!
 - Subscribe to the mailing list [**coleslaw@common-lisp.net**](https://mailman.common-lisp.net/listinfo/coleslaw).
 
-See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blogroll) for a list of coleslaw-powered blogs.
+See the [wiki](https://github.com/redline6561/coleslaw/wiki/Example-sites) for a list of coleslaw-powered blogs.
 
 ## Features
 
