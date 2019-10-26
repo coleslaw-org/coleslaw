@@ -20,3 +20,4 @@ cache:
 script:
   - ros -s prove -e "(ql:quickload '(coleslaw coleslaw-test))"
                  -e '(or (prove:run :coleslaw-test) (uiop:quit -1))'
+  - cli-tests/basic.sh
