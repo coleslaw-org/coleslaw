@@ -1,5 +1,14 @@
 (defpackage :coleslaw-cli
-  (:use :cl :trivia))
+  (:use :cl :trivia)
+  (:export
+   #:copy-theme
+   #:setup
+   #:new
+   #:generate
+   #:preview
+   #:watch
+   #:watch-preview
+   #:help))
   
 (in-package :coleslaw-cli)
 
