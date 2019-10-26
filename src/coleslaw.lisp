@@ -43,7 +43,7 @@ in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
   (:method (staging)
-    (run-program "rsync --delete -avz ~a ~a" staging (deploy-dir *config*))))
+    (run-program "rsync --delete -avz ~a ~a" staging (merge-pathnames (deploy-dir *config*)))))
 
 (defun update-symlink (path target)
   "Update the symlink at PATH to point to TARGET."
