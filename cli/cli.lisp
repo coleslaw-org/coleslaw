@@ -12,7 +12,7 @@
  ;; Required information
  :author \"~a\"                         ;; to be placed on post pages and in the copyright/CC-BY-SA notice
  :deploy-dir \"deploy/\"                ;; for Coleslaw's generated HTML to go in
- :domain \"https://~a.github.com\"      ;; to generate absolute links to the site content
+ :domain \"\"                           ;; to generate absolute links to the site content
  :routing ((:post           \"posts/~~a\") ;; to determine the URL scheme of content on the site
            (:tag-index      \"tag/~~a\")
            (:month-index    \"date/~~a\")
@@ -42,7 +42,6 @@
 )
 
 ;; * Prerequisites described in plugin docs."
-            user
             user
             user
             user
