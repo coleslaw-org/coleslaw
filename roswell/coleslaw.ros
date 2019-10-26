@@ -1,0 +1,10 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -L sbcl-bin -m coleslaw -- $0 "$@"
+|#
+(progn ;;init forms
+  (ros:ensure-asdf)
+  #+quicklisp (ql:quickload '(:coleslaw-cli) :silent t))
+
+(in-package :coleslaw-cli)
