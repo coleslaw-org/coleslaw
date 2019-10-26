@@ -113,7 +113,8 @@ Excerpt separator is `<!--more-->` by default.
                    (string= type "page") name
                    sep)
            (format *error-output* "~&Created a ~a \"~a\".~%" type name)
-           (format t "~&~a~%" path)))))))
+           (format t "~&~a~%" path)
+           path))))))
 
 (defun generate ()
   (coleslaw:main *default-pathname-defaults*))
