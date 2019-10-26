@@ -18,6 +18,9 @@ Have questions?
 
 See the [wiki](https://github.com/redline6561/coleslaw/wiki/Example-sites) for a list of coleslaw-powered blogs.
 
+Coleslaw should run on any conforming Common Lisp implementations but
+testing is primarily done on [SBCL](http://www.sbcl.org/) and [CCL](http://ccl.clozure.com/).
+
 ## Features
 
 * Git for storage
@@ -35,9 +38,6 @@ See the [wiki](https://github.com/redline6561/coleslaw/wiki/Example-sites) for a
 
 ## Installation
 
-Coleslaw should run on any conforming Common Lisp implementation but
-testing is primarily done on [SBCL](http://www.sbcl.org/) and
-[CCL](http://ccl.clozure.com/).
 
 Coleslaw can either be run **manually** on a local machine or
 triggered **automatically** on git push to a server.  If you want a
