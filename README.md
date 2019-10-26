@@ -16,40 +16,22 @@ Have questions?
 - IRC in **#coleslaw** on Freenode!
 - Subscribe to the mailing list [**coleslaw@common-lisp.net**](https://mailman.common-lisp.net/listinfo/coleslaw).
 
+See the [wiki](https://github.com/redline6561/coleslaw/wiki/Example-sites) for a list of coleslaw-powered blogs.
+
 ## Features
 
 * Git for storage
-* RSS and Atom feeds
-* Markdown Support with Code Highlighting provided by [colorize](http://www.cliki.net/colorize)
-  * Currently supports: Common Lisp, Emacs Lisp, Scheme, C, C++, Java, Python, Erlang, Haskell, Obj-C, Diff.
-
+* RSS/Atom feeds
 * A [Plugin API](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-api.md) and [**plugins**](http://github.com/redline6561/coleslaw/blob/master/docs/plugin-use.md) for...
-  * Static Pages
-  * Sitemap generation
-  * Incremental builds
-  * Analytics via Google or [Piwik](http://www.piwik.org)
-  * Comments via [Disqus](http://disqus.com/) or [isso](http://posativ.org/isso)
-  * Hosting via [Github Pages](https://pages.github.com/) or [Amazon S3](http://aws.amazon.com/s3/)
-  * Embedding [gfycats](http://gfycat.com/)
-  * [Tweeting](http://twitter.com/) about new posts
-  * Using LaTeX via [Mathjax](http://mathjax.org/)
-  * Writing posts in ReStructured Text
-  * Importing posts from [Wordpress](http://wordpress.org/)
-  * Code Highlighting via [Pygments](http://pygments.org/) instead of [colorize](http://www.cliki.net/colorize)
 
-## Example Sites
+| plugins                                                | plugins                                      | plugins                                               |
+|--------------------------------------------------------|----------------------------------------------|-------------------------------------------------------|
+| Sitemap generation                                     | Incremental builds                           | Analytics via Google or [Piwik](http://www.piwik.org) |
+| Comments via [Disqus](http://disqus.com/)              | Comments via [isso](http://posativ.org/isso) | Hosting via  [Amazon S3](http://aws.amazon.com/s3/)   |
+| Hosting via [Github Pages](https://pages.github.com/)  | Embedding [gfycats](http://gfycat.com/)      | [Tweeting](http://twitter.com/) about new posts       |
+| [Mathjax](http://mathjax.org/)                         | Posts in ReStructured Text                   | [Wordpress](http://wordpress.org/) import             |
+| [Pygments](http://pygments.org/)                       | [colorize](http://www.cliki.net/colorize)    |                                                       |
 
-See the [wiki](https://github.com/redline6561/coleslaw/wiki/Blogroll) for a list of coleslaw-powered blogs.
-
-## Hacking
-
-A core goal of *coleslaw* is to be both pleasant to read and easy to
-hack on and extend. If you want to understand the internals and bend
-*coleslaw* to do new and interesting things, I strongly encourage you
-to read the [Hacker's Guide to Coleslaw][hackers]. You'll find some
-current **TODO** items towards the bottom.
-
-[hackers]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
 
 ## Installation
 
@@ -125,3 +107,13 @@ Two themes are provided: hyde, the default, and readable (based on
 
 A guide to creating themes for coleslaw lives
 [here](https://github.com/redline6561/coleslaw/blob/master/docs/themes.md).
+
+## Hacking
+
+A core goal of *coleslaw* is to be both pleasant to read and easy to
+hack on and extend. If you want to understand the internals and bend
+*coleslaw* to do new and interesting things, I strongly encourage you
+to read the [Hacker's Guide to Coleslaw][hackers]. You'll find some
+current **TODO** items towards the bottom.
+
+[hackers]: https://github.com/redline6561/coleslaw/blob/master/docs/hacking.md
