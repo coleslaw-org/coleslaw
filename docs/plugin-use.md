@@ -7,6 +7,13 @@
 * Available plugins are listed below with usage descriptions and
   config examples.
 
+## Direct deployment via rsync
+
+**Description**: This directly sends the contents of the staging dir to the deployed directory.
+The former default deployment method.
+
+**Example**: `(rsync "--exclude" ".git/" "--exclude" ".gitignore" "--copy-links")`
+
 ## Analytics via Google
 
 **Description**: Provides traffic analysis through

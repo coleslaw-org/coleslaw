@@ -43,6 +43,8 @@
            (sitemap)
            (static-pages)
            ; (versioned)    ;; *Remove comment to enable symlinked, timestamped deploys.
+           ;; default deploy method is rsync
+           (rsync \"-avz\" \"--delete\" \"--exclude\" \".git/\" \"--exclude\" \".gitignore\" \"--copy-links\")
           )
  :sitenav ((:url \"http://~a.github.com/\" :name \"Home\")
            (:url \"http://twitter.com/~a\" :name \"Twitter\")
