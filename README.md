@@ -1,6 +1,6 @@
 # coleslaw
 
-[![Build Status](https://travis-ci.org/kingcons/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
+[![Build Status](https://travis-ci.org/coleslaw-org/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
 [![Quicklisp](http://quickdocs.org/badge/coleslaw.svg)](http://quickdocs.org/coleslaw/)
 
 <img src="https://raw.github.com/redline6561/coleslaw/master/themes/hyde/css/logo_medium.jpg" alt="coleslaw logo" align="right"/>
