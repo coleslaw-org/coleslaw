@@ -11,7 +11,7 @@
   (coleslaw-cli:setup)
   (let ((file (coleslaw-cli:new)))
     (ok (probe-file file)))
-  (coleslaw-cli:generate)
+  (coleslaw-cli:deploy)
   (print (format nil "~adeploy/index.html" *default-pathname-defaults*))
   (ok (probe-file (format nil "~adeploy/index.html" *default-pathname-defaults*))))
 

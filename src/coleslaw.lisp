@@ -3,16 +3,19 @@
 (defvar *last-revision* nil
   "The git revision prior to the last push. For use with GET-UPDATED-FILES.")
 
-(defun main (repo-dir &optional oldrev)
-  "Load the user's config file, then compile and deploy the blog stored
-in REPO-DIR. Optionally, OLDREV is the revision prior to the last push."
+(defun main (repo-dir &key oldrev (deploy t))
+  "Load the user's config file, compile the blog in REPO-DIR into STAGING-DIR,
+ and optionally deploy the blog to DEPLOY-DIR.
+  OLDREV -- the git revision prior to the last push.
+  DEPLOY -- when non-nil, perform the deploy. (default: t)"
   (load-config repo-dir)
   (setf *last-revision* oldrev)
   (load-content)
   (compile-theme (theme *config*))
   (let ((dir (staging-dir *config*)))
     (compile-blog dir)
-    (deploy dir)))
+    (when deploy
+      (deploy dir))))
 
 (defun load-content ()
   "Load all content stored in the blog's repo."

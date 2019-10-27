@@ -44,69 +44,77 @@ testing is primarily done on [SBCL](http://www.sbcl.org/) and [CCL](http://ccl.c
 Step 1: Install this library.
 
 With [Roswell](https://roswell.github.io/),
-``` sh
+```
 $ ros install coleslaw
 $ export PATH="$HOME/.roswell/bin:$PATH" # If you haven't done this before
-```
-
 or
-
-``` lisp
-(ql:quickload :coleslaw-cli)
+CL-USER> (ql:quickload :coleslaw-cli)
 ```
-
 
 Step 2: Initialize your blog repository.
 
-``` sh
+``` 
 $ mkdir yourblog ; cd yourblog
 $ git init
-$ coleslaw setup
+$ coleslaw setup              # or
+CL-USER> (coleslaw-cli:setup)
 ```
-``` lisp
-(coleslaw-cli:setup)
-```
+
+`coleslaw setup` / `(coleslaw-cli:setup)` will generate a `.coleslawrc` file in
+the current directory, which contains the configuration of the static website.
 
 Step 3: Write a post file in the current directory.
 The file should contain a certain metadata, so use the `coleslaw new` command,
 which instantiates a correct file for you.
 
-``` sh
+```
 $ coleslaw new
 Created a post 2017-11-06.post .
-```
-``` lisp
-(coleslaw-cli:new "post")
+# or 
+CL-USER> (coleslaw-cli:new "post")
+Created a post 2017-11-06.post .
 ```
 
 Step 4: Generate the site from those post files.
-The result goes to the `deploy/` subdirectory.
+The result goes to the *staging directory* specified in the `.coleslawrc` file.
+The staging directory is `/tmp/coleslaw/` by default.
 
-``` sh
-$ coleslaw
 ```
-``` lisp
-(coleslaw-cli:generate)
+$ coleslaw          # or
+$ coleslaw generate # or
+$ coleslaw stage    # or
+CL-USER> (coleslaw-cli:generate) ; or
+CL-USER> (coleslaw-cli:stage)    ; --- these are all aliases
 ```
 
-Step 5: You can also launch a server...
+Step 5: You can launch a web server to check the result on a browser.
+(Running a webserver sometimes has a benefit over just opening an html file,
+e.g. the relative links behaves differently on a file:/// protocol)
 
-``` sh
-$ coleslaw preview
 ```
-``` lisp
-(coleslaw-cli:preview)
+$ coleslaw preview     # or
+CL-USER> (coleslaw-cli:preview)
 ```
 
 Step 6: and watch the file system to automatically regenerate the site!
 
-``` sh
+```
 $ coleslaw watch          # or even better,
-$ coleslaw watch-preview 
+$ coleslaw watch-preview  # or, on REPL,
+CL-USER> (coleslaw-cli:watch)      ;; watch-preview does not work on REPL right now
 ```
-``` lisp
-(coleslaw-cli:watch)      ;; watch-preview does not work on REPL right now
+
+Step 7: When you think your article is publishable, run
+
 ```
+$ coleslaw deploy             # or
+CL-USER> (coleslaw-cli:deploy)
+```
+
+To move the contents in the staging dir to the deploy dir.
+By default, this deploy command uses `rsync` to sync the directories,
+where the deploy dir could be a remote directory on the server which is running your website.
+By using a plugin, you can customize this behavior e.g. running the deploy on gh-pages.
 
 For further customization, e.g. adding a new plugin, developing a new plugin, changing the deploy option, or creating a new theme,
 see the [config docs](docs).
