@@ -23,7 +23,7 @@
  ;; Required information
  :author \"~a\"                         ;; to be placed on post pages and in the copyright/CC-BY-SA notice
  :deploy-dir \"deploy/\"                ;; for Coleslaw's generated HTML to go in
- :domain \"\"                           ;; to generate absolute links to the site content
+ :domain \"\"                           ;; to generate absolute links to the site content. Note: with :cname option of gh-pages, this requires a url scheme, e.g. https://fake.org 
  :routing ((:post           \"posts/~~a\") ;; to determine the URL scheme of content on the site
            (:tag-index      \"tag/~~a\")
            (:month-index    \"date/~~a\")
@@ -42,7 +42,13 @@
            (mathjax)
            (sitemap)
            (static-pages)
-           ; (versioned)    ;; *Remove comment to enable symlinked, timestamped deploys.
+           ;; deployment plugins
+           ;; deployment to github pages
+           ; (gh-pages :url \"git@github.com:myaccount/myrepo.git\"
+           ;           ; :cname t  ;; if you want to use the custom domain --- see http://pages.github.com/
+           ;           )
+           ;; versioned deployment. Remove comment to enable symlinked, timestamped deploys.
+           ; (versioned)
            ;; default deploy method is rsync
            (rsync \"-avz\" \"--delete\" \"--exclude\" \".git/\" \"--exclude\" \".gitignore\" \"--copy-links\")
           )
