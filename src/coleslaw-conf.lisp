@@ -1,12 +1,10 @@
 (defpackage #:coleslaw-conf
   (:use #:cl)
-  (:export #:*basedir*
-           #:set-basedir))
+  (:export #:*basedir*))
 
 (in-package #:coleslaw-conf)
 
-(defvar *basedir*)
-
-(defun set-basedir (pathname)
-  (setf coleslaw-conf:*basedir*
-    (make-pathname :name nil :type nil :defaults pathname)))
+(defparameter *basedir*
+  (uiop/pathname:pathname-parent-directory-pathname
+   #.(or *compile-file-truename* *load-truename*))
+  "A pathname pointing to Coleslaw's top level directory.")
