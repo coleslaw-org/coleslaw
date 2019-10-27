@@ -25,9 +25,9 @@ trap "kill $pid; rm -rf $dir" EXIT
 
 sleep 3
 
-wget -4 -O- 127.0.0.1:5000
+curl --fail 127.0.0.1:5000
 
-! wget -4 -O- 127.0.0.1:5000/nosuchurl
+! curl --fail 127.0.0.1:5000/nosuchurl
 
 # (
 #     wget 127.0.0.1:5000/nosuchurl -O-
