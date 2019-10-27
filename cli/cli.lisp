@@ -8,7 +8,9 @@
    #:preview
    #:watch
    #:watch-preview
-   #:help))
+   #:help
+   #:stage
+   #:deploy))
   
 (in-package :coleslaw-cli)
 
@@ -117,9 +119,15 @@ Excerpt separator is `<!--more-->` by default.
            path))))))
 
 (defun generate ()
-  (coleslaw:main *default-pathname-defaults*))
+  (stage))
 
-(defun preview (&optional (path (getf (read-rc) :deploy-dir)))
+(defun stage ()
+  (coleslaw:main *default-pathname-defaults* :deploy nil))
+
+(defun deploy ()
+  (coleslaw:main *default-pathname-defaults* :deploy t))
+
+(defun preview (&optional (path (getf (read-rc) :staging-dir)))
   ;; clack depends on the global binding of *default-pathname-defaults*.
   (let ((oldpath *default-pathname-defaults*))
     (unwind-protect
@@ -212,10 +220,12 @@ Command Line Syntax:
 coleslaw setup [NAME]                --- Sets up a new .coleslawrc file in the current directory.
 coleslaw copy-theme THEME [TARGET]   --- Copies the installed THEME in coleslaw to the current directory with a different name TARGET.
 coleslaw new [TYPE] [NAME]           --- Creates a new content file with the correct format. TYPE defaults to 'post', NAME defaults to the current date.
-coleslaw generate                    --- Generates the static html according to .coleslawrc .
-coleslaw preview [DIRECTORY]         --- Runs a preview server at port 5000. DIRECTORY defaults to the deploy directory (described in .coleslawrc).
+coleslaw stage                       --- Generates the static html in the staging dir.
+coleslaw generate                    --- Alias to `coleslaw stage`.
+coleslaw deploy                      --- Generates the static html in the staging dir, then publish it to the deploy dir.
+coleslaw preview [DIRECTORY]         --- Runs a preview server at port 5000. DIRECTORY defaults to the staging directory.
 coleslaw watch [DIRECTORY]           --- Watches the given directory and generates the site when changes are detected. Defaults to the current directory.
-coleslaw                             --- Shorthand of 'coleslaw generate'.
+coleslaw                             --- Alias to `coleslaw stage`.
 coleslaw -h                          --- Show this help
 
 Corresponding REPL commands are available in coleslaw-cli package.
@@ -225,7 +235,9 @@ Corresponding REPL commands are available in coleslaw-cli package.
   (coleslaw-cli:setup            &optional name)
   (coleslaw-cli:copy-theme theme &optional target)
   (coleslaw-cli:new              &optional type name)
+  (coleslaw-cli:stage)
   (coleslaw-cli:generate)
+  (coleslaw-cli:deploy)
   (coleslaw-cli:preview &optional directory)
   (coleslaw-cli:watch   &optional directory)
 ```
@@ -279,7 +291,13 @@ Examples:
      (apply #'watch-preview rest))
     ((list* "new" rest)
      (apply #'new rest))
-    ((or nil (list "generate"))
+    ((list* "generate" rest)
+     (apply #'generate rest))
+    ((list* "stage" rest)
+     (apply #'stage rest))
+    ((list* "deploy" rest)
+     (apply #'deploy rest))
+    (nil
      (generate))
     ((list* "copy-theme" rest)
      (apply #'copy-theme rest))
