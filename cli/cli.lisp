@@ -126,7 +126,7 @@ Excerpt separator is `<!--more-->` by default.
          (progn
            (when path
              (setf *default-pathname-defaults* (truename path)))
-           (format t "~%Starting a Clack server at ~a~%" path)
+           (format t "~%Starting a Clack server at ~a. Press C-c to stop it~%" path)
            (clack:clackup
             (lack:builder
              :accesslog

@@ -11,6 +11,7 @@ env:
 
 install:
   - curl -L https://raw.githubusercontent.com/snmsts/roswell/release/scripts/install-for-ci.sh | sh
+  - ros install coleslaw
 
 cache:
   directories:
