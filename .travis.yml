@@ -1,5 +1,5 @@
 language: common-lisp
-sudo: true
+sudo: false
 
 env:
   global:
