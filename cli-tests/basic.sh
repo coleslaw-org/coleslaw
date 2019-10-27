@@ -25,11 +25,15 @@ trap "kill $pid; rm -rf $dir" EXIT
 
 sleep 3
 
-# Doesn't run on Travis!
-# wget -O- 127.0.0.1:5000
-# ! wget -O- 127.0.0.1:5000/nosuchurl
-# curl --fail 127.0.0.1:5000
-# ! curl --fail 127.0.0.1:5000/nosuchurl
+try_query=${1:-true}
+
+if $try_query
+then
+    # Doesn't run on Travis!
+    curl --fail 127.0.0.1:5000
+    ! curl --fail 127.0.0.1:5000/nosuchurl
+    echo success!
+fi
 
 # (
 #     wget 127.0.0.1:5000/nosuchurl -O-
