@@ -11,7 +11,7 @@
 (defvar *args* nil)
 
 (defmethod deploy (staging)
-  (coleslaw::run-program "rsync --delete ~{~A~^ ~} -avz ~A ~A" *args*
+  (coleslaw::run-program "rsync ~{~A~^ ~} ~A ~A" *args*
                          (merge-pathnames staging)
                          (merge-pathnames (deploy-dir *config*))))
 

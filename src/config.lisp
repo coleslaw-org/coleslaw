@@ -21,7 +21,7 @@
   (:default-initargs
    :feeds        nil
    :license      nil
-   :plugins      '((rsync "--delete"))
+   :plugins      '((rsync "-avz" "--delete" "--exclude" ".git/" "--exclude" ".gitignore" "--copy-links"))
    :sitenav      nil
    :excerpt-sep  "<!--more-->"
    :charset      "UTF-8"
