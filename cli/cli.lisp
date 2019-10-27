@@ -130,10 +130,12 @@ Excerpt separator is `<!--more-->` by default.
   (stage))
 
 (defun stage ()
-  (coleslaw:main *default-pathname-defaults* :deploy nil))
+  (prog1 (coleslaw:main *default-pathname-defaults* :deploy nil)
+    (format t "~&Page generated at the staging dir ~a~%" (getf (read-rc) :staging-dir))))
 
 (defun deploy ()
-  (coleslaw:main *default-pathname-defaults* :deploy t))
+  (prog1 (coleslaw:main *default-pathname-defaults* :deploy t)
+    (format t "~&Page deployed at the deploy dir ~a~%" (getf (read-rc) :deploy-dir))))
 
 (defun preview (&optional (path (getf (read-rc) :staging-dir)))
   ;; clack depends on the global binding of *default-pathname-defaults*.
