@@ -1,33 +1,38 @@
 (eval-when (:compile-toplevel :load-toplevel)
-  (ql:quickload 'puri))
-
+  (ql:quickload 'puri :silent t))
 (defpackage :coleslaw-gh-pages
   (:use :cl)
-  (:import-from :puri #:parse-uri #:uri-host)
-  (:import-from :coleslaw #:*config*
-                          #:deploy
-                          #:deploy-dir
-                          #:domain
-                          #:rel-path)
+  (:import-from :coleslaw
+                #:*config*
+                #:domain
+                #:deploy
+                #:staging-dir
+                #:deploy-dir)
   (:export #:enable))
 
 (in-package :coleslaw-gh-pages)
 
-(defvar *cname* nil
-  "The domain CNAME for github to serve pages from.")
+(defvar *options* nil)
 
-(defmethod deploy :after (staging)
-  (let ((blog (rel-path (deploy-dir *config*) ".curr")))
-    (delete-file (rel-path blog "index.html"))
-    (cl-fad:copy-file (rel-path blog "1.html") (rel-path blog "index.html"))
-    (with-open-file (out (rel-path blog "CNAME")
-                     :direction :output
-                     :if-exists :supersede
-                     :if-does-not-exist :create)
-      (format out "~A~%" *cname*))))
+(defmethod deploy (staging)
+  (uiop:run-program (list* (namestring
+                            (merge-pathnames "plugins/publish-gh-pages.sh"
+                                             coleslaw-conf:*basedir*))
+                           (namestring
+                            (merge-pathnames (staging-dir *config*)))
+                           (namestring
+                            (merge-pathnames (deploy-dir *config*)))
+                           *options*)
+                    :output t
+                    :error-output t))
 
-(defun enable (&key cname)
-  (typecase cname
-    (string (setf *cname* cname))
-    (t (setf *cname* (uri-host (parse-uri (domain *config*)))))
-    (otherwise (error "Not a valid CNAME: ~A" cname))))
+(defun enable (&key url (branch "gh-pages") (remote "origin") cname)
+  (check-type url string)
+  (check-type remote string)
+  (check-type branch string)
+  (if (eq t cname)
+      (progn
+        (setf cname (puri:uri-host (puri:parse-uri (domain *config*))))
+        (check-type cname string)
+        (setf *options* (list url branch remote cname)))
+      (setf *options* (list url branch remote))))

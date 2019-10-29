@@ -58,14 +58,27 @@ post with `format: cl-who` and the plugin will do the rest.
 
 **Example**: `(gfycat)`
 
-## Hosting via Github Pages
+## Deploying / Hosting via Github Pages
 
-**Description**: Allows hosting with CNAMEs via
-  [github-pages](http://pages.github.com/). Parses the host from the
-  `:domain` section of your config by default. Pass in a string to
-  override.
+**Description**:
 
-**Example**: `(gh-pages :cname t)`
+Coleslaw deploys the blog to the specified branch of the given url.
+* `url`     -- a string, git repository url that you already have a push access.
+* `branch` -- a string, the branch to publish, either `"gh-pages"` or `"master"` can be used.
+* `remote` -- a string, the remote name that we use in the deploy directory. defaulted to `"origin"`.
+* `cname`  -- a string denoting the custom domain name, or `t`. If `cname` is `t`, the value is inferred
+  from the domain name specified in the `.coleslawrc`.
+  The value is written into `CNAME` file in the repository root.
+  For details, see [github-pages](http://pages.github.com/).
+
+**Example**:
+
+``` lisp
+(gh-pages :url "git@github.com:myaccount/myrepo.git"
+          :branch "gh-pages"
+          :remote "origin"
+          :cname t)
+```
 
 ## Incremental Builds
 
