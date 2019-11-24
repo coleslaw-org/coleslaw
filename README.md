@@ -43,10 +43,9 @@ testing is primarily done on [SBCL](http://www.sbcl.org/) and [CCL](http://ccl.c
 
 Step 1: Install this library.
 
-With [Roswell](https://roswell.github.io/),
 ```
-$ ros install coleslaw
-$ export PATH="$HOME/.roswell/bin:$PATH" # If you haven't done this before
+$ ros install coleslaw-org/coleslaw      # With [Roswell](https://roswell.github.io/)
+$ export PATH="$HOME/.roswell/bin:$PATH" # If you haven't done this before for Roswell
 or
 CL-USER> (ql:quickload :coleslaw-cli)
 ```
