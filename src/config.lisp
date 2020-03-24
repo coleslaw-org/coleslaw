@@ -7,6 +7,7 @@
    (domain          :initarg :domain         :reader domain)
    (excerpt-sep     :initarg :excerpt-sep    :reader excerpt-sep)
    (feeds           :initarg :feeds          :reader feeds)
+   (name-fn         :initarg :name-fn        :reader name-fn)
    (lang            :initarg :lang           :reader lang)
    (license         :initarg :license        :reader license)
    (page-ext        :initarg :page-ext       :reader page-ext-intolerant)
@@ -25,6 +26,7 @@
    :plugins      '((rsync "-avz" "--delete" "--exclude" ".git/" "--exclude" ".gitignore" "--copy-links"))
    :sitenav      nil
    :excerpt-sep  "<!--more-->"
+   :name-fn      'identity
    :charset      "UTF-8"
    :lang         "en"
    :page-ext     #1="html"
