@@ -212,7 +212,24 @@ CL-USER> (chirp:complete-authentication "4173325")
 
 **Example**: `(twitter-summary-card :twitter-handle "@redline6561")
 
-## Versioned Deploys
+## Versioning Deploys
+
+Either [automatic git interaction](#git-versioned) or [double
+versioning](#double-versioning)
+
+### Git Versioned
+
+**Description**: Automatically stages, commits, and/or pushes the server's
+sources. Assumes that a git repository exists in the server's directory. Pushing
+is optional.
+
+**Examples**: 
+`(git-versioned "~/src/dir/" 'stage 'commit 'push)`
+
+
+`(git-versioned "~/src/dir/" 'stage 'commit)`
+
+### Double Versioning
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and

@@ -100,6 +100,12 @@ If ARGS is provided, use (fmt path args) as the value of PATH."
 use (fmt program args) as the value of PROGRAM."
   (inferior-shell:run (fmt program args) :show t))
 
+(defun run-lines (dir &rest programs)
+  "Runs some programs, in a directory."
+  (mapc (lambda (line)
+          (run-program "cd ~A && ~A" dir line))
+        programs))
+
 (defun take-up-to (n seq)
   "Take elements from SEQ until all elements or N have been taken."
   (subseq seq 0 (min (length seq) n)))
