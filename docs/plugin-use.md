@@ -19,7 +19,9 @@ The former default deployment method.
 **Description**: Provides traffic analysis through
   [Google Analytics](http://www.google.com/analytics/).
 
-**Example**: `(analytics :tracking-code "google-provided-unique-id")`
+**Example**: `(gtag :tracking-code "google-provided-unique-id")`
+
+**Note**: You can use `(analytics :tracking-code "google-provided-unique-id")` for the legacy integration with Google Analytics. 
 
 ## Analytics via Piwik
 
