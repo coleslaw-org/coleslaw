@@ -279,3 +279,5 @@ For example `!yt[oeul8fTG9dM|width=480,allowfullscreen]`.
   [3bmd](https://github.com/3b/3bmd/blob/master/README.md) for more info.
 
 **Example**: `(pygments)`
+
+**Setup**: Install `Pygments` and verify that the `pygmentize` command works (`pygmentize -V` should print the version number). You also need to verify that your theme includes an appropriate css file.
