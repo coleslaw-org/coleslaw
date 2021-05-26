@@ -59,14 +59,11 @@
   (:method :around (status path &key)
     (let ((extension (pathname-type path))
           (ctypes (all-subclasses (find-class 'content))))
-      ;; This feels way too clever. I wish I could think of a better option.
-      (flet ((class-name-p (x class)
-               (string-equal x (symbol-name (class-name class)))))
-        ;; If the updated file's extension doesn't match one of our content types,
-        ;; we don't need to mess with it at all. Otherwise, since the class is
-        ;; annoyingly tricky to determine, pass it along.
-        (when-let (ctype (find extension ctypes :test #'class-name-p))
-          (call-next-method status path :ctype ctype))))))
+      ;; If the updated file's extension doesn't match one of our content types,
+      ;; we don't need to mess with it at all. Otherwise, since the class is
+      ;; annoyingly tricky to determine, pass it along.
+      (when-let (ctype (find extension ctypes :test #'class-name-p))
+        (call-next-method status path :ctype ctype)))))
 
 (defmethod process-change ((status (eql :deleted)) path &key)
   (let ((old (find-content-by-path path)))

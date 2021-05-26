@@ -122,3 +122,8 @@ in the git repo since REVISION."
            (cl-ppcre:split "\\s+" str)))
     (let ((cmd (format nil "git diff --name-status ~A HEAD" revision)))
       (mapcar #'split-on-whitespace (inferior-shell:run/lines cmd)))))
+
+(defun class-name-p (name class)
+  "True if the specified string is the name of the class provided"
+  ;; This feels way too clever. I wish I could think of a better option.
+  (string-equal name (symbol-name (class-name class))))
