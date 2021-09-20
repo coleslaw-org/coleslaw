@@ -13,7 +13,7 @@
 
 (in-package :coleslaw-sitemap)
 
-(defclass sitemap ()
+(defclass sitemap (index)
   ((urls :initarg :urls :reader urls)))
 
 (defmethod page-url ((object sitemap)) "sitemap.xml")
