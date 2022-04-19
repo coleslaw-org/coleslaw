@@ -29,7 +29,8 @@
            (:month-index    \"date/~~a\")
            (:numeric-index  \"~~d\")
            (:feed           \"~~a.xml\")
-           (:tag-feed       \"tag/~~a.xml\"))
+           (:tag-feed       \"tag/~~a.xml\")
+           (:sitemap        \"~~a.xml\"))
  :title \"Improved Means for Achieving Deteriorated Ends\" ;; a site title
  :theme \"hyde\"                        ;; to select one of the themes in \"coleslaw/themes/\"
  
