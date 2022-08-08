@@ -43,8 +43,8 @@
       (publish ctype))
     (do-subclasses (itype index)
       (publish itype))
-    (update-symlink (format nil "index.~A" (page-ext *config*))
-                    (format nil "1.~A" (page-ext *config*)))))
+    (update-symlink (format nil "index.~A" (index-ext *config*))
+                    (format nil "1~A" (page-ext *config*)))))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
