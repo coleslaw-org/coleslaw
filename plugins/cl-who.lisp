@@ -3,21 +3,20 @@
 
 (defpackage :coleslaw-cl-who
   (:use #:cl #:cl-who)
-  (:import-from #:coleslaw :render-text)
   (:export #:enable))
 
 (in-package :coleslaw-cl-who)
 
-(defmethod render-text (text (format (eql :cl-who)))
-  (let* ((*package* (find-package "COLESLAW-CL-WHO"))
-         (sexps (with-input-from-string (v text)
-                  (do* ((line (read v)
-                              (read v nil 'done))
-                        (acc (list line)
-                             (cons line acc)))
-                       ((eql line 'done)
-                        (nreverse (cdr acc)))))))
-    (eval `(with-html-output-to-string (v) ,@sexps))))
-
-(defun enable ()
+(defmethod coleslaw:render-text (text (format (eql :cl-who)))
+  (with-output-to-string (o)
+      (with-input-from-string (s (prog2 (in-package :cl-who);kludge
+                                        (concatenate 'string
+                                              (format nil "(cl-who:with-html-output-to-string (o) (htm~%")
+                                              text
+                                              (format nil "~%))"))
+                                        (in-package :coleslaw-cl-who)))
+        (format o "~a" (eval (read s nil)))))
+  (in-package :coleslaw);bugfix for kludge
   )
+
+(defun enable ())
