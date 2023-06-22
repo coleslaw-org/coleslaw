@@ -24,9 +24,9 @@
  :author \"~a\"                         ;; to be placed on post pages and in the copyright/CC-BY-SA notice
  :deploy-dir \"deploy/\"                ;; for Coleslaw's generated HTML to go in
  :domain \"\"                           ;; to generate absolute links to the site content. Note: with :cname option of gh-pages, this requires a url scheme, e.g. https://fake.org 
- :routing ((:post           \"posts/~~a\") ;; to determine the URL scheme of content on the site
-           (:tag-index      \"tag/~~a\")
-           (:month-index    \"date/~~a\")
+ :routing ((:post           \"posts/~~a.html\") ;; to determine the URL scheme of content on the site
+           (:tag-index      \"tag/~~a.html\")
+           (:month-index    \"date/~~a.html\")
            (:numeric-index  \"~~d\")
            (:feed           \"~~a.xml\")
            (:tag-feed       \"tag/~~a.xml\")
