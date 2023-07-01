@@ -42,15 +42,8 @@ is provided, it overrides the route used."
       (error "No routing method found for: ~A" class-name))
     (let* ((result (format nil route unique-id))
            (type (or (pathname-type result) (page-ext *config*))))
-      (make-pathname :name (funcall (name-fn *config*)
-                                    (pathname-name result))
-                     :type (when (string/= type "")
-                             (if (or (string-equal "index"
-                                                   (pathname-name result))
-                                     (string-equal "1"
-                                                   (pathname-name result)))
-                                 (index-ext *config*)
-                                 type))
+      (make-pathname :name (funcall (name-fn *config*) (pathname-name result))
+                     :type type
                      :defaults result))))
 
 (defun get-route (doc-type)
