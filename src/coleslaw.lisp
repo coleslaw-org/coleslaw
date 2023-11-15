@@ -42,7 +42,10 @@
       (publish ctype))
     (do-subclasses (itype index)
       (publish itype))
-    (let ((recent-posts (first (find-all 'numeric-index))))
+    (let ((recent-posts (reduce #'(lambda (a b)
+                                    (if (< (index-name a) (index-name b))
+                                        a b))
+                                (find-all 'numeric-index))))
       (update-symlink "index.html" (page-url recent-posts)))))
 
 (defgeneric deploy (staging)
