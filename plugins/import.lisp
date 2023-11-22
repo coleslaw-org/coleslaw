@@ -7,7 +7,9 @@
   (:import-from :coleslaw #:slugify
                           #:load-config
                           #:*config*
-                          #:repo)
+                          #:repo
+                          #:repo-dir
+                          #:separator)
   (:import-from :local-time #:+short-month-names+)
   (:import-from :cl-ppcre #:regex-replace-all))
 
