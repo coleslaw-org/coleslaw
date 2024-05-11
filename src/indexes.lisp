@@ -5,6 +5,9 @@
 (defvar *all-tags* nil
   "The list of tags which content has been tagged with.")
 
+(defvar *pages-listings-on-index* 10
+  "Page listings in the index per page.")
+
 (defclass index ()
   ((url     :initarg :url     :reader page-url)
    (name    :initarg :name    :reader index-name)
@@ -67,14 +70,14 @@
 
 (defmethod discover ((doc-type (eql (find-class 'numeric-index))))
   (let ((content (by-date (find-all 'post))))
-    (dotimes (i (ceiling (length content) 10))
+    (dotimes (i (ceiling (length content) *pages-listings-on-index*))
       (add-document (index-by-n i content)))))
 
 (defun index-by-n (i content)
   "Return the index for the Ith page of CONTENT in reverse chronological order."
-  (let ((content (subseq content (* 10 i))))
+  (let ((content (subseq content (* *pages-listings-on-index* i))))
     (make-instance 'numeric-index :slug (1+ i) :name (1+ i)
-                   :content (take-up-to 10 content)
+                   :content (take-up-to *pages-listings-on-index* content)
                    :title "Recent Content")))
 
 (defmethod publish ((doc-type (eql (find-class 'numeric-index))))
