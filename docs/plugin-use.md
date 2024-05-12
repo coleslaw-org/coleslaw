@@ -26,9 +26,9 @@ The former default deployment method.
 ## Analytics via Piwik
 
 **Description**: Provides traffic analysis through
-  [Piwik](https://www.piwik.org).
+  [Matomo](https://www.matomo.org).
 
-**Example**: `(piwik :piwik-url "piwik.example.com" :piwik-site "example-site")`
+**Example**: `(matomo :matomo-url "matomo.example.com" :matomo-site "example-site")`
 
 ## CL-WHO
 
