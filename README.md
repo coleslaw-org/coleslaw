@@ -28,13 +28,13 @@ testing is primarily done on [SBCL](http://www.sbcl.org/) and [CCL](http://ccl.c
 * Themes
 * A [Plugin API](docs/plugin-api.md) and [**plugins**](docs/plugin-use.md) for...
 
-| plugins                                                | plugins                                      | plugins                                               |
-|--------------------------------------------------------|----------------------------------------------|-------------------------------------------------------|
-| Sitemap generation                                     | Incremental builds                           | Analytics via Google or [Piwik](http://www.piwik.org) |
-| Comments via [Disqus](http://disqus.com/)              | Comments via [isso](http://posativ.org/isso) | Hosting via  [Amazon S3](http://aws.amazon.com/s3/)   |
-| Hosting via [Github Pages](https://pages.github.com/)  | Embedding [gfycats](http://gfycat.com/)      | [Tweeting](http://twitter.com/) about new posts       |
-| [Mathjax](http://mathjax.org/)                         | Posts in ReStructured Text                   | [Wordpress](http://wordpress.org/) import             |
-| [Pygments](http://pygments.org/)                       | [colorize](http://www.cliki.net/colorize)    |                                                       |
+| plugins                                                | plugins                                      | plugins                                                  |
+|--------------------------------------------------------|----------------------------------------------|----------------------------------------------------------|
+| Sitemap generation                                     | Incremental builds                           | Analytics via Google or [Matomo](https://www.matomo.org) |
+| Comments via [Disqus](http://disqus.com/)              | Comments via [isso](http://posativ.org/isso) | Hosting via  [Amazon S3](http://aws.amazon.com/s3/)      |
+| Hosting via [Github Pages](https://pages.github.com/)  | Embedding [gfycats](http://gfycat.com/)      | [Tweeting](http://twitter.com/) about new posts          |
+| [Mathjax](http://mathjax.org/)                         | Posts in ReStructured Text                   | [Wordpress](http://wordpress.org/) import                |
+| [Pygments](http://pygments.org/)                       | [colorize](http://www.cliki.net/colorize)    |                                                          |
 
 
 ## Installation/Tutorial
